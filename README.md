@@ -8,7 +8,7 @@ Tive a oportunidade de ver a evolução de muitas ferramentas e tecnologias fron
 
 Vivemos um momento onde a inteligencia artificial está cada vez mais evoluindo e ganhando espaço na automação de `tarefas repetitivas`, e já está se tornando uma realidade em diversos cenários específicos.
 
-Neste contexto, iniciei meus estudos no uso da inteligencia artificial para começar a automatizar meus trabalhos e tarefas repetitivas através de prompts de IA, testei as ferramentas (Google Stitch, Figma Make, V0, Lovable), apliquei padrôes de projetos frontend como `atomic design` e outras técnicas estratégicas com o objetivo de guiar a inteligência artificial a gerar a interface `pixel-perfect`.
+Neste contexto, iniciei meus estudos no uso da inteligencia artificial para começar a automatizar meus trabalhos e tarefas repetitivas através de prompts de IA, testei as ferramentas (Google Stitch, V0, Lovable), apliquei padrôes de projetos frontend como `atomic design` e outras técnicas estratégicas com o objetivo de guiar a inteligência artificial a gerar a interface `pixel-perfect`.
 
 **Neste post você verá:**
 
@@ -22,7 +22,6 @@ Neste contexto, iniciei meus estudos no uso da inteligencia artificial para come
    - [Google Stitch](#google-stitch)
    - [V0](#v0)
    - [Lovable](#lovable)
-   - [Figma Make](#figma-make)
 - [Principais Aprendizados](#principais-aprendizados)
    - [Pontos Positivos](#pontos-positivos)
    - [Pontos Negativos](#pontos-negativos)
@@ -75,7 +74,7 @@ Em todas as tentativas utilizei o seguinte passo a passo:
 
 - Acessei a ferramenta de IA (Google Stitch, v0 etc...).
 - Anexei na sessão do chat todos os arquivos markdown para servir de contexto.
-- Solicitei para que seja gerado a molecula com id: `MOL_CARD` -> `card`.
+- Solicitei para que seja gerado a molecula referenciando o id unico, ex: `MOL_CARD_ID`-> `card`.
 
 > A LLM analisou todo o contexto e especificaçôes do prompt e gerou exatamente o que eu precisava.
 
@@ -83,11 +82,19 @@ Em todas as tentativas utilizei o seguinte passo a passo:
 
 ### Google Stitch
 
+![Google Stitch](/readme/google-stich.png)
+
+> Gerado com Gemini 3.0
+
 ### V0
+
+![V0](/readme/v0.png)
+
+> Gerado com v0 Max, o v0 não conseguiu baixar a fonte correta, mas ficou pixel-perfect.
 
 ### Lovable
 
-### Figma Make
+![V0](/readme/lovable.png)
 
 ## Principais Aprendizados
 
@@ -103,3 +110,5 @@ Em todas as tentativas utilizei o seguinte passo a passo:
 - **Google Stitch**: O `Google Stitch`, gerou muito bem as interfaces no primeiro prompt, mas com o tempo e iteração, ele começou a se perder e alucinar, me retornando interfaces (design) totalmente aleatórias.
 
 ## Conclusão
+
+As ferramentas de geração de código apresentaram resultados mais precisos ao longo do tempo, e as ferramentas de geração de design, inicialmente geram resultados muito bons, mas conforme usamos por muito tempo, a IA começa a alucinar e guiar designs que não foi solicitado.
