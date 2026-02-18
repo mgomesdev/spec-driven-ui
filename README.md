@@ -14,7 +14,6 @@ Neste contexto, iniciei meus estudos no uso da inteligencia artificial para come
 
 - Projeto de Exemplo(#)
 - RAG (Retrieval Augmented Generation)(#rag)
-- Artefatos Utilizados(#)
 - Plano de Acao Estrategico(#)
 - Ferramentas de Geração de Design(#)
    - Google Stitches(#)
@@ -28,12 +27,6 @@ Neste contexto, iniciei meus estudos no uso da inteligencia artificial para come
 ## Projeto de Exemplo
 
 - TODO
-
-## Artefatos Utilizados
-
-### Sitemap
-
-![Sitemap](/readme/sitemap.png)
 
 ## RAG
 
