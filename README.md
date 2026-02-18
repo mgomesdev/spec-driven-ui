@@ -14,7 +14,7 @@ Neste contexto, iniciei meus estudos no uso da inteligencia artificial para come
 
 - Projeto de Exemplo(#)
 - RAG (Retrieval Augmented Generation)(#rag)
-- Atomic Design(#)
+- Artefatos Utilizados(#)
 - Plano de Acao Estrategico(#)
 - Ferramentas de Geração de Design(#)
    - Google Stitches(#)
@@ -28,6 +28,12 @@ Neste contexto, iniciei meus estudos no uso da inteligencia artificial para come
 ## Projeto de Exemplo
 
 - TODO
+
+## Artefatos Utilizados
+
+### Sitemap
+
+![Sitemap](/readme/sitemap.png)
 
 ## RAG
 
@@ -49,11 +55,10 @@ Neste contexto, iniciei meus estudos no uso da inteligencia artificial para come
 
 ### Pontos Positivos
 
-- **frontmatter**: Juntar cabeçalhos YAML no markdown funcionou muito bem, a IA consegue referenciar com precisão os arquivos.
+- **frontmatter**: Juntar cabeçalhos `YAML` no `markdown` funcionou muito bem, a IA consegue referenciar com precisão os arquivos.
 - **formato de dados**: em meus testes, a IA gerou saídas mais precisas quando segui a seguinte estrutura de declaração de diretrizes nos prompts:
-   - **JSON**: o formato `JSON` é melhor utilizado em especificação de `implementação` de componentes, a IA segue de forma literal a estrutura do `JSON`.
+   - **JSON**: o formato `JSON` apresentou resultados excelentes em especificação de `implementação` de componentes, a IA segue de forma literal a estrutura do `JSON` tornando pixel-perfect.
    - **Metadata**: O formato `**metadata**: <value>`, funcionou melhor para especificação de comportamentos do componente. Quando usado em especificações de implementação a IA começou a alucinar e gerar errado.
-- \*\*
 
 ## Pontos Negativos
 
