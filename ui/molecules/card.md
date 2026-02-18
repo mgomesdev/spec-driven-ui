@@ -47,17 +47,17 @@ id: "MOL_CARD"
   "children": [
     {
       "atom_id": "AT_HEADING",
-      "props": { "label": "Live Server Output" }
+      "props": { "label": "Card Pixel-Perfect" }
     },
     {
       "atom_id": "AT_PARAGRAPH",
       "props": {
-        "label": "Currently focused on building high-performance 3D web experiences using Three.js and React. Available for new collaborations starting 03 2024."
+        "label": "Este Card foi gerado através de prompt com técnicas RAG e estratégias avançadas, Atomic Design, Orientação a Objetos e Arquitetura."
       }
     },
     {
       "atom_id": "AT_BUTTON",
-      "props": { "label": "Get In Touch" }
+      "props": { "label": "Gostou ?" }
     }
   ]
 }

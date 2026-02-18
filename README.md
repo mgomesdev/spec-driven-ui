@@ -26,11 +26,25 @@ Neste contexto, iniciei meus estudos no uso da inteligencia artificial para come
 
 ## Projeto de Exemplo
 
-- TODO
+![Card](/readme/card.png)
 
 ## RAG
 
-## Plano de Acao Estrategico
+> O `RAG (Retrieval-Augmented Generation) ou Geração Aumentada por Recuperação`, é uma técnica que melhora a precisão da saída das LLMS, permitindo limitemos o contexto da IA para que ela consulte apenas fontes e dados específicos que precisamos, ou seja, apenas os dados do projeto.
+
+### Estrutura do Prompt
+
+Utilizei uma mistura de `Fontmatter (YALM)` com `markdown` para melhorar a precisão da saída da LLM e separar as responsabilidades nos arquivos, e ficou da seguinte maneira:
+
+- **created_at**/**updated_at**: Registram o ciclo de vida do arquivo, permitindo que a IA priorize as versões mais recentes em caso de duplicidade.
+- **dependencies**: Lista os IDs dos Átomos necessários (AT_HEADING, AT_PARAGRAPH, AT_BUTTON), garantindo que a IA carregue os estilos deles antes de montar a Molécula.
+- **file_name**/**version**: Identificam o nome físico do arquivo e o controle de versão para manutenção do Design System.
+- **variants**: Espaço reservado para listar variações da molécula (ex: dark, light, outline).
+- **extends**: Indica que este arquivo herda regras globais de outro documento (MOL_RULES), evitando repetição de código.
+- **type**/**role**: Definem a categoria arquitetural (MOLECULE) e a função semântica no HTML (div).
+- **id**: O identificador único e absoluto usado pelas LLMs para localizar este componente na base de dados.
+
+### Prompts
 
 ![Spec Driven - Atomic Design](/readme/spec-driven-atomic-design.png)
 
@@ -56,3 +70,5 @@ Neste contexto, iniciei meus estudos no uso da inteligencia artificial para come
 ## Pontos Negativos
 
 - **Google Stitches**: O `Google Stitches`, gerou muito bem as interfaces no primeiro prompt, mas com o tempo e iteração, ele começou a se perder e alucinar, me retornando interfaces (design) totalmente aleatórias.
+
+## Conclusão

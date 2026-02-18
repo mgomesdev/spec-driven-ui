@@ -57,7 +57,7 @@ Regras de geometria e respiro do layout.
 
 ```json
 {
- "font_arial": "Arial",
+ "font_arial": "Space Grotesk",
  "font_sm": "12px",
  "font_md: "18px"
 }```
