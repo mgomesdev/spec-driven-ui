@@ -28,3 +28,7 @@ Neste contexto, iniciei meus estudos no uso da inteligencia artificial para come
 ## Projeto de Exemplo
 
 - TODO
+
+## Plano de Ação Estratégico
+
+![Spec Drivel - Atomic Design](/readme/spec-driven-atomic-design.png)
