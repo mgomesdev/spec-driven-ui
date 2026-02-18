@@ -8,12 +8,12 @@ Tive a oportunidade de ver a evolução de muitas ferramentas e tecnologias fron
 
 Vivemos um momento onde a inteligencia artificial está cada vez mais evoluindo e ganhando espaço na automação de `tarefas repetitivas`, e já está se tornando uma realidade em diversos cenários específicos.
 
-Neste contexto, iniciei meus estudos no uso da inteligencia artificial para começar a automatizar meus trabalhos e tarefas repetitivas através de prompts de IA, testei algumas ferramentas, apliquei padrôes de projetos frontend como `atomic design` e outras técnicas com o objetivo de guiar a inteligência artificial a gerar a interface `pixel-perfect`.
+Neste contexto, iniciei meus estudos no uso da inteligencia artificial para começar a automatizar meus trabalhos e tarefas repetitivas através de prompts de IA, testei as ferramentas (Google Stitches, Figma Make, V0, Lovable), apliquei padrôes de projetos frontend como `atomic design` e outras técnicas estratégicas com o objetivo de guiar a inteligência artificial a gerar a interface `pixel-perfect`.
 
 **Neste post você verá:**
 
 - Projeto de Exemplo(#)
-- RAG (Retrieval Augmented Generation)(#)
+- RAG (Retrieval Augmented Generation)(#rag)
 - Atomic Design(#)
 - Plano de Acao Estrategico(#)
 - Ferramentas de Geração de Design(#)
@@ -29,6 +29,32 @@ Neste contexto, iniciei meus estudos no uso da inteligencia artificial para come
 
 - TODO
 
+## RAG
+
 ## Plano de Acao Estrategico
 
-![Spec Drivel - Atomic Design](/readme/spec-driven-atomic-design.png)
+![Spec Driven - Atomic Design](/readme/spec-driven-atomic-design.png)
+
+- **global_rules.md**: Contém as regras, diretrizes e lógica imutável que todo o `projeto` deve seguir para garantir que a IA não viole padrôes.
+- **design_tokens.md**: Armazeta todos os tokens (cores, espaçamentos) para garantir o pixel-perfect, fornecendo so valores exatos que os componentes devem consumir.
+- **atomic_design_rules.md**: Armazena todas as regras, diretrizes e lógica imutável que todos os `componentes` devem seguir.
+- **button.md**: Definição do atomo abstrato 'button', ele não sabe onde será usado, apenas como deve ser e se comportar individualmente.
+- **heading.md**: Definição do atomo abstrato 'heading', ele não sabe onde será usado, apenas como deve ser e se comportar individualmente.
+- **paragraph.md**: Definição do atomo abstrato 'paragraph', ele não sabe onde será usado, apenas como deve ser e se comportar individualmente.
+- **card.md**: Definição do componente 'card'. ele instancia os átomos e define o layout injetando o conteudo.
+
+> O sistema funciona em cascata: os `Global Rules` dão os valores imutáveis, as `Rules` dão o comportamento, os `Atoms` são nossas peças isoladas e as `Molecules` são o manual de montagem que une tudo isso com precisão milimétrica através de `JSON` e `metadados`."
+
+## Principais Aprendizados
+
+### Pontos Positivos
+
+- **frontmatter**: Juntar cabeçalhos YAML no markdown funcionou muito bem, a IA consegue referenciar com precisão os arquivos.
+- **formato de dados**: em meus testes, a IA gerou saídas mais precisas quando segui a seguinte estrutura de declaração de diretrizes nos prompts:
+   - **JSON**: o formato `JSON` é melhor utilizado em especificação de `implementação` de componentes, a IA segue de forma literal a estrutura do `JSON`.
+   - **Metadata**: O formato `**metadata**: <value>`, funcionou melhor para especificação de comportamentos do componente. Quando usado em especificações de implementação a IA começou a alucinar e gerar errado.
+- \*\*
+
+## Pontos Negativos
+
+- **Google Stitches**: O `Google Stitches`, gerou muito bem as interfaces no primeiro prompt, mas com o tempo e iteração, ele começou a se perder e alucinar, me retornando interfaces (design) totalmente aleatórias.
