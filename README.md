@@ -15,7 +15,7 @@ Neste contexto, iniciei meus estudos no uso da inteligencia artificial para come
 - Projeto de Exemplo(#)
 - RAG (Retrieval Augmented Generation)(#)
 - Atomic Design(#)
-- Plano de Ação Estratégico(#)
+- Plano de Acao Estrategico(#)
 - Ferramentas de Geração de Design(#)
    - Google Stitches(#)
 - Ferramentas de Geração de Código(#)
@@ -29,6 +29,6 @@ Neste contexto, iniciei meus estudos no uso da inteligencia artificial para come
 
 - TODO
 
-## Plano de Ação Estratégico
+## Plano de Acao Estrategico
 
 ![Spec Drivel - Atomic Design](/readme/spec-driven-atomic-design.png)
