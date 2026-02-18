@@ -14,27 +14,43 @@ Neste contexto, iniciei meus estudos no uso da inteligencia artificial para come
 
 - [Projeto de Exemplo](#projeto-de-exemplo)
 - [RAG (Retrieval Augmented Generation)](#rag)
-- [Arquitetura](#arquitetura)
-- [Geração de Design](#geracao-de-design)
+- [Atomic Design](#atomic-design)
+- [Arquitetura de Software](#arquitetura-de-software)
+- [Prompts](#prompts)
+- [Passo a passo usado](#passo-a-passo-usado)
+- [Resultados](#resultados)
    - [Google Stitches](#google-stitches)
-- [Geração de Código](#geracao-de-codigo)
-   - [Figma Make](#figma-make)
    - [V0](#v0)
    - [Lovable](#lovable)
+   - [Figma Make](#figma-make)
 - [Principais Aprendizados](#principais-aprendizados)
+   - [Pontos Positivos](#pontos-positivos)
+   - [Pontos Negativos](#pontos-negativos)
 - [Conclusão](#conclusao)
 
 ## Projeto de Exemplo
 
 ![Card](/readme/card.png)
 
+> Utilizei um `card` simples que usa toda a estrutura para testar o processo de forma simples e escalavel para testes maiores.
+
 ## RAG
 
 > O `RAG (Retrieval-Augmented Generation) ou Geração Aumentada por Recuperação`, é uma técnica que melhora a precisão da saída das LLMS, permitindo limitemos o contexto da IA para que ela consulte apenas fontes e dados específicos que precisamos, ou seja, apenas os dados do projeto.
 
-### Estrutura do Prompt
+## Atomic Design
 
-Utilizei uma mistura de `Fontmatter (YALM)` com `markdown` para melhorar a precisão da saída da LLM e separar as responsabilidades nos arquivos, e ficou da seguinte maneira:
+> Utilizei a metodologia `atomic design` para criar especificações de componentes abstratos e precisos para os testes.
+
+## Arquitetura de Software
+
+> Utilizei fundamentos de orientação a objetos e diagramas UML para o planejamento estratégico e exemplos.
+
+### Prompts
+
+Utilizei uma mistura de `Fontmatter(YALM)` com `markdown` para melhorar a precisão da saída da LLM e separar as responsabilidades nos arquivos, e ficou da seguinte maneira:
+
+![Spec Driven - Atomic Design](/readme/spec-driven-atomic-design.png)
 
 - **created_at**/**updated_at**: Registram o ciclo de vida do arquivo, permitindo que a IA priorize as versões mais recentes em caso de duplicidade.
 - **dependencies**: Lista os IDs dos Átomos necessários (AT_HEADING, AT_PARAGRAPH, AT_BUTTON), garantindo que a IA carregue os estilos deles antes de montar a Molécula.
@@ -43,11 +59,6 @@ Utilizei uma mistura de `Fontmatter (YALM)` com `markdown` para melhorar a preci
 - **extends**: Indica que este arquivo herda regras globais de outro documento (MOL_RULES), evitando repetição de código.
 - **type**/**role**: Definem a categoria arquitetural (MOLECULE) e a função semântica no HTML (div).
 - **id**: O identificador único e absoluto usado pelas LLMs para localizar este componente na base de dados.
-
-### Prompts
-
-![Spec Driven - Atomic Design](/readme/spec-driven-atomic-design.png)
-
 - **global_rules.md**: Contém as regras, diretrizes e lógica imutável que todo o `projeto` deve seguir para garantir que a IA não viole padrôes.
 - **design_tokens.md**: Armazeta todos os tokens (cores, espaçamentos) para garantir o pixel-perfect, fornecendo so valores exatos que os componentes devem consumir.
 - **atomic_design_rules.md**: Armazena todas as regras, diretrizes e lógica imutável que todos os `componentes` devem seguir.
@@ -57,6 +68,26 @@ Utilizei uma mistura de `Fontmatter (YALM)` com `markdown` para melhorar a preci
 - **card.md**: Definição do componente 'card'. ele instancia os átomos e define o layout injetando o conteudo.
 
 > O sistema funciona em cascata: os `Global Rules` dão os valores imutáveis, as `Rules` dão o comportamento, os `Atoms` são nossas peças isoladas e as `Molecules` são o manual de montagem que une tudo isso com precisão milimétrica através de `JSON` e `metadados`."
+
+## Passo a Passo Usado
+
+Em todas as tentativas utilizei o seguinte passo a passo:
+
+- Acessei a ferramenta de IA (Google Stitches, v0 etc...).
+- Anexei na sessão do chat todos os arquivos markdown para servir de contexto.
+- Solicitei para que seja gerado a molecula com id: `MOL_CARD` -> `card`.
+
+> A LLM analisou todo o contexto e especificaçôes do prompt e gerou exatamente o que eu precisava.
+
+## Resultados
+
+### Google Stitches
+
+### V0
+
+### Lovable
+
+### Figma Make
 
 ## Principais Aprendizados
 
