@@ -1,13 +1,14 @@
 ---
+dependencies: []
 created_at: "18-02-2026:10:00"
 updated_at: "18-02-2026:12:30"
 file_name: heading.md
 variants: ["h1", "h2", "h3", "h4", "h5", "h6"]
 version: "1.0"
-extends: ["ATOMIC_DESIGN_RULES"]
+extends: ["ATOMIC_DESIGN_RULES_ID"]
 type: "ATOM"
 role: "heading"
-id: "AT_HEADING"
+id: "AT_HEADING_ID"
 ---
 
 # 1. Diretrizes de Uso

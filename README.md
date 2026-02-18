@@ -8,7 +8,7 @@ Tive a oportunidade de ver a evolução de muitas ferramentas e tecnologias fron
 
 Vivemos um momento onde a inteligencia artificial está cada vez mais evoluindo e ganhando espaço na automação de `tarefas repetitivas`, e já está se tornando uma realidade em diversos cenários específicos.
 
-Neste contexto, iniciei meus estudos no uso da inteligencia artificial para começar a automatizar meus trabalhos e tarefas repetitivas através de prompts de IA, testei as ferramentas (Google Stitches, Figma Make, V0, Lovable), apliquei padrôes de projetos frontend como `atomic design` e outras técnicas estratégicas com o objetivo de guiar a inteligência artificial a gerar a interface `pixel-perfect`.
+Neste contexto, iniciei meus estudos no uso da inteligencia artificial para começar a automatizar meus trabalhos e tarefas repetitivas através de prompts de IA, testei as ferramentas (Google Stitch, Figma Make, V0, Lovable), apliquei padrôes de projetos frontend como `atomic design` e outras técnicas estratégicas com o objetivo de guiar a inteligência artificial a gerar a interface `pixel-perfect`.
 
 **Neste post você verá:**
 
@@ -19,7 +19,7 @@ Neste contexto, iniciei meus estudos no uso da inteligencia artificial para come
 - [Prompts](#prompts)
 - [Passo a passo usado](#passo-a-passo-usado)
 - [Resultados](#resultados)
-   - [Google Stitches](#google-stitches)
+   - [Google Stitch](#google-stitch)
    - [V0](#v0)
    - [Lovable](#lovable)
    - [Figma Make](#figma-make)
@@ -73,7 +73,7 @@ Utilizei uma mistura de `Fontmatter(YALM)` com `markdown` para melhorar a precis
 
 Em todas as tentativas utilizei o seguinte passo a passo:
 
-- Acessei a ferramenta de IA (Google Stitches, v0 etc...).
+- Acessei a ferramenta de IA (Google Stitch, v0 etc...).
 - Anexei na sessão do chat todos os arquivos markdown para servir de contexto.
 - Solicitei para que seja gerado a molecula com id: `MOL_CARD` -> `card`.
 
@@ -81,7 +81,7 @@ Em todas as tentativas utilizei o seguinte passo a passo:
 
 ## Resultados
 
-### Google Stitches
+### Google Stitch
 
 ### V0
 
@@ -100,6 +100,6 @@ Em todas as tentativas utilizei o seguinte passo a passo:
 
 ## Pontos Negativos
 
-- **Google Stitches**: O `Google Stitches`, gerou muito bem as interfaces no primeiro prompt, mas com o tempo e iteração, ele começou a se perder e alucinar, me retornando interfaces (design) totalmente aleatórias.
+- **Google Stitch**: O `Google Stitch`, gerou muito bem as interfaces no primeiro prompt, mas com o tempo e iteração, ele começou a se perder e alucinar, me retornando interfaces (design) totalmente aleatórias.
 
 ## Conclusão

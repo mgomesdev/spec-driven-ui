@@ -1,4 +1,5 @@
 ---
+dependencies: []
 created_at: "18-02-2026:10:00"
 updated_at: "18-02-2026:12:30"
 file_name: global_rules.md

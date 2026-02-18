@@ -1,14 +1,14 @@
 ---
+dependencies: ["AT_HEADING_ID", "AT_PARAGRAPH_ID", "AT_BUTTON_ID"]
 created_at: "18-02-2026:10:00"
 updated_at: "18-02-2026:12:30"
-dependencies: ["AT_HEADING", "AT_PARAGRAPH", "AT_BUTTON"]
 file_name: card.md
 variants: []
 version: "1.0"
 extends: ["MOL_RULES"]
 type: "MOLECULE"
 role: "div"
-id: "MOL_CARD"
+id: "MOL_CARD_ID"
 ---
 
 # 1. Diretrizes de Uso
@@ -46,17 +46,17 @@ id: "MOL_CARD"
 {
   "children": [
     {
-      "atom_id": "AT_HEADING",
+      "atom_id": "AT_HEADING_ID",
       "props": { "label": "Card Pixel-Perfect" }
     },
     {
-      "atom_id": "AT_PARAGRAPH",
+      "atom_id": "AT_PARAGRAPH_ID",
       "props": {
         "label": "Este Card foi gerado através de prompt com técnicas RAG e estratégias avançadas, Atomic Design, Orientação a Objetos e Arquitetura."
       }
     },
     {
-      "atom_id": "AT_BUTTON",
+      "atom_id": "AT_BUTTON_ID",
       "props": { "label": "Gostou ?" }
     }
   ]
