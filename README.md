@@ -31,7 +31,7 @@ Neste contexto, iniciei meus estudos no uso da inteligencia artificial para come
 
 ![Card](/readme/card.png)
 
-> Utilizei um `card` simples que usa toda a estrutura para testar o processo de forma simples e escalavel para testes maiores.
+> Utilizei o design no figma desse `card` simples que usa toda a estrutura para testar o processo de forma simples e escalavel para testes maiores.
 
 ## RAG
 
