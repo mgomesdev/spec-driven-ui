@@ -86,11 +86,15 @@ Em todas as tentativas utilizei o seguinte passo a passo:
 
 > Gerado com Gemini 3.0
 
+---
+
 ### V0
 
 ![V0](/readme/v0.png)
 
 > Gerado com v0 Max, o v0 não conseguiu baixar a fonte correta, mas ficou pixel-perfect.
+
+---
 
 ### Lovable
 
@@ -111,4 +115,8 @@ Em todas as tentativas utilizei o seguinte passo a passo:
 
 ## Conclusão
 
-As ferramentas de geração de código apresentaram resultados mais precisos ao longo do tempo, e as ferramentas de geração de design, inicialmente geram resultados muito bons, mas conforme usamos por muito tempo, a IA começa a alucinar e guiar designs que não foi solicitado.
+As ferramentas de geração de código apresentaram resultados mais precisos ao longo do tempo do que as ferramentas de geração de design.
+
+As ferramentas de geração de design inicialmente geram resultados muito bons, mas conforme avançamos e customizados ao longo do tempo, a IA começa a alucinar e guiar designs que não foi solicitado.
+
+Esse pequeno teste prova e torna possível gerar unificar a geração de interfaces tanto no UX, quanto no código, e muda completamente a forma de trabalhar, o UX e o Frontend ficam cada vez mais sincronizados, e as interfaces ficam cada vez mais precisas e coesas.
