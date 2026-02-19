@@ -8,7 +8,7 @@ Tive a oportunidade de ver a evolução de muitas ferramentas e tecnologias fron
 
 Vivemos um momento onde a inteligencia artificial está cada vez mais evoluindo e ganhando espaço na automação de `tarefas repetitivas`, e já está se tornando uma realidade em diversos cenários específicos.
 
-Neste contexto, iniciei meus estudos no uso da inteligencia artificial para começar a automatizar meus trabalhos e tarefas repetitivas através de prompts de IA, testei as ferramentas (Google Stitch, V0, Lovable), apliquei padrôes de projetos, a metodologia `atomic design` e outras técnicas estratégicas com o objetivo de guiar a inteligência artificial a gerar a interface `pixel-perfect`.
+Neste contexto, iniciei meus estudos no uso da inteligencia artificial para começar a automatizar meus trabalhos e tarefas repetitivas através de prompts de IA, testei as ferramentas ([Google Stitch](https://stitch.withgoogle.com/), [V0](https://v0.app/), [Lovable](https://lovable.dev/)), apliquei padrôes de projetos, a metodologia `atomic design` e outras técnicas estratégicas com o objetivo de guiar a inteligência artificial a gerar a interface `pixel-perfect`.
 
 **Neste post você verá:**
 
@@ -75,7 +75,7 @@ Utilizei uma mistura de `Frontmatter(YALM)` com `markdown` para melhorar a preci
 
 Em todas as tentativas utilizei o seguinte passo a passo:
 
-- Acessei a ferramenta de IA (Google Stitch, v0 etc...).
+- Acessei a ferramenta de IA ([Google Stitch](https://stitch.withgoogle.com/), [v0](https://v0.app/) etc...).
 - Anexei na sessão do chat todos os arquivos markdown para servir de contexto.
 - Solicitei para que seja gerado a molecula referenciando o id unico, ex: `MOL_CARD_ID`-> `card`.
 
@@ -113,7 +113,7 @@ Em todas as tentativas utilizei o seguinte passo a passo:
 
 ### Pontos Negativos
 
-- **Google Stitch**: O `Google Stitch`, gerou muito bem as primeiras interfaces, mas com o tempo e uso no longo prazo, ele começou a se perder e alucinar, me retornando interfaces (design) totalmente aleatórias.
+- **Google Stitch**: O [`Google Stitch`](https://stitch.withgoogle.com/), gerou muito bem as primeiras interfaces, mas com o tempo e uso no longo prazo, ele começou a se perder e alucinar, me retornando interfaces (design) totalmente aleatórias.
 
 ## Conclusão
 
