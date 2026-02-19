@@ -13,10 +13,11 @@ Neste contexto, iniciei meus estudos no uso da inteligencia artificial para come
 **Neste post você verá:**
 
 - [Projeto de Exemplo](#projeto-de-exemplo)
-- [RAG (Retrieval Augmented Generation)](#rag)
-- [Atomic Design](#atomic-design)
-- [Arquitetura de Software](#arquitetura-de-software)
-- [Prompts](#prompts)
+- [Tecnicas Usadas](#tecnicas-usadas)
+   - [RAG (Retrieval Augmented Generation)](#rag)
+   - [Atomic Design](#atomic-design)
+   - [Arquitetura de Software](#arquitetura-de-software)
+   - [Prompts](#prompts)
 - [Passo a passo usado](#passo-a-passo-usado)
 - [Resultados](#resultados)
    - [Google Stitch](#google-stitch)
@@ -33,15 +34,17 @@ Neste contexto, iniciei meus estudos no uso da inteligencia artificial para come
 
 > Utilizei o design no figma desse `card` simples que usa toda a estrutura para testar o processo de forma simples e escalavel para testes maiores.
 
-## RAG
+## Tecnicas Usadas
+
+### RAG
 
 > O `RAG (Retrieval-Augmented Generation) ou Geração Aumentada por Recuperação`, é uma técnica que melhora a precisão da saída das LLMS, permitindo limitemos o contexto da IA para que ela consulte apenas fontes e dados específicos que precisamos, ou seja, apenas os dados do projeto.
 
-## Atomic Design
+### Atomic Design
 
 > Utilizei a metodologia `atomic design` para criar especificações de componentes abstratos e precisos para os testes.
 
-## Arquitetura de Software
+### Arquitetura de Software
 
 > Utilizei fundamentos de orientação a objetos e diagramas UML para o planejamento estratégico e exemplos.
 
@@ -105,18 +108,20 @@ Em todas as tentativas utilizei o seguinte passo a passo:
 ### Pontos Positivos
 
 - **frontmatter**: Juntar cabeçalhos `YAML` no `markdown` funcionou muito bem, a IA consegue referenciar com precisão os arquivos.
-- **formato de dados**: em meus testes, a IA gerou saídas mais precisas quando segui a seguinte estrutura de declaração de diretrizes nos prompts:
-   - **JSON**: o formato `JSON` apresentou resultados excelentes em especificação de `implementação` de componentes, a IA segue de forma literal a estrutura do `JSON` tornando pixel-perfect.
-   - **Metadata**: O formato `**metadata**: <value>`, funcionou melhor para especificação de comportamentos do componente. Quando usado em especificações de implementação a IA começou a alucinar e gerar errado.
+- **JSON**: o formato `JSON` apresentou resultados excelentes em especificação de `implementação` de componentes, a IA segue de forma literal a estrutura do `JSON` tornando pixel-perfect.
+- **Metadata**: O formato `**metadata**: <value>`, funcionou melhor para especificação de comportamentos do componente. Quando usado em especificações de implementação a IA começou a alucinar e gerar errado.
 
-## Pontos Negativos
+### Pontos Negativos
 
-- **Google Stitch**: O `Google Stitch`, gerou muito bem as interfaces no primeiro prompt, mas com o tempo e iteração, ele começou a se perder e alucinar, me retornando interfaces (design) totalmente aleatórias.
+- **Google Stitch**: O `Google Stitch`, gerou muito bem as primeiras interfaces, mas com o tempo e uso no longo prazo, ele começou a se perder e alucinar, me retornando interfaces (design) totalmente aleatórias.
 
 ## Conclusão
 
-As ferramentas de geração de código apresentaram resultados mais precisos ao longo do tempo do que as ferramentas de geração de design.
+- As ferramentas de geração de código apresentaram resultados mais precisos ao longo do tempo e uso do que as ferramentas de geração de design.
+- As ferramentas de geração de design inicialmente geram resultados muito bons, mas conforme avançamos e customizados ao longo do tempo, a IA começa a alucinar e guiar designs que não foi solicitado.
 
-As ferramentas de geração de design inicialmente geram resultados muito bons, mas conforme avançamos e customizados ao longo do tempo, a IA começa a alucinar e guiar designs que não foi solicitado.
+Esse pequeno teste prova e torna possível automatizar a geração de interfaces tanto no Design, quanto no código, de forma precisa e coesa. Tornando possível a criação de um fluxo sincronizado, entre design (ux) e código (dev) reutilizando o mesmo prompt como base.
 
-Esse pequeno teste prova e torna possível gerar unificar a geração de interfaces tanto no UX, quanto no código, e muda completamente a forma de trabalhar, o UX e o Frontend ficam cada vez mais sincronizados, e as interfaces ficam cada vez mais precisas e coesas.
+Nos próximos posts irei testar em cenários mais complexos e projetos maiores, adicionando cada vez mais ferramentas que eu for descobrindo no processo.
+
+Espero que este post tenha te dado algum insight, Até mais!
