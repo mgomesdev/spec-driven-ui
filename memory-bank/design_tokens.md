@@ -12,8 +12,6 @@ id: "TOKENS_GLOBAL_ID"
 
 - **Geral**: verifique se o atributo 'extends' possui algo para ser herdado e caso possua, busque e importe todas as regras e definições especificadas em cada arquivo.
 
----
-
 # 2. Color Tokens
 
 Cores fundamentais para serem usadas sempre que encontrar referências em componentes.
@@ -24,11 +22,10 @@ Cores fundamentais para serem usadas sempre que encontrar referências em compon
   "deep_blue": "#9DB4B9",
   "cyan": "#13C8EC",
   "black": "#101F22",
-  "deep_black": #0A1315,
-  "gray": #1E2F32
-}```
-
----
+  "deep_black": "#0A1315",
+  "gray": "#1E2F32"
+}
+```
 
 # 3. Shape & Spacing Tokens
 
@@ -38,21 +35,19 @@ Regras de geometria e respiro do layout.
 {
  "$radius_quark": "4px",
  "$spacing_nano": "8px",
- "$spacing_xxs: "18px",
+ "$spacing_xxs": "18px",
  "$size_full": "100%",
  "$size_md": "40px"
-}```
-
----
+}
+```
 
 # 4. Opacity
 
 ```json
 {
   "$opacity_50": "50%"
-}```
-
----
+}
+```
 
 # 5. Fonts
 
@@ -60,5 +55,6 @@ Regras de geometria e respiro do layout.
 {
  "font_arial": "Space Grotesk",
  "font_sm": "12px",
- "font_md: "18px"
-}```
+ "font_md": "18px"
+}
+```

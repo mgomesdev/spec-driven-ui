@@ -15,11 +15,10 @@ id: "AT_PARAGRAPH_ID"
 
 - **Geral**: verifique se o atributo 'extends' possui algo para ser herdado e caso possua, busque e importe todas as regras e definições especificadas em cada arquivo.
 
----
-
 # 2. Especificações Técnicas
 
 ## Default Specs
+
 ```json
 {
     "color": "$deep_blue",

@@ -15,8 +15,6 @@ id: "MOL_CARD_ID"
 
 - **Geral**: verifique se o atributo 'extends' possui algo para ser herdado e caso possua, busque e importe todas as regras e definições especificadas em cada arquivo.
 
----
-
 # 2. Composição
 
 - **Comportamento**: Siga a hierarquia definida no bloco JSON de Molecule Specs.
@@ -31,15 +29,14 @@ id: "MOL_CARD_ID"
   "height": "auto",
   "display": "flex",
   "flex-direction": "column",
-  "gap": $spacing_nano,
-  "background-color": $deep_black,
-  "opacity": $opacity_50,
-  "border-radius": $radius_quark,
+  "gap": "$spacing_nano",
+  "background-color": "$deep_black",
+  "opacity": "$opacity_50",
+  "border-radius": "$radius_quark",
   "border": "2px solid $gray",
-  "padding": $spacing_nano
-}```
-
----
+  "padding": "$spacing_nano"
+}
+```
 
 # 3. Definição de Conteúdo
 ```json
