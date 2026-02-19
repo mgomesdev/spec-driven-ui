@@ -1,4 +1,4 @@
-> Neste feriadão de carnaval, continuei meus estudos e tentativas iniciais para automatizar a geração de interfaces de sites pixel-perfect com IA. Utilizei alguns design patterns e técnicas avançadas em minhas tentativas, e neste post irei mostrar os principais aprendizados, desafios e insights que obtive nesses meus primeiros estudos.
+> Neste feriadão de carnaval, continuei meus estudos e tentativas iniciais para automatizar a geração de interfaces de sites pixel-perfect com IA. Utilizei alguns design patterns e técnicas avançadas em minhas tentativas, e neste post mostro os principais aprendizados, desafios e insights que obtive nesses meus primeiros estudos.
 
 ## Visão Geral
 
@@ -8,7 +8,7 @@ Tive a oportunidade de ver a evolução de muitas ferramentas e tecnologias fron
 
 Vivemos um momento onde a inteligencia artificial está cada vez mais evoluindo e ganhando espaço na automação de `tarefas repetitivas`, e já está se tornando uma realidade em diversos cenários específicos.
 
-Neste contexto, iniciei meus estudos no uso da inteligencia artificial para começar a automatizar meus trabalhos e tarefas repetitivas através de prompts de IA, testei as ferramentas (Google Stitch, V0, Lovable), apliquei padrôes de projetos frontend como `atomic design` e outras técnicas estratégicas com o objetivo de guiar a inteligência artificial a gerar a interface `pixel-perfect`.
+Neste contexto, iniciei meus estudos no uso da inteligencia artificial para começar a automatizar meus trabalhos e tarefas repetitivas através de prompts de IA, testei as ferramentas (Google Stitch, V0, Lovable), apliquei padrôes de projetos, a metodologia `atomic design` e outras técnicas estratégicas com o objetivo de guiar a inteligência artificial a gerar a interface `pixel-perfect`.
 
 **Neste post você verá:**
 
@@ -50,9 +50,9 @@ Neste contexto, iniciei meus estudos no uso da inteligencia artificial para come
 
 ### Prompts
 
-Utilizei uma mistura de `Fontmatter(YALM)` com `markdown` para melhorar a precisão da saída da LLM e separar as responsabilidades nos arquivos, e ficou da seguinte maneira:
+Utilizei uma mistura de `Frontmatter(YALM)` com `markdown` para melhorar a precisão da saída da LLM e separar as responsabilidades nos arquivos, e ficou da seguinte maneira:
 
-![Spec Driven - Atomic Design](/readme/spec-driven-atomic-design.png)
+![Spec Driven - Atomic Design](/readme/spec-driven-atomic-design.jpg)
 
 - **created_at**/**updated_at**: Registram o ciclo de vida do arquivo, permitindo que a IA priorize as versões mais recentes em caso de duplicidade.
 - **dependencies**: Lista os IDs dos Átomos necessários (AT_HEADING, AT_PARAGRAPH, AT_BUTTON), garantindo que a IA carregue os estilos deles antes de montar a Molécula.
@@ -69,7 +69,7 @@ Utilizei uma mistura de `Fontmatter(YALM)` com `markdown` para melhorar a precis
 - **paragraph.md**: Definição do atomo abstrato 'paragraph', ele não sabe onde será usado, apenas como deve ser e se comportar individualmente.
 - **card.md**: Definição do componente 'card'. ele instancia os átomos e define o layout injetando o conteudo.
 
-> O sistema funciona em cascata: os `Global Rules` dão os valores imutáveis, as `Rules` dão o comportamento, os `Atoms` são nossas peças isoladas e as `Molecules` são o manual de montagem que une tudo isso com precisão milimétrica através de `JSON` e `metadados`."
+> O sistema funciona em cascata: os `Global Rules` dão os valores imutáveis, as `Rules` dão o comportamento, os `Atoms` são nossas peças isoladas e as `Molecules` são o manual de montagem que une tudo isso com precisão milimétrica através de `JSON` e `metadados`.
 
 ## Passo a Passo Usado
 
@@ -118,7 +118,7 @@ Em todas as tentativas utilizei o seguinte passo a passo:
 ## Conclusão
 
 - As ferramentas de geração de código apresentaram resultados mais precisos ao longo do tempo e uso do que as ferramentas de geração de design.
-- As ferramentas de geração de design inicialmente geram resultados muito bons, mas conforme avançamos e customizados ao longo do tempo, a IA começa a alucinar e guiar designs que não foi solicitado.
+- As ferramentas de geração de design inicialmente geram resultados muito bons, mas conforme avançamos e customizamos ao longo do tempo, a IA começa a alucinar e guiar designs que não foi solicitado.
 
 Esse pequeno teste prova e torna possível automatizar a geração de interfaces tanto no Design, quanto no código, de forma precisa e coesa. Tornando possível a criação de um fluxo sincronizado, entre design (ux) e código (dev) reutilizando o mesmo prompt como base.
 
