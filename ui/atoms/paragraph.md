@@ -20,6 +20,9 @@ id: "AT_PARAGRAPH_ID"
 # 2. Especificações Técnicas
 
 ## Default Specs
-
-- **color**: $deep_blue
-- **font-size**: $font_sm
+```json
+{
+    "color": "$deep_blue",
+    "font-size": "$font_sm"
+}
+```

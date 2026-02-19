@@ -1,4 +1,4 @@
-> Neste feriadão de carnaval, continuei meus estudos e tentativas iniciais para automatizar a geração de interfaces de sites pixel-perfect com IA. Utilizei alguns design patterns e técnicas avançadas em minhas tentativas, e neste post mostro os principais aprendizados, desafios e insights que obtive nesses meus primeiros estudos.
+> Neste feriadão de carnaval, continuei meus estudos e tentativas iniciais para automatizar a geração de interfaces de sites pixel-perfect com IA. Utilizei alguns design patterns e técnicas avançadas em minhas tentativas, e os resultados foram promissores. Neste post mostro os principais aprendizados, desafios e insights que obtive nesses meus primeiros estudos.
 
 ## Visão Geral
 
@@ -71,7 +71,7 @@ Utilizei uma mistura de `Frontmatter(YALM)` com `markdown` para melhorar a preci
 
 > O sistema funciona em cascata: os `Global Rules` dão os valores imutáveis, as `Rules` dão o comportamento, os `Atoms` são nossas peças isoladas e as `Molecules` são o manual de montagem que une tudo isso com precisão milimétrica através de `JSON` e `metadados`.
 
-## Passo a Passo Usado
+## Passo a Passo Usados
 
 Em todas as tentativas utilizei o seguinte passo a passo:
 

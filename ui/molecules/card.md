@@ -25,7 +25,7 @@ id: "MOL_CARD_ID"
 
 ## Molecule Specs
 
-````json
+```json
 {
   "width": "352px",
   "height": "auto",
@@ -61,4 +61,4 @@ id: "MOL_CARD_ID"
     }
   ]
 }
-````
+```

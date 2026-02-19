@@ -18,7 +18,7 @@ id: "TOKENS_GLOBAL_ID"
 
 Cores fundamentais para serem usadas sempre que encontrar referências em componentes.
 
-````json
+```json
 {
   "white": "#FFFFFF",
   "deep_blue": "#9DB4B9",
@@ -62,4 +62,3 @@ Regras de geometria e respiro do layout.
  "font_sm": "12px",
  "font_md: "18px"
 }```
-````

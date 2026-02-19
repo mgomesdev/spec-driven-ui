@@ -21,5 +21,8 @@ id: "AT_HEADING_ID"
 
 ## Default Specs
 
-- **color**: $white
-- **font-size**: $font_md
+```json
+{
+ "color": "$white",
+ "font-size": "$font_md"
+}```

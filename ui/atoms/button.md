@@ -22,16 +22,17 @@ id: "AT_BUTTON_ID"
 
 ## Default Specs
 
-````json
+```json
 {
-  "width": "$size_full",
+"width": "$size_full",
   "height": "$size_md",
-  "border-radius": "$radius_quark",
+"border-radius": "$radius_quark",
   "background-color": "$cyan",
-  "color": "$black"
+"color": "$black"
 }```
 
 ## Variant Secondary Specs
+
 ```json
 {
   "background-color": "$gray",
@@ -52,4 +53,3 @@ id: "AT_BUTTON_ID"
 - **role**: button.
 - **keyboard**: deve ser ativável via as teclas Enter e Space.
 - **contrast**: o contraste entre o label/ícone e o background-color deve seguir a norma WCAG AA (mínimo 4.5:1).
-````
