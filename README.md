@@ -8,7 +8,7 @@ Tive a oportunidade de ver a evolução de muitas ferramentas e tecnologias fron
 
 Vivemos um momento onde a inteligencia artificial está cada vez mais evoluindo e ganhando espaço na automação de `tarefas repetitivas`, e já está se tornando uma realidade em diversos cenários específicos.
 
-Neste contexto, iniciei meus estudos no uso da inteligencia artificial para começar a automatizar meus trabalhos e tarefas repetitivas através de prompts de IA, testei as ferramentas ([Google Stitch](https://stitch.withgoogle.com/), [V0](https://v0.app/), [Lovable](https://lovable.dev/)), apliquei padrôes de projetos, a metodologia `atomic design` e outras técnicas estratégicas com o objetivo de guiar a inteligência artificial a gerar a interface `pixel-perfect`.
+Neste contexto, iniciei meus estudos no uso da inteligencia artificial para começar a automatizar meus trabalhos e tarefas repetitivas através de prompts de IA, testei as ferramentas ([Google Stitch](https://stitch.withgoogle.com/), [V0](https://v0.app/), [Lovable](https://lovable.dev/)), apliquei padrôes de projetos, a metodologia [`atomic design`](https://atomicdesign.bradfrost.com/) e outras técnicas estratégicas com o objetivo de guiar a inteligência artificial a gerar a interface `pixel-perfect`.
 
 **Neste post você verá:**
 
@@ -38,11 +38,11 @@ Neste contexto, iniciei meus estudos no uso da inteligencia artificial para come
 
 ### RAG
 
-> O `RAG (Retrieval-Augmented Generation) ou Geração Aumentada por Recuperação`, é uma técnica que melhora a precisão da saída das LLMS, permitindo limitemos o contexto da IA para que ela consulte apenas fontes e dados específicos que precisamos, ou seja, apenas os dados do projeto.
+> O [`RAG (Retrieval-Augmented Generation) ou Geração Aumentada por Recuperação`](https://cloud.google.com/use-cases/retrieval-augmented-generation?hl=pt-BR), é uma técnica que melhora a precisão da saída das LLMS, permitindo limitemos o contexto da IA para que ela consulte apenas fontes e dados específicos que precisamos, ou seja, apenas os dados do projeto.
 
 ### Atomic Design
 
-> Utilizei a metodologia `atomic design` para criar especificações de componentes abstratos e precisos para os testes.
+> Utilizei a metodologia [`atomic design`](https://atomicdesign.bradfrost.com/) para criar especificações de componentes abstratos e precisos para os testes.
 
 ### Arquitetura de Software
 
@@ -50,7 +50,7 @@ Neste contexto, iniciei meus estudos no uso da inteligencia artificial para come
 
 ### Prompts
 
-Utilizei uma mistura de `Frontmatter(YALM)` com `markdown` para melhorar a precisão da saída da LLM e separar as responsabilidades nos arquivos, e ficou da seguinte maneira:
+Utilizei uma mistura de [`Frontmatter(YALM)`](https://docs.github.com/pt/contributing/writing-for-github-docs/using-yaml-frontmatter) com [`markdown`](https://www.markdownguide.org/) para melhorar a precisão da saída da LLM e separar as responsabilidades nos arquivos, e ficou da seguinte maneira:
 
 ![Spec Driven - Atomic Design](/readme/spec-driven-atomic-design.jpg)
 
@@ -76,7 +76,7 @@ Utilizei uma mistura de `Frontmatter(YALM)` com `markdown` para melhorar a preci
 Em todas as tentativas utilizei o seguinte passo a passo:
 
 - Acessei a ferramenta de IA ([Google Stitch](https://stitch.withgoogle.com/), [v0](https://v0.app/) etc...).
-- Anexei na sessão do chat todos os arquivos markdown para servir de contexto.
+- Anexei na sessão do chat todos os arquivos [markdown](https://www.markdownguide.org/) para servir de contexto.
 - Solicitei para que seja gerado a molecula referenciando o id unico, ex: `MOL_CARD_ID`-> `card`.
 
 > A LLM analisou todo o contexto e especificaçôes do prompt e gerou exatamente o que eu precisava.
@@ -107,7 +107,7 @@ Em todas as tentativas utilizei o seguinte passo a passo:
 
 ### Pontos Positivos
 
-- **frontmatter**: Juntar cabeçalhos `YAML` no `markdown` funcionou muito bem, a IA consegue referenciar com precisão os arquivos.
+- **frontmatter**: Juntar cabeçalhos `YAML` no [`markdown`](https://www.markdownguide.org/) funcionou muito bem, a IA consegue referenciar com precisão os arquivos.
 - **JSON**: o formato `JSON` apresentou resultados excelentes em especificação de `implementação` de componentes, a IA segue de forma literal a estrutura do `JSON` tornando pixel-perfect.
 - **Metadata**: O formato `**metadata**: <value>`, funcionou melhor para especificação de comportamentos do componente. Quando usado em especificações de implementação a IA começou a alucinar e gerar errado.
 
