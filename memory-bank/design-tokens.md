@@ -2,7 +2,7 @@
 dependencies: []
 created_at: "18-02-2026:10:00"
 updated_at: "21-02-2026:08:00"
-file_name: design_tokens.md
+file_name: design-tokens.md
 version: "1.1"
 extends: ["GLOBAL_RULES_ID"]
 id: "DESIGN_TOKENS_ID"
@@ -40,6 +40,7 @@ Regras de geometria e respiro.
 {
   "--radius-md": "6px", // 0.375rem
   "--radius-lg": "8px", // 0.5rem
+  "--radius-full": "100%",
 
   "--spacing-1": "4px",   // 0.25rem 
   "--spacing-2": "8px",   // 0.5rem  
@@ -113,7 +114,10 @@ Pontos de interrupção para design responsivo.
 
 ```json
 {
-  "--w-full": "100%",
-  "--h-12": "48px", // 3rem  
+  "--s-full": "100%",
+  "--s-8": "32px",  // 2rem   
+  "--s-12": "48px", // 3rem  
+  "--s-17": "72px", // 4.5rem
+  "--s-24": "96px", // 6rem 
 }
 ```

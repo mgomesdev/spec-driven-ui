@@ -22,8 +22,8 @@ id: "AT_BUTTON_ID"
 
 ```json
 {
-  "width": "--w-full",
-  "height": "--h-12",
+  "width": "--s-full",
+  "height": "--s-12",
   "border-radius": "--radius-lg",
   "border": "none",
   "background-color": "--color-white",
@@ -44,7 +44,7 @@ id: "AT_BUTTON_ID"
 
 ```json
 {
-  "background-color": "--color-transparent",
+  "background-color": "--color-transparent"
 }
 ```
 

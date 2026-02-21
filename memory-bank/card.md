@@ -5,7 +5,7 @@ updated_at: "18-02-2026:12:30"
 file_name: card.md
 variants: []
 version: "1.0"
-extends: ["MOL_RULES"]
+extends: ["ATOMIC_DESIGN_RULES_ID"]
 type: "MOLECULE"
 role: "div"
 id: "MOL_CARD_ID"
@@ -32,13 +32,13 @@ id: "MOL_CARD_ID"
   "gap": "--spacing-2",
   "background-color": "--color-gray-900",
   "opacity": "--opacity-50",
-  "border-radius": "--raidus-md",
+  "border-radius": "--radius-md",
   "border": "2px solid --color-gray-500",
   "padding": "--spacing-2"
 }
 ```
 
-# 3. Definição de Conteúdo
+# 4. Definição de Conteúdo
 ```json
 {
   "children": [

@@ -2,7 +2,7 @@
 dependencies: []
 created_at: "18-02-2026:10:00"
 updated_at: "18-02-2026:12:30"
-file_name: global_rules.md
+file_name: global-rules.md
 version: "1.0"
 extends: []
 type: "GLOBAL_RULES"
