@@ -52,42 +52,16 @@ E muitas outras descobertas, neste post você verá:
 
 > Utilizei um projeto aleatório que estava perdido no meu `figma` para criação do prompt que gera a interface.
 
-## Tecnicas Usadas
+## Gerando novas telas
 
-### RAG
+![Gerando novas telas](/readme/02-gerando-novas-telas.png)
 
-> O [`RAG (Retrieval-Augmented Generation) ou Geração Aumentada por Recuperação`](https://cloud.google.com/use-cases/retrieval-augmented-generation?hl=pt-BR), é uma técnica que melhora a precisão da saída das LLMS, permitindo limitemos o contexto da IA para que ela consulte apenas fontes e dados específicos que precisamos, ou seja, apenas os dados do projeto.
+> Neste exemplo foi gerada duas novas seções (timeline, habilidades), a IA utilizou os elementos atomicos e usou a 'criatividade' para gerar.
 
-### Atomic Design
 
-> Utilizei a metodologia [`atomic design`](https://atomicdesign.bradfrost.com/) para criar especificações de componentes abstratos e precisos para os testes.
-
-### Arquitetura de Software
-
-> Utilizei fundamentos de orientação a objetos e diagramas UML para o planejamento estratégico e exemplos.
-
-### Prompts
-
-Utilizei uma mistura de [`Frontmatter(YALM)`](https://docs.github.com/pt/contributing/writing-for-github-docs/using-yaml-frontmatter) com [`markdown`](https://www.markdownguide.org/) para melhorar a precisão da saída da LLM e separar as responsabilidades nos arquivos, e ficou da seguinte maneira:
+## Arvore de Elementos Atomicos Atualizada
 
 ![Spec Driven - Atomic Design](/readme/02-spec-driven-atomic-design.jpg)
-
-- **created_at**/**updated_at**: Registram o ciclo de vida do arquivo, permitindo que a IA priorize as versões mais recentes em caso de duplicidade.
-- **dependencies**: Lista os IDs dos Átomos necessários (AT_HEADING, AT_PARAGRAPH, AT_BUTTON), garantindo que a IA carregue os estilos deles antes de montar a Molécula.
-- **file_name**/**version**: Identificam o nome físico do arquivo e o controle de versão para manutenção do Design System.
-- **variants**: Espaço reservado para listar variações da molécula (ex: dark, light, outline).
-- **extends**: Indica que este arquivo herda regras globais de outro documento (MOL_RULES), evitando repetição de código.
-- **type**/**role**: Definem a categoria arquitetural (MOLECULE) e a função semântica no HTML (div).
-- **id**: O identificador único e absoluto usado pelas LLMs para localizar este componente na base de dados.
-- **global_rules.md**: Contém as regras, diretrizes e lógica imutável que todo o `projeto` deve seguir para garantir que a IA não viole padrôes.
-- **design_tokens.md**: Armazeta todos os tokens (cores, espaçamentos) para garantir o pixel-perfect, fornecendo so valores exatos que os componentes devem consumir.
-- **atomic_design_rules.md**: Armazena todas as regras, diretrizes e lógica imutável que todos os `componentes` devem seguir.
-- **button.md**: Definição do atomo abstrato 'button', ele não sabe onde será usado, apenas como deve ser e se comportar individualmente.
-- **heading.md**: Definição do atomo abstrato 'heading', ele não sabe onde será usado, apenas como deve ser e se comportar individualmente.
-- **paragraph.md**: Definição do atomo abstrato 'paragraph', ele não sabe onde será usado, apenas como deve ser e se comportar individualmente.
-- **card.md**: Definição do componente 'card'. ele instancia os átomos e define o layout injetando o conteudo.
-
-> O sistema funciona em cascata: os `Global Rules` dão os valores imutáveis, as `Rules` dão o comportamento, os `Atoms` são nossas peças isoladas e as `Molecules` são o manual de montagem que une tudo isso com precisão milimétrica através de `JSON` e `metadados`.
 
 ## Passo a Passo Usados
 
