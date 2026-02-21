@@ -25,7 +25,7 @@ id: "ORG_FOOTER_ID"
 
 ```json
 {
-  "className": "w-full h-24 flex justify-between items-center bg-gray-900 px-4"
+  "className": "w-full flex justify-between items-center bg-gray-900 p-4"
 }
 ```
 

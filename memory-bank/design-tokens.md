@@ -14,3 +14,7 @@ id: "DESIGN_TOKENS_ID"
 - **Priorizar os tokens**: Este arquivo é a "Single Source of Truth" para a geração de telas. Ferramentas de design (como Google Stitch) devem priorizar os tokens abaixo em vez de valores hex ou pixel fixos.
 - **Theme Variables**: As o Tailwind CSS v4 e as convenções de chaves. Ao identificar um valor em pixel no design, utilize a variável CSS correspondente ou a utilidade padrão do Tailwind (ex: 16px -> `--spacing-4`).
 
+# 2. Fonts
+
+- **Global Font**: A font geral do sistema deve ser a `Inter`, ou seja, é a que deve estar configurada por padrão.
+

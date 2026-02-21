@@ -25,7 +25,7 @@ id: "ORG_HEADER_ID"
 
 ```json
 {
-  "className": "w-full h-[68px] flex justify-end items-end bg-gray-900 px-5"
+  "className": "w-full h-[80px] flex justify-end items-end bg-gray-900 px-5"
 }
 ```
 

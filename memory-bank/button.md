@@ -22,7 +22,7 @@ id: "AT_BUTTON_ID"
 
 ```json
 {
-  "className": "w-full h-12 rounded-lg border-none bg-white text-gray-500"
+  "className": "w-full h-12 rounded-lg border-none bg-white text-gray-500 whitespace-nowrap"
 }
 ```
 

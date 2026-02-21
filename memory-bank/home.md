@@ -26,7 +26,7 @@ id: "HOME_ID"
 
 ```json
 {
-"className": "w-full flex flex-col bg-gray-900 min-h-screen p-4"
+"className": "w-full flex flex-col bg-gray-900 min-h-screen px-4"
 }
 ```
 
