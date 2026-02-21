@@ -37,6 +37,7 @@ id: "ORG_HEADER_ID"
     {
       "atom_id": "AT_BUTTON_ID",
       "props": { "label": "", "variant": "link" },
+      "className": "w-max",
       "children": {
         "atom_id": "AT_ICON_ID",
         "icon": "sun",

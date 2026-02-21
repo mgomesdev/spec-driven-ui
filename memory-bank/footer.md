@@ -25,7 +25,7 @@ id: "ORG_FOOTER_ID"
 
 ```json
 {
-  "className": "w-full flex justify-between items-center bg-gray-900 p-4"
+  "className": "w-full h-[60px] flex justify-between items-center bg-gray-900 p-4"
 }
 ```
 
@@ -36,7 +36,8 @@ id: "ORG_FOOTER_ID"
   "children": [
       {
       "atom_id": "AT_ICON_ID",
-      "icon": "sun"
+      "icon": "sun",
+      "className": "w-max",
     }
   ]
 }

@@ -22,6 +22,6 @@ id: "AT_ICON_ID"
 
 ```json
 {
-  "className": "w-8 h-8 rounded-full text-white"
+  "className": "size-5 rounded-full text-white"
 }
 ```
