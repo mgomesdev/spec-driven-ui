@@ -23,7 +23,7 @@ Descobri que o Google Stitch, v0, lovable gera as versoes mobile, table e deskto
 
 Describri que posso gerar o design system com 1 prompt. 
 
-Descobri que utilizar um Agente Integrado a IDE ajuda de mais na atualização dos prompts, a produtividade comparado aos primeiros estudos aumentou bastante.
+Descobri que utilizar um Agente Integrado a IDE ajuda de mais na atualização dos prompts, a produtividade comparado aos primeiros estudos aumentou bastante, atualizar metadados dos arquivos .md,, consultas rapidas de classes do tailwind que nao lembrava de cabeça. etc...
 
 Tambem descobri uma maneira de diminuir drasticamente as alucinações de sessôes de longo prazo, e para isso, criei um Prompt Agentico para simplificar o uso e correção dessas alucinações.
 
