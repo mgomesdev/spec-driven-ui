@@ -81,9 +81,9 @@ Em todas as tentativas utilizei o seguinte passo a passo:
 
 > Design System foi gerado com apenas 1 comando.
 
-### Google Stitch
+### Board Google Stitch
 
-![Google Stitch](/readme/google-stich.png)
+![Board Google Stitch](/readme/02-board-google-stitch.png)
 
 > Gerado com Gemini 3.0
 
