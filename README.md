@@ -19,6 +19,8 @@ Descobri que o [Tailwind CSS](https://tailwindcss.com/) funciona muito bem com a
 
 Descobri tambem que fornecendo os elementos atomicos para a IA, podemos utilizar os insights do contexto gigantesco da IA para criar novas telas baseados em insights estratégicos, e isso torna possivel criar muitas coisas apenas 'conversando com a IA', isso libera o Design de se preocupar em clicar, arrastar coisas no board para criar as telas, assim ele como um revisor/aprovador do resultado final. 
 
+Descobri que utilizar um Agente Integrado a IDE ajuda de mais na atualização dos prompts, a produtividade comparado aos primeiros estudos aumentou bastante.
+
 Tambem descobri uma maneira de diminuir drasticamente as alucinações de sessôes de longo prazo, e para isso, criei um Prompt Agentico para simplificar o uso e correção dessas alucinações.
 
 E muitas outras descobertas, neste post você verá:
@@ -42,7 +44,7 @@ E muitas outras descobertas, neste post você verá:
 
 ## Projeto de Exemplo
 
-![Card](/readme/card.png)
+![Home](/readme/02-page.png)
 
 > Utilizei o design no figma desse `card` simples que usa toda a estrutura para testar o processo de forma simples e escalavel para testes maiores.
 
