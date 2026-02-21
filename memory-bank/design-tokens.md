@@ -22,7 +22,7 @@ id: "DESIGN_TOKENS_ID"
 
 Cores fundamentais para serem usadas sempre que encontrar referências em componentes.
 
-````json
+```json
 {
     "--color-primary-500": "#9e77ed",
     "--color-primary-600": "#7f56d9",
@@ -30,4 +30,5 @@ Cores fundamentais para serem usadas sempre que encontrar referências em compon
     "--color-gray-500": "#667085",
     "--color-gray-900": "#101828",
     "--color-gradient-primary": "linear-gradient(90deg, #7f56d9 0%, #9e77ed 100%)"
-}```
+}
+```
