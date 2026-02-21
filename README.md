@@ -70,7 +70,7 @@ E muitas outras descobertas, neste post você verá:
 
 Utilizei uma mistura de [`Frontmatter(YALM)`](https://docs.github.com/pt/contributing/writing-for-github-docs/using-yaml-frontmatter) com [`markdown`](https://www.markdownguide.org/) para melhorar a precisão da saída da LLM e separar as responsabilidades nos arquivos, e ficou da seguinte maneira:
 
-![Spec Driven - Atomic Design](/readme/spec-driven-atomic-design.jpg)
+![Spec Driven - Atomic Design](/readme/02-spec-driven-atomic-design.jpg)
 
 - **created_at**/**updated_at**: Registram o ciclo de vida do arquivo, permitindo que a IA priorize as versões mais recentes em caso de duplicidade.
 - **dependencies**: Lista os IDs dos Átomos necessários (AT_HEADING, AT_PARAGRAPH, AT_BUTTON), garantindo que a IA carregue os estilos deles antes de montar a Molécula.
