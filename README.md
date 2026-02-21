@@ -46,7 +46,7 @@ E muitas outras descobertas, neste post você verá:
 
 ![Home](/readme/02-page.png)
 
-> Utilizei o design no figma desse `card` simples que usa toda a estrutura para testar o processo de forma simples e escalavel para testes maiores.
+> Utilizei um projeto aleatório que estava perdido no meu `figma` para criação do prompt que gera a interface.
 
 ## Tecnicas Usadas
 
