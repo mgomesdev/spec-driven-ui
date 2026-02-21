@@ -25,7 +25,7 @@ id: "ORG_HERO_ID"
 
 ```json
 {
-  "className": "w-full min-h-[calc(100vh-140px)] flex flex-col justify-center items-center bg-gray-900 py-16"
+  "className": "w-full min-h-[calc(100vh-140px)] flex flex-col md:justify-center items-center bg-gray-900 py-16"
 }
 ```
 

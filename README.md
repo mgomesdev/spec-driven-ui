@@ -19,6 +19,10 @@ Descobri que o [Tailwind CSS](https://tailwindcss.com/) funciona muito bem com a
 
 Descobri tambem que fornecendo os elementos atomicos para a IA, podemos utilizar os insights do contexto gigantesco da IA para criar novas telas baseados em insights estratégicos, e isso torna possivel criar muitas coisas apenas 'conversando com a IA', isso libera o Design de se preocupar em clicar, arrastar coisas no board para criar as telas, assim ele como um revisor/aprovador do resultado final. 
 
+Descobri que o Google Stitch, v0, lovable gera as versoes mobile, table e desktop automaticamente, aparentemente é padrao quando se usa tailwind como referencia, assim pode-se exportar para o figma as tres versoes.
+
+Describri que posso gerar o design system com 1 prompt. 
+
 Descobri que utilizar um Agente Integrado a IDE ajuda de mais na atualização dos prompts, a produtividade comparado aos primeiros estudos aumentou bastante.
 
 Tambem descobri uma maneira de diminuir drasticamente as alucinações de sessôes de longo prazo, e para isso, criei um Prompt Agentico para simplificar o uso e correção dessas alucinações.
