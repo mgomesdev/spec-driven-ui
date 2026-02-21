@@ -1,7 +1,7 @@
 ---
 dependencies: ["AT_BUTTON_ID", "AT_PARAGRAPH_ID"]
-created_at: "18-02-2026:10:00"
-updated_at: "18-02-2026:12:30"
+created_at: "21-02-2026:15:45"
+updated_at: "21-02-2026:15:45"
 file_name: footer.md
 variants: ["light", "dark"]
 version: "1.0"
@@ -34,6 +34,11 @@ id: "ORG_FOOTER_ID"
 ```json
 {
   "children": [
+      {
+        "atom_id": "AT_PARAGRAPH",
+        "label": "© {{year}} matheusgomesdev.",
+        "className": "text-xs text-white"
+      },
       {
       "atom_id": "AT_ICON_ID",
       "icon": "sun",

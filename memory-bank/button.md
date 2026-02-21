@@ -1,7 +1,7 @@
 ---
 dependencies: []
-created_at: "18-02-2026:10:00"
-updated_at: "18-02-2026:12:30"
+created_at: "21-02-2026:15:45"
+updated_at: "21-02-2026:15:45"
 file_name: "button.md"
 variants: ["default", "primary", "link"]
 version: "1.0"

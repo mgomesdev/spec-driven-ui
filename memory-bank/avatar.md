@@ -14,6 +14,7 @@ id: "AT_AVATAR_ID"
 # 1. Diretrizes de Uso
 
 - **Geral**: verifique se o atributo `extends` possui valores, e caso possua, busque todos os arquivos pelos `_ID` registrados e importe todas as regras e definições especificadas neste arquivo.
+- **Imagens**: para preencher o conteúdo de `img`, use imagens do `https://uifaces.co/`.
 
 # 2. Especificações Técnicas
 

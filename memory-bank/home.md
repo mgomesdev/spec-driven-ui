@@ -1,7 +1,7 @@
 ---
 dependencies: ["ORG_HEADER_ID", "ORG_HERO_ID", "ORG_FOOTER_ID"]
-created_at: "18-02-2026:10:00"
-updated_at: "18-02-2026:12:30"
+created_at: "21-02-2026:15:45"
+updated_at: "21-02-2026:15:45"
 file_name: home.md
 variants: []
 version: "1.0"
@@ -26,7 +26,7 @@ id: "HOME_ID"
 
 ```json
 {
-"className": "w-full flex flex-col bg-gray-900 min-h-screen px-4"
+"className": "w-full max-w-7xl mx-auto flex flex-col bg-gray-900 min-h-screen px-4"
 }
 ```
 

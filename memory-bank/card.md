@@ -1,7 +1,7 @@
 ---
 dependencies: ["AT_HEADING_ID", "AT_PARAGRAPH_ID", "AT_BUTTON_ID"]
-created_at: "18-02-2026:10:00"
-updated_at: "18-02-2026:12:30"
+created_at: "21-02-2026:15:45"
+updated_at: "21-02-2026:15:45"
 file_name: card.md
 variants: []
 version: "1.0"
