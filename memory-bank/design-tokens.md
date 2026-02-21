@@ -25,7 +25,7 @@ Cores fundamentais para serem usadas sempre que encontrar referências em compon
 ````json
 {
     "--color-primary-500": "#9e77ed",
-    "--color-primary-600:" "#7f56d9",
+    "--color-primary-600": "#7f56d9",
     "--color-gray-50": "#f9fafb",
     "--color-gray-500": "#667085",
     "--color-gray-900": "#101828",
