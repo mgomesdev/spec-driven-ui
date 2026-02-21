@@ -13,7 +13,7 @@ id: "MOL_CARD_ID"
 
 # 1. Diretrizes de Uso
 
-- **Geral**: verifique se o atributo 'extends' possui algo para ser herdado e caso possua, busque e importe todas as regras e definições especificadas em cada arquivo.
+- **Geral**: verifique se o atributo `extends` possui valores, e caso possua, busque todos os arquivos pelos `_ID` registrados e importe todas as regras e definições especificadas neste arquivo.
 
 # 2. Composição
 
@@ -29,12 +29,12 @@ id: "MOL_CARD_ID"
   "height": "auto",
   "display": "flex",
   "flex-direction": "column",
-  "gap": "$spacing_nano",
-  "background-color": "$deep_black",
-  "opacity": "$opacity_50",
-  "border-radius": "$radius_quark",
-  "border": "2px solid $gray",
-  "padding": "$spacing_nano"
+  "gap": "--spacing-2",
+  "background-color": "--color-gray-900",
+  "opacity": "--opacity-50",
+  "border-radius": "--raidus-md",
+  "border": "2px solid --color-gray-500",
+  "padding": "--spacing-2"
 }
 ```
 

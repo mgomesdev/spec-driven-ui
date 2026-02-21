@@ -13,7 +13,7 @@ id: "AT_PARAGRAPH_ID"
 
 # 1. Diretrizes de Uso
 
-- **Geral**: verifique se o atributo 'extends' possui algo para ser herdado e caso possua, busque e importe todas as regras e definições especificadas em cada arquivo.
+- **Geral**: verifique se o atributo `extends` possui valores, e caso possua, busque todos os arquivos pelos `_ID` registrados e importe todas as regras e definições especificadas neste arquivo.
 
 # 2. Especificações Técnicas
 
@@ -21,7 +21,7 @@ id: "AT_PARAGRAPH_ID"
 
 ```json
 {
-    "color": "$deep_blue",
-    "font-size": "$font_sm"
+    "color": "--color-primary-600",
+    "font-size": "--text-sm"
 }
 ```

@@ -12,6 +12,6 @@ id: "GLOBAL_RULES_ID"
 # 1. Diretrizes de Uso
 
 - **Geral**:
-   - **Herança**: verifique se o atributo 'extends' possui algo para ser herdado e caso possua, busque e importe todas as regras e definições especificadas em cada arquivo.
+   - **Herança**: verifique se o atributo `extends` possui valores, e caso possua, busque todos os arquivos pelos `_ID` registrados e importe todas as regras e definições especificadas neste arquivo.
    - **Blocos de código**: Sempre priorize os valores contidos nos blocos de código para decisão final de implementação.
 - **Fidelidade Técnica:** Siga rigorosamente as especificações deste documento. Não invente propriedades omitidas.
