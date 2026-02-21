@@ -26,10 +26,7 @@ id: "HOME_ID"
 
 ```json
 {
-  "width": "--s-full",
-  "display": "flex",
-  "flex-direction": "column",
-  "background-color": "--color-gray-900"
+"className": "w-full flex flex-col bg-gray-900 min-h-screen p-4"
 }
 ```
 

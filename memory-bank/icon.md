@@ -22,9 +22,6 @@ id: "AT_ICON_ID"
 
 ```json
 {
-  "width": "--s-8",
-  "height": "--s-8",
-  "border-radius": "--radius-full",
-  "color": "--color-white"
+  "className": "w-8 h-8 rounded-full text-white"
 }
 ```

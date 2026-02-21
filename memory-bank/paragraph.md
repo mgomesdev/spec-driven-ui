@@ -21,7 +21,6 @@ id: "AT_PARAGRAPH_ID"
 
 ```json
 {
-    "color": "--color-primary-600",
-    "font-size": "--text-sm"
+  "className": "text-primary-600 text-sm"
 }
 ```

@@ -25,13 +25,7 @@ id: "ORG_FOOTER_ID"
 
 ```json
 {
-  "width": "--s-full",
-  "height": "--s-24",
-  "display": "flex",
-  "justify-content": "space-between",
-  "align-items": "center",
-  "background-color": "--color-gray-900",
-  "padding": "0 --spacing-4"
+  "className": "w-full h-24 flex justify-between items-center bg-gray-900 px-4"
 }
 ```
 

@@ -25,13 +25,7 @@ id: "ORG_HEADER_ID"
 
 ```json
 {
-  "width": "--s-full",
-  "height": "--s-17",
-  "display": "flex",
-  "justify-content": "end",
-  "align-items": "end",
-  "background-color": "--color-gray-900",
-  "padding": "0 --spacing-5"
+  "className": "w-full h-[68px] flex justify-end items-end bg-gray-900 px-5"
 }
 ```
 

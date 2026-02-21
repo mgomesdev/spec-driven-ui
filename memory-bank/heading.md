@@ -21,8 +21,7 @@ id: "AT_HEADING_ID"
 
 ```json
 {
- "color": "--color-white",
- "font-size": "--text-xl"
+  "className": "text-white text-xl"
 }
 ```
 
@@ -30,6 +29,6 @@ id: "AT_HEADING_ID"
 
 ```json
 {
-    "color": "--color-gradient-primary"
+  "className": "bg-gradient-primary bg-clip-text text-transparent"
 }
 ```

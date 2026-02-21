@@ -22,12 +22,7 @@ id: "AT_BUTTON_ID"
 
 ```json
 {
-  "width": "--s-full",
-  "height": "--s-12",
-  "border-radius": "--radius-lg",
-  "border": "none",
-  "background-color": "--color-white",
-  "color": "--color-gray-500"
+  "className": "w-full h-12 rounded-lg border-none bg-white text-gray-500"
 }
 ```
 
@@ -35,8 +30,7 @@ id: "AT_BUTTON_ID"
 
 ```json
 {
-  "background-color": "--color-gradient-primary",
-  "color": "--color-white"
+  "className": "bg-gradient-primary text-white"
 }
 ```
 
@@ -44,7 +38,7 @@ id: "AT_BUTTON_ID"
 
 ```json
 {
-  "background-color": "--color-transparent"
+  "className": "bg-transparent"
 }
 ```
 

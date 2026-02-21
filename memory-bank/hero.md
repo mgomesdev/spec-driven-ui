@@ -25,14 +25,7 @@ id: "ORG_HERO_ID"
 
 ```json
 {
-  "width": "--s-full",
-  "min-height": "calc(100vh - (--s-17))",
-  "display": "flex",
-  "flex-direction": "column",
-  "justify-content": "center",
-  "align-items": "center",
-  "background-color": "--color-gray-900",
-  "padding-top": "--spacing-16"
+  "className": "w-full min-h-[calc(100vh-68px)] flex flex-col justify-center items-center bg-gray-900 pt-16"
 }
 ```
 
@@ -43,13 +36,8 @@ id: "ORG_HERO_ID"
     {
       "element": "div",
       "style": {
-        "width": "--s-full",
-        "max-width": "700px",
-        "display": "flex",
-        "flex-direction": "column",
-        "gap": "--spacing-8",
-        "text-align": "center"
-      },
+  "className": "w-full max-w-[700px] flex flex-col gap-8 text-center"
+},
       "children": [
         {
           "atom_id": "AT_HEADING_ID",
@@ -68,7 +56,7 @@ id: "ORG_HERO_ID"
           "atom_id": "AT_BUTTON_ID",
           "label": "Vamos criar algo incrível juntos?",
           "variant": "link",
-          "color": "--color-primary-600"
+          "className": "text-primary-600"
         },
         {
           "element": "div",

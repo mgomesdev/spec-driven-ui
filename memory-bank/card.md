@@ -25,16 +25,7 @@ id: "MOL_CARD_ID"
 
 ```json
 {
-  "width": "352px",
-  "height": "auto",
-  "display": "flex",
-  "flex-direction": "column",
-  "gap": "--spacing-2",
-  "background-color": "--color-gray-900",
-  "opacity": "--opacity-50",
-  "border-radius": "--radius-md",
-  "border": "2px solid --color-gray-500",
-  "padding": "--spacing-2"
+  "className": "w-[352px] h-auto flex flex-col gap-2 bg-gray-900 opacity-50 rounded-md border-2 border-gray-500 p-2"
 }
 ```
 
