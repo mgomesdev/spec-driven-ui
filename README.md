@@ -1,8 +1,15 @@
-> Continuando meus estudos e tentativas iniciais para automatizar a geração de interfaces de sites pixel-perfect com IA. Desta vez gerei uma interface um pouco mais complexa, melhorei a versão anterior e descobri varias novidades e obtive varios insights incriveis que torna possível escalar e automatizar de forma incrível, da um olhada.
+> Continuando [meus estudos](https://www.linkedin.com/pulse/ui-pixel-perfect-com-ia-gera%25C3%25A7%25C3%25A3o-de-interfaces-utilizando-gomes-gvrxf/?trackingId=t3xOt8PrS2%2BRsl%2F7PGuZfQ%3D%3D) e tentativas iniciais para automatizar a geração de interfaces de sites pixel-perfect com IA. Desta vez gerei uma interface um pouco mais complexa, melhorei a versão anterior, descobri muita coisa legal e possibilidades de automação e escala incríveis, da um olhada.
 
 ## Visão Geral
 
-No primeiro post, eu fiz alguns testes iniciais com um exemplo simples mas escalável que tornou possível e viavel automatizar a geração de interfaces pixel-perfect com IA e sincronizar design e código para que o design reflita exatamente no código de maneira automatizada.
+No [primeiro post](https://www.linkedin.com/pulse/ui-pixel-perfect-com-ia-gera%25C3%25A7%25C3%25A3o-de-interfaces-utilizando-gomes-gvrxf/?trackingId=t3xOt8PrS2%2BRsl%2F7PGuZfQ%3D%3D), fiz alguns testes iniciais com um exemplo simples para validar a ideia de forma escalável que tornou possível e viavel automatizar a geração de interfaces pixel-perfect com IA, sincronizando design e código de maneira automatizada.
+
+Em meus testes, usei ferramentas gratuidas de geração de design/código, e validei as saídas para confirmar se estão exatamente iguais (design/código).
+
+Os resultados foram bem promissores, e abriu uma infinidade de possibilidades de automação e fluxos de trabalho que tem o potencial de mudar a forma como UX e Frontend se integram, agilizando e melhorando o fluxo de trabalho. 
+
+--- 
+**TODO**
 
 Nesses primeiros testes estou focando nos prompts de geração de design, e testando a parte de código com ferramentas de codificação gratuitas sem me preocupar com estrutura e organização do código. O objetivo dos meus estudos iniciais é focar na sincronização do design com o resultado final da UI no código, delegando para a IA toda a parte de codificação reutilizando o mesmo prompt (design/código). 
 
