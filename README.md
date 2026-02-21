@@ -101,6 +101,12 @@ Em todas as tentativas utilizei o seguinte passo a passo:
 
 ## Resultados
 
+### Design System
+
+![Design System](/readme/02-page-design-system.png)
+
+> Design System foi gerado com apenas 1 comando.
+
 ### Google Stitch
 
 ![Google Stitch](/readme/google-stich.png)
