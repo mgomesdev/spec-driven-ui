@@ -39,7 +39,8 @@ id: "ORG_HEADER_ID"
       "props": { "label": "", "variant": "link" },
       "children": {
         "atom_id": "AT_ICON_ID",
-        "icon": "sun"
+        "icon": "sun",
+        "className": "text-white"
       }
     }
   ]
