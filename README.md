@@ -1,24 +1,29 @@
-> Neste feriadão de carnaval, continuei meus estudos e tentativas iniciais para automatizar a geração de interfaces de sites pixel-perfect com IA. Utilizei alguns design patterns e técnicas avançadas em minhas tentativas, e os resultados foram promissores. Neste post mostro os principais aprendizados, desafios e insights que obtive nesses meus primeiros estudos.
+> Continuando meus estudos e tentativas iniciais para automatizar a geração de interfaces de sites pixel-perfect com IA. Desta vez gerei uma interface um pouco mais complexa, melhorei a versão anterior e descobri varias novidades e obtive varios insights incriveis que torna possível escalar e automatizar de forma incrível, da um olhada.
 
 ## Visão Geral
 
-Trabalho como desenvolvedor frontend a mais de 8 anos, e nesta jornada já trabalhei em diversos projetos de interfaces, começei na época do `tableless, html/js vanilla, jquery, sass, wordpress`, e hoje em dia trabalho utilizando `React/Nextjs/Typescript`.
+No primeiro post, eu fiz alguns testes iniciais com um exemplo simples mas escalável que tornou possível e viavel automatizar a geração de interfaces pixel-perfect com IA e sincronizar design e código para que o design reflita exatamente no código de maneira automatizada.
 
-Tive a oportunidade de ver a evolução de muitas ferramentas e tecnologias frontend, e hoje em dia o cenário de desenvolvimento de interfaces se encontra em um momento mais estável e animador.
+Nesses primeiros testes estou focando nos prompts de geração de design, e testando a parte de código com ferramentas de codificação gratuitas sem me preocupar com estrutura e organização do código. O objetivo dos meus estudos iniciais é focar na sincronização do design com o resultado final da UI no código, delegando para a IA toda a parte de codificação reutilizando o mesmo prompt (design/código). 
 
-Vivemos um momento onde a inteligencia artificial está cada vez mais evoluindo e ganhando espaço na automação de `tarefas repetitivas`, e já está se tornando uma realidade em diversos cenários específicos.
+Descobri novas maneiras de gerar design precisos usando o [Google Stitch](https://stitch.withgoogle.com/), e testei a geração do código/UI usando o  com o [V0](https://v0.app/) e [Lovable](https://lovable.dev/) para confirmar a saída exata do design no código.
 
-Neste contexto, iniciei meus estudos no uso da inteligencia artificial para começar a automatizar meus trabalhos e tarefas repetitivas através de prompts de IA, testei as ferramentas ([Google Stitch](https://stitch.withgoogle.com/), [V0](https://v0.app/), [Lovable](https://lovable.dev/)), apliquei padrôes de projetos, a metodologia [`atomic design`](https://atomicdesign.bradfrost.com/) e outras técnicas estratégicas com o objetivo de guiar a inteligência artificial a gerar a interface `pixel-perfect`.
+Descobri que o [Tailwind CSS](https://tailwindcss.com/) funciona muito bem com as LLMS, aparentemente é algo nativo nas IAs, e isso simplificou ainda mais a estrutura do [`atomic design`](https://atomicdesign.bradfrost.com/) que estou usando na arquitetura.
+
+Descobri tambem que fornecendo os elementos atomicos para a IA, podemos utilizar os insights do contexto gigantesco da IA para criar novas telas baseados em insights estratégicos, e isso torna possivel criar muitas coisas apenas 'conversando com a IA', isso libera o Design de se preocupar em clicar, arrastar coisas no board para criar as telas, assim ele como um revisor/aprovador do resultado final. 
+
+Tambem descobri uma maneira de diminuir drasticamente as alucinações de sessôes de longo prazo, e para isso, criei um Prompt Agentico para simplificar o uso e correção dessas alucinações.
+
+E muitas outras descobertas, neste post você verá:
+
 
 **Neste post você verá:**
 
-- [Projeto de Exemplo](#projeto-de-exemplo)
-- [Tecnicas Usadas](#tecnicas-usadas)
-   - [RAG (Retrieval Augmented Generation)](#rag)
-   - [Atomic Design](#atomic-design)
-   - [Arquitetura de Software](#arquitetura-de-software)
-   - [Prompts](#prompts)
-- [Passo a passo usado](#passo-a-passo-usado)
+- [Projeto um pouco maior](#projeto-de-exemplo)
+- [Evitando alucinações na sessão de longo prazo](#tecnicas-usadas)
+   - [Prompt anti-alucinação](#rag)
+- [Melhorias na versão anterior](#passo-a-passo-usado)
+   - [Tailwind CSS como referência funciona muito bem](#)
 - [Resultados](#resultados)
    - [Google Stitch](#google-stitch)
    - [V0](#v0)
