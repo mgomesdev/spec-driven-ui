@@ -5,7 +5,7 @@ updated_at: "21-02-2026:08:00"
 file_name: design_tokens.md
 version: "1.1"
 extends: ["GLOBAL_RULES_ID"]
-id: "TOKENS_GLOBAL_ID"
+id: "DESIGN_TOKENS_ID"
 ---
 
 # 1. Diretrizes de Uso
