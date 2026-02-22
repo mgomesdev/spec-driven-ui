@@ -22,6 +22,8 @@ Saída: `memory-bank/memory-bank.md` — arquivo consolidado com todos os compon
 
 A IA vai extrair o bloco específico do ID solicitado do arquivo consolidado.
 
+> **Obs**: algumas IAs não permitem enviar somente o arquivo sem um texto digitado no prompt, em meus testes usei o seguinte texto: `Use memory-bank.md como contexto e aguarde minha solicitação`. A IA irá aguardar o comando do passo 3.
+
 ---
 
 ## 🎯 PASSO 3: Gerar um Componente Individual
@@ -29,10 +31,11 @@ A IA vai extrair o bloco específico do ID solicitado do arquivo consolidado.
 **Para gerar qualquer componente (ATOM, MOLECULE, ORGANISM ou PAGE), copie e cole a seguinte frase na IA:**
 
 ```
-Limpe o contexto e gere [ID] isoladamente, extraindo os dados exclusivamente 
-do bloco correspondente dentro do memory-bank.md. Mantenha a especificação 
-técnica original sem inventar propriedades, componentes irmãos ou elementos 
-não declarados. Responda apenas com o código, mantendo fidelidade 1:1 com a spec
+Limpe o contexto e gere [ID] isoladamente, utilizando estritamente os dados do bloco correspondente no memory-bank.md. 
+
+- Mantenha a especificação técnica original e aplique as diretrizes de [Tokens/Rules] declaradas para garantir fidelidade 1:1.
+- É proibido inferir estilos, arredondamentos, inventar propriedades, componentes irmãos, elementos não declarados ou cores fora da especificação técnica original.
+- Responda apenas com o código bruto, mantendo fidelidade 1:1 com a spec.
 ```
 
 **Substitua `[ID]` pelo ID desejado. Exemplos:**
@@ -51,11 +54,11 @@ não declarados. Responda apenas com o código, mantendo fidelidade 1:1 com a sp
 ```
 [Cole aqui o memory-bank.md completo]
 
-Limpe o contexto e gere AT_BUTTON_ID isoladamente, extraindo os dados 
-exclusivamente do bloco correspondente dentro do memory-bank.md. Mantenha 
-a especificação técnica original sem inventar propriedades, componentes 
-irmãos ou elementos não declarados. Responda apenas com o código, 
-mantendo fidelidade 1:1 com a spec
+Limpe o contexto e gere AT_HERO_ID isoladamente, utilizando estritamente os dados do bloco correspondente no memory-bank.md. 
+
+- Mantenha a especificação técnica original e aplique as diretrizes de [Tokens/Rules] declaradas para garantir fidelidade 1:1.
+- É proibido inferir estilos, arredondamentos, inventar propriedades, componentes irmãos, elementos não declarados ou cores fora da especificação técnica original.
+- Responda apenas com o código bruto, mantendo fidelidade 1:1 com a spec.
 ```
 
 ### Esperado — Resposta (CORRETA):
@@ -74,12 +77,24 @@ mantendo fidelidade 1:1 com a spec
 **Para gerar TODOS os componentes de uma vez, copie e cole:**
 
 ```
-Limpe o contexto e gere o Design System completo extraindo todos os blocos 
-do memory-bank.md. Processe cada ID (Atoms, Molecules, Organisms, Templates, 
-Pages e Rules) em ordem sequencial, mantendo a especificação técnica 1:1 de 
-cada um. É proibido resumir, omitir propriedades ou agrupar componentes. 
-Gere o código bruto de cada especificação exatamente como definido, sem 
-intervenções criativas ou componentes extras não declarados.
+Limpe o contexto  e aja como um especialista em Design Systems. Extraia todo o conteúdo integral do memory-bank.md e reconstrua o Design System seguindo rigorosamente a arquitetura de Atomic Design declarada.
+
+# Diretrizes de Extração
+
+## Fidelidade 1:1
+Processe cada ID (Atoms, Molecules, Organisms, Templates, Pages, Rules) em ordem sequencial. É terminantemente proibido o uso de valores genéricos ou 'placeholders'. Se o documento define um Border-Radius: 4px, não utilize rounded-md, mantendo a especificação técnica 1:1 de cada um.
+
+## Exaustividade de Propriedades
+
+Transcreva todos os tokens de design (Typography, Color Palette, Spacing Scale, Shadows) e estados de componentes (Hover, Focus, Disabled, Active) exatamente como mapeados. É proibido resumir, omitir propriedades. 
+
+## Sem Intervenção Criativa
+
+Não adicione componentes extras, não sugira melhorias e não agrupe definições distintas. O output deve ser o código bruto das especificações técnicas exatamente como definido, sem intervenções criativas ou componentes extras não declarados.
+
+## Foco em Artefatos de Conversão
+
+Priorize a precisão técnica dos elementos críticos do site: Headers responsivos, Grids de formulários, Hierarquia de botões (Primary/Secondary/Ghost) e Cards de conteúdo, mantendo a consistência com as Rules (Regras) extraídas.
 ```
 
 ---
