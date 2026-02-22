@@ -87,8 +87,8 @@ Em todas as tentativas utilizei o seguinte passo a passo:
 
 ## Principais Aprendizados
 
-- **Tailwind CSS V4**: Aparentemente o [Tailwind CSS](https://tailwindcss.com/) tem uma compatibilidade e precisão melhor quando utilizado nas LLMs, além de simplificar e facilitar a composição dos elementos. 
-- **IA no VSCode**: Usar a IA no vscode é muito útil para algumas tarefas manuais, no meu caso utilizei bastante para atualizar os **metadados** dos arquivos .md, e descobrir de forma mais rápida algumas classes do tailwind css.
+- **Tailwind CSS V4**: Aparentemente o [Tailwind CSS](https://tailwindcss.com/) tem uma compatibilidade e precisão melhor quando utilizado nas LLMs, além de simplificar e facilitar a composição dos elementos. Realizei a refatoração da primeira versão, e agora todos os elementos referenciam as classes do tailwind diretamente no contexto, ficou bem mais simples de dar manutenção, além de ter aumentado a precisão da saída. 
+- **IA no VSCode**: Usar a IA no vscode é muito útil para algumas tarefas manuais, no meu caso utilizei bastante para atualizar os **metadados** dos arquivos .md, descobrir de forma mais rápida algumas classes do tailwind css e buscar erros de sintax nos blocos de código do markdown.
 - **Diminuir Alucinações**: Descobri que pedir para a IA limpar o contexto entre uma solicitação e outra, melhora a precisão da saída e diminui alucinações.
 - **Responsividade**: A ferramenta [`Google Stitch`](https://stitch.withgoogle.com/) gera 3 versôes (mobile, tablet, desktop) automaticamente, portanto só precisei me preocupar com a geração da versão desktop. 
 
