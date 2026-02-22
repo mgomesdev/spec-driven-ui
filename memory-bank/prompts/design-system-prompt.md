@@ -1,4 +1,4 @@
-Limpe o contexto  e aja como um especialista em Design Systems. Extraia todo o conteúdo integral do memory-bank.md e reconstrua o Design System seguindo rigorosamente a arquitetura de Atomic Design declarada.
+Limpe o contexto e aja como um especialista em Design Systems. Extraia todo o conteúdo integral do memory-bank.md e reconstrua o Design System seguindo rigorosamente a arquitetura de Atomic Design declarada.
 
 # Diretrizes de Extração
 
@@ -8,7 +8,7 @@ Limpe o contexto  e aja como um especialista em Design Systems. Extraia todo o c
 
 ## Exaustividade de Propriedades
 
-- Transcreva todos os tokens de design (Typography, Color Palette, Spacing Scale, Shadows) e estados de componentes (Hover, Focus, Disabled, Active) exatamente como mapeados. É proibido resumir, omitir propriedades. 
+- Transcreva todos os tokens de design (Typography, Color Palette, Spacing Scale, Shadows) e estados de componentes (Hover, Focus, Disabled, Active) exatamente como mapeados. É proibido resumir, omitir propriedades.
 
 ## Sem Intervenção Criativa
 

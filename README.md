@@ -84,6 +84,12 @@ Em todas as tentativas utilizei o seguinte passo a passo:
 
 ### Lovable
 
+![Chat Lovable](/readme/02-chat-lovable.png)
+
+![Resultado Lovable](/readme/02-resultado-lovable-site.png)
+
+![Resultado Lovable](/readme/02-resultado-lovable-ds.png)
+
 
 ## Principais Aprendizados
 
