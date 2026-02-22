@@ -83,9 +83,15 @@ Criei dois prompts específicos:
 
 ![Chat Lovable](/readme/02-chat-lovable.png)
 
+> Nesta imagem insiro o memory-bank.md e o prompt no contexto do lovable.
+
 ![Resultado Lovable](/readme/02-resultado-lovable-site.png)
 
+> O lovable gerou a interface pixel perfect.
+
 ![Resultado Lovable](/readme/02-resultado-lovable-ds.png)
+
+> O lovable gerou o design system pixel perfect.
 
 ### Gerando o Design System com 1 click
 
