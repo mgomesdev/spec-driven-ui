@@ -91,7 +91,7 @@ Em todas as tentativas utilizei o seguinte passo a passo:
 - **IA no VSCode**: Usar a IA no vscode é muito útil para algumas tarefas manuais, no meu caso utilizei bastante para atualizar os **metadados** dos arquivos .md, descobrir de forma mais rápida algumas classes do tailwind css e buscar erros de sintax nos blocos de código do markdown.
 - **Diminuir Alucinações**: Descobri que pedir para a IA limpar o contexto entre uma solicitação e outra, melhora a precisão da saída e diminui alucinações.
 - **Responsividade**: A ferramenta [`Google Stitch`](https://stitch.withgoogle.com/) gera 3 versôes (mobile, tablet, desktop) automaticamente, portanto só precisei me preocupar com a geração da versão desktop. 
-
+- **Repomix**: Esta ferramenta é um tipo de **Blunder de Prompt"** que realiza a compressão de varias fontes de arquivos em um arquivo final em formatos especificos, utilizei para juntar todos os arquivos de contexto **.md** em um arquivo **json** final, aprimorando a precisão da saída e facilitando o uso de LLMS que não suportam o envio de varios arquivos.
 
 ## Conclusão
 
