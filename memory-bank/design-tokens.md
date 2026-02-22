@@ -5,6 +5,7 @@ updated_at: "21-02-2026:15:45"
 file_name: design-tokens.md
 version: "1.1"
 extends: ["GLOBAL_RULES_ID"]
+type: "RULES"
 id: "DESIGN_TOKENS_ID"
 ---
 

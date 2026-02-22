@@ -1,0 +1,20 @@
+{
+   "name": "spec-driven-ui",
+   "version": "1.0.0",
+   "description": "> Continuando [meus estudos](https://www.linkedin.com/pulse/ui-pixel-perfect-com-ia-gera%25C3%25A7%25C3%25A3o-de-interfaces-utilizando-gomes-gvrxf/?trackingId=t3xOt8PrS2%2BRsl%2F7PGuZfQ%3D%3D) em **geração automatizada de sites pixel-perfect com IA**. Desta vez gerei um exemplo um pouco mais próximo do dia-dia, melhorei a versão anterior, descobri muita coisa legal e possibilidades de automação e escala incríveis, da um olhada.",
+   "main": "index.js",
+   "scripts": {
+      "compile": "repomix"
+   },
+   "repository": {
+      "type": "git",
+      "url": "git+https://github.com/mgomesdev/spec-driven-ui.git"
+   },
+   "keywords": [],
+   "author": "",
+   "license": "ISC",
+   "bugs": {
+      "url": "https://github.com/mgomesdev/spec-driven-ui/issues"
+   },
+   "homepage": "https://github.com/mgomesdev/spec-driven-ui#readme"
+}

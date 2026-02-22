@@ -5,7 +5,7 @@ updated_at: "21-02-2026:15:45"
 file_name: global-rules.md
 version: "1.0"
 extends: []
-type: "GLOBAL_RULES"
+type: "RULES"
 id: "GLOBAL_RULES_ID"
 ---
 
