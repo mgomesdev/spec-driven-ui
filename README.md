@@ -67,10 +67,8 @@ Com todas as informações do projeto reunidas no **memory-bank.md**, utilizei o
 Com acesso a todo o contexto do projeto em um só lugar e o uso da IA como auxiliar, consegui ter uma visão global do projeto, obter insights e gerar prompts cada vez mais precisos alinhados completamente com o cenário do projeto, isso possibilitou gerar **prompts** que geram saídas muito precisas, tornando possível sincronizar **Design/Código**.
 
 Criei dois prompts específicos: 
-- TODO: adicionar link para o tutorial do repo.
-- **Prompt Atomic Design**: Responsável por gerar elementos específicos (atomos, moleculas, organismos, templates, paginas).
-- TODO: adicionar link para o tutorial do repo.
-- **Prompt Design System**: Responsável por gerar o design system do projeto.
+- [**Prompt Atomic Design**](https://github.com/mgomesdev/spec-driven-ui/blob/02-page_home/memory-bank/prompts/atomic-design-prompt.md): Responsável por gerar elementos específicos (atomos, moleculas, organismos, templates, paginas).
+- [**Prompt Design System**](https://github.com/mgomesdev/spec-driven-ui/blob/02-page_home/memory-bank/prompts/design-system-prompt.md): Responsável por gerar o design system do projeto.
 
 > Os resultados gerados nas ferramentas **Google Stich** e **Lovable** podem ser vistos logo abaixo.
 
