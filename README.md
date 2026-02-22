@@ -25,8 +25,6 @@ Os resultados foram bem animadores, e abriu uma infinidade de possibilidades de 
 - [Conclusão](#conclusão)
 - [Referências](#referencias)
 
-**Repositório**: https://github.com/mgomesdev/spec-driven-ui/tree/02-page_home
-
 ## Projeto de Exemplo
 
 ![Home](/readme/02-page.png)
@@ -120,4 +118,5 @@ Com esse exemplo mais próximo do dia a dia, consegui avançar mais um pouco na 
 
 ## Referencias
 
+**Repositório**: https://github.com/mgomesdev/spec-driven-ui/tree/02-page_home
 - TODO: colar a coleção de links.
