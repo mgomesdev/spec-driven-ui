@@ -80,11 +80,7 @@ Em todas as tentativas utilizei o seguinte passo a passo:
 
 > Gerado com Gemini 3.0
 
----
-
 ### V0
-
----
 
 ### Lovable
 
