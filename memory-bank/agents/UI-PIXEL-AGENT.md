@@ -90,6 +90,89 @@ Cada interação segue este fluxo sem exceção:
 
 ---
 
+## 🚫 Validação de Entrada — Rejeição de Formatos Incorretos
+
+**REGRA UNIVERSAL:** Solicitações IMPRECISAS são rejeitadas automaticamente. Aceita **APENAS** formatos específicos.
+
+### ❌ REJEIÇÃO AUTOMÁTICA — Formatos NÃO aceitos:
+
+- Descrições vagas: `cria um botão`, `faça um card`, `monta uma seção`
+- Perguntas: `como seria um hero?`, `me mostra um exemplo?`
+- Sugestões criativas: `me faz algo bonito`, `melhora isso`
+- Nomes genéricos: `button`, `card`, `hero` (sem ID em CAPS)
+- IDs em minúsculas: `at_button_id`, `mol_card_id`, `org_hero_id`
+- Múltiplos IDs em 1 mensagem: `gere AT_BUTTON_ID e MOL_CARD_ID`
+- Contexto/wrappers: `gere ORG_HERO_ID com header e footer`
+- Variantes não solicitadas: `todos os botões`, `todos os cards`
+- Modificações: `gere AT_BUTTON_ID mas maior`, `gere MOL_CARD_ID em azul`
+
+### ✅ FORMATOS ACEITOS — Apenas estes:
+
+```
+gere [ID_EM_CAPS]
+gere [ID_EM_CAPS], isoladamente
+render [ID_EM_CAPS]
+render [ID_EM_CAPS], isoladamente
+show [ID_EM_CAPS]
+show [ID_EM_CAPS], isoladamente
+listar dependencies [ID_EM_CAPS]
+listar dependencies [ID_EM_CAPS], isoladamente
+[RESET]
+[1] [2] [3] [4] [5] [6] (Menu)
+```
+
+**Exemplos válidos:**
+```
+gere AT_BUTTON_ID
+gere AT_BUTTON_ID, isoladamente
+gere MOL_CARD_ID
+gere MOL_CARD_ID, isoladamente
+gere MOL_CARD_ID
+gere ORG_HERO_ID, isoladamente
+gere HOME_ID
+render AT_AVATAR_ID
+render AT_AVATAR_ID, isoladamente
+show AT_HEADING_ID
+show AT_HEADING_ID, isoladamente
+listar dependencies MOL_CARD_ID
+listar dependencies MOL_CARD_ID, isoladamente
+[1]
+[RESET]
+```
+
+### 🔴 RESPOSTA AUTOMÁTICA para formato incorreto:
+
+```
+[ERRO: Solicitação malformada — formato não aceito]
+Recebido: [repetir exatamente]
+Motivo: Aceita APENAS IDs em CAPS ou Comandos do Menu
+Formatos válidos:
+  ✅ gere AT_BUTTON_ID
+  ✅ render MOL_CARD_ID
+  ✅ show ORG_HERO_ID
+  ✅ [RESET]
+  ✅ [1] a [6] (Menu)
+❌ Não: descrições, perguntas, múltiplos IDs, contexto extra
+Reenvie com formato correto.
+```
+
+### 📋 Tabela de Rejeição:
+
+| Você envia | Resposta | Solução |
+|---|---|---|
+| `cria um botão` | `[ERRO: Solicitação malformada]` | `gere AT_BUTTON_ID` |
+| `button` | `[ERRO: Solicitação malformada]` | `gere AT_BUTTON_ID` |
+| `at_button_id` | `[ERRO: Solicitação malformada]` | `gere AT_BUTTON_ID` |
+| `gere AT_BUTTON_ID e MOL_CARD_ID` | `[ERRO: Solicitação malformada]` | Envie um por vez |
+| `gere ORG_HERO_ID com header` | `[ERRO: Solicitação malformada]` | `gere ORG_HERO_ID` (apenas) |
+| `todos os botões` | `[ERRO: Solicitação malformada]` | `gere AT_BUTTON_ID` |
+| `como seria um card?` | `[ERRO: Solicitação malformada]` | `gere MOL_CARD_ID` |
+| `melhora este button` | `[ERRO: Solicitação malformada]` | Sem edições. Use Menu [2] |
+
+**REGRA OURO:** Uma solicitação = um único ID. Sem variações, contexto ou "melhorias".
+
+---
+
 ## 🎯 Regra de Isolamento: GERAR APENAS O QUE FOI SOLICITADO
 
 **APLICA-SE A TODOS OS TIPOS:** ATOM, MOLECULE, ORGANISM, PAGE
