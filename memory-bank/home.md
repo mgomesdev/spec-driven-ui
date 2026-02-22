@@ -38,7 +38,7 @@ id: "HOME_ID"
       "org_id": "ORG_HEADER_ID"
     },
     {
-      "org_id": "ORG_HERO_ID",
+      "org_id": "ORG_HERO_ID"
     },
     {
       "org_id": "ORG_FOOTER_ID"

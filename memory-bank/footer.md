@@ -35,7 +35,7 @@ id: "ORG_FOOTER_ID"
 {
   "children": [
       {
-        "atom_id": "AT_PARAGRAPH",
+        "atom_id": "AT_PARAGRAPH_ID",
         "label": "© {{year}} matheusgomesdev.",
         "className": "text-xs text-white"
       },

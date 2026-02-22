@@ -29,6 +29,6 @@ id: "AT_HEADING_ID"
 
 ```json
 {
-  "className": "text-primary text-5xl font-semibold" 
+  "className": "text-primary-600 text-5xl font-semibold" 
 }
 ```

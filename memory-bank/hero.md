@@ -1,5 +1,5 @@
 ---
-dependencies: ["AT_AVATAR", "AT_HEADING", "AT_PARAGRAPH", "AT_BUTTON"]
+dependencies: ["AT_AVATAR_ID", "AT_HEADING_ID", "AT_PARAGRAPH_ID", "AT_BUTTON_ID"]
 created_at: "21-02-2026:11:48"
 updated_at: "21-02-2026:11:48"
 file_name: hero.md
