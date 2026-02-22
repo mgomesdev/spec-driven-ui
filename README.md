@@ -14,6 +14,16 @@ Os resultados foram bem animadores, e abriu uma infinidade de possibilidades de 
 - [Uma fonte unica de verdade para o projeto](#uma-fonte-unica-de-verdade-para-o-projeto)
    - [Repomix o bundler de prompts](#repomix-o-bundler-de-prompts)
    - [Usando o Copilot para gerar insights incríveis](#usando-o-copilot-para-gerar-insights-incriveis)
+   - [memory-bank.md - o cérebro do projeto](#memory-bank)
+   - [Usando o Copilot para gerar insights incríveis](#usando-o-copilot-para-gerar-insights-incriveis)
+- [Prompt Anti-Alucinação](#prompt-anti-alucinacao)
+   - [Gerando o Design com 1 click](#gerando-o-design-com-1-click)
+   - [Gerando o Código com 1 click](#gerando-o-codigo-com-1-click)
+   - [Gerando o Design System com 1 click](#gerando-o-design-system-com-1-click)
+- [Usando a criatividade para gerar novas ideias](#usando-a-criatividade-para-gerar-novas-telas)
+- [Principais Aprendizados](#principais-aprendizados)
+- [Conclusão](#conclusão)
+- [Referências](#referencias)
 
 **Repositório**: https://github.com/mgomesdev/spec-driven-ui/tree/02-page_home
 
@@ -33,7 +43,7 @@ Nos [meus estudos anteriores](https://www.linkedin.com/pulse/ui-pixel-perfect-co
 
 Na maioria das aplicações, usamos blundlers como **gulp**, **webpack** entre outros, para reunir varios arquivos fragmentados em uma unica **fonte de verdade** que centraliza e facilita o carregamento e uso pelas aplicações. O **Repomix** tem um objetivo parecido, com a diferença que foi feito para o **contexto de projetos de IA** que geralmente usam extensôes **json, .md, .xml**.
 
-### Uma unica fonte de verdade para o projeto
+### Memory Bank
 
 Usei o Repomix para gerar um arquivo chamado **memory-bank.md** que centraliza todo o contexto do projeto, reunindo (**#include**) os arquivos especificos com os elementos, regras e outras coisas especificas do projeto, possibilitando o uso das **LLMS** na geração de insights e melhorias incríveis sobre o projeto.
 
@@ -53,7 +63,7 @@ Com todas as informações do projeto reunidas no **memory-bank.md**, utilizei o
 
 ![Copilot](/readme/02-copilot.png)
 
-### Prompt Anti Alucinacao
+## Prompt Anti Alucinacao
 
 Com acesso a todo o contexto do projeto em um só lugar e o uso da IA como auxiliar, consegui ter uma visão global do projeto, obter insights e gerar prompts cada vez mais precisos alinhados completamente com o cenário do projeto, isso possibilitou gerar **prompts** que geram saídas muito precisas, tornando possível sincronizar **Design/Código**.
 
@@ -65,25 +75,25 @@ Criei dois prompts específicos:
 
 > Os resultados gerados nas ferramentas **Google Stich** e **Lovable** podem ser vistos logo abaixo.
 
-### Design System
-
-![Design System](/readme/02-page-design-system.png)
-
-> Design System foi gerado com apenas 1 comando.
-
-### Google Stitch
+### Gerando o Design com 1 click
 
 ![Board Google Stitch](/readme/02-board-google-stitch.png)
 
 > Gerado com Gemini 3.0
 
-### Lovable
+### Gerando o Codigo com 1 click
 
 ![Chat Lovable](/readme/02-chat-lovable.png)
 
 ![Resultado Lovable](/readme/02-resultado-lovable-site.png)
 
 ![Resultado Lovable](/readme/02-resultado-lovable-ds.png)
+
+### Gerando o Design System com 1 click
+
+![Design System](/readme/02-page-design-system.png)
+
+> Design System foi gerado com apenas 1 comando.
 
 ### Usando a criatividade para gerar novas telas
 
