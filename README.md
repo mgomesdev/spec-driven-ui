@@ -120,7 +120,10 @@ Com essa estrutura atomica fornecida no contexto da IA, podemos utilizar toda a 
 ## Conclusão
 
 Com esse exemplo mais próximo do dia a dia, consegui avançar mais um passo na direção de sincronizar o trabalho de UX/Frontend. A combinação de **Spec-driven Development**, **Repomix como bundler de prompts** e um **memory-bank.md centralizado** se mostrou uma abordagem poderosa para reduzir alucinações, aumentar a precisão das saídas e automatizar tarefas que antes consumiam dias de trabalho manual.
-O mais animador é perceber que ainda estamos no início: integrar dados reais de uso (Analytics, Hotjar) para gerar ajustes automáticos de interface, ou escalar versões responsivas com um único prompt, são possibilidades concretas e acessíveis agora. O papel do Design e do Frontend começa a se transformar, menos execução mecânica, mais revisão estratégica e criativa.
+
+O mais animador é perceber que ainda estamos no início: integrar dados reais de uso (Analytics, Hotjar) para gerar ajustes automáticos de interface, ou escalar versões responsivas com um único prompt, são possibilidades concretas e acessíveis agora. 
+
+O papel do Design e do Frontend começa a se transformar, menos execução mecânica, mais revisão estratégica e criativa.
 
 ## Referencias
 
