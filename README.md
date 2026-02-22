@@ -127,8 +127,8 @@ O papel do Design e do Frontend começa a se transformar, menos execução mecâ
 
 ## Referencias
 
-- **Post anterior (Parte 1)**: https://www.linkedin.com/pulse/ui-pixel-perfect-com-ia-gera%C3%A7%C3%A3o-de-interfaces-utilizando-gomes-gvrxf/?trackingId=t3xOt8PrS2%2BRsl%2F7PGuZfQ%3D%3D
-- **Repositório do projeto**: https://github.com/mgomesdev/spec-driven-ui/tree/02-page_home
-- **Prompts usados**: https://github.com/mgomesdev/spec-driven-ui/tree/02-page_home/memory-bank/prompts.
-- **Spec-driven Development:** https://martinfowler.com/articles/exploring-gen-ai/sdd-3-tools.html
-- **Repomix:** https://repomix.com/?format=markdown
+- [**Post anterior (Parte 1)**](https://www.linkedin.com/pulse/ui-pixel-perfect-com-ia-gera%C3%A7%C3%A3o-de-interfaces-utilizando-gomes-gvrxf/?trackingId=t3xOt8PrS2%2BRsl%2F7PGuZfQ%3D%3D) 
+- [**Repositório do projeto**](https://github.com/mgomesdev/spec-driven-ui/tree/02-page_home) 
+- [**Prompts usados**](https://github.com/mgomesdev/spec-driven-ui/tree/02-page_home/memory-bank/prompts)
+- [**Spec-driven Development:**](https://martinfowler.com/articles/exploring-gen-ai/sdd-3-tools.html) 
+- [**Repomix:**](https://repomix.com/?format=markdown) 
