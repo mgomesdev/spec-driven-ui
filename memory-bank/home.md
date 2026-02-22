@@ -35,13 +35,13 @@ id: "HOME_ID"
 {
   "children": [
     {
-      "atom_id": "ORG_HEADER_ID"
+      "org_id": "ORG_HEADER_ID"
     },
     {
-      "atom_id": "ORG_HERO_ID",
+      "org_id": "ORG_HERO_ID",
     },
     {
-      "atom_id": "ORG_FOOTER_ID"
+      "org_id": "ORG_FOOTER_ID"
     }
   ]
 }

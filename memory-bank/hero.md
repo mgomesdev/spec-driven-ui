@@ -35,9 +35,7 @@ id: "ORG_HERO_ID"
   "children": [
     {
       "element": "div",
-      "style": {
-  "className": "w-full max-w-[700px] flex flex-col gap-8 text-center"
-},
+      "className": "w-full max-w-[700px] flex flex-col gap-8 text-center",
       "children": [
         {
           "element": "div",
@@ -82,9 +80,7 @@ id: "ORG_HERO_ID"
         },
         {
           "element": "div",
-          "style": {
-            "display": "flex"
-          },
+          "className": "flex",
           "children": [
             {
               "atom_id": "AT_BUTTON_ID",
