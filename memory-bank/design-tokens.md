@@ -1,9 +1,9 @@
 ---
 dependencies: []
 created_at: "21-02-2026:15:45"
-updated_at: "22-02-2026:12:00"
+updated_at: "22-02-2026:13:00"
 file_name: design-tokens.md
-version: "1.2"
+version: "1.3"
 extends: ["GLOBAL_RULES_ID"]
 type: "RULES"
 id: "DESIGN_TOKENS_ID"
@@ -18,13 +18,50 @@ id: "DESIGN_TOKENS_ID"
 
 ---
 
-# 2. Fonts
+# 2. Configuração Obrigatória do Tailwind CSS v4
+
+> ⚠️ **ATENÇÃO**: Os tokens abaixo **só funcionam em produção** se o bloco `@theme` estiver configurado no CSS global do projeto (ex: `globals.css` ou `app.css`). Sem essa configuração, classes como `bg-gradient-primary` não serão reconhecidas pelo Tailwind e não renderizarão.
+
+O agente **deve incluir este bloco** ao gerar o setup inicial do projeto ou ao gerar a página `HOME_ID`.
+
+```css
+@import "tailwindcss";
+
+@theme {
+  --color-primary-500: #9e77ed;
+  --color-primary-600: #7f56d9;
+  --color-gray-50: #f9fafb;
+  --color-gray-500: #667085;
+  --color-gray-900: #101828;
+  --color-white: #ffffff;
+  --color-gradient-primary: linear-gradient(90deg, #7f56d9 0%, #9e77ed 100%);
+}
+```
+
+**Mapeamento className → token** (referência para validação do agente):
+
+| Classe usada nos componentes | Token CSS correspondente |
+|---|---|
+| `text-primary-500` | `--color-primary-500` |
+| `text-primary-600` | `--color-primary-600` |
+| `bg-primary-600` | `--color-primary-600` |
+| `bg-gradient-primary` | `--color-gradient-primary` |
+| `text-gray-50` | `--color-gray-50` |
+| `text-gray-500` | `--color-gray-500` |
+| `bg-gray-500` | `--color-gray-500` |
+| `bg-gray-900` | `--color-gray-900` |
+| `text-white` | `--color-white` |
+| `border-white` | `--color-white` |
+
+---
+
+# 3. Fonts
 
 - **Global Font**: `Inter` — configurada por padrão em todo o sistema.
 
 ---
 
-# 3. Color Tokens
+# 4. Color Tokens
 
 ```json
 {
@@ -40,7 +77,7 @@ id: "DESIGN_TOKENS_ID"
 
 ---
 
-# 4. Typography Tokens
+# 5. Typography Tokens
 
 ```json
 {
@@ -55,7 +92,7 @@ id: "DESIGN_TOKENS_ID"
 
 ---
 
-# 5. Spacing Tokens
+# 6. Spacing Tokens
 
 ```json
 {
@@ -70,7 +107,7 @@ id: "DESIGN_TOKENS_ID"
 
 ---
 
-# 6. Border Tokens
+# 7. Border Tokens
 
 ```json
 {
@@ -86,7 +123,7 @@ id: "DESIGN_TOKENS_ID"
 
 ---
 
-# 7. Shadow Tokens
+# 8. Shadow Tokens
 
 ```json
 {
@@ -98,7 +135,7 @@ id: "DESIGN_TOKENS_ID"
 
 ---
 
-# 8. Interactive State Tokens
+# 9. Interactive State Tokens
 
 ```json
 {
@@ -111,7 +148,7 @@ id: "DESIGN_TOKENS_ID"
 
 ---
 
-# 9. Sizing Tokens
+# 10. Sizing Tokens
 
 ```json
 {

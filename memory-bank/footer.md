@@ -42,7 +42,7 @@ id: "ORG_FOOTER_ID"
       {
       "atom_id": "AT_ICON_ID",
       "icon": "sun",
-      "className": "w-max",
+      "className": "w-max"
     }
   ]
 }

@@ -64,8 +64,8 @@ id: "ORG_HERO_ID"
               "atom_id": "AT_HEADING_ID",
               "label": "apaixonado por criação de interfaces inovadoras",
               "className": "text-5xl"
-            },
-          ],          
+            }
+          ]        
         },
         {
           "atom_id": "AT_PARAGRAPH_ID",
