@@ -9,19 +9,26 @@
 memory-bank/
 ├── agents/
 │   └── UI-PIXEL-AGENT.md         # Instruções do agente orquestrador
-├── global-rules.md               # Regras absolutas globais         [GLOBAL_RULES_ID]
-├── design-tokens.md              # Todos os tokens visuais          [DESIGN_TOKENS_ID]
-├── atomic-design-rules.md        # Regras de composição Atomic      [ATOMIC_DESIGN_RULES_ID]
-├── avatar.md                     # Avatar circular                  [AT_AVATAR_ID]
-├── button.md                     # Botão                            [AT_BUTTON_ID]
-├── heading.md                    # Título                           [AT_HEADING_ID]
-├── icon.md                       # Ícone (Radix UI)                 [AT_ICON_ID]
-├── paragraph.md                  # Parágrafo                        [AT_PARAGRAPH_ID]
-├── card.md                       # Card composto                    [MOL_CARD_ID]
-├── header.md                     # Cabeçalho                        [ORG_HEADER_ID]
-├── hero.md                       # Seção hero principal             [ORG_HERO_ID]
-├── footer.md                     # Rodapé                           [ORG_FOOTER_ID]
-└── home.md                       # Página home completa             [HOME_ID]
+├── components/
+│   ├── atoms/
+│   │   ├── avatar.md
+│   │   ├── button.md
+│   │   ├── heading.md
+│   │   ├── icon.md
+│   │   └── paragraph.md
+│   ├── molecules/
+│   │   └── card.md
+│   ├── organisms/
+│   │   ├── footer.md
+│   │   ├── header.md
+│   │   └── hero.md
+│   └── pages/
+│       └── home.md
+├── constitution/
+│   ├── atomic-design-rules.md
+│   ├── design-tokens.md
+│   └── global-rules.md
+└── README.md
 ```
 
 ---
