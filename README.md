@@ -83,15 +83,15 @@ Criei dois prompts específicos:
 
 ![Chat Lovable](/readme/02-chat-lovable.png)
 
-> Nesta imagem insiro o memory-bank.md e o prompt no contexto do lovable.
+> Nesta imagem insiro o memory-bank.md e o prompt no contexto do Lovable.
 
 ![Resultado Lovable](/readme/02-resultado-lovable-site.png)
 
-> O lovable gerou a interface pixel perfect.
+> O Lovable gerou a interface pixel perfect.
 
 ![Resultado Lovable](/readme/02-resultado-lovable-ds.png)
 
-> O lovable gerou o design system pixel perfect.
+> O Lovable gerou o design system pixel perfect.
 
 ### Gerando o Design System com 1 click
 
@@ -106,7 +106,7 @@ Com essa estrutura atomica fornecida no contexto da IA, podemos utilizar toda a 
 - Imagine por um momento pegar dados e insights de uso da aplicação como por exemplo **Google Analytics, Hotjar** e baseado nos dados de uso, criar, ajustar, corrigir detalhes na interface de maneira automatizada apenas com um prompt, isso é possivel!
 - Imagine desenvolver uma tela desktop e gerar a versão mobile, tablet com 1 prompt, isso é possivel ! 
 
-![Gerando novas telas](/readme/02-gerando-novas-telas.png)
+![Gerando novas telas](/readme/02-nova-secao.png)
 
 > Neste exemplo foi gerada duas novas seções (timeline, habilidades), a IA utilizou os elementos atomicos e usou a **criatividade** para gerar. Como temos poucos elementos no projeto, ela gerou algo simples, mas você entendeu a ideia (espero).
 
