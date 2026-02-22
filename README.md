@@ -1,72 +1,69 @@
-> Continuando [meus estudos](https://www.linkedin.com/pulse/ui-pixel-perfect-com-ia-gera%25C3%25A7%25C3%25A3o-de-interfaces-utilizando-gomes-gvrxf/?trackingId=t3xOt8PrS2%2BRsl%2F7PGuZfQ%3D%3D) em **geração automatizada de sites pixel-perfect com IA**. Desta vez gerei um exemplo um pouco mais próximo do dia-dia, melhorei a versão anterior, descobri muita coisa legal e possibilidades de automação e escala incríveis, da um olhada.
+> Continuando [meus estudos](https://www.linkedin.com/pulse/ui-pixel-perfect-com-ia-gera%25C3%25A7%25C3%25A3o-de-interfaces-utilizando-gomes-gvrxf/?trackingId=t3xOt8PrS2%2BRsl%2F7PGuZfQ%3D%3D) em **geração automatizada de sites pixel-perfect com IA**. Desta vez fiz um exemplo um pouco mais complexo, consegui sincronizar design e código via prompt, reduzi as alucinações da IA em quase 100%, descobri ferramentas mais eficazes, e até gerar o design system de forma automatizada com pouco esforço, sem perder as regras de branding da marca, isso pode mudar completamente a forma de sincronizar o trabalho de UX/Frontend, da um olhada.
 
 ## Visão Geral
 
-No [primeiro post](https://www.linkedin.com/pulse/ui-pixel-perfect-com-ia-gera%25C3%25A7%25C3%25A3o-de-interfaces-utilizando-gomes-gvrxf/?trackingId=t3xOt8PrS2%2BRsl%2F7PGuZfQ%3D%3D), fiz alguns testes iniciais para validar a ideia de **geração de interfaces pixel-perfect com IA**, sincronizando design e código de maneira automatizada. Usei **ferramentas gratuidas de geração de design/código**, e validei as saídas para confirmar se estão exatamente iguais (design e código).
+No [primeiro post](https://www.linkedin.com/pulse/ui-pixel-perfect-com-ia-gera%25C3%25A7%25C3%25A3o-de-interfaces-utilizando-gomes-gvrxf/?trackingId=t3xOt8PrS2%2BRsl%2F7PGuZfQ%3D%3D), fiz alguns testes iniciais para validar a ideia de **geração de interfaces pixel-perfect com IA**, sincronizando design e código de maneira automatizada. Deu certo, mas o exemplo era muito simples e tinham muitas limitações que nesta nova versão consegui corrigi-las.
 
-Os resultados foram bem promissores, e abriu uma infinidade de possibilidades de **automação do fluxo de trabalho entre UX/Frontend**. 
+Desta vez, fiz um exemplo mais proximo do dia-dia, com o mesmo prompt, consegui gerar o design (interface/design system) e código, totalmente fieis ao layout que foi proposto. Estruturei o projeto utilizando [Spec-driven Development](https://martinfowler.com/articles/exploring-gen-ai/sdd-3-tools.html), compilei os arquivos utilizando [Repomix](https://repomix.com/?format=markdown) que trouxe um ganho absurdo no uso da IA para gerar insights e melhorias no projeto.
+
+Os resultados foram bem animadores, e abriu uma infinidade de possibilidades de **automação do fluxo de trabalho entre UX/Frontend**. 
 
 **Neste artigo**:
 
-- Gerando interfaces com IA de forma precisa e sem alucinações.
-   - Tailwind CSS V4 torna as saídas da IA mais precisas, além de facilitar manutenção.
-   - O Prompt Agêntico Atomico pronto para uso.
-      - Criando novos elementos.
-      - Gerando Design System do projeto com 1 click.
-      - Usando a criatividade da IA para gerar novas telas, mantendo o contexto da marca.
-- Comparativo das saídas de Design e Protótipo(código).
-- Principais Aprendizados
-- Conclusão
+- [Projeto de Exemplo](#projeto-de-exemplo)
+- [Uma fonte unica de verdade para o projeto](#uma-fonte-unica-de-verdade-para-o-projeto)
+   - [Repomix o bundler de prompts](#repomix-o-bundler-de-prompts)
+   - [Usando o Copilot para gerar insights incríveis](#usando-o-copilot-para-gerar-insights-incriveis)
 
 **Repositório**: https://github.com/mgomesdev/spec-driven-ui/tree/02-page_home
-
-```
-**TODO (Rascunho)**
-
-Nesses primeiros testes estou focando nos prompts de geração de design, e testando a parte de código com ferramentas de codificação gratuitas sem me preocupar com estrutura e organização do código. O objetivo dos meus estudos iniciais é focar na sincronização do design com o resultado final da UI no código, delegando para a IA toda a parte de codificação reutilizando o mesmo prompt (design/código). 
-
-Descobri novas maneiras de gerar design precisos usando o [Google Stitch](https://stitch.withgoogle.com/), e testei a geração do código/UI usando o  com o [V0](https://v0.app/) e [Lovable](https://lovable.dev/) para confirmar a saída exata do design no código.
-
-Descobri que o [Tailwind CSS](https://tailwindcss.com/) funciona muito bem com as LLMS, aparentemente é algo nativo nas IAs, e isso simplificou ainda mais a estrutura do [`atomic design`](https://atomicdesign.bradfrost.com/) que estou usando na arquitetura.
-
-Descobri tambem que fornecendo os elementos atomicos para a IA, podemos utilizar os insights do contexto gigantesco da IA para criar novas telas baseados em insights estratégicos, e isso torna possivel criar muitas coisas apenas 'conversando com a IA', isso libera o Design de se preocupar em clicar, arrastar coisas no board para criar as telas, assim ele como um revisor/aprovador do resultado final. 
-
-Descobri que o Google Stitch, v0, lovable gera as versoes mobile, table e desktop automaticamente, aparentemente é padrao quando se usa tailwind como referencia, assim pode-se exportar para o figma as tres versoes.
-
-Describri que posso gerar o design system com 1 prompt. 
-
-Descobri que utilizar um Agente Integrado a IDE ajuda de mais na atualização dos prompts, a produtividade comparado aos primeiros estudos aumentou bastante, atualizar metadados dos arquivos .md,, consultas rapidas de classes do tailwind que nao lembrava de cabeça. etc...
-```
 
 ## Projeto de Exemplo
 
 ![Home](/readme/02-page.png)
 
-> Construí a home utilizando a IA.
+> Peguei uma interface aleatória no figma e depois converti para o promt que gerou as telas na ferramenta da IA exatamente iguais a original.
 
-## Gerando novas telas
+## Uma fonte unica de verdade para o projeto
 
-![Gerando novas telas](/readme/02-gerando-novas-telas.png)
+Nos [meus estudos anteriores](https://www.linkedin.com/pulse/ui-pixel-perfect-com-ia-gera%25C3%25A7%25C3%25A3o-de-interfaces-utilizando-gomes-gvrxf/?trackingId=t3xOt8PrS2%2BRsl%2F7PGuZfQ%3D%3D), uma das maiores complicações era inserir varios arquivos no contexto da **IA** para gerar os artefatos, e a maioria das ferramentas **gratuitas** tem uma limitação na quantidade de arquivos que eu podia enviar, tornando a experiência de desenvolvimento muito massante e chata. Resolvi esse problema usando a ferramenta [Repomix](https://repomix.com/?format=markdown) que possibilitou a reestruturação da arquitetura do projeto, evoluindo para um próximo nível onde a IA pode ser usada como um copiloto que agrega valor real.
 
-> Neste exemplo foi gerada duas novas seções (timeline, habilidades), a IA utilizou os elementos atomicos e usou a **criatividade** para gerar.
+### Repomix o bundler de prompts
 
-## Arvore de Elementos Atomicos Atualizada
+> [Repomix](https://repomix.com/?format=markdown) é uma ferramenta poderosa que empacota toda a sua base de código em um único arquivo compatível com IA. Seja para revisões de código, refatoração ou para obter assistência de IA em seu projeto, o Repomix facilita o compartilhamento de todo o contexto do seu repositório com ferramentas de IA.
 
-![Spec Driven - Atomic Design](/readme/02-spec-driven-atomic-design.jpg)
-> Atualizei a arquitetura com as novas mudanças.
+Na maioria das aplicações, usamos blundlers como **gulp**, **webpack** entre outros, para reunir varios arquivos fragmentados em uma unica **fonte de verdade** que centraliza e facilita o carregamento e uso pelas aplicações. O **Repomix** tem um objetivo parecido, com a diferença que foi feito para o **contexto de projetos de IA** que geralmente usam extensôes **json, .md, .xml**.
 
-## Passo a Passo Usados
+### Uma unica fonte de verdade para o projeto
 
-Em todas as tentativas utilizei o seguinte passo a passo:
+Usei o Repomix para gerar um arquivo chamado **memory-bank.md** que centraliza todo o contexto do projeto, reunindo (**#include**) os arquivos especificos com os elementos, regras e outras coisas especificas do projeto, possibilitando o uso das **LLMS** na geração de insights e melhorias incríveis sobre o projeto.
 
-- Acessei a ferramenta de IA ([Google Stitch](https://stitch.withgoogle.com/), [v0](https://v0.app/) etc...).
-- Anexei na sessão do chat o **Prompt do Agente Atômico**, que passou a guiar a sessão.
-- Anexei na sessão do chat todos os arquivos [markdown](https://www.markdownguide.org/) para servir de contexto.
-- Solicitei para que seja gerado a pagina referenciando o id unico, ex: `HOME_ID`.
+![Fonte Unica de Verdade](/readme/02-fonte-unica.png)
 
-> A LLM analisou todo o contexto e especificaçôes do prompt e gerou exatamente o que eu precisava.
+### Usando o Copilot para gerar insights incriveis
 
-## Resultados
+Com todas as informações do projeto reunidas no **memory-bank.md**, utilizei o **Github Copilot** para analisar todo o contexto do projeto e me gerar insights e melhorias estratégicas, e realmente me surpreendi com as infinitas possibilidades que essa estrutura possibilitou. 
+
+- Identifiquei erros de sintax nos arquivos markdown.
+- Formatei e deixei os arquivos mais legíveis e bonitos.
+- Gerei documentações especificas baseado no contexto do projeto.
+- Criei tutoriais.
+- entre outras coisas....
+
+> Apenas guiando os passos da IA para fazer esses processos que eu teria que fazer manualmente e daria um baita trabalho, eu simplesmente fiz em 30 minutos algo que iria durar dias. e tenho quase certeza que muitos detalhes que a IA identificou iam passar batidos por mim :) 
+
+![Copilot](/readme/02-copilot.png)
+
+### Prompt Anti Alucinacao
+
+Com acesso a todo o contexto do projeto em um só lugar e o uso da IA como auxiliar, consegui ter uma visão global do projeto, obter insights e gerar prompts cada vez mais precisos alinhados completamente com o cenário do projeto, isso possibilitou gerar **prompts** que geram saídas muito precisas, tornando possível sincronizar **Design/Código**.
+
+Criei dois prompts específicos: 
+- TODO: adicionar link para o tutorial do repo.
+- **Prompt Atomic Design**: Responsável por gerar elementos específicos (atomos, moleculas, organismos, templates, paginas).
+- TODO: adicionar link para o tutorial do repo.
+- **Prompt Design System**: Responsável por gerar o design system do projeto.
+
+> Os resultados gerados nas ferramentas **Google Stich** e **Lovable** podem ser vistos logo abaixo.
 
 ### Design System
 
@@ -74,13 +71,11 @@ Em todas as tentativas utilizei o seguinte passo a passo:
 
 > Design System foi gerado com apenas 1 comando.
 
-### Board Google Stitch
+### Google Stitch
 
 ![Board Google Stitch](/readme/02-board-google-stitch.png)
 
 > Gerado com Gemini 3.0
-
-### V0
 
 ### Lovable
 
@@ -90,6 +85,16 @@ Em todas as tentativas utilizei o seguinte passo a passo:
 
 ![Resultado Lovable](/readme/02-resultado-lovable-ds.png)
 
+### Usando a criatividade para gerar novas telas
+
+Com essa estrutura atomica fornecida no contexto da IA, podemos utilizar toda a capacidade da IA para criar novas telas que não existem usando apenas elementos especificos do projeto. Isso torna possivel criar muitas coisas apenas 'conversando com a IA', liberando o Design de se preocupar em arrastar elementos na ferramenta de design para criar as telas, o UX atuaria mais em um papel de revisor.
+
+- Imagine por um momento pegar dados e insights de uso da aplicação como por exemplo **Google Analytics, Hotjar** e baseado nos dados de uso, criar, ajustar, corrigir detalhes na interface de maneira automatizada apenas com um prompt, isso é possivel!
+- Imagine desenvolver uma tela desktop e gerar a versão mobile, tablet com 1 prompt, isso é possivel ! 
+
+![Gerando novas telas](/readme/02-gerando-novas-telas.png)
+
+> Neste exemplo foi gerada duas novas seções (timeline, habilidades), a IA utilizou os elementos atomicos e usou a **criatividade** para gerar. Como temos poucos elementos no projeto, ela gerou algo simples, mas você entendeu a ideia (espero).
 
 ## Principais Aprendizados
 
@@ -101,8 +106,8 @@ Em todas as tentativas utilizei o seguinte passo a passo:
 
 ## Conclusão
 
-```
-- **TODO (Rascunho)**
+Com esse exemplo mais próximo do dia a dia, consegui avançar mais um pouco na direção de sincronizar o trabalho de UX/Frontend, 
 
-Espero que este post tenha te dado algum insight, Até mais!
-```
+## Referencias
+
+- TODO: colar a coleção de links.
