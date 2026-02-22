@@ -3,6 +3,7 @@ Limpe o contexto  e aja como um especialista em Design Systems. Extraia todo o c
 # Diretrizes de Extração
 
 ## Fidelidade 1:1
+
 - Processe cada ID (Atoms, Molecules, Organisms, Templates, Pages, Rules) em ordem sequencial. É terminantemente proibido o uso de valores genéricos ou 'placeholders'. Se o documento define um Border-Radius: 4px, não utilize rounded-md, mantendo a especificação técnica 1:1 de cada um.
 
 ## Exaustividade de Propriedades
