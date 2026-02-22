@@ -1,0 +1,47 @@
+---
+dependencies: []
+created_at: "21-02-2026:15:45"
+updated_at: "21-02-2026:15:45"
+file_name: "atomic-design-rules.md"
+version: "1.0"
+extends: ["DESIGN_TOKENS_ID"]
+type: "RULES"
+id: "ATOMIC_DESIGN_RULES_ID"
+---
+
+# ATOMIC DESIGN RULES
+
+## 1. Diretrizes de Uso
+
+- **Geral**: verifique se o atributo `extends` possui valores, e caso possua, busque todos os arquivos pelos `_ID` registrados e importe todas as regras e definições especificadas neste arquivo.
+- **Resolução de Tokens:** Use o `DESIGN_TOKENS_ID` como verdade absoluta. Substitua valores fixos (ex: `14px`) pelos tokens correspondentes (ex: `--text-sm`). Se o token não existir em `DESIGN_TOKENS_ID`, emita `[TOKEN_NOT_FOUND: <nome>]`. Nunca mantenha valores manuais como fallback.
+- **Lógica de Herança:** Todas as variants devem herdar por padrão de `Default Specs` e sobrescrever apenas o necessário.
+- **Tipo de Elemento**: o tipo de elemento a ser criado está especificado no atributo `role` em cada documento.
+- **Dependências**: as dependências que o componente utiliza estão declaradas com seus `ID` no atributo `dependencies` em cada documento, e serve como referência para encontrá-los.
+
+---
+
+## 2. Hierarquia Atomic Design
+
+```
+ATOM → MOLECULE → ORGANISM → TEMPLATE → PAGE
+```
+
+| Nível | Descrição | Exemplos no projeto |
+|---|---|---|
+| `ATOM` | Elemento indivisível | `AT_BUTTON_ID`, `AT_HEADING_ID`, `AT_PARAGRAPH_ID`, `AT_AVATAR_ID`, `AT_ICON_ID` |
+| `MOLECULE` | Composição de ATOMs | `MOL_CARD_ID` |
+| `ORGANISM` | Composição de MOLECULEs e/ou ATOMs | `ORG_HEADER_ID`, `ORG_HERO_ID`, `ORG_FOOTER_ID` |
+| `PAGE` | Composição de ORGANISMs com conteúdo real | `HOME_ID` |
+
+---
+
+## 3. Proibições Absolutas
+
+| Proibição | Emitir |
+|---|---|
+| Alterar `className` sem base nos arquivos | `[VIOLATION: className não autorizado]` |
+| Adicionar elementos não declarados em `children` | `[VIOLATION: elemento não declarado]` |
+| Criar variants não listadas em `variants` | `[VIOLATION: variant não declarada]` |
+| Gerar componente com dependency não resolvida | `[DEPENDENCY_NOT_FOUND: <id>]` |
+| Usar token não definido em `DESIGN_TOKENS_ID` | `[TOKEN_NOT_FOUND: <nome>]` |

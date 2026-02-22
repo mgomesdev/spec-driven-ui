@@ -2,14 +2,16 @@
 dependencies: []
 created_at: "21-02-2026:15:45"
 updated_at: "22-02-2026:13:00"
-file_name: design-tokens.md
+file_name: "design-tokens.md"
 version: "1.3"
 extends: ["GLOBAL_RULES_ID"]
 type: "RULES"
 id: "DESIGN_TOKENS_ID"
 ---
 
-# 1. Diretrizes de Uso
+# DESIGN TOKENS
+
+## 1. Diretrizes de Uso
 
 - **Geral**: verifique se o atributo `extends` possui valores, e caso possua, busque todos os arquivos pelos `_ID` registrados e importe todas as regras e definições especificadas neste arquivo.
 - **Priorizar os tokens**: Este arquivo é a "Single Source of Truth" para valores visuais. Nenhum valor de cor, tipografia, borda, sombra ou estado interativo pode ser usado se não estiver definido aqui.
@@ -18,7 +20,7 @@ id: "DESIGN_TOKENS_ID"
 
 ---
 
-# 2. Configuração Obrigatória do Tailwind CSS v4
+## 2. Configuração Obrigatória — Tailwind CSS v4
 
 > ⚠️ **ATENÇÃO**: Os tokens abaixo **só funcionam em produção** se o bloco `@theme` estiver configurado no CSS global do projeto (ex: `globals.css` ou `app.css`). Sem essa configuração, classes como `bg-gradient-primary` não serão reconhecidas pelo Tailwind e não renderizarão.
 
@@ -55,13 +57,13 @@ O agente **deve incluir este bloco** ao gerar o setup inicial do projeto ou ao g
 
 ---
 
-# 3. Fonts
+## 3. Fonts
 
 - **Global Font**: `Inter` — configurada por padrão em todo o sistema.
 
 ---
 
-# 4. Color Tokens
+## 4. Color Tokens
 
 ```json
 {
@@ -77,45 +79,45 @@ O agente **deve incluir este bloco** ao gerar o setup inicial do projeto ou ao g
 
 ---
 
-# 5. Typography Tokens
+## 5. Typography Tokens
 
 ```json
 {
-  "--text-xs":   "0.75rem",
-  "--text-sm":   "0.875rem",
-  "--text-base": "1rem",
-  "--text-xl":   "1.25rem",
-  "--text-5xl":  "3rem",
+  "--text-xs":       "0.75rem",
+  "--text-sm":       "0.875rem",
+  "--text-base":     "1rem",
+  "--text-xl":       "1.25rem",
+  "--text-5xl":      "3rem",
   "--font-semibold": "600"
 }
 ```
 
 ---
 
-# 6. Spacing Tokens
+## 6. Spacing Tokens
 
 ```json
 {
-  "--spacing-2": "0.5rem",
-  "--spacing-3": "0.75rem",
-  "--spacing-4": "1rem",
-  "--spacing-5": "1.25rem",
-  "--spacing-8": "2rem",
+  "--spacing-2":  "0.5rem",
+  "--spacing-3":  "0.75rem",
+  "--spacing-4":  "1rem",
+  "--spacing-5":  "1.25rem",
+  "--spacing-8":  "2rem",
   "--spacing-16": "4rem"
 }
 ```
 
 ---
 
-# 7. Border Tokens
+## 7. Border Tokens
 
 ```json
 {
-  "--border-radius-md":  "0.375rem",
-  "--border-radius-lg":  "0.5rem",
-  "--border-radius-full":"9999px",
-  "--border-width-2":    "2px",
-  "--border-width-4":    "4px",
+  "--border-radius-md":     "0.375rem",
+  "--border-radius-lg":     "0.5rem",
+  "--border-radius-full":   "9999px",
+  "--border-width-2":       "2px",
+  "--border-width-4":       "4px",
   "--border-color-default": "var(--color-gray-500)",
   "--border-color-white":   "var(--color-white)"
 }
@@ -123,7 +125,7 @@ O agente **deve incluir este bloco** ao gerar o setup inicial do projeto ou ao g
 
 ---
 
-# 8. Shadow Tokens
+## 8. Shadow Tokens
 
 ```json
 {
@@ -135,7 +137,7 @@ O agente **deve incluir este bloco** ao gerar o setup inicial do projeto ou ao g
 
 ---
 
-# 9. Interactive State Tokens
+## 9. Interactive State Tokens
 
 ```json
 {
@@ -148,7 +150,7 @@ O agente **deve incluir este bloco** ao gerar o setup inicial do projeto ou ao g
 
 ---
 
-# 10. Sizing Tokens
+## 10. Sizing Tokens
 
 ```json
 {
