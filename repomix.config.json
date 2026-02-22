@@ -4,8 +4,8 @@
       "maxFileSize": 52428800
    },
    "output": {
-      "filePath": "dist/memory-bank.json",
-      "style": "json",
+      "filePath": "memory-bank/memory-bank.md",
+      "style": "xml",
       "parsableStyle": false,
       "fileSummary": true,
       "directoryStructure": true,
@@ -27,7 +27,7 @@
          "includeLogsCount": 50
       }
    },
-   "include": ["memory-bank/**/*.md"],
+   "include": ["memory-bank/components/**/**.md", "memory-bank/constitution/**/**.md"],
    "ignore": {
       "useGitignore": true,
       "useDotIgnore": true,
