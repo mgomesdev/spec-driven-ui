@@ -111,11 +111,21 @@ Com essa estrutura atomica fornecida no contexto da IA, podemos utilizar toda a 
 
 ## Principais Aprendizados
 
-- **Tailwind CSS V4**: Aparentemente o [Tailwind CSS](https://tailwindcss.com/) tem uma compatibilidade e precisão melhor quando utilizado nas LLMs, além de simplificar e facilitar a composição dos elementos. Realizei a refatoração da primeira versão, e agora todos os elementos referenciam as classes do tailwind diretamente no contexto, ficou bem mais simples de dar manutenção, além de ter aumentado a precisão da saída. 
-- **IA no VSCode**: Usar a IA no vscode é muito útil para algumas tarefas manuais, no meu caso utilizei bastante para atualizar os **metadados** dos arquivos .md, descobrir de forma mais rápida algumas classes do tailwind css e buscar erros de sintax nos blocos de código do markdown.
-- **Diminuir Alucinações**: Descobri que pedir para a IA limpar o contexto entre uma solicitação e outra, melhora a precisão da saída e diminui alucinações.
-- **Responsividade**: A ferramenta [`Google Stitch`](https://stitch.withgoogle.com/) gera 3 versôes (mobile, tablet, desktop) automaticamente, portanto só precisei me preocupar com a geração da versão desktop. 
-- **Repomix**: Esta ferramenta é um tipo de **Blundler de Prompt"** que realiza a compressão de varias fontes de arquivos em um arquivo final em formatos especificos, utilizei para juntar todos os arquivos de contexto **.md** em um arquivo **json** final, aprimorando a precisão da saída e facilitando o uso de LLMS que não suportam o envio de varios arquivos.
+- **Tailwind CSS V4**: Aparentemente o [Tailwind CSS](https://tailwindcss.com/) tem uma compatibilidade 
+  e precisão melhor quando utilizado nas LLMs, além de simplificar a composição dos elementos. 
+  Refatorei a primeira versão do projeto e agora todos os elementos referenciam as classes do Tailwind 
+  diretamente no contexto, ficou muito mais simples de manter e a precisão da saída aumentou 
+  consideravelmente.
+- **Repomix como Bundler de Prompts**: Usar o [Repomix](https://repomix.com/?format=markdown) para 
+  reunir todos os arquivos de contexto em um único arquivo eliminou a 
+  limitação de envio de múltiplos arquivos nas ferramentas gratuitas e tornou o contexto muito mais 
+  rico e preciso para as LLMs.
+- **Memory Bank como fonte única de verdade**: Centralizar todo o contexto do projeto no **memory-bank.md** foi o que possibilitou gerar prompts cada vez mais precisos e consistentes.
+- **Reduzindo Alucinações**: Descobri que pedir para a IA limpar o contexto entre uma solicitação e outra melhora significativamente a precisão da saída. Parece simples, mas fez uma diferença enorme na prática.
+- **IA no VSCode**: Usar a IA diretamente no VSCode foi muito útil para tarefas manuais e repetitivas, como atualizar metadados dos arquivos `.md`, identificar erros de sintaxe em blocos de código e descobrir classes do Tailwind CSS com mais rapidez.
+- **Spec-driven Development como base**: Estruturar o projeto com [Spec-driven Development](https://martinfowler.com/articles/exploring-gen-ai/sdd-3-tools.html) 
+  foi o que deu consistência a todo o processo. Com as especificações bem definidas, a IA tem 
+  muito menos espaço para interpretar errado.
 
 ## Conclusão
 
@@ -132,3 +142,7 @@ O papel do Design e do Frontend começa a se transformar, menos execução mecâ
 - [Prompts usados](https://github.com/mgomesdev/spec-driven-ui/tree/02-page_home/memory-bank/prompts)
 - [Spec-driven Development](https://martinfowler.com/articles/exploring-gen-ai/sdd-3-tools.html) 
 - [Repomix](https://repomix.com/?format=markdown) 
+
+
+
+
