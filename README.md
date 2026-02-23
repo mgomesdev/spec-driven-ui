@@ -1,12 +1,12 @@
-> Continuando [meus estudos](https://www.linkedin.com/pulse/ui-pixel-perfect-com-ia-gera%25C3%25A7%25C3%25A3o-de-interfaces-utilizando-gomes-gvrxf/?trackingId=t3xOt8PrS2%2BRsl%2F7PGuZfQ%3D%3D) em **geração automatizada de interfaces pixel-perfect com IA**. Desta vez fui além: sincronizei design e código com um único prompt, reduzi alucinações da IA em quase 100% e gerei o design system completo de forma automatizada, mantendo as regras regras de branding do produto. Isso me deu um insight que pode mudar completamente a forma como UX e Frontend trabalham juntos. Dá uma olhada.
+> Continuando [meus estudos](https://www.linkedin.com/pulse/ui-pixel-perfect-com-ia-gera%25C3%25A7%25C3%25A3o-de-interfaces-utilizando-gomes-gvrxf/?trackingId=t3xOt8PrS2%2BRsl%2F7PGuZfQ%3D%3D) em **geração automatizada de interfaces pixel-perfect com IA**. Desta vez fui além: sincronizei design e código com um único prompt, reduzi alucinações da IA e gerei o design system completo de forma automatizada, mantendo as regras de branding do produto. Isso me deu um insight que pode mudar completamente a forma como UX e Frontend trabalham juntos. Dá uma olhada.
 
 ## Visão Geral
 
 Continuando os estudos sobre geração automatizada de interfaces pixel-perfect com IA, desta vez fui além do exemplo inicial e trouxe um cenário mais próximo do dia a dia real de UX/Frontend.
 
-O objetivo foi o mesmo: sincronizar design e código via prompt, mas desta vez com muito mais precisão. Usando [Spec-driven Development](https://martinfowler.com/articles/exploring-gen-ai/sdd-3-tools.html) como base estrutural e o [Repomix](https://repomix.com/?format=markdown) para centralizar todo o contexto do projeto em um único arquivo — o **memory-bank.md** — consegui reduzir as a**lucinações da IA em quase 100%** e gerar design, código e design system com um único prompt, sem perder as regras de branding da marca.
+O objetivo foi o mesmo: sincronizar design e código via prompt, mas desta vez com muito mais precisão. Usando [Spec-driven Development](https://martinfowler.com/articles/exploring-gen-ai/sdd-3-tools.html) como base estrutural e o [Repomix](https://repomix.com/?format=markdown) para centralizar todo o contexto do projeto em um único arquivo, o **memory-bank.md**. Consegui reduzir as **alucinações da IA** e gerar design, código e design system com um único prompt, sem perder as regras de branding da marca.
 
-Os resultados validaram algo que vai além da automação técnica: essa abordagem pode mudar completamente a forma como UX e Frontend colaboram, eliminando retrabalho, aumentando a precisão das entregas e abrindo espaço para que o Design atue mais como revisor estratégico do que executor manual.
+Essa abordagem pode ser usada para eliminar retrabalho, aumentar a precisão das entregas e abrir espaço para que o **Design e Frontend trabalhem a partir de uma única fonte de verdade**, onde um **prompt gera tanto o design quanto o código**, fiéis ao layout original. 
 
 
 **Neste artigo**:
