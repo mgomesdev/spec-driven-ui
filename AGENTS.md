@@ -5,6 +5,7 @@
 > Preencha cada slot conforme o projeto evolui — não invente valores, só registre o que foi
 > efetivamente decidido ou implementado. Slots vazios são ignorados pelos agentes.
 > Nunca remova um slot; deixe-o vazio se o item ainda não se aplica.
+> Ignore completamente a pasta **specs/docs/examples**
 
 ---
 
