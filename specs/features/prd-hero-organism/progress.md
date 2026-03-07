@@ -21,3 +21,11 @@
 - **Aprendizados para iterações futuras:**
   - Utilitários do Tailwind como `md:text-7xl` são suficientes para a maioria dos ajustes de escala de texto responsivo.
 ---
+
+## [2026-03-07T18:40:00] - Finalização do Hero
+- Arquivos e diretórios renomeados para kebab-case (`button.tsx`, `hero.tsx`) conforme padrões do projeto.
+- Imports atualizados para refletir a nova estrutura de nomes.
+- Aprendizados destilados em `AGENTS.md`.
+- **Aprendizados para iterações futuras:**
+  - Seguir rigorosamente o kebab-case para arquivos e pastas desde o início para evitar conflitos de cache de casing no sistema de arquivos e lint.
+---

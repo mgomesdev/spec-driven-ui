@@ -69,6 +69,7 @@ Este é um site estratégico para posicionamento de autoridade profissional como
 ### Antipadrôes a evitar
 - Usar tipos `any` (sempre defina tipos apropriados)
 - Colocar valores não reativos dentro de componentes (sempre coloque valores não reativos fora do componente logo abaixo do primeiro componente que utiliza)
+- Ignorar a convenção de nomenclatura de arquivos (sempre use kebab-case para arquivos e diretórios para evitar problemas de casing em diferentes sistemas operacionais e ferramentas de lint)
 
 ### Exemplos de código
 
