@@ -8,6 +8,8 @@
 - Criado o arquivo de tarefas em `specs/features/home/TASKS.md`, dividido em 5 histórias de usuário.
 - Definido o escopo como Landing Page de scroll único, design minimalista e foco em conversão.
 - Implementada a **US-001**: Header minimalista com navegação por âncoras e Root Layout em português.
+- Implementada a **US-002**: Seção Hero refatorada para design minimalista premium, com novos CTAs e posicionamento profissional.
+- Atualizado o átomo **Button** com variantes `primary`, `secondary` e `ghost` seguindo estética Shadcn/UI.
 - Adicionado `scroll-behavior: smooth` ao `globals.css`.
 - Arquivos alterados:
   - `specs/features/home/PRD.md`

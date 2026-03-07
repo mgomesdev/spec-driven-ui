@@ -35,7 +35,7 @@ Página Inicial (Home) - Landing page de scroll único e design minimalista foca
 ### US-002: Implementar Seção Hero com CTA de Conversão
 
 **Prioridade:** 2
-**Passes:** false
+**Passes:** true
 **Descrição:**
 
 > Como visitante, quero ver uma introdução clara e um botão de ação (CTA) focado em ver o portfólio.

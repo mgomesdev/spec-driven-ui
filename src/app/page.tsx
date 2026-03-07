@@ -2,13 +2,12 @@ import { Hero } from "@/components/organisms/hero/hero";
 
 export default function Home() {
   return (
-    <main className="min-h-screen">
+    <main className="flex flex-col">
       <Hero
-        title="Construa o Futuro da Web com Antigravity"
-        subtitle="Interfaces modernas, escaláveis e deslumbrantes criadas com inteligência e precisão."
-        logoSrc="/logo.png"
-        imageSrc="/hero-illustration.png"
-        ctaText="Começar Projeto"
+        title="Desenvolvedor Frontend Sênior & Especialista em Design Systems"
+        subtitle="Construindo experiências digitais memoráveis com Next.js, TypeScript e alto desempenho."
+        imageSrc="/hero.png"
+        ctaText="Me Contrate"
       />
     </main>
   );
