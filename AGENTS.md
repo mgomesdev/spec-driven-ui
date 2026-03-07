@@ -19,7 +19,7 @@ Este é um site estratégico para posicionamento de autoridade profissional como
 - https://www.typescriptlang.org/
 - https://react.dev/
 
-### Blogs e artigos que seguimos
+### Blogs e artigos
 
 - https://atomicdesign.bradfrost.com/
 
@@ -56,7 +56,7 @@ Este é um site estratégico para posicionamento de autoridade profissional como
 - tsconfig.json                 # Arquivos de Configuração de TypeScript
 ```
 
-## Padrôes
+## Padrôes do projeto
 
 ### Convenções de nomenclatura
 
