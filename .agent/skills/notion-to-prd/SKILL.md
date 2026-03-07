@@ -14,7 +14,7 @@ Crie documentos de requisitos de produto detalhados, claros, acionáveis ​​e
 1. Receba uma descrição da feature do usuário.
 2. Faça de 3 a 5 perguntas essenciais para esclarecer dúvidas (com opções identificadas por letras).
 3. Gere um PRD estruturado com base nas respostas.
-4. Salve em `specs/features/[prd-[nome-da-feature]]/prd-[nome-da-feature].md`
+4. Salve em `specs/features/[nome-da-feature]/PRD.md`
 
 **Importante:** NÃO inicie a implementação. Apenas crie o PRD (Product Requirements Document).
 
@@ -134,8 +134,8 @@ O leitor do PRD pode ser um desenvolvedor júnior ou um agente de IA. Portanto:
 ## Saída
 
 - **Formato:** Markdown (`.md`)
-- **Localização:** `specs/features/[prd-[nome-do-recurso]]`
-- **Nome do arquivo:** `prd-[nome-do-recurso].md` (minúsculas)
+- **Localização:** `specs/features/[nome-do-recurso]/PRD.md`
+- **Nome do arquivo:** `PRD.md` (minúsculas)
 
 ---
 
@@ -237,4 +237,4 @@ Antes de salvar o PRD:
 - [ ] As histórias de usuário são pequenas e específicas
 - [ ] Os requisitos funcionais são numerados e inequívocos
 - [ ] A seção de objetivos não definidos estabelece limites claros
-- [ ] Salvo em `specs/features/[prd-[nome-da-funcionalidade]]/prd-[nome-da-funcionalidade].md`
+- [ ] Salvo em `specs/features/[nome-da-funcionalidade]/PRD.md`
