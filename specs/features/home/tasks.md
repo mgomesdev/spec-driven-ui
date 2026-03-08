@@ -1,4 +1,4 @@
-# Projeto: Site de Autoridade Profissional
+# Projeto: spec-driven-ui
 
 **Branch:** us/home
 **Research:** specs/features/home/research.md
@@ -6,274 +6,243 @@
 
 ## Descrição
 
-Criação da página inicial (Home) de um site estratégico voltado para o posicionamento de autoridade profissional como desenvolvedor frontend sênior com UI premium em Tailwind v4.
+Página inicial (`/`) de posicionamento profissional. Exibe uma seção Hero com apresentação pessoal e uma seção de Projetos em Destaque. Todos os dados são estáticos, declarados em constantes TypeScript — sem API ou CMS. O objetivo é converter visitantes (recrutadores e clientes) em contatos ativos.
+
+---
 
 ## User Stories
 
-### US-001: Criar types da feature home
+### US-001: Criar interfaces TypeScript da feature home
 
 **Prioridade:** 1
-**Passes:** true
+**Passes:** false
 
 **Descrição:**
-> Como desenvolvedor, eu quero os tipos TypeScript da feature home definidos para garantir a segurança de tipos e contratos na criação dos mocks e componentes.
+> Como desenvolvedor, eu quero os tipos TypeScript da feature definidos em um único arquivo para que todos os outros artefatos possam ser criados com tipagem correta e sem duplicação.
 
 **Artefatos:**
-- Cria: `src/generated/types.ts`
-- Modifica: (nenhum)
+- Cria: `src/types/home.ts`
 
 **Contexto do plan:**
-> Consultar seção "3. Tipagens Base (Exemplificação)" do plan.md.
-> Tipos necessários: `Project`, `Skill`, `SocialProof`.
+> Consultar seção "3. Interfaces e Types" do plan.md.
+> Tipos necessários: `Profile` (name, role, bio, ctaEmail?, ctaLinkedIn?) e `Project` (id, title, description, stack: string[], url, imageUrl?).
 
 #### Critérios de Aceitação
 
-* Arquivo exporta interface `Project` com `id`, `title`, `description`, `url`, lista de `tags` e `imageUrl` (opcional).
-* Arquivo exporta interface `Skill` contendo `name`, `category` e `icon` opcional.
-* Arquivo exporta interface `SocialProof` contendo `author`, `role` e `quote`.
-* Nenhum tipo utiliza `any` ou `object`.
-* Typecheck aprovado.
+* Arquivo exporta interface `Profile` com campos: `name: string`, `role: string`, `bio: string`, `ctaEmail?: string`, `ctaLinkedIn?: string`
+* Arquivo exporta interface `Project` com campos: `id: string`, `title: string`, `description: string`, `stack: string[]`, `url: string`, `imageUrl?: string`
+* Nenhum uso de `any`
+* Typecheck aprovado
 
 #### Notas
 
 (Sem notas)
 
-### US-002: Criar mock estático home-data
+---
+
+### US-002: Criar arquivo de dados do profissional (profile.ts)
 
 **Prioridade:** 2
-**Passes:** true
+**Passes:** false
 
 **Descrição:**
-> Como desenvolvedor, eu quero mapear os dados estáticos que alimentarão as seções da home para simular um consumo real de dados limpo na UI.
+> Como desenvolvedor que mantém o site, eu quero os dados pessoais do profissional centralizados em uma constante TypeScript para que atualizações futuras sejam feitas em um único lugar.
 
 **Artefatos:**
-- Cria: `src/data/home-data.ts`
-- Depende de: `US-001` (types.ts)
+- Cria: `src/data/profile.ts`
+- Depende de: `US-001` (types/home.ts)
 
 **Contexto do plan:**
-> Consultar diagrama na seção "7. Diagrama de Dependências" do plan.md. O conteúdo provém diretamente das tipagens estáticas como fonte da verdade.
+> Consultar seção "2. Estrutura de Arquivos" e "3. Interfaces e Types" do plan.md.
+> A constante `PROFILE` deve ser tipada com `Profile` de `@/types/home`.
+> Usar placeholders para nome, cargo e bio (ver seção "8. Questões em Aberto").
 
 #### Critérios de Aceitação
 
-* Exporta constantes simulando API para uso nas seções, ex: `projectsData` (lista de `Project`), `skillsData` (lista de `Skill`), `socialProofData` (lista de `SocialProof`).
-* Dados aderem estritamente aos tipos do arquivo `types.ts`.
-* Typecheck aprovado.
+* Arquivo exporta constante `PROFILE` tipada como `Profile`
+* `PROFILE` contém valores placeholder para: `name`, `role`, `bio`, `ctaEmail` e `ctaLinkedIn`
+* Nenhum componente de UI define dados inline — dados centralizados aqui
+* Typecheck aprovado
 
 #### Notas
 
-(Sem notas)
+Usar placeholders realistas enquanto o profissional não preenche os dados definitivos. Ex: `name: "Matheus Gomes"`, `role: "Desenvolvedor Frontend Sênior"`.
 
-### US-003: Criar componente de Botão UI base
+---
+
+### US-003: Criar arquivo de dados de projetos (projects.ts)
 
 **Prioridade:** 3
-**Passes:** true
+**Passes:** false
 
 **Descrição:**
-> Como usuário, eu quero um componente de botão padronizado com múltiplos estilos para ser usado nas ações e Call-To-Action.
+> Como desenvolvedor que mantém o site, eu quero os dados dos projetos centralizados em uma constante TypeScript tipada para que atualizações sejam feitas em um único lugar sem tocar nos componentes.
 
 **Artefatos:**
-- Cria: `src/components/ui/button.tsx`
-- Depende de: `US-001` (para consistência, embora seja UI genérica)
+- Cria: `src/data/projects.ts`
+- Depende de: `US-001` (types/home.ts)
 
 **Contexto do plan:**
-> Consultar seção "4. Assinatura de Componentes" do plan.md.
-> Props: `children`, `variant: 'primary' | 'outline'`, `href?`.
+> Consultar seção "2. Estrutura de Arquivos" e "3. Interfaces e Types" do plan.md.
+> A constante `PROJECTS` deve ser `Project[]` com no mínimo 2 e no máximo 6 projetos de exemplo.
+> Cada projeto deve ter: id, title, description, stack, url — imageUrl é opcional.
 
 #### Critérios de Aceitação
 
-* Componente aceita prop para renderizar botão nativo ou link interno se `href` for fornecido.
-* Renderiza com estilos Tailwind v4 apropriados baseados na prop `variant`.
-* Componente acessível e testado para contraste e states de hover/focus.
-* Typecheck aprovado.
-* Verificar no navegador usando a skill dev-browser.
+* Arquivo exporta constante `PROJECTS` tipada como `Project[]`
+* Array contém entre 2 e 6 projetos com dados placeholder realistas
+* Cada item possui: `id`, `title`, `description`, `stack` (array com pelo menos 2 tecnologias), `url`
+* Nenhum componente define dados de projetos inline
+* Typecheck aprovado
 
 #### Notas
 
-(Sem notas)
+Usar projetos de exemplo realistas até confirmação pelo profissional. URLs podem apontar para `https://github.com` como placeholder.
 
-### US-004: Criar componente Section base
+---
+
+### US-004: Criar componente ProjectCard
 
 **Prioridade:** 4
-**Passes:** true
+**Passes:** false
 
 **Descrição:**
-> Como desenvolvedor, eu quero um wrapper de seção da página genérico para manter espaçamentos e constrains de largura padronizados e responsivos em toda a Home.
-
-**Artefatos:**
-- Cria: `src/components/ui/section.tsx`
-- Modifica: (nenhum)
-
-**Contexto do plan:**
-> Citado em "2. Estrutura de Arquivos" e Diagrama do plan.md. Atuará como base de layout.
-
-#### Critérios de Aceitação
-
-* Exporta wrapper `<Section>` que deve definir max-width, paddings (y-axis) e responsividade mobile-first consistentes com design premium.
-* Typecheck aprovado.
-
-#### Notas
-
-(Sem notas)
-
-### US-005: Criar componente ProjectCard
-
-**Prioridade:** 5
-**Passes:** true
-
-**Descrição:**
-> Como usuário, eu quero visualizar detalhes breves de um projeto na vitrine através de um cartão visual contendo links de acesso rápidos.
+> Como recrutador, eu quero ver cada projeto em um card visual com título, descrição, stack e link, para que eu possa avaliar a capacidade técnica de forma rápida e elegante.
 
 **Artefatos:**
 - Cria: `src/components/home/project-card.tsx`
-- Depende de: `US-001` (types.ts)
+- Depende de: `US-001` (types/home.ts), `US-003` (projects.ts indiretamente via tipo)
 
 **Contexto do plan:**
-> Consultar seção "4. Assinatura de Componentes" do plan.md.
-> Expor a Prop: `{ project: Project }`. Elemento base da lista de projetos.
+> Consultar seção "5. Componentes: Props e Responsabilidades" → subsection `ProjectCard` do plan.md.
+> Props: `{ project: Project }`.
+> Estética: glassmorphism (backdrop-blur, bg translúcido), hover com micro-animação de elevação.
+> Imagem: `<Image />` do Next.js com fallback por degradê quando `imageUrl` é undefined ou falha.
+> Link externo: `target="_blank" rel="noopener noreferrer"`.
+> Acessibilidade: link de cobertura com texto `sr-only` em vez de `<a>` envolvendo todo o card.
 
 #### Critérios de Aceitação
 
-* Componente recebe única prop `project` repassando todos os dados.
-* Renderiza Título, Descrição, Tags, Link (usando Next Link) e a imagem (usando next/image) de maneira visual ou apresenta um placeholder vazio de design harmonioso se não houver imagem.
-* Aplica micro-interações no hover usando Tailwind v4.
-* Typecheck aprovado.
-* Verificar no navegador usando a skill dev-browser.
+* Componente aceita prop `project: Project` e renderiza sem erros
+* Exibe: título do projeto, descrição curta (1–2 linhas), lista de tags da stack
+* Link externo abre o projeto em nova aba com `target="_blank" rel="noopener noreferrer"`
+* Quando `imageUrl` é indefinido ou falha, exibe placeholder com degradê (sem imagem quebrada)
+* Aplica efeito glassmorphism e micro-animação de hover (elevação/scale)
+* Nenhum uso de `any`
+* Typecheck aprovado
+* Verificar no navegador usando a skill dev-browser
+
+#### Notas
+
+O estado `isImageError: boolean` controla o fallback da imagem conforme especificado no plan.md.
+
+---
+
+### US-005: Criar componente ProjectsSection
+
+**Prioridade:** 5
+**Passes:** false
+
+**Descrição:**
+> Como recrutador, eu quero ver os projetos em uma grade organizada com heading identificável para que eu possa avaliar os trabalhos do profissional sem precisar navegar para outra página.
+
+**Artefatos:**
+- Cria: `src/components/home/projects-section.tsx`
+- Depende de: `US-001` (types/home.ts), `US-004` (ProjectCard)
+
+**Contexto do plan:**
+> Consultar seção "5. Componentes: Props e Responsabilidades" → subsection `ProjectsSection` do plan.md.
+> Props: `{ projects: Project[] }`.
+> Estrutura: heading `h2` + grid responsivo (1 col mobile / 2–3 col desktop).
+> A seção deve ter `id="projects"` para que o scroll suave do CTA do Hero funcione.
+
+#### Critérios de Aceitação
+
+* Componente aceita prop `projects: Project[]`
+* Renderiza um heading `h2` com texto "Projetos em Destaque" (ou equivalente)
+* Renderiza um `ProjectCard` para cada item do array `projects`
+* A seção possui `id="projects"` para suporte ao scroll âncora
+* Grid é responsivo: 1 coluna em mobile, 2–3 colunas em desktop (via Tailwind CSS v4)
+* Nenhum uso de `any`
+* Typecheck aprovado
+* Verificar no navegador usando a skill dev-browser
 
 #### Notas
 
 (Sem notas)
 
-### US-006: Criar seção Hero da Home
+---
+
+### US-006: Criar componente HeroSection
 
 **Prioridade:** 6
-**Passes:** true
+**Passes:** false
 
 **Descrição:**
-> Como visitante, quero uma seção de destaque contendo o nome, especialidade e CTA na primeira tela que abra do site para me apresentar contextualmente o profissional.
+> Como recrutador que acessa o site pela primeira vez, eu quero ver de imediato o nome, cargo, bio e links de contato do profissional, para que eu possa decidir em segundos se o perfil é relevante.
 
 **Artefatos:**
-- Cria: `src/components/home/hero.tsx`
-- Depende de: `US-003` (button.tsx), `US-004` (section.tsx)
+- Cria: `src/components/home/hero-section.tsx`
+- Depende de: `US-001` (types/home.ts), `US-002` (profile.ts indiretamente via tipo)
 
 **Contexto do plan:**
-> Consultar seção "4. Assinatura de Componentes" do plan.md;
-> Deve importar as props ou consumir dados passados estáticos de herói.
+> Consultar seção "5. Componentes: Props e Responsabilidades" → subsection `HeroSection` do plan.md.
+> Props: `{ profile: Profile }`.
+> Estrutura: `h1` com nome (único na página), cargo/título, bio curta, CTA primário ("Ver projetos" → `href="#projects"`) e CTA secundário ("Falar comigo" → `mailto:` ou LinkedIn).
+> Estética: gradiente no heading `h1`, backdrop-blur no container, layout responsivo (centralizado mobile / split desktop).
+> Acessibilidade: `h1` único, CTAs com `aria-label` descritivo.
 
 #### Critérios de Aceitação
 
-* Exibe título H1 enfatizando o Nome e o Cargo de Senior Frontend Developer.
-* Usa UI Typography premium (estilos legíveis).
-* Renderiza `<Button variant="primary">` com CTA ("Ver Projetos" ou "Entrar em Contato").
-* Typecheck aprovado.
-* Verificar no navegador usando a skill dev-browser.
+* Componente aceita prop `profile: Profile`
+* Renderiza `h1` com o nome do profissional (único na página)
+* Renderiza cargo/título profissional abaixo do `h1`
+* Renderiza bio curta (1–2 linhas)
+* CTA primário "Ver projetos" com `href="#projects"` para scroll suave até a seção de projetos
+* CTA secundário "Falar comigo" com link para `mailto:` ou LinkedIn conforme valor em `profile`
+* Layout responsivo: mobile-first, conteúdo centralizado; em desktop layout split ou centralizado com max-width
+* Gradiente aplicado ao `h1`, efeito de backdrop-blur visível no container
+* CTAs possuem `aria-label` descritivo
+* Nenhum uso de `any`
+* Typecheck aprovado
+* Verificar no navegador usando a skill dev-browser
 
 #### Notas
 
-(Sem notas)
+O scroll suave é tratado via CSS (`scroll-behavior: smooth`) e âncora HTML nativa — não requer lógica JavaScript.
 
-### US-007: Criar seção Expertise/Stack
+---
+
+### US-007: Integrar HeroSection e ProjectsSection em page.tsx
 
 **Prioridade:** 7
-**Passes:** true
+**Passes:** false
 
 **Descrição:**
-> Como recrutador, quero ver as tecnologias divididas por categoria para facilmente diagnosticar os conhecimentos técnicos da stack atual.
-
-**Artefatos:**
-- Cria: `src/components/home/expertise.tsx`
-- Depende de: `US-001` (types.ts), `US-004` (section.tsx)
-
-**Contexto do plan:**
-> Consultar seção "4. Assinatura de Componentes" do plan.md;
-> Props: `ExpertiseProps: { skills: Skill[] }`.
-
-#### Critérios de Aceitação
-
-* Renderiza uma listagem visual limpa das ferramentas dominadas por Categoria (ex: Linguagens, Ferramentas).
-* Typecheck aprovado.
-* Verificar no navegador usando a skill dev-browser.
-
-#### Notas
-
-Aproveitará `skillsData` importando estaticamente vindo do data.
-
-### US-008: Criar seção Vitrine de Projetos
-
-**Prioridade:** 8
-**Passes:** true
-
-**Descrição:**
-> Como visitante, quero navegar rapidamente por uma lista em grid dos melhores projetos entregues contendo imagem e os contatos.
-
-**Artefatos:**
-- Cria: `src/components/home/projects.tsx`
-- Depende de: `US-001` (types.ts), `US-004` (section.tsx), `US-005` (project-card.tsx)
-
-**Contexto do plan:**
-> Consultar seção "2. Estrutura de Arquivos" e "4. Assinatura de Componentes".
-
-#### Critérios de Aceitação
-
-* Renderiza um CSS Grid ou Flex responsivo populado por 3 `ProjectCard` importados via lista local do component/data.
-* Typecheck aprovado.
-* Verificar no navegador usando a skill dev-browser.
-
-#### Notas
-
-Faremos uma versão estática inicial dos top 3 projetos.
-
-### US-009: Criar seção About e Prova Social
-
-**Prioridade:** 9
-**Passes:** true
-
-**Descrição:**
-> Como potencial cliente, quero ler de forma concisa sobre a biografia do profissional e conferir as avaliações e validações do trabalho pregresso.
-
-**Artefatos:**
-- Cria: `src/components/home/about.tsx`
-- Depende de: `US-001` (types.ts), `US-004` (section.tsx)
-
-**Contexto do plan:**
-> Consultar seção "4. Assinatura de Componentes" do plan.md.
-> Props de conteúdo baseado em bio e testimonials `SocialProof`.
-
-#### Critérios de Aceitação
-
-* Apresenta bloco contendo a história e bio do perfil (2 paragrafos curtos).
-* Apresenta design limpo com citações e o cargo dos autores dos depoimentos.
-* Typecheck aprovado.
-* Verificar no navegador usando a skill dev-browser.
-
-#### Notas
-
-(Sem notas)
-
-### US-010: Integrar todas as seções na page.tsx
-
-**Prioridade:** 10
-**Passes:** true
-
-**Descrição:**
-> Como usuário visitante, acessando a raiz (/), quero que a SPA se inicie e traga todas as seções de layout em uma ordem lógica.
+> Como recrutador que acessa `/`, eu quero ver a página completa com Hero e Projetos compostos corretamente, para que eu tenha uma experiência coesa e funcional desde o primeiro acesso.
 
 **Artefatos:**
 - Modifica: `src/app/page.tsx`
-- Depende de: `US-006` a `US-009` e `US-002` (home-data)
+- Depende de: `US-002` (profile.ts), `US-003` (projects.ts), `US-005` (ProjectsSection), `US-006` (HeroSection)
 
 **Contexto do plan:**
-> Consultar diagrama da seção "7. Diagrama de Dependências" e "2. Estrutura de Arquivos" do plan.md.
+> Consultar seção "2. Estrutura de Arquivos" e "7. Diagrama de Dependências" do plan.md.
+> `page.tsx` importa `PROFILE` de `@/data/profile`, `PROJECTS` de `@/data/projects`,
+> `HeroSection` de `@/components/home/hero-section` e `ProjectsSection` de `@/components/home/projects-section`.
+> `page.tsx` passa os dados via props. Não define dados inline.
 
 #### Critérios de Aceitação
 
-* Edita `src/app/page.tsx` (removendo boilerplates defaults se aplicavel).
-* Importa os dados de `src/data/home-data.ts`.
-* Renderiza, organizadamente, em ordem as seções Hero, Expertise, Projetos, About alimentadas pelas props estáticas.
-* Estrutura SPA mantida (sem roteamentos quebrados).
-* Garantir meta SEO base se possível e performance de index base.
-* Typecheck aprovado.
-* Verificar no navegador usando a skill dev-browser acessando `/` e validando o Layout por completo.
+* `page.tsx` importa e renderiza `HeroSection` passando `profile={PROFILE}`
+* `page.tsx` importa e renderiza `ProjectsSection` passando `projects={PROJECTS}`
+* A página tem apenas um `h1` (vindo do HeroSection) e `h2` para seções subsequentes
+* O CTA "Ver projetos" rola suavemente até `#projects` (âncora nativa + CSS smooth)
+* Links externos abrem em nova aba com `rel="noopener noreferrer"`
+* Página carrega sem erros de console no browser
+* Nenhum dado de profissional ou projeto definido inline no JSX de `page.tsx`
+* Typecheck aprovado
+* Verificar no navegador usando a skill dev-browser: acessar `/`, confirmar Hero e Projetos visíveis, testar CTA de scroll
 
 #### Notas
 
-Última task centralizadora da feature de Home.
+Esta é a história de integração final. Todas as histórias anteriores (US-001 a US-006) devem estar concluídas antes de iniciar esta.
