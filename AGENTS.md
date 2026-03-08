@@ -29,6 +29,7 @@ Site estratégico de posicionamento de autoridade profissional como desenvolvedo
 - **arquitetura**: `./specs/docs/arquitetura.md`
 - **fluxo de desenvolvimento**: `./specs/docs/fluxo-dev.md`
 - **estrutura do projeto**: `./specs/docs/estrutura-projeto.md`
+- **exemplos de código**: `./specs/docs/exemplos-codigo.md`
 
 ## Padrôes do projeto
 
@@ -55,5 +56,3 @@ Commits devem ser atômicos — um por história implementada.
 - ❌ Não commite com erros de typecheck ou lint
 - ❌ Não crie componentes sem tipar as props
 - ❌ Não invente contratos de API — consulte o `plan.md`
-
-### Exemplos de código

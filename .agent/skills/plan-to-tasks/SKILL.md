@@ -1,19 +1,17 @@
 ---
-name: tasks
-description: "Gera o TASKS.md lendo o research.md e o plan.md. Converte o planejamento técnico em histórias de usuário atômicas, ordenadas por dependência, prontas para execução pelo Orchestrator. Use esta skill após o plan.md estar aprovado. Acionada por: 'gere as tasks', 'criar TASKS.md', 'gerar plano de execução', 'converter plan em tasks', 'criar histórias de implementação', 'gerar tasks do plan'. Deve ser usada APÓS o plan.md estar aprovado e ANTES de iniciar o Orchestrator."
+name: plan-to-tasks
+description: "Gera o tasks.md lendo o research.md e o plan.md. Converte o planejamento técnico em histórias de usuário atômicas, ordenadas por dependência, prontas para execução. Use esta skill após o plan.md estar aprovado. Acionada por: 'gere as tasks'. Deve ser usada APÓS o plan.md estar aprovado."
 ---
 
 # Tasks Generator
 
-Lê o `research.md` e o `plan.md` aprovados e gera um `TASKS.md` com histórias de usuário atômicas, ordenadas por dependência, prontas para execução pelo Orchestrator uma por vez.
+Lê o `research.md` e o `plan.md` aprovados e gera um `tasks.md` com histórias de usuário atômicas, ordenadas por dependência, prontas para execução.
 
 ## Posição no fluxo
 
 ```
-research.md + plan.md (aprovados)  →  [ESTA SKILL] TASKS.md  →  Orchestrator
+research.md + plan.md (aprovados)  →  [ESTA SKILL] tasks.md  →  Orchestrator
 ```
-
----
 
 ## Funcionamento
 
@@ -26,22 +24,22 @@ research.md + plan.md (aprovados)  →  [ESTA SKILL] TASKS.md  →  Orchestrator
 
 ### Etapa 2: Arquivar execução anterior (se houver)
 
-Antes de escrever o novo `TASKS.md`:
+Antes de escrever o novo `tasks.md`:
 
-1. Verifique se existe `specs/features/[nome-da-feature]/TASKS.md`
+1. Verifique se existe `specs/features/[nome-da-feature]/tasks.md`
 2. Se existir e tiver um `branchName` diferente da feature atual:
    - Crie `specs/features/[nome-da-feature]/archive/YYYY-MM-DD-[nome-anterior]/`
-   - Mova os arquivos `TASKS.md` e `progress.md` para o arquivo
+   - Mova os arquivos `tasks.md` e `progress.md` para o arquivo
    - Reinicie `progress.md` com cabeçalho limpo
 
-### Etapa 3: Gerar o TASKS.md
+### Etapa 3: Gerar o tasks.md
 
 Transforme os artefatos do plan em histórias atômicas. Siga as regras de tamanho e ordenação abaixo.
 
 ### Etapa 4: Apresentar ao usuário e aguardar aprovação
 
 ```
-✅ TASKS.md gerado em specs/features/[nome]/TASKS.md
+✅ tasks.md gerado em specs/features/[nome]/tasks.md
 
 Resumo:
 - X histórias geradas
@@ -56,8 +54,6 @@ Histórias:
 👉 Revise as tasks e responda "aprovado" para iniciar o Orchestrator,
    ou indique o que deve ser ajustado.
 ```
-
----
 
 ## Regra #1: Tamanho das Histórias
 
@@ -78,8 +74,6 @@ O Orchestrator cria uma nova instância de agente por história, sem memória da
 
 **Regra prática:** Se não consegue descrever a mudança em 2–3 frases, é grande demais.
 
----
-
 ## Regra #2: Ordem das Histórias (Dependências Primeiro)
 
 As histórias rodam em sequência. Histórias posteriores não podem depender de algo que ainda não foi criado.
@@ -95,9 +89,7 @@ As histórias rodam em sequência. Histórias posteriores não podem depender de
 
 **Nunca crie um componente antes do type que ele usa.**
 
----
-
-## Formato do TASKS.md
+## Formato do tasks.md
 
 ```markdown
 # Projeto: [Nome do Projeto]
@@ -109,8 +101,6 @@ As histórias rodam em sequência. Histórias posteriores não podem depender de
 ## Descrição
 
 [Descrição da feature em 2–3 linhas, extraída do research.md]
-
----
 
 ## User Stories
 
@@ -139,11 +129,7 @@ As histórias rodam em sequência. Histórias posteriores não podem depender de
 #### Notas
 
 (Sem notas)
-
----
 ```
-
----
 
 ## Critérios de Aceitação: Como Escrever
 
@@ -165,8 +151,6 @@ As histórias rodam em sequência. Histórias posteriores não podem depender de
 - Toda história com componente/UI: adicionar `"Verificar no navegador usando a skill dev-browser"`
 - Toda história com lógica de dados: adicionar critério que verifica o contrato da API (ex: "chama `GET /api/items` com o header Authorization")
 
----
-
 ## Incluir Contexto do Plan nas Histórias
 
 Cada história deve referenciar explicitamente qual seção do `plan.md` o agente deve consultar. Isso evita que o agente invente interfaces ou ignore o planejamento.
@@ -178,15 +162,13 @@ Cada história deve referenciar explicitamente qual seção do `plan.md` o agent
 > O type `StatusItem` deve ser `'ativo' | 'inativo' | 'pendente'` conforme definido.
 ```
 
----
-
 ## Exemplo Completo
 
 **Input (feature: `item-list`):**
 - research.md define: tela de listagem de itens com filtro por status
 - plan.md define: types.ts, itemService.ts, useItems hook, ItemCard componente, ItemList componente, page.tsx modificado
 
-**Output TASKS.md:**
+**Output tasks.md:**
 
 ```markdown
 # Projeto: MeuApp
@@ -199,8 +181,6 @@ Cada história deve referenciar explicitamente qual seção do `plan.md` o agent
 
 Tela de listagem de itens com filtro por status. O usuário pode visualizar todos os itens,
 filtrar por status (ativo/inativo/pendente) e clicar para ver detalhes.
-
----
 
 ## User Stories
 
@@ -231,8 +211,6 @@ filtrar por status (ativo/inativo/pendente) e clicar para ver detalhes.
 
 (Sem notas)
 
----
-
 ### US-002: Criar itemService com chamadas à API
 
 **Prioridade:** 2
@@ -261,8 +239,6 @@ filtrar por status (ativo/inativo/pendente) e clicar para ver detalhes.
 #### Notas
 
 (Sem notas)
-
----
 
 ### US-003: Criar hook useItems
 
@@ -293,8 +269,6 @@ filtrar por status (ativo/inativo/pendente) e clicar para ver detalhes.
 
 (Sem notas)
 
----
-
 ### US-004: Criar componente ItemCard
 
 **Prioridade:** 4
@@ -323,8 +297,6 @@ filtrar por status (ativo/inativo/pendente) e clicar para ver detalhes.
 #### Notas
 
 (Sem notas)
-
----
 
 ### US-005: Criar componente ItemList com filtro
 
@@ -356,8 +328,6 @@ filtrar por status (ativo/inativo/pendente) e clicar para ver detalhes.
 
 (Sem notas)
 
----
-
 ### US-006: Integrar ItemList na página
 
 **Prioridade:** 6
@@ -388,11 +358,9 @@ filtrar por status (ativo/inativo/pendente) e clicar para ver detalhes.
 (Sem notas)
 ```
 
----
-
 ## Lista de Verificação (antes de salvar)
 
-- [ ] Execução anterior arquivada (se TASKS.md existia com branch diferente)
+- [ ] Execução anterior arquivada (se tasks.md existia com branch diferente)
 - [ ] Cada história pode ser concluída em uma única iteração
 - [ ] Histórias estão ordenadas por dependência (types → service → hook → componentes → página)
 - [ ] Nenhuma história depende de uma história posterior
@@ -400,5 +368,5 @@ filtrar por status (ativo/inativo/pendente) e clicar para ver detalhes.
 - [ ] Toda história tem `"Typecheck aprovado"` como critério
 - [ ] Toda história com UI tem `"Verificar no navegador usando a skill dev-browser"`
 - [ ] Critérios de aceitação são verificáveis (não vagos)
-- [ ] Arquivo salvo em `specs/features/[nome-da-feature]/TASKS.md`
+- [ ] Arquivo salvo em `specs/features/[nome-da-feature]/tasks.md`
 - [ ] Resumo apresentado ao usuário para aprovação

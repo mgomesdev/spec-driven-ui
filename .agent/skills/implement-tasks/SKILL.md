@@ -3,7 +3,7 @@ name: implement-tasks
 description: "Executa as histórias do tasks.md uma por vez como um agente engenheiro de software frontend. Lê o plan.md para contexto técnico, implementa a história, roda typechecks, verifica no navegador, commita e registra aprendizados no progress.md antes de passar para a próxima. Use esta skill para executar o plano de implementação gerado pelas skills de research, plan e tasks. Acionada por: 'execute as tasks da feature [nome-da-feature]'. Deve ser usada APÓS o tasks.md estar aprovado."
 ---
 
-# Implement-tasks — Agente de Implementação Frontend
+# Agente de Implementação Frontend
 
 Executa as histórias do `tasks.md` uma por vez. A cada história, lê o contexto técnico do `plan.md`, implementa, valida, commita e registra aprendizados para a próxima iteração.
 
@@ -136,7 +136,66 @@ Após concluir uma história, verifique o tasks.md:
 Encerre normalmente. A próxima iteração processará a próxima história.
 
 **Se TODAS as histórias têm `Passes: true`:**
-Responda com:
+Execute a **Destilação de Conhecimento** (seção abaixo) antes de encerrar.
+
+---
+
+## Destilação de Conhecimento (ao concluir todas as histórias)
+
+Quando todas as histórias estiverem com `Passes: true`, o aprendizado acumulado no `progress.md` deve ser destilado nos documentos gerais do projeto antes de limpar o arquivo.
+
+### 1. Leia o progress.md completo
+
+Releia todo o `progress.md` da feature, incluindo:
+- Seção `## Padrões do Projeto`
+- Todos os blocos de `## Aprendizados para iterações futuras`
+- Todas as notas de contexto útil
+
+### 2. Mapeie o aprendizado para os documentos gerais
+
+O `AGENTS.md` (raiz do projeto) aponta para os documentos gerais. Distribua o aprendizado conforme a natureza de cada item:
+
+| Tipo de aprendizado | Documento destino |
+|---|---|
+| Padrões de arquitetura, estrutura de pastas, fluxo de dados | `specs/docs/arquitetura.md` |
+| Convenções de nomenclatura de arquivos e componentes | `specs/docs/nomenclatura-arquivos.md` |
+| Padrões de código, hooks, imports, exports | `specs/docs/convencoes-codigo.md` |
+| Restrições, armadilhas, o que nunca fazer | `specs/docs/guardrails.md` |
+| Novas tecnologias, libs ou fontes de referência descobertas | Seção `## Fontes confiáveis` do `AGENTS.md` |
+| Antipadrões identificados na prática | Seção `### Antipadrões a evitar` do `AGENTS.md` |
+| Exemplos de código reutilizáveis | Seção `### Exemplos de código` do `AGENTS.md` |
+
+> **Regra:** Se um aprendizado se encaixa em um documento filho (`specs/docs/`), vá direto ao filho. Use o `AGENTS.md` apenas para itens de alto nível sem documento filho correspondente.
+
+### 3. Atualize os documentos destino
+
+Para cada documento a ser atualizado:
+- **Acrescente** — nunca substitua conteúdo existente
+- **Seja cirúrgico** — adicione apenas o que é novo e geral
+- **Não copie** entradas específicas de uma história; generalize o aprendizado
+
+### 4. Limpe o progress.md
+
+Após confirmar que todo aprendizado relevante foi destilado, reescreva o `progress.md` com apenas o esqueleto inicial:
+
+```markdown
+## Padrões do Projeto
+
+<!-- Padrões consolidados serão adicionados aqui durante a execução das histórias -->
+
+---
+```
+
+### 5. Commit da destilação
+
+```bash
+git add .
+git commit -m "chore: destilar aprendizados do progress.md nos docs gerais"
+```
+
+---
+
+Após a destilação, responda com:
 
 ```
 ✅ CONCLUÍDO
@@ -148,6 +207,9 @@ Todas as histórias foram implementadas:
 
 Branch: us/[nome-da-feature]
 Commits: [número de commits]
+
+📚 Conhecimento destilado em:
+- [lista dos documentos atualizados]
 
 👉 Próximos passos sugeridos:
    1. Revisar o código no PR
@@ -192,4 +254,10 @@ FINALIZAÇÃO:
   12. adicionar ao progress.md (aprendizados)
   13. atualizar AGENTS.md (se padrão reutilizável)
   14. verificar se há mais histórias → continuar ou encerrar
+
+SE TODAS AS HISTÓRIAS CONCLUÍDAS:
+  15. destilar progress.md nos docs gerais (AGENTS.md e specs/docs/)
+  16. limpar progress.md → esqueleto inicial
+  17. git commit -m "chore: destilar aprendizados do progress.md nos docs gerais"
+  18. responder com resumo + lista de docs atualizados
 ```
