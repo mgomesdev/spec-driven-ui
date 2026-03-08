@@ -1,5 +1,6 @@
 import { Hero } from "@/components/organisms/hero/hero";
 import { ProjectsSection } from "@/components/organisms/projects-section/projects-section";
+import { SkillsExperienceSection } from "@/components/organisms/skills-experience-section/skills-experience-section";
 
 export default function Home() {
   return (
@@ -11,6 +12,7 @@ export default function Home() {
         ctaText="Me Contrate"
       />
       <ProjectsSection />
+      <SkillsExperienceSection />
     </main>
   );
 }

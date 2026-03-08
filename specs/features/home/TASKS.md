@@ -58,7 +58,7 @@ Página Inicial (Home) - Landing page de scroll único e design minimalista foca
 ### US-003: Criar Galeria de Projetos Curada
 
 **Prioridade:** 3
-**Passes:** false
+**Passes:** true
 **Descrição:**
 
 > Como recrutador, quero ver uma lista selecionada de projetos com visibilidade imediata.
