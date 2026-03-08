@@ -1,6 +1,6 @@
 ## Padrões do Projeto
 
-<!-- Padrões consolidados serão adicionados aqui durante a execução das histórias -->
+- Componentes são exportados via `src/components/atoms/index.ts` (ou barrel correspondente) para facilitar imports.
 
 ---
 
@@ -35,7 +35,19 @@
 - Arquivos: `src/hooks/use-content.ts`
 
 **Aprendizados para iterações futuras:**
-- Hooks que consomem dados estáticos devem usar `useMemo` se o custo de processamento/leitura for relevante, embora aqui seja por convenção e futura escalabilidade.
+- Hooks que consomem dados estáticos devem usar `useMemo` se o custo de processamento/leitura for relevante.
 - Adicionado `'use client'` pois hooks que usam `useMemo` ou hooks do React são hooks de client components.
+
+---
+
+## 2026-03-08 17:40 - US-004
+
+**O que foi implementado:**
+- Criação dos átomos `Badge`, `Button` e `Heading`.
+- Arquivos: `src/components/atoms/badge.tsx`, `src/components/atoms/button.tsx`, `src/components/atoms/heading.tsx`
+
+**Aprendizados para iterações futuras:**
+- Para componentes de cabeçalho dinâmicos (`h1` a `h6`), use o tipo `ElementType` de `react` para o `Tag` para evitar erros de tipagem do JSX.
+- O Tailwind v4 simplifica a gestão de cores e temas, mas é importante manter a consistência com as variáveis CSS definidas em `globals.css`.
 
 ---

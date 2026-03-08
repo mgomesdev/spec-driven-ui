@@ -89,7 +89,7 @@ projetos de destaque, habilidades e depoimentos para facilitar o processo de con
 ### US-004: Criar átomos base (Badge, Button, Heading)
 
 **Prioridade:** 4
-**Passes:** false
+**Passes:** true
 
 **Descrição:**
 > Como visitante, eu quero ver elementos de interface consistentes e com design premium.
