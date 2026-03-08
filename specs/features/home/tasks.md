@@ -94,7 +94,7 @@ Criação da página inicial (Home) de um site estratégico voltado para o posic
 ### US-004: Criar componente Section base
 
 **Prioridade:** 4
-**Passes:** false
+**Passes:** true
 
 **Descrição:**
 > Como desenvolvedor, eu quero um wrapper de seção da página genérico para manter espaçamentos e constrains de largura padronizados e responsivos em toda a Home.
