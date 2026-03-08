@@ -200,7 +200,7 @@ Aproveitará `skillsData` importando estaticamente vindo do data.
 ### US-008: Criar seção Vitrine de Projetos
 
 **Prioridade:** 8
-**Passes:** false
+**Passes:** true
 
 **Descrição:**
 > Como visitante, quero navegar rapidamente por uma lista em grid dos melhores projetos entregues contendo imagem e os contatos.

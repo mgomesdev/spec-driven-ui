@@ -5,6 +5,7 @@
 - Constantes internas do componente que não utilizam as props, via prop-drilling, ou não dependem de re-renderização, devem ser declaradas logo após o componente que as usa.
 - evite selecionar props que não são utilizadas no componente, prefira a desestruturação de props que são utilizadas.
 - Não use comentários.
+- Declare os componentes utilizando arrow functions.
 ---
 
 ## [2026-03-08 19:00] - US-001
@@ -89,5 +90,18 @@
 
 **Aprendizados para iterações futuras:**
 - Manter objetos estáticos (`categoryTitles`) fora do componente ajuda a reduzir o footprint de memória das alocações durante as renderizações.
+
+---
+
+## [2026-03-08 19:42] - US-008
+
+**O que foi implementado:**
+- Criado componente `Projects` (`src/components/home/projects.tsx`).
+- Apresenta os 3 princiais projetos consumindo dados estáticos através de um grid responsivo.
+- Reutiliza o `ProjectCard` já desenvolvido.
+- Arquivos: `src/components/home/projects.tsx`
+
+**Aprendizados para iterações futuras:**
+- O uso de grid responsivos em Next com Tailwind é facilitado ao acoplar com as Sections pré-estilizadas (max-w e paddings).
 
 ---
