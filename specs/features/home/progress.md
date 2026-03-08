@@ -1,6 +1,9 @@
 ## Padrões do Projeto
 
 - Componentes são exportados via `src/components/[tier]/index.ts` (ou barrel correspondente) para facilitar imports.
+- Não adicione comentários no código, expresse-se através de nomes claros.
+- Se uma função, constante, etc, não depende do re-render do componente, devem ser instanciados fora do componente, logo abaixo do componente que o utiliza.
+- Não precisa criar varios arquivos para cada componente, se o componente é usado somente no mesmo arquivo, mantenha-os no mesmo arquivo (só separe se o arquivo tive proximo de 500 linhas).
 
 ---
 
