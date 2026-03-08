@@ -28,3 +28,5 @@
 | Service | camelCase + Service | `projetosService.ts` |
 | Types | camelCase | `types.ts` |
 | Página | kebab-case (pasta) | `app/sobre/page.tsx` |
+- **Estilos Globais no Módulo**: Extraia objetos de estilo e classes utilitárias (como variáveis string Tailwind) para o escopo do módulo (fora do componente) para reduzir o ruído visual e evitar re-alocações.
+- **Links Acessíveis em Cards**: Prefira criar um link de cobertura (`absolute inset-0 z-10`) com texto `sr-only` em vez de envolver todo o card em uma tag `<a>`, permitindo estrutura semântica (como `<article>`) dentro do card.
