@@ -1,6 +1,6 @@
 ## Padrões do Projeto
 
-- Componentes são exportados via `src/components/atoms/index.ts` (ou barrel correspondente) para facilitar imports.
+- Componentes são exportados via `src/components/[tier]/index.ts` (ou barrel correspondente) para facilitar imports.
 
 ---
 
@@ -49,5 +49,17 @@
 **Aprendizados para iterações futuras:**
 - Para componentes de cabeçalho dinâmicos (`h1` a `h6`), use o tipo `ElementType` de `react` para o `Tag` para evitar erros de tipagem do JSX.
 - O Tailwind v4 simplifica a gestão de cores e temas, mas é importante manter a consistência com as variáveis CSS definidas em `globals.css`.
+
+---
+
+## 2026-03-08 17:45 - US-005
+
+**O que foi implementado:**
+- Criação da molécula `ProjectCard`.
+- Arquivos: `src/components/molecules/project-card.tsx`
+
+**Aprendizados para iterações futuras:**
+- Use `next/image` para otimização de imagens, configurando o domínio da Unsplash ou outros se for usar placeholders externos.
+- `line-clamp-2` do Tailwind é excelente para manter a consistência de altura em grids de cards.
 
 ---

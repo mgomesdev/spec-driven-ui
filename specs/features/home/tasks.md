@@ -118,7 +118,7 @@ projetos de destaque, habilidades e depoimentos para facilitar o processo de con
 ### US-005: Criar molécula ProjectCard
 
 **Prioridade:** 5
-**Passes:** false
+**Passes:** true
 
 **Descrição:**
 > Como recrutador, eu quero ver os detalhes de um projeto de forma clara e atraente.

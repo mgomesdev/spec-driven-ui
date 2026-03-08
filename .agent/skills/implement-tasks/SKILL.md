@@ -128,7 +128,7 @@ Antes de commitar, verifique se há aprendizados que valem para futuras sessões
 Após concluir uma história, verifique o tasks.md:
 
 **Se ainda há histórias com `Passes: false`:**
-Encerre normalmente. A próxima iteração processará a próxima história.
+Reinicie o ciclo a partir do passo 1 — releia o `tasks.md`, depois o `progress.md` atualizado (incluindo os novos padrões recém-registrados) e o `plan.md` antes de implementar a próxima história.
 
 **Se TODAS as histórias têm `Passes: true`:**
 Execute a **Destilação de Conhecimento** (seção abaixo) antes de encerrar.
@@ -248,7 +248,9 @@ FINALIZAÇÃO:
   11. atualizar tasks.md → Passes: true
   12. adicionar ao progress.md (aprendizados)
   13. atualizar AGENTS.md (se padrão reutilizável)
-  14. verificar se há mais histórias → continuar ou encerrar
+  14. verificar se há mais histórias com Passes: false
+      → se sim: voltar ao passo 1 (reler tasks.md → progress.md atualizado → plan.md)
+      → se não: ir para passo 15 (destilação)
 
 SE TODAS AS HISTÓRIAS CONCLUÍDAS:
   15. destilar progress.md nos docs gerais (AGENTS.md e specs/docs/)
