@@ -174,7 +174,7 @@ Criação da página inicial (Home) de um site estratégico voltado para o posic
 ### US-007: Criar seção Expertise/Stack
 
 **Prioridade:** 7
-**Passes:** false
+**Passes:** true
 
 **Descrição:**
 > Como recrutador, quero ver as tecnologias divididas por categoria para facilmente diagnosticar os conhecimentos técnicos da stack atual.

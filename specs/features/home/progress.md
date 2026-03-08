@@ -66,3 +66,28 @@
 - O padrão de criar um link de cobertura (`absolute inset-0 z-10`) com texto `sr-only` é mais acessível e elimina a necessidade de envolver todo o card em uma tag de link, permitindo elementos semânticos mais corretos (`<article>`).
 
 ---
+
+## [2026-03-08 19:35] - US-006
+
+**O que foi implementado:**
+- Criado componente `Hero` (`src/components/home/hero.tsx`).
+- Typography premium aplicada com tracking, kerning e bg-clip-text gradient.
+- Fundo sutil com overlay radial-gradient e dependência de Section e Button acopladas.
+- Arquivos: `src/components/home/hero.tsx`
+
+**Aprendizados para iterações futuras:**
+- O uso de classes globais const extraídas ajuda muito para reutilizar variáveis de tipografia se necessário num futuro próximo. O layout de container flexível permite fácil responsividade colapsando em telas menores (`min-h-[70vh]`).
+
+---
+
+## [2026-03-08 19:40] - US-007
+
+**O que foi implementado:**
+- Criado componente `Expertise` (`src/components/home/expertise.tsx`).
+- Apresenta as ferramentas e linguagens separadas por categoria.
+- Arquivos: `src/components/home/expertise.tsx`
+
+**Aprendizados para iterações futuras:**
+- Manter objetos estáticos (`categoryTitles`) fora do componente ajuda a reduzir o footprint de memória das alocações durante as renderizações.
+
+---
