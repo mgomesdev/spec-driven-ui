@@ -1,15 +1,9 @@
-'use client';
-
-import { contentService } from '@/services/content-service';
-import { HomeContent } from '@/types/content';
-import { useMemo } from 'react';
+import { HomeContent } from '../types/content';
+import { getContent } from '../services/content-service';
 
 /**
- * Hook to provide content for the Home page.
- * Keeps the component logic clean and abstracts the data source.
+ * Hook para acessar o conteúdo da home
  */
 export const useContent = (): HomeContent => {
-  const content = useMemo(() => contentService.getHomeContent(), []);
-  
-  return content;
+  return getContent();
 };
