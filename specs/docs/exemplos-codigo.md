@@ -1,8 +1,6 @@
 ## 3. Interfaces e Types
 
 ```typescript
-// Local: src/generated/types.ts
-
 // Enums / union types
 export type StatusItem = 'ativo' | 'inativo' | 'pendente';
 
@@ -46,7 +44,6 @@ O que o frontend vai **consumir** do backend. Documente cada contrato.
 ```typescript
 // Método: GET | POST | PUT | PATCH | DELETE
 // Endpoint: /api/[recurso]
-// Ou: Server Action em src/features/[nome]/actions/nomeAction.ts
 
 // Request
 interface NomeRequest {
@@ -74,8 +71,6 @@ Para cada componente criado, defina props e responsabilidade.
 ### NomeComponente
 
 ```typescript
-// Local: src/features/[nome]/components/NomeComponente.tsx
-
 interface NomeComponenteProps {
   // props tipadas explicitamente
   items: Item[];
@@ -97,8 +92,6 @@ Hooks que encapsulam lógica de dados ou side-effects.
 ### useNomeHook
 
 ```typescript
-// Local: src/features/[nome]/hooks/useNomeHook.ts
-
 // Input
 interface UseNomeHookParams {
   filtro?: string;

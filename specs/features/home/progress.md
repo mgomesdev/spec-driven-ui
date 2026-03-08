@@ -39,3 +39,14 @@
 - Extrair objetos de estilo (`baseStyles`, `variantStyles`) para o escopo global do módulo reduz o ruído de tipagem e re-renderização, de acordo com a regra de manter constantes com dados estáticos fora do componente.
 
 ---
+
+## [2026-03-08 19:22] - US-004
+
+**O que foi implementado:**
+- Criado componente de layout `Section` com constrains de visibilidade (`max-w-7xl` e padding y responsivo).
+- Arquivos: `src/components/ui/section.tsx`
+
+**Aprendizados para iterações futuras:**
+- O encapsulamento de `max-w-7xl` dentro de uma section 100% de largura permite ter backgrounds `bleeding` edge-to-edge enquanto o conteúdo central obedece às guias, prática recomendada em componentes de layout de Next.
+
+---

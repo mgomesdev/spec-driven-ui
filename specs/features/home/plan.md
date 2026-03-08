@@ -1,11 +1,11 @@
-# Plan: Home Page
+# Plan: Home
 
 > Gerado a partir de: `specs/features/home/research.md`
-> Foco: Frontend (Next.js + Tailwind v4 + Atomic Design)
+> Foco: Frontend
 
 ## 1. Visão Geral Técnica
 
-Implementação da Home Page seguindo o Atomic Design. O conteúdo será centralizado em um arquivo `src/data/content.json` para facilitar futuras edições. Os componentes serão construídos do zero utilizando Tailwind CSS v4, garantindo um design minimalista e premium. A página será estática, consumindo os dados do JSON via importação direta ou via serviço/hook.
+A página Home será construída com Next.js App Router (React 19) como uma Single Page Application. Os dados do perfil, portfólio e depoimentos serão fornecidos via uma fonte local estática (mock), já que não há integração de API e backend real. Utilizaremos Tailwind CSS v4 puro para a estilização unificada e criação de microinterações fluídas. Todos os artefatos basear-se-ão estritamente no framework Next.js sem SWR/React Query.
 
 ---
 
@@ -14,179 +14,70 @@ Implementação da Home Page seguindo o Atomic Design. O conteúdo será central
 ```
 src/
 ├── app/
-│   └── page.tsx                          # modificado - monta as seções da home
+│   └── page.tsx                          # modificado - refatorada para importar seções
 ├── components/
-│   ├── atoms/
-│   │   ├── badge.tsx                     # criado - componente de tag para tecnologias
-│   │   ├── button.tsx                    # criado - botões minimalistas
-│   │   └── heading.tsx                   # criado - tipografia consistente
-│   ├── molecules/
-│   │   ├── project-card.tsx              # criado - card individual de projeto
-│   │   └── skill-item.tsx                # criado - item individual de skill com ícone
-│   └── organisms/
-│       ├── header.tsx                    # criado - navegação principal
-│       ├── hero.tsx                      # criado - seção de destaque (autoridade)
-│       ├── projects-grid.tsx             # criado - grade de projetos
-│       ├── skills-list.tsx               # criado - listagem de tecnologias
-│       └── testimonials.tsx              # criado - seção de prova social
+│   ├── home/
+│   │   ├── hero.tsx                      # criado - CTA e título
+│   │   ├── expertise.tsx                 # criado - Lista de tecnologias (badges)
+│   │   ├── projects.tsx                  # criado - Vitrine dos 3 top projetos
+│   │   ├── project-card.tsx              # criado - Elemento base da lista de projetos
+│   │   └── about.tsx                     # criado - Resumo profisional e prova social
+│   └── ui/
+│       ├── button.tsx                    # criado - Botão principal
+│       └── section.tsx                   # criado - Container de seção resposiva
 ├── data/
-│   └── content.json                      # criado - fonte de verdade para os textos
-├── hooks/
-│   └── use-content.ts                    # criado - hook para acessar dados do JSON
-├── services/
-│   └── content-service.ts                # criado - abstração para leitura do JSON
-└── types/
-    └── content.ts                        # criado - interfaces para o JSON de conteúdo
-```
-
-Legenda:
-- `# criado` — arquivo novo
-- `# modificado` — arquivo existente com alterações
-
----
-
-## 3. Interfaces e Types
-
-### Content Schema
-
-```typescript
-// Local: src/types/content.ts
-
-export interface Project {
-  id: string;
-  title: string;
-  description: string;
-  imageUrl: string;
-  technologies: string[];
-  link?: string;
-}
-
-export interface Skill {
-  name: string;
-  category: 'Frontend' | 'Tools' | 'Soft Skills';
-  icon?: string;
-}
-
-export interface Testimonial {
-  author: string;
-  role: string;
-  company: string;
-  content: string;
-  avatarUrl?: string;
-}
-
-export interface HomeContent {
-  hero: {
-    title: string;
-    description: string;
-    ctaLabel?: string;
-  };
-  projects: Project[];
-  skills: Skill[];
-  testimonials: Testimonial[];
-}
+│   └── home-data.ts                      # criado - Dados estáticos simulando banco (skills, textos)
+└── generated/
+    └── types.ts                          # criado - Interfaces TypeScript de conteúdo
 ```
 
 ---
 
-## 4. Contratos de Dados (Internos)
+## 3. Tipagens Base (Exemplificação)
 
-Como usaremos dados estáticos, o "contrato" é o formato do `content.json`.
+Principais tipos a serem exportados em `types.ts` sem uso de `any` ou `object`:
 
-### content.json structure
-
-```json
-{
-  "hero": {
-    "title": "Desenvolvedor Frontend Sênior",
-    "description": "Portfólio estratégico focado em autoridade e entrega de valor.",
-    "ctaLabel": "Ver Projetos"
-  },
-  "projects": [
-    {
-      "id": "1",
-      "title": "Exemplo",
-      "description": "Descrição do projeto",
-      "imageUrl": "/images/project1.png",
-      "technologies": ["React", "Next.js", "Tailwind"]
-    }
-  ],
-  "skills": [
-    { "name": "TypeScript", "category": "Frontend" }
-  ],
-  "testimonials": [
-    {
-      "author": "Nome",
-      "role": "CEO",
-      "company": "Empresa",
-      "content": "Excelente profissional."
-    }
-  ]
-}
-```
+- `Project`: `{ id: string; title: string; description: string; imageUrl?: string; url: string; tags: string[] }`
+- `Skill`: `{ name: string; category: 'languages' | 'frameworks' | 'tools'; icon?: string }`
+- `SocialProof`: `{ author: string; role: string; quote: string }`
 
 ---
 
-## 5. Componentes: Props e Responsabilidades
+## 4. Assinatura de Componentes
 
-### Hero Organism
+Props expostas esperadas (em resumo):
 
-```typescript
-// src/components/organisms/hero.tsx
-interface HeroProps {
-  data: HomeContent['hero'];
-}
-// Responsabilidade: Renderizar título H1 impactante e descrição curta.
-```
-
-### ProjectsGrid Organism
-
-```typescript
-// src/components/organisms/projects-grid.tsx
-interface ProjectsGridProps {
-  projects: Project[];
-}
-// Responsabilidade: Mapear a lista de projetos e renderizar ProjectCards em grid.
-```
-
-### ProjectCard Molecule
-
-```typescript
-// src/components/molecules/project-card.tsx
-interface ProjectCardProps {
-  project: Project;
-}
-// Responsabilidade: Exibir imagem, título, tecnologias (Badges) e descrição.
-```
+- `HeroProps`: `{ name: string; title: string; subtitle: string; ctaText: string }`
+- `ProjectCardProps`: `{ project: Project }`
+- `ExpertiseProps`: `{ skills: Skill[] }`
+- `AboutProps`: `{ biography: string; proofs: SocialProof[] }`
+- `ButtonProps`: `{ children: React.ReactNode; variant: 'primary' | 'outline'; href?: string }`
 
 ---
 
 ## 7. Diagrama de Dependências
 
 ```
-[types/content.ts]
+[types.ts]
     │
-    ├──► [data/content.json]
-    │         │
-    │         ▼
-    │    [services/content-service.ts]
+    ├──► [home-data.ts]
     │         │
     ▼         ▼
-[Atoms (Badge, Button, Heading)]
+[button.tsx, section.tsx, project-card.tsx]
     │
     ▼
-[Molecules (ProjectCard, SkillItem)]
-    │
-    ▼
-[Organisms (Hero, ProjectsGrid, SkillsList, etc.)]
+[hero.tsx, expertise.tsx, projects.tsx, about.tsx]
     │
     ▼
 [page.tsx (modificado)]
 ```
 
+Desta forma preparamos as estruturas de dados e UI de base antes das seções em si.
+
 ---
 
 ## 8. Questões em Aberto
 
-- [ ] Definir a paleta de cores exata para o "Minimalista Tech" no Tailwind v4.
-- [ ] Decidir se o Hero terá uma imagem/avatar ou será focado apenas em tipografia.
+- [ ] Vamos incluir uma seção de currículo para baixar (PDF) direto na Home?
+- [ ] Quais são os top 3 projetos que terão destaque inicial?
+- [ ] Há ícones específicos/biblioteca extra (ex: Lucide React) pré-instalados para os cards ou usaremos SVG raw?

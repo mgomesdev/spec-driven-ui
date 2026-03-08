@@ -33,7 +33,6 @@ Site estratégico de posicionamento de autoridade profissional como desenvolvedo
 ## Padrôes do projeto
 
 - **convenções de código**: `./specs/docs/convencoes-codigo.md`
-- **nomenclatura de arquivos**: `./specs/docs/nomenclatura-arquivos.md`
 - **guardrails**: `./specs/docs/guardrails.md`
 - **padroes git**: `./specs/docs/padroes-git.md`
 - **antipadroes a evitar**: `./specs/docs/antipadroes.md`
@@ -44,5 +43,6 @@ Site estratégico de posicionamento de autoridade profissional como desenvolvedo
 
 ### Arquivos para ignorar
 
-- `./specs/readme`
+- `./specs/README.md`
+- `./specs/FLUXO-DEV.md`
 - Leia o arquivo `.gitignore` localizado na raiz do projeto e ignore tudo que está especificado lá.
