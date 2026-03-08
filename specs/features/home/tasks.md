@@ -146,7 +146,7 @@ Criação da página inicial (Home) de um site estratégico voltado para o posic
 ### US-006: Criar seção Hero da Home
 
 **Prioridade:** 6
-**Passes:** false
+**Passes:** true
 
 **Descrição:**
 > Como visitante, quero uma seção de destaque contendo o nome, especialidade e CTA na primeira tela que abra do site para me apresentar contextualmente o profissional.

@@ -1,9 +1,10 @@
 ## Padrões do Projeto
 
+- Siga as regras de codificação do projeto.
 - Não use forwardRef na criação dos componentes.
-- Constantes internas do componente que não utilizam as props, via prop-drilling, ou não dependem de re-renderização, devem ser declaradas fora depois da declaração do componente que as usa.
+- Constantes internas do componente que não utilizam as props, via prop-drilling, ou não dependem de re-renderização, devem ser declaradas logo após o componente que as usa.
 - evite selecionar props que não são utilizadas no componente, prefira a desestruturação de props que são utilizadas.
-- 
+- Não use comentários.
 ---
 
 ## [2026-03-08 19:00] - US-001
@@ -48,5 +49,20 @@
 
 **Aprendizados para iterações futuras:**
 - O encapsulamento de `max-w-7xl` dentro de uma section 100% de largura permite ter backgrounds `bleeding` edge-to-edge enquanto o conteúdo central obedece às guias, prática recomendada em componentes de layout de Next.
+
+---
+
+## [2026-03-08 19:28] - US-005
+
+**O que foi implementado:**
+- Criado componente `ProjectCard` (`src/components/home/project-card.tsx`).
+- Uso do `next/image` com suporte a placeholder (fallback com ícone).
+- Tratamento de tags iterativas.
+- Micro-interações de hover premium (`-translate-y-1`, sombra, transição de imagem colorida).
+- Camada de link absoluto (`inset-0`) cobrindo todo o card de forma acessível para maximizar área de clique.
+- Arquivos: `src/components/home/project-card.tsx`
+
+**Aprendizados para iterações futuras:**
+- O padrão de criar um link de cobertura (`absolute inset-0 z-10`) com texto `sr-only` é mais acessível e elimina a necessidade de envolver todo o card em uma tag de link, permitindo elementos semânticos mais corretos (`<article>`).
 
 ---
