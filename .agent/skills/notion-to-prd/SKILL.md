@@ -1,33 +1,38 @@
 ---
-name: prd
-description: "Gera um Documento de Requisitos do Produto (PRD) para um novo recurso. Use ao planejar um recurso, iniciar um novo projeto ou quando solicitado a criar um PRD. Acionado por: criar um PRD, escrever PRD para, planejar este recurso, requisitos para, especificar."
+name: notion-to-research
+description: "Gera um Documento de Research para um novo recurso. Use ao analisar a US que foi escrita no notion e não está clara o suficiente para iniciar a implementação."
 ---
 
-# PRD Generator
+# Research Generator
 
-Crie documentos de requisitos de produto detalhados, claros, acionáveis ​​e adequados para implementação.
+Crie um documento de Research detalhado, claro e acionável.
 
----
+## Quando usar esta skill
 
-## The Job
+- Quando a equipe de produto criar uma US e não estiver clara o suficiente para iniciar a implementação.
 
-1. Receba uma descrição da feature do usuário.
-2. Faça de 3 a 5 perguntas essenciais para esclarecer dúvidas (com opções identificadas por letras).
-3. Gere um PRD estruturado com base nas respostas.
-4. Salve em `specs/features/[nome-da-feature]/PRD.md`
+## Acionamento
 
-**Importante:** NÃO inicie a implementação. Apenas crie o PRD (Product Requirements Document).
+- converta a especificação de produto para o research
+- gere o research apartir da especificação de produto
 
----
+## Funcionamento
 
-Etapa 1: Esclarecendo dúvidas
+1. Solicite o nome da feature que será desenvolvida no seguinte formado: `nome-da-feature`.
+2. Leia a descrição da feature do usuário através do arquivo research.md que está localizado no diretório `specs/features/[nome-da-feature]/research.md` (crie o arquivo se ele não existir).
+3. Verifique se o arquivo `specs/features/[nome-da-feature]/research.md` está completo (solicite ao usuário que complete o arquivo se ele não estiver completo).
+4. Faça de 3 a 5 perguntas essenciais para esclarecer dúvidas (com opções identificadas por letras).
+5. Gere um research.md estruturado com base nas respostas.
+6. Salve em `specs/features/[nome-da-feature]/research.md`
+
+### Etapa 1: Esclarecendo dúvidas
 
 Faça apenas perguntas críticas quando a pergunta inicial for ambígua ou genérica. Concentre-se em:
 
 - **Problema/Objetivo:** Que problema isso resolve?
 - **Funcionalidade principal:** Quais são as ações principais?
 - **Âmbito de aplicação/Limites:** O que NÃO deve fazer?
-**Critérios de sucesso:** Como saberemos que foi concluído?
+- **Critérios de sucesso:** Como saberemos que foi concluído?
 
 ### Formate as perguntas assim:
 
@@ -55,11 +60,11 @@ Isso permite que os usuários respondam com "1A, 2C, 3B" para uma iteração rá
 
 ---
 
-Etapa 2: Estrutura PRD
+Etapa 2: Estrutura research.md
 
-Gere o PRD com estas seções:
+Gere o research.md com estas seções:
 
-### 1. Introdução/Visão Geral
+### 1. Visão Geral
 Breve descrição da funcionalidade e do problema que ela resolve.
 
 ### 2. Objetivos
@@ -71,7 +76,7 @@ Cada história precisa de:
 - **Descrição:** "Como [usuário], eu quero [recurso] para que [benefício]"
 **Critérios de Aceitação:** Lista de verificação do que significa "concluído".
 
-Cada história deve ser pequena o suficiente para ser implementada em uma única sessão focada.
+Cada história deve ser pequena o suficiente para ser implementada em uma única sessão focada (max 20% janela de contexto do agente).
 
 **Formato:**
 ```markdown
@@ -82,7 +87,7 @@ Cada história deve ser pequena o suficiente para ser implementada em uma única
 - [ ] Critério específico verificável
 - [ ] Outro critério
 - [ ] Aprovações de verificação de tipo/lint
-- [ ] **[Somente histórias de UI]** Verifique no navegador usando a dev-browser skill
+- [ ] **[Somente histórias de UI]** Verifique no navegador usando a dev-browser skill (ou skill de navegador disponível)
 ```
 
 **Importante:**
@@ -121,7 +126,7 @@ Ainda há dúvidas ou áreas que precisam de esclarecimento?
 
 ## Escrita para Desenvolvedores Juniores
 
-O leitor do PRD pode ser um desenvolvedor júnior ou um agente de IA. Portanto:
+O leitor do research.md pode ser um desenvolvedor júnior ou um agente de IA. Portanto:
 
 - Seja explícito e inequívoco
 - Evite jargões ou explique-os.
@@ -134,15 +139,15 @@ O leitor do PRD pode ser um desenvolvedor júnior ou um agente de IA. Portanto:
 ## Saída
 
 - **Formato:** Markdown (`.md`)
-- **Localização:** `specs/features/[nome-do-recurso]/PRD.md`
-- **Nome do arquivo:** `PRD.md` (minúsculas)
+- **Localização:** `specs/features/[nome-do-recurso]/research.md`
+- **Nome do arquivo:** `research.md` (minúsculas)
 
 ---
 
-## Exemplo PRD
+## Exemplo research.md
 
 ```markdown
-# PRD: Sistema de Priorização de Tarefas
+# Sistema de Priorização de Tarefas
 
 ## Introdução
 
@@ -230,11 +235,11 @@ Adicione níveis de prioridade às tarefas para que os usuários possam se conce
 
 ## Lista de verificação
 
-Antes de salvar o PRD:
+Antes de salvar o research.md:
 
 - [ ] Fez perguntas de esclarecimento com opções identificadas por letras.
 - [ ] Respostas do usuário incorporadas
 - [ ] As histórias de usuário são pequenas e específicas
 - [ ] Os requisitos funcionais são numerados e inequívocos
 - [ ] A seção de objetivos não definidos estabelece limites claros
-- [ ] Salvo em `specs/features/[nome-da-funcionalidade]/PRD.md`
+- [ ] Salvo em `specs/features/[nome-da-funcionalidade]/research.md`
