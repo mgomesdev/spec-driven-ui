@@ -29,30 +29,20 @@ Site estratégico de posicionamento de autoridade profissional como desenvolvedo
 - **arquitetura**: `./specs/docs/arquitetura.md`
 - **fluxo de desenvolvimento**: `./specs/docs/fluxo-dev.md`
 - **estrutura do projeto**: `./specs/docs/estrutura-projeto.md`
-- **exemplos de código**: `./specs/docs/exemplos-codigo.md`
 
 ## Padrôes do projeto
 
 - **convenções de código**: `./specs/docs/convencoes-codigo.md`
 - **nomenclatura de arquivos**: `./specs/docs/nomenclatura-arquivos.md`
 - **guardrails**: `./specs/docs/guardrails.md`
+- **padroes git**: `./specs/docs/padroes-git.md`
+- **antipadroes a evitar**: `./specs/docs/antipadroes.md`
 
-### Padrão de Commits
+### Exemplos de Código
 
-```
-feat: US-XXX - Título da história
-fix: descrição do que foi corrigido
-chore: descrição de tarefa de manutenção
-```
+- `./specs/docs/exemplos-codigo.md`
 
-Commits devem ser atômicos — um por história implementada.
+### Arquivos para ignorar
 
-### Antipadrôes a evitar
-
-- ❌ Não implemente nada sem passar pelo fluxo research → plan → tasks
-- ❌ Não use `any` no TypeScript
-- ❌ Não faça `fetch` direto em componentes
-- ❌ Não refatore código fora do escopo da história atual
-- ❌ Não commite com erros de typecheck ou lint
-- ❌ Não crie componentes sem tipar as props
-- ❌ Não invente contratos de API — consulte o `plan.md`
+- `./specs/readme`
+- Leia o arquivo `.gitignore` localizado na raiz do projeto e ignore tudo que está especificado lá.
