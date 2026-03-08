@@ -1,4 +1,4 @@
-# Projeto: Spec Driven UI
+# Projeto: Site de Autoridade Profissional
 
 **Branch:** us/home
 **Research:** specs/features/home/research.md
@@ -6,273 +6,274 @@
 
 ## Descrição
 
-Desenvolvimento da página inicial do site estratégico de posicionamento de autoridade profissional. 
-A página serve como o cartão de visitas principal, apresentando competência técnica (frontend sênior), 
-projetos de destaque, habilidades e depoimentos para facilitar o processo de contratação.
+Criação da página inicial (Home) de um site estratégico voltado para o posicionamento de autoridade profissional como desenvolvedor frontend sênior com UI premium em Tailwind v4.
 
 ## User Stories
 
-### US-001: Validar e ajustar types da feature home
+### US-001: Criar types da feature home
 
 **Prioridade:** 1
 **Passes:** true
 
 **Descrição:**
-> Como desenvolvedor, eu quero garantir que as interfaces TypeScript estejam alinhadas com o planejado para que todos os componentes usem tipagem correta.
+> Como desenvolvedor, eu quero os tipos TypeScript da feature home definidos para garantir a segurança de tipos e contratos na criação dos mocks e componentes.
 
 **Artefatos:**
-- Modifica: `src/types/content.ts`
+- Cria: `src/generated/types.ts`
+- Modifica: (nenhum)
 
 **Contexto do plan:**
-> Ver seção "3. Interfaces e Types" do plan.md. As interfaces `Project`, `Skill`, `Testimonial` e `HomeContent` devem estar presentes e corretas.
+> Consultar seção "3. Tipagens Base (Exemplificação)" do plan.md.
+> Tipos necessários: `Project`, `Skill`, `SocialProof`.
 
 #### Critérios de Aceitação
 
-* Arquivo `src/types/content.ts` exporta as interfaces `Project`, `Skill`, `Testimonial` e `HomeContent`
-* As interfaces seguem exatamente a estrutura definida no plan.md
-* Typecheck aprovado
+* Arquivo exporta interface `Project` com `id`, `title`, `description`, `url`, lista de `tags` e `imageUrl` (opcional).
+* Arquivo exporta interface `Skill` contendo `name`, `category` e `icon` opcional.
+* Arquivo exporta interface `SocialProof` contendo `author`, `role` e `quote`.
+* Nenhum tipo utiliza `any` ou `object`.
+* Typecheck aprovado.
 
 #### Notas
 
 (Sem notas)
 
-### US-002: Criar content-service para leitura de dados
+### US-002: Criar mock estático home-data
 
 **Prioridade:** 2
 **Passes:** true
 
 **Descrição:**
-> Como desenvolvedor, eu quero uma abstração para leitura dos dados do content.json para que a lógica de carregamento de dados fique centralizada.
+> Como desenvolvedor, eu quero mapear os dados estáticos que alimentarão as seções da home para simular um consumo real de dados limpo na UI.
 
 **Artefatos:**
-- Cria: `src/services/content-service.ts`
-- Depende de: `US-001`
+- Cria: `src/data/home-data.ts`
+- Depende de: `US-001` (types.ts)
 
 **Contexto do plan:**
-> Ver seção "2. Estrutura de Arquivos" e "7. Diagrama de Dependências". O serviço deve importar o `content.json` ou fazer o fetch se necessário (por enquanto importação direta resolve).
+> Consultar diagrama na seção "7. Diagrama de Dependências" do plan.md. O conteúdo provém diretamente das tipagens estáticas como fonte da verdade.
 
 #### Critérios de Aceitação
 
-* Exporta função ou classe para acessar os dados de `src/data/content.json`
-* O retorno deve ser tipado como `HomeContent`
-* Typecheck aprovado
+* Exporta constantes simulando API para uso nas seções, ex: `projectsData` (lista de `Project`), `skillsData` (lista de `Skill`), `socialProofData` (lista de `SocialProof`).
+* Dados aderem estritamente aos tipos do arquivo `types.ts`.
+* Typecheck aprovado.
 
 #### Notas
 
 (Sem notas)
 
-### US-003: Criar hook use-content
+### US-003: Criar componente de Botão UI base
 
 **Prioridade:** 3
 **Passes:** true
 
 **Descrição:**
-> Como desenvolvedor, eu quero um hook customizado para acessar os dados da home para que os componentes não precisem conhecer a implementação do serviço.
+> Como usuário, eu quero um componente de botão padronizado com múltiplos estilos para ser usado nas ações e Call-To-Action.
 
 **Artefatos:**
-- Cria: `src/hooks/use-content.ts`
-- Depende de: `US-002`
+- Cria: `src/components/ui/button.tsx`
+- Depende de: `US-001` (para consistência, embora seja UI genérica)
 
 **Contexto do plan:**
-> Ver seção "2. Estrutura de Arquivos". O hook deve expor os dados carregados pelo `content-service`.
+> Consultar seção "4. Assinatura de Componentes" do plan.md.
+> Props: `children`, `variant: 'primary' | 'outline'`, `href?`.
 
 #### Critérios de Aceitação
 
-* Hook `useContent` exportado e funcional
-* Retorna os dados da home tipados corretamente
-* Typecheck aprovado
+* Componente aceita prop para renderizar botão nativo ou link interno se `href` for fornecido.
+* Renderiza com estilos Tailwind v4 apropriados baseados na prop `variant`.
+* Componente acessível e testado para contraste e states de hover/focus.
+* Typecheck aprovado.
+* Verificar no navegador usando a skill dev-browser.
 
 #### Notas
 
 (Sem notas)
 
-### US-004: Criar átomos base (Badge, Button, Heading)
+### US-004: Criar componente Section base
 
 **Prioridade:** 4
 **Passes:** false
 
 **Descrição:**
-> Como visitante, eu quero ver elementos de interface consistentes e com design premium.
+> Como desenvolvedor, eu quero um wrapper de seção da página genérico para manter espaçamentos e constrains de largura padronizados e responsivos em toda a Home.
 
 **Artefatos:**
-- Cria: `src/components/atoms/badge.tsx`
-- Cria: `src/components/atoms/button.tsx`
-- Cria: `src/components/atoms/heading.tsx`
+- Cria: `src/components/ui/section.tsx`
+- Modifica: (nenhum)
 
 **Contexto do plan:**
-> Ver seção "2. Estrutura de Arquivos". Usar Tailwind CSS v4 para estilização minimalista.
+> Citado em "2. Estrutura de Arquivos" e Diagrama do plan.md. Atuará como base de layout.
 
 #### Critérios de Aceitação
 
-* `Badge`: Componente para exibir tags de tecnologias
-* `Button`: Componente de botão com variações (ex: primary, outline)
-* `Heading`: Componente para tipografia H1, H2, etc. com estilos consistentes
-* Estilização minimalista conforme research.md
-* Typecheck aprovado
-* Verificar no navegador usando a skill dev-browser
+* Exporta wrapper `<Section>` que deve definir max-width, paddings (y-axis) e responsividade mobile-first consistentes com design premium.
+* Typecheck aprovado.
 
 #### Notas
 
 (Sem notas)
 
-### US-005: Criar molécula ProjectCard
+### US-005: Criar componente ProjectCard
 
 **Prioridade:** 5
 **Passes:** false
 
 **Descrição:**
-> Como recrutador, eu quero ver os detalhes de um projeto de forma clara e atraente.
+> Como usuário, eu quero visualizar detalhes breves de um projeto na vitrine através de um cartão visual contendo links de acesso rápidos.
 
 **Artefatos:**
-- Cria: `src/components/molecules/project-card.tsx`
-- Depende de: `US-001`, `US-004`
+- Cria: `src/components/home/project-card.tsx`
+- Depende de: `US-001` (types.ts)
 
 **Contexto do plan:**
-> Ver seção "5. Componentes: Props e Responsabilidades". Recebe `Project` como prop.
+> Consultar seção "4. Assinatura de Componentes" do plan.md.
+> Expor a Prop: `{ project: Project }`. Elemento base da lista de projetos.
 
 #### Critérios de Aceitação
 
-* Exibe imagem do projeto, título, descrição e lista de tecnologias (usando `Badge`)
-* Hover effects sutis para interatividade
-* Design responsivo
-* Typecheck aprovado
-* Verificar no navegador usando a skill dev-browser
+* Componente recebe única prop `project` repassando todos os dados.
+* Renderiza Título, Descrição, Tags, Link (usando Next Link) e a imagem (usando next/image) de maneira visual ou apresenta um placeholder vazio de design harmonioso se não houver imagem.
+* Aplica micro-interações no hover usando Tailwind v4.
+* Typecheck aprovado.
+* Verificar no navegador usando a skill dev-browser.
 
 #### Notas
 
 (Sem notas)
 
-### US-006: Criar molécula SkillItem
+### US-006: Criar seção Hero da Home
 
 **Prioridade:** 6
 **Passes:** false
 
 **Descrição:**
-> Como gestor técnico, eu quero identificar rapidamente as tecnologias dominadas.
+> Como visitante, quero uma seção de destaque contendo o nome, especialidade e CTA na primeira tela que abra do site para me apresentar contextualmente o profissional.
 
 **Artefatos:**
-- Cria: `src/components/molecules/skill-item.tsx`
-- Depende de: `US-001`
+- Cria: `src/components/home/hero.tsx`
+- Depende de: `US-003` (button.tsx), `US-004` (section.tsx)
 
 **Contexto do plan:**
-> Ver seção "2. Estrutura de Arquivos". Exibe nome e opcionalmente um ícone.
+> Consultar seção "4. Assinatura de Componentes" do plan.md;
+> Deve importar as props ou consumir dados passados estáticos de herói.
 
 #### Critérios de Aceitação
 
-* Exibe nome da skill
-* Layout minimalista e limpo
-* Typecheck aprovado
-* Verificar no navegador usando a skill dev-browser
+* Exibe título H1 enfatizando o Nome e o Cargo de Senior Frontend Developer.
+* Usa UI Typography premium (estilos legíveis).
+* Renderiza `<Button variant="primary">` com CTA ("Ver Projetos" ou "Entrar em Contato").
+* Typecheck aprovado.
+* Verificar no navegador usando a skill dev-browser.
 
 #### Notas
 
 (Sem notas)
 
-### US-007: Criar organismos Header e Hero
+### US-007: Criar seção Expertise/Stack
 
 **Prioridade:** 7
 **Passes:** false
 
 **Descrição:**
-> Como visitante, eu quero ver uma introdução impactante e ter navegação fácil.
+> Como recrutador, quero ver as tecnologias divididas por categoria para facilmente diagnosticar os conhecimentos técnicos da stack atual.
 
 **Artefatos:**
-- Cria: `src/components/organisms/header.tsx`
-- Cria: `src/components/organisms/hero.tsx`
-- Depende de: `US-003`, `US-004`
+- Cria: `src/components/home/expertise.tsx`
+- Depende de: `US-001` (types.ts), `US-004` (section.tsx)
 
 **Contexto do plan:**
-> Ver research.md US-001 e plan.md seção 5.
+> Consultar seção "4. Assinatura de Componentes" do plan.md;
+> Props: `ExpertiseProps: { skills: Skill[] }`.
 
 #### Critérios de Aceitação
 
-* `Header`: Navegação minimalista (Home, Projetos, Sobre, Skills)
-* `Hero`: Título principal (H1) e proposta de valor consumindo dados do JSON
-* Design responsivo e premium
-* Typecheck aprovado
-* Verificar no navegador usando a skill dev-browser
+* Renderiza uma listagem visual limpa das ferramentas dominadas por Categoria (ex: Linguagens, Ferramentas).
+* Typecheck aprovado.
+* Verificar no navegador usando a skill dev-browser.
 
 #### Notas
 
-(Sem notas)
+Aproveitará `skillsData` importando estaticamente vindo do data.
 
-### US-008: Criar organismos ProjectsGrid e SkillsList
+### US-008: Criar seção Vitrine de Projetos
 
 **Prioridade:** 8
 **Passes:** false
 
 **Descrição:**
-> Como recrutador, eu quero ver a listagem de projetos e habilidades de forma organizada.
+> Como visitante, quero navegar rapidamente por uma lista em grid dos melhores projetos entregues contendo imagem e os contatos.
 
 **Artefatos:**
-- Cria: `src/components/organisms/projects-grid.tsx`
-- Cria: `src/components/organisms/skills-list.tsx`
-- Depende de: `US-003`, `US-005`, `US-006`
+- Cria: `src/components/home/projects.tsx`
+- Depende de: `US-001` (types.ts), `US-004` (section.tsx), `US-005` (project-card.tsx)
 
 **Contexto do plan:**
-> Ver research.md US-002, US-003 e plan.md seção 5.
+> Consultar seção "2. Estrutura de Arquivos" e "4. Assinatura de Componentes".
 
 #### Critérios de Aceitação
 
-* `ProjectsGrid`: Mapeia projetos em grid consumindo dados via hook
-* `SkillsList`: Organiza skills por categoria (Frontend, Tools, Soft Skills)
-* Typecheck aprovado
-* Verificar no navegador usando a skill dev-browser
+* Renderiza um CSS Grid ou Flex responsivo populado por 3 `ProjectCard` importados via lista local do component/data.
+* Typecheck aprovado.
+* Verificar no navegador usando a skill dev-browser.
 
 #### Notas
 
-(Sem notas)
+Faremos uma versão estática inicial dos top 3 projetos.
 
-### US-009: Criar organismo Testimonials
+### US-009: Criar seção About e Prova Social
 
 **Prioridade:** 9
 **Passes:** false
 
 **Descrição:**
-> Como potencial cliente, eu quero ver prova social para aumentar minha confiança.
+> Como potencial cliente, quero ler de forma concisa sobre a biografia do profissional e conferir as avaliações e validações do trabalho pregresso.
 
 **Artefatos:**
-- Cria: `src/components/organisms/testimonials.tsx`
-- Depende de: `US-003`
+- Cria: `src/components/home/about.tsx`
+- Depende de: `US-001` (types.ts), `US-004` (section.tsx)
 
 **Contexto do plan:**
-> Ver research.md US-004 e plan.md seção 5.
+> Consultar seção "4. Assinatura de Componentes" do plan.md.
+> Props de conteúdo baseado em bio e testimonials `SocialProof`.
 
 #### Critérios de Aceitação
 
-* Exibição de depoimentos com autor, cargo e conteúdo
-* Layout limpo e leitura fácil
-* Typecheck aprovado
-* Verificar no navegador usando a skill dev-browser
+* Apresenta bloco contendo a história e bio do perfil (2 paragrafos curtos).
+* Apresenta design limpo com citações e o cargo dos autores dos depoimentos.
+* Typecheck aprovado.
+* Verificar no navegador usando a skill dev-browser.
 
 #### Notas
 
 (Sem notas)
 
-### US-010: Integrar Home Page completa
+### US-010: Integrar todas as seções na page.tsx
 
 **Prioridade:** 10
 **Passes:** false
 
 **Descrição:**
-> Como usuário, eu quero acessar a página inicial e ver todas as seções integradas e funcionais.
+> Como usuário visitante, acessando a raiz (/), quero que a SPA se inicie e traga todas as seções de layout em uma ordem lógica.
 
 **Artefatos:**
 - Modifica: `src/app/page.tsx`
-- Depende de: `US-007`, `US-008`, `US-009`
+- Depende de: `US-006` a `US-009` e `US-002` (home-data)
 
 **Contexto do plan:**
-> Ver seção "7. Diagrama de Dependências". A página deve orquestrar todos os organismos.
+> Consultar diagrama da seção "7. Diagrama de Dependências" e "2. Estrutura de Arquivos" do plan.md.
 
 #### Critérios de Aceitação
 
-* Todas as seções (Hero, Projetos, Skills, Testimonials) renderizadas na Home
-* Dados carregados corretamente do `content.json` via hook
-* SEO básico implementado (título, meta description)
-* Performance otimizada e design responsivo
-* Typecheck aprovado
-* Verificar no navegador usando a skill dev-browser: home page completa e funcional em /
+* Edita `src/app/page.tsx` (removendo boilerplates defaults se aplicavel).
+* Importa os dados de `src/data/home-data.ts`.
+* Renderiza, organizadamente, em ordem as seções Hero, Expertise, Projetos, About alimentadas pelas props estáticas.
+* Estrutura SPA mantida (sem roteamentos quebrados).
+* Garantir meta SEO base se possível e performance de index base.
+* Typecheck aprovado.
+* Verificar no navegador usando a skill dev-browser acessando `/` e validando o Layout por completo.
 
 #### Notas
 
-(Sem notas)
+Última task centralizadora da feature de Home.

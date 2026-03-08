@@ -1,47 +1,41 @@
 ## Padrões do Projeto
 
-- Componentes são exportados via `src/components/[tier]/index.ts` (ou barrel correspondente) para facilitar imports.
-- Não adicione comentários no código, expresse-se através de nomes claros.
-- Se uma função, constante, etc, não depende do re-render do componente, devem ser instanciados fora do componente, logo abaixo do componente que o utiliza.
-- Não precisa criar varios arquivos para cada componente, se o componente é usado somente no mesmo arquivo, mantenha-os no mesmo arquivo (só separe se o arquivo tive proximo de 500 linhas).
-- Prefira arrow functions em vez de funções nomeadas sem return quando o componente não possui logica interna além da renderização.
+- Não use forwardRef na criação dos componentes.
+- Constantes internas do componente que não utilizam as props, via prop-drilling, ou não dependem de re-renderização, devem ser declaradas fora do componente e abaixo de quem usa.
+- evite selecionar props que não são utilizadas no componente, prefira a desestruturação de props que são utilizadas.
 
 ---
 
-## 2026-03-08 18:10 - US-001
+## [2026-03-08 19:00] - US-001
 
 **O que foi implementado:**
-- Validação das interfaces `Project`, `Skill`, `Testimonial` e `HomeContent` em `src/types/content.ts`.
-- Arquivos: `src/types/content.ts`
+- Criados os types Project, Skill, e SocialProof para a feature home.
+- Arquivos: `src/generated/types.ts`
 
 **Aprendizados para iterações futuras:**
-- As interfaces já estavam implementadas e batem com o `plan.md`.
-- O typecheck global falha por dependências não implementadas, mas o arquivo individual está correto.
+- Tipos unificados no arquivo de generated types para reaproveitamento nos componentes visuais.
 
 ---
 
-## 2026-03-08 18:15 - US-002
+## [2026-03-08 19:02] - US-002
 
 **O que foi implementado:**
-- Criação do serviço `src/services/content-service.ts` para leitura centralizada do `content.json`.
-- Tipagem do retorno como `HomeContent`.
-- Arquivos: `src/services/content-service.ts`
+- Criados os mocks estáticos com listas de `Project`, `Skill`, e `SocialProof`.
+- Arquivos: `src/data/home-data.ts`
 
 **Aprendizados para iterações futuras:**
-- O uso de `resolveJsonModule: true` no `tsconfig.json` é essencial para importar arquivos JSON diretamente em TypeScript.
-- Abstrair o carregamento de dados em um serviço facilita a manutenção caso a fonte de dados mude no futuro (ex: para uma API ou CMS).
+- Reuso dos tipos exportados de `types.ts` funciona bem para validação em dev dos mocks visuais.
 
 ---
 
-## 2026-03-08 18:20 - US-003
+## [2026-03-08 19:15] - US-003
 
 **O que foi implementado:**
-- Criação do hook `src/hooks/use-content.ts` para consumo fácil dos dados no frontend.
-- Integração com `content-service.ts`.
-- Arquivos: `src/hooks/use-content.ts`
+- Criado componente de Botão UI base (`Button`) com variantes `primary` e `outline`.
+- Suporte a links do Next.js via prop `href`.
+- Arquivos: `src/components/ui/button.tsx`
 
 **Aprendizados para iterações futuras:**
-- Manter uma camada de hook isola os componentes da implementação de fetching ou acesso a dados.
-- Em Next.js 16, hooks podem ser usados tanto em client components quanto apenas para organização em alguns contextos, embora para server components a importação direta do serviço seja mais comum.
+- Extrair objetos de estilo (`baseStyles`, `variantStyles`) para o escopo global do módulo reduz o ruído de tipagem e re-renderização, de acordo com a regra de manter constantes com dados estáticos fora do componente.
 
 ---
