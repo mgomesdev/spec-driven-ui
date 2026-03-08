@@ -64,7 +64,7 @@ projetos de destaque, habilidades e depoimentos para facilitar o processo de con
 ### US-003: Criar hook use-content
 
 **Prioridade:** 3
-**Passes:** false
+**Passes:** true
 
 **Descrição:**
 > Como desenvolvedor, eu quero um hook customizado para acessar os dados da home para que os componentes não precisem conhecer a implementação do serviço.

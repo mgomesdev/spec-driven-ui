@@ -27,3 +27,15 @@
 - O alias `@/` está configurado corretamente para `src/`.
 
 ---
+
+## 2026-03-08 17:34 - US-003
+
+**O que foi implementado:**
+- Criação do hook `useContent` para consumir dados do serviço.
+- Arquivos: `src/hooks/use-content.ts`
+
+**Aprendizados para iterações futuras:**
+- Hooks que consomem dados estáticos devem usar `useMemo` se o custo de processamento/leitura for relevante, embora aqui seja por convenção e futura escalabilidade.
+- Adicionado `'use client'` pois hooks que usam `useMemo` ou hooks do React são hooks de client components.
+
+---
