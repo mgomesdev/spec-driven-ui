@@ -7,14 +7,6 @@ description: "Gera um documento de Plan técnico a partir do research.md com foc
 
 Lê o `research.md` aprovado e gera um `plan.md` com todos os artefatos técnicos de **frontend** necessários para a implementação: componentes, tipos TypeScript, contratos de API consumidos, estrutura de arquivos e diagrama de dependências.
 
-## Posição no fluxo
-
-```
-research.md (aprovado)  →  [ESTA SKILL] plan.md  →  tasks.md
-```
-
----
-
 ## Funcionamento
 
 ### Etapa 1: Leitura do research

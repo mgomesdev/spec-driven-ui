@@ -7,12 +7,6 @@ description: "Gera o tasks.md lendo o research.md e o plan.md. Converte o planej
 
 Lê o `research.md` e o `plan.md` aprovados e gera um `tasks.md` com histórias de usuário atômicas, ordenadas por dependência, prontas para execução.
 
-## Posição no fluxo
-
-```
-research.md + plan.md (aprovados)  →  [ESTA SKILL] tasks.md  →  Orchestrator
-```
-
 ## Funcionamento
 
 ### Etapa 1: Leitura dos artefatos

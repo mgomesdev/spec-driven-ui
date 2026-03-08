@@ -1,17 +1,11 @@
 ---
 name: us-to-research
-description: "Converte requisitos abstratos escritos por Product Owners em um research.md estruturado para desenvolvimento frontend. Use esta skill sempre que receber uma User Story, briefing de produto, ou descrição de feature não técnica que precisa ser traduzida para linguagem de desenvolvimento. Acionada por: 'gere o research.md da US'. Deve ser usada ANTES do plan e do tasks."
+description: "Converte requisitos abstratos escritos por Product Owners em um research.md estruturado para desenvolvimento frontend. Use esta skill sempre que receber uma User Story, briefing de produto, ou descrição de feature não técnica que precisa ser traduzida para linguagem de desenvolvimento. Acionada por: 'use a skill us-to-research para converter a US do product owner para o research de desenvolvimento'. Deve ser usada ANTES do plan e do tasks."
 ---
 
 # Research Generator
 
 Converte requisitos abstratos de produto (User Stories, briefings, notas do PO) em um `research.md` estruturado, claro e acionável para desenvolvimento **frontend**.
-
-## Posição no fluxo
-
-```
-[US do PO / Notion]  →  [ESTA SKILL] research.md  →  plan.md  →  tasks.md
-```
 
 ## Funcionamento
 

@@ -1,0 +1,39 @@
+{
+  "hero": {
+    "title": "Desenvolvedor Frontend Sênior",
+    "description": "Desenvolvimento de sites estratégicos focados em autoridade profissional e visual premium.",
+    "ctaLabel": "Ver Projetos"
+  },
+  "projects": [
+    {
+      "id": "1",
+      "title": "Portfolio Antigravity",
+      "description": "Site estratégico desenvolvido com Next.js 16 e Tailwind CSS v4.",
+      "imageUrl": "/images/projects/portfolio.png",
+      "technologies": ["Next.js", "React", "TypeScript", "Tailwind CSS"]
+    },
+    {
+      "id": "2",
+      "title": "Spec Driven Platform",
+      "description": "Plataforma orientada a especificações para automação de desenvolvimento.",
+      "imageUrl": "/images/projects/spec-platform.png",
+      "technologies": ["React", "PostCSS", "Atomic Design"]
+    }
+  ],
+  "skills": [
+    { "name": "React 19", "category": "Frontend" },
+    { "name": "Next.js 16", "category": "Frontend" },
+    { "name": "TypeScript 5.9", "category": "Frontend" },
+    { "name": "Tailwind CSS v4", "category": "Frontend" },
+    { "name": "Atomic Design", "category": "Tools" },
+    { "name": "Git / GitHub", "category": "Tools" }
+  ],
+  "testimonials": [
+    {
+      "author": "Matheus Gomes",
+      "role": "Tech Lead",
+      "company": "DeepMind",
+      "content": "A abordagem orientada a especificações mudou a forma como entregamos software de qualidade."
+    }
+  ]
+}

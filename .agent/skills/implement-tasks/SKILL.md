@@ -7,17 +7,12 @@ description: "Executa as histórias do tasks.md uma por vez como um agente engen
 
 Executa as histórias do `tasks.md` uma por vez. A cada história, lê o contexto técnico do `plan.md`, implementa, valida, commita e registra aprendizados para a próxima iteração.
 
-## Posição no fluxo
-
-```
-tasks.md (aprovado)  →  [ESTA SKILL] implementação  →  código commitado
-```
 ## Sua Tarefa (por iteração)
 
 1. Leia o `tasks.md` em `specs/features/[nome-da-feature]/tasks.md`
 2. Leia o `progress.md` em `specs/features/[nome-da-feature]/progress.md` — **especialmente a seção `## Padrões do Projeto`**
 3. Leia o `plan.md` em `specs/features/[nome-da-feature]/plan.md` — consulte as seções relevantes para a história atual
-4. Verifique se está no branch correto (`branchName` no tasks.md). Se não, faça checkout ou crie o branch a partir do principal
+4. Verifique se está no branch correto (`branchName` no tasks.md). Se não, faça checkout ou crie o branch a partir da branch atual
 5. Selecione a história de **maior prioridade** onde `Passes: false`
 6. Implemente **somente essa história**
 7. Execute as verificações de qualidade definidas no projeto
