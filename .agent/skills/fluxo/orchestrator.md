@@ -1,33 +1,28 @@
 ---
-name: orchestrator
-description: "Executa as histórias do TASKS.md uma por vez como um agente engenheiro de software frontend. Lê o plan.md para contexto técnico, implementa a história, roda typechecks, verifica no navegador, commita e registra aprendizados no progress.md antes de passar para a próxima. Use esta skill para executar o plano de implementação gerado pelas skills de research, plan e tasks. Acionada por: 'execute as tasks', 'iniciar o orchestrator', 'implementar as histórias', 'rodar o agente', 'executar o TASKS.md', 'iniciar implementação'. Deve ser usada APÓS o TASKS.md estar aprovado."
+name: implement-tasks
+description: "Executa as histórias do tasks.md uma por vez como um agente engenheiro de software frontend. Lê o plan.md para contexto técnico, implementa a história, roda typechecks, verifica no navegador, commita e registra aprendizados no progress.md antes de passar para a próxima. Use esta skill para executar o plano de implementação gerado pelas skills de research, plan e tasks. Acionada por: 'execute as tasks da feature [nome-da-feature]'. Deve ser usada APÓS o tasks.md estar aprovado."
 ---
 
-# Orchestrator — Agente de Implementação Frontend
+# Implement-tasks — Agente de Implementação Frontend
 
-Executa as histórias do `TASKS.md` uma por vez. A cada história, lê o contexto técnico do `plan.md`, implementa, valida, commita e registra aprendizados para a próxima iteração.
+Executa as histórias do `tasks.md` uma por vez. A cada história, lê o contexto técnico do `plan.md`, implementa, valida, commita e registra aprendizados para a próxima iteração.
 
 ## Posição no fluxo
 
 ```
-TASKS.md (aprovado)  →  [ESTA SKILL] implementação  →  código commitado
+tasks.md (aprovado)  →  [ESTA SKILL] implementação  →  código commitado
 ```
-
----
-
 ## Sua Tarefa (por iteração)
 
-1. Leia o `TASKS.md` em `specs/features/[nome-da-feature]/TASKS.md`
+1. Leia o `tasks.md` em `specs/features/[nome-da-feature]/tasks.md`
 2. Leia o `progress.md` em `specs/features/[nome-da-feature]/progress.md` — **especialmente a seção `## Padrões do Projeto`**
 3. Leia o `plan.md` em `specs/features/[nome-da-feature]/plan.md` — consulte as seções relevantes para a história atual
-4. Verifique se está no branch correto (`branchName` no TASKS.md). Se não, faça checkout ou crie o branch a partir do principal
+4. Verifique se está no branch correto (`branchName` no tasks.md). Se não, faça checkout ou crie o branch a partir do principal
 5. Selecione a história de **maior prioridade** onde `Passes: false`
 6. Implemente **somente essa história**
 7. Execute as verificações de qualidade definidas no projeto
-8. Se passou: commit + atualiza TASKS.md + registra no progress.md
+8. Se passou: commit + atualiza tasks.md + registra no progress.md
 9. Verifique se ainda há histórias com `Passes: false`
-
----
 
 ## Antes de Implementar: Leia o Contexto
 
@@ -48,54 +43,9 @@ Antes de escrever qualquer código, faça:
 - Não refatore código existente fora do escopo da história
 - Não adicione funcionalidades não listadas nos critérios
 - Siga os padrões de código existentes no projeto
-
-### Tipagem
-
 - Use os types definidos no `plan.md` e criados em `types.ts`
-- Nunca use `any` — se necessário, use `unknown` e documente
 - Importe tipos de `../types` (relativo à feature), não redefina
-
-### Componentes
-
 - Props devem bater exatamente com o definido no `plan.md` seção 5
-- Exporte componentes como `export default` e `export` nomeado
-- Mantenha responsabilidades separadas — um componente não faz fetch direto se há um hook para isso
-
-### Integração com API
-
-- Use o serviço (`[nome]Service.ts`) para chamadas à API — nunca `fetch` direto em componente
-- Trate os estados: loading, sucesso, erro
-- Mensagens de erro devem ser legíveis pelo usuário
-
----
-
-## Verificações de Qualidade
-
-Execute as verificações especificadas no projeto. Em projetos TypeScript/Next.js, tipicamente:
-
-```bash
-# Typecheck
-npx tsc --noEmit
-
-# Lint (se configurado)
-npx eslint src/features/[nome-da-feature]/
-
-# Build (se necessário para validar)
-npx next build
-```
-
-**NÃO commite se houver erros de typecheck ou lint.** Corrija antes.
-
-### Verificação no Navegador
-
-Para histórias com critério `"Verificar no navegador usando a skill dev-browser"`:
-
-1. Use a skill dev-browser para navegar até a página afetada
-2. Verifique cada critério visual listado
-3. Faça uma captura de tela e inclua no relatório de progresso
-4. Se algo não funcionar visualmente, corrija antes de commitar
-
----
 
 ## Commit
 
@@ -110,7 +60,7 @@ Exemplo: `feat: US-004 - Criar componente ItemCard`
 
 ---
 
-## Atualizar TASKS.md
+## Atualizar tasks.md
 
 Após o commit, marque a história como concluída:
 
@@ -180,7 +130,7 @@ Antes de commitar, verifique se há aprendizados que valem para futuras sessões
 
 ## Condição de Parada
 
-Após concluir uma história, verifique o TASKS.md:
+Após concluir uma história, verifique o tasks.md:
 
 **Se ainda há histórias com `Passes: false`:**
 Encerre normalmente. A próxima iteração processará a próxima história.
@@ -222,7 +172,7 @@ Commits: [número de commits]
 
 ```
 INÍCIO DA ITERAÇÃO:
-  1. ler TASKS.md → identificar próxima história (menor prioridade com Passes: false)
+  1. ler tasks.md → identificar próxima história (menor prioridade com Passes: false)
   2. ler progress.md → seção "Padrões do Projeto"
   3. ler plan.md → seção referenciada na história
 
@@ -238,7 +188,7 @@ VALIDAÇÃO:
 
 FINALIZAÇÃO:
   10. git commit -m "feat: US-XXX - Título"
-  11. atualizar TASKS.md → Passes: true
+  11. atualizar tasks.md → Passes: true
   12. adicionar ao progress.md (aprendizados)
   13. atualizar AGENTS.md (se padrão reutilizável)
   14. verificar se há mais histórias → continuar ou encerrar
