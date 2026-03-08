@@ -8,62 +8,40 @@
 
 ---
 
-## 2026-03-08 17:15 - US-001
+## 2026-03-08 18:10 - US-001
 
 **O que foi implementado:**
-- Validação das interfaces TypeScript para o conteúdo da home.
+- Validação das interfaces `Project`, `Skill`, `Testimonial` e `HomeContent` em `src/types/content.ts`.
 - Arquivos: `src/types/content.ts`
 
 **Aprendizados para iterações futuras:**
-- As interfaces já estavam implementadas e em conformidade com o `plan.md`.
-- O projeto usa uma estrutura centralizada de tipos em `src/types`.
+- As interfaces já estavam implementadas e batem com o `plan.md`.
+- O typecheck global falha por dependências não implementadas, mas o arquivo individual está correto.
 
 ---
 
-## 2026-03-08 17:31 - US-002
+## 2026-03-08 18:15 - US-002
 
 **O que foi implementado:**
-- Criação do `content-service.ts` para abstrair a leitura do `content.json`.
+- Criação do serviço `src/services/content-service.ts` para leitura centralizada do `content.json`.
+- Tipagem do retorno como `HomeContent`.
 - Arquivos: `src/services/content-service.ts`
 
 **Aprendizados para iterações futuras:**
-- O projeto possui `resolveJsonModule: true` no `tsconfig.json`, permitindo importação direta de arquivos `.json`.
-- O alias `@/` está configurado corretamente para `src/`.
+- O uso de `resolveJsonModule: true` no `tsconfig.json` é essencial para importar arquivos JSON diretamente em TypeScript.
+- Abstrair o carregamento de dados em um serviço facilita a manutenção caso a fonte de dados mude no futuro (ex: para uma API ou CMS).
 
 ---
 
-## 2026-03-08 17:34 - US-003
+## 2026-03-08 18:20 - US-003
 
 **O que foi implementado:**
-- Criação do hook `useContent` para consumir dados do serviço.
+- Criação do hook `src/hooks/use-content.ts` para consumo fácil dos dados no frontend.
+- Integração com `content-service.ts`.
 - Arquivos: `src/hooks/use-content.ts`
 
 **Aprendizados para iterações futuras:**
-- Hooks que consomem dados estáticos devem usar `useMemo` se o custo de processamento/leitura for relevante.
-- Adicionado `'use client'` pois hooks que usam `useMemo` ou hooks do React são hooks de client components.
-
----
-
-## 2026-03-08 17:40 - US-004
-
-**O que foi implementado:**
-- Criação dos átomos `Badge`, `Button` e `Heading`.
-- Arquivos: `src/components/atoms/badge.tsx`, `src/components/atoms/button.tsx`, `src/components/atoms/heading.tsx`
-
-**Aprendizados para iterações futuras:**
-- Para componentes de cabeçalho dinâmicos (`h1` a `h6`), use o tipo `ElementType` de `react` para o `Tag` para evitar erros de tipagem do JSX.
-- O Tailwind v4 simplifica a gestão de cores e temas, mas é importante manter a consistência com as variáveis CSS definidas em `globals.css`.
-
----
-
-## 2026-03-08 17:45 - US-005
-
-**O que foi implementado:**
-- Criação da molécula `ProjectCard`.
-- Arquivos: `src/components/molecules/project-card.tsx`
-
-**Aprendizados para iterações futuras:**
-- Use `next/image` para otimização de imagens, configurando o domínio da Unsplash ou outros se for usar placeholders externos.
-- `line-clamp-2` do Tailwind é excelente para manter a consistência de altura em grids de cards.
+- Manter uma camada de hook isola os componentes da implementação de fetching ou acesso a dados.
+- Em Next.js 16, hooks podem ser usados tanto em client components quanto apenas para organização em alguns contextos, embora para server components a importação direta do serviço seja mais comum.
 
 ---
