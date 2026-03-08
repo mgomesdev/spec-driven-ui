@@ -58,7 +58,7 @@ Resumo:
 - Contratos de API: [lista de endpoints/actions]
 - Ordem de implementação: [resumo do diagrama]
 
-👉 Revise o arquivo e responda "aprovado" para prosseguir para as tasks,
+👉 Revise o arquivo e responda "aprovado" para encerrar,
    ou indique o que deve ser ajustado.
 ```
 

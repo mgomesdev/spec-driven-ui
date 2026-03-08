@@ -10,7 +10,7 @@ Executa as histórias do `tasks.md` uma por vez. A cada história, lê o context
 ## Sua Tarefa (por iteração)
 
 1. Leia o `tasks.md` em `specs/features/[nome-da-feature]/tasks.md`
-2. Leia o `progress.md` em `specs/features/[nome-da-feature]/progress.md` — **especialmente a seção `## Padrões do Projeto`**
+2. Leia o `progress.md` em `specs/features/[nome-da-feature]/progress.md` (Crie caso não exista) — **especialmente a seção `## Padrões do Projeto`**
 3. Leia o `plan.md` em `specs/features/[nome-da-feature]/plan.md` — consulte as seções relevantes para a história atual
 4. Verifique se está no branch correto (`branchName` no tasks.md). Se não, faça checkout ou crie o branch a partir da branch atual
 5. Selecione a história de **maior prioridade** onde `Passes: false`

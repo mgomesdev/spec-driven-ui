@@ -6,64 +6,93 @@
 
 ## Descrição
 
-Implementação da Home Page estratégica focada em autoridade profissional. Contém seções de Hero, Grade de Projetos, Lista de Skills e Depoimentos, com conteúdo gerenciado via arquivo JSON estático.
+Desenvolvimento da página inicial do site estratégico de posicionamento de autoridade profissional. 
+A página serve como o cartão de visitas principal, apresentando competência técnica (frontend sênior), 
+projetos de destaque, habilidades e depoimentos para facilitar o processo de contratação.
 
 ## User Stories
 
-### US-001: Criar types e esquema de dados da Home
+### US-001: Validar e ajustar types da feature home
 
 **Prioridade:** 1
-**Passes:** true
+**Passes:** false
 
 **Descrição:**
-> Como desenvolvedor, eu quero definir as interfaces TypeScript e o arquivo de dados inicial para que a feature tenha uma estrutura de dados consistente.
+> Como desenvolvedor, eu quero garantir que as interfaces TypeScript estejam alinhadas com o planejado para que todos os componentes usem tipagem correta.
 
 **Artefatos:**
-- Cria: `src/types/content.ts`
-- Cria: `src/data/content.json`
+- Modifica: `src/types/content.ts`
 
 **Contexto do plan:**
-> Veja seções "3. Interfaces e Types" e "4. Contratos de Dados" do plan.md.
+> Ver seção "3. Interfaces e Types" do plan.md. As interfaces `Project`, `Skill`, `Testimonial` e `HomeContent` devem estar presentes e corretas.
 
 #### Critérios de Aceitação
 
-* Arquivo `src/types/content.ts` exporta as interfaces `Project`, `Skill`, `Testimonial` e `HomeContent`.
-* Arquivo `src/data/content.json` contém dados válidos conforme o esquema definido.
-* Typecheck aprovado.
+* Arquivo `src/types/content.ts` exporta as interfaces `Project`, `Skill`, `Testimonial` e `HomeContent`
+* As interfaces seguem exatamente a estrutura definida no plan.md
+* Typecheck aprovado
 
----
+#### Notas
 
-### US-002: Criar serviço e hook de conteúdo
+(Sem notas)
+
+### US-002: Criar content-service para leitura de dados
 
 **Prioridade:** 2
 **Passes:** false
 
 **Descrição:**
-> Como desenvolvedor, eu quero uma camada de abstração para acessar os dados do JSON para que os componentes não dependam de importações diretas e fiquem fáceis de testar/mockar.
+> Como desenvolvedor, eu quero uma abstração para leitura dos dados do content.json para que a lógica de carregamento de dados fique centralizada.
 
 **Artefatos:**
 - Cria: `src/services/content-service.ts`
-- Cria: `src/hooks/use-content.ts`
-- Depende de: US-001
+- Depende de: `US-001`
 
 **Contexto do plan:**
-> Veja seção "2. Estrutura de Arquivos" do plan.md. O serviço deve apenas ler o JSON e o hook deve expor os dados.
+> Ver seção "2. Estrutura de Arquivos" e "7. Diagrama de Dependências". O serviço deve importar o `content.json` ou fazer o fetch se necessário (por enquanto importação direta resolve).
 
 #### Critérios de Aceitação
 
-* `content-service.ts` exporta função para obter o conteúdo da Home.
-* `use-content.ts` retorna os dados tipados como `HomeContent`.
-* Typecheck aprovado.
+* Exporta função ou classe para acessar os dados de `src/data/content.json`
+* O retorno deve ser tipado como `HomeContent`
+* Typecheck aprovado
 
----
+#### Notas
 
-### US-003: Criar átomos de UI (Badge, Button, Heading)
+(Sem notas)
+
+### US-003: Criar hook use-content
 
 **Prioridade:** 3
 **Passes:** false
 
 **Descrição:**
-> Como usuário, quero elementos de interface consistentes (botões, títulos e badges) que sigam o design minimalista.
+> Como desenvolvedor, eu quero um hook customizado para acessar os dados da home para que os componentes não precisem conhecer a implementação do serviço.
+
+**Artefatos:**
+- Cria: `src/hooks/use-content.ts`
+- Depende de: `US-002`
+
+**Contexto do plan:**
+> Ver seção "2. Estrutura de Arquivos". O hook deve expor os dados carregados pelo `content-service`.
+
+#### Critérios de Aceitação
+
+* Hook `useContent` exportado e funcional
+* Retorna os dados da home tipados corretamente
+* Typecheck aprovado
+
+#### Notas
+
+(Sem notas)
+
+### US-004: Criar átomos base (Badge, Button, Heading)
+
+**Prioridade:** 4
+**Passes:** false
+
+**Descrição:**
+> Como visitante, eu quero ver elementos de interface consistentes e com design premium.
 
 **Artefatos:**
 - Cria: `src/components/atoms/badge.tsx`
@@ -71,95 +100,179 @@ Implementação da Home Page estratégica focada em autoridade profissional. Con
 - Cria: `src/components/atoms/heading.tsx`
 
 **Contexto do plan:**
-> Veja seção "5. Componentes" do plan.md. Use Tailwind CSS v4 para estilização premium.
+> Ver seção "2. Estrutura de Arquivos". Usar Tailwind CSS v4 para estilização minimalista.
 
 #### Critérios de Aceitação
 
-* Componentes exportados corretamente em `src/components/atoms/`.
-* `Badge` aceita texto e cores variantes.
-* `Button` é acessível e suporta estados de hover.
-* `Heading` suporta diferentes níveis (H1, H2, H3).
-* Typecheck aprovado.
-* Verificar no navegador usando a skill dev-browser.
+* `Badge`: Componente para exibir tags de tecnologias
+* `Button`: Componente de botão com variações (ex: primary, outline)
+* `Heading`: Componente para tipografia H1, H2, etc. com estilos consistentes
+* Estilização minimalista conforme research.md
+* Typecheck aprovado
+* Verificar no navegador usando a skill dev-browser
 
----
+#### Notas
 
-### US-004: Criar moléculas (ProjectCard, SkillItem)
+(Sem notas)
 
-**Prioridade:** 4
-**Passes:** false
-
-**Descrição:**
-> Como usuário, quero ver cards de projetos e itens de skill detalhados para entender a experiência do profissional.
-
-**Artefatos:**
-- Cria: `src/components/molecules/project-card.tsx`
-- Cria: `src/components/molecules/skill-item.tsx`
-- Depende de: US-003
-
-**Contexto do plan:**
-> Veja seção "5. Componentes" do plan.md (Molecule definitions).
-
-#### Critérios de Aceitação
-
-* `ProjectCard` exibe imagem, título e badges de tecnologia.
-* `SkillItem` exibe o nome da tecnologia e sua categoria.
-* Layout responsivo e minimalista.
-* Typecheck aprovado.
-* Verificar no navegador usando a skill dev-browser.
-
----
-
-### US-005: Criar organismos da Home (Hero, Grids, Lists)
+### US-005: Criar molécula ProjectCard
 
 **Prioridade:** 5
 **Passes:** false
 
 **Descrição:**
-> Como usuário, quero as seções completas da home page montadas para visualizar o conteúdo de autoridade.
+> Como recrutador, eu quero ver os detalhes de um projeto de forma clara e atraente.
 
 **Artefatos:**
-- Cria: `src/components/organisms/header.tsx`
-- Cria: `src/components/organisms/hero.tsx`
-- Cria: `src/components/organisms/projects-grid.tsx`
-- Cria: `src/components/organisms/skills-list.tsx`
-- Cria: `src/components/organisms/testimonials.tsx`
-- Depende de: US-004
+- Cria: `src/components/molecules/project-card.tsx`
+- Depende de: `US-001`, `US-004`
 
 **Contexto do plan:**
-> Veja seção "5. Componentes" (Organisms). Cada organismo deve receber seus dados via props.
+> Ver seção "5. Componentes: Props e Responsabilidades". Recebe `Project` como prop.
 
 #### Critérios de Aceitação
 
-* Todos os organismos implementados conforme o plan.md.
-* `Hero` apresenta o H1 principal e descrição.
-* `ProjectsGrid` mapeia a lista de projetos do JSON.
-* `SkillsList` agrupa skills por categorias.
-* Typecheck aprovado.
-* Verificar no navegador usando a skill dev-browser.
+* Exibe imagem do projeto, título, descrição e lista de tecnologias (usando `Badge`)
+* Hover effects sutis para interatividade
+* Design responsivo
+* Typecheck aprovado
+* Verificar no navegador usando a skill dev-browser
 
----
+#### Notas
 
-### US-006: Integrar Home Page final
+(Sem notas)
+
+### US-006: Criar molécula SkillItem
 
 **Prioridade:** 6
 **Passes:** false
 
 **Descrição:**
-> Como visitante, quero acessar a home page completa para ter a experiência de autoridade profissional planejada.
+> Como gestor técnico, eu quero identificar rapidamente as tecnologias dominadas.
 
 **Artefatos:**
-- Modifica: `src/app/page.tsx`
-- Depende de: US-002, US-005
+- Cria: `src/components/molecules/skill-item.tsx`
+- Depende de: `US-001`
 
 **Contexto do plan:**
-> Veja seção "2. Estrutura de Arquivos" do plan.md. A página deve consumir os dados via hook/serviço e renderizar os organismos.
+> Ver seção "2. Estrutura de Arquivos". Exibe nome e opcionalmente um ícone.
 
 #### Critérios de Aceitação
 
-* `src/app/page.tsx` renderiza Header, Hero, ProjectsGrid, SkillsList e Testimonials.
-* Página é totalmente responsiva.
-* Animações sutis aplicadas (conforme research.md).
-* Performance Lighthouse > 90.
-* Typecheck aprovado.
-* Verificar no navegador usando a skill dev-browser: navegar pela home e validar visualmente todas as seções.
+* Exibe nome da skill
+* Layout minimalista e limpo
+* Typecheck aprovado
+* Verificar no navegador usando a skill dev-browser
+
+#### Notas
+
+(Sem notas)
+
+### US-007: Criar organismos Header e Hero
+
+**Prioridade:** 7
+**Passes:** false
+
+**Descrição:**
+> Como visitante, eu quero ver uma introdução impactante e ter navegação fácil.
+
+**Artefatos:**
+- Cria: `src/components/organisms/header.tsx`
+- Cria: `src/components/organisms/hero.tsx`
+- Depende de: `US-003`, `US-004`
+
+**Contexto do plan:**
+> Ver research.md US-001 e plan.md seção 5.
+
+#### Critérios de Aceitação
+
+* `Header`: Navegação minimalista (Home, Projetos, Sobre, Skills)
+* `Hero`: Título principal (H1) e proposta de valor consumindo dados do JSON
+* Design responsivo e premium
+* Typecheck aprovado
+* Verificar no navegador usando a skill dev-browser
+
+#### Notas
+
+(Sem notas)
+
+### US-008: Criar organismos ProjectsGrid e SkillsList
+
+**Prioridade:** 8
+**Passes:** false
+
+**Descrição:**
+> Como recrutador, eu quero ver a listagem de projetos e habilidades de forma organizada.
+
+**Artefatos:**
+- Cria: `src/components/organisms/projects-grid.tsx`
+- Cria: `src/components/organisms/skills-list.tsx`
+- Depende de: `US-003`, `US-005`, `US-006`
+
+**Contexto do plan:**
+> Ver research.md US-002, US-003 e plan.md seção 5.
+
+#### Critérios de Aceitação
+
+* `ProjectsGrid`: Mapeia projetos em grid consumindo dados via hook
+* `SkillsList`: Organiza skills por categoria (Frontend, Tools, Soft Skills)
+* Typecheck aprovado
+* Verificar no navegador usando a skill dev-browser
+
+#### Notas
+
+(Sem notas)
+
+### US-009: Criar organismo Testimonials
+
+**Prioridade:** 9
+**Passes:** false
+
+**Descrição:**
+> Como potencial cliente, eu quero ver prova social para aumentar minha confiança.
+
+**Artefatos:**
+- Cria: `src/components/organisms/testimonials.tsx`
+- Depende de: `US-003`
+
+**Contexto do plan:**
+> Ver research.md US-004 e plan.md seção 5.
+
+#### Critérios de Aceitação
+
+* Exibição de depoimentos com autor, cargo e conteúdo
+* Layout limpo e leitura fácil
+* Typecheck aprovado
+* Verificar no navegador usando a skill dev-browser
+
+#### Notas
+
+(Sem notas)
+
+### US-010: Integrar Home Page completa
+
+**Prioridade:** 10
+**Passes:** false
+
+**Descrição:**
+> Como usuário, eu quero acessar a página inicial e ver todas as seções integradas e funcionais.
+
+**Artefatos:**
+- Modifica: `src/app/page.tsx`
+- Depende de: `US-007`, `US-008`, `US-009`
+
+**Contexto do plan:**
+> Ver seção "7. Diagrama de Dependências". A página deve orquestrar todos os organismos.
+
+#### Critérios de Aceitação
+
+* Todas as seções (Hero, Projetos, Skills, Testimonials) renderizadas na Home
+* Dados carregados corretamente do `content.json` via hook
+* SEO básico implementado (título, meta description)
+* Performance otimizada e design responsivo
+* Typecheck aprovado
+* Verificar no navegador usando a skill dev-browser: home page completa e funcional em /
+
+#### Notas
+
+(Sem notas)

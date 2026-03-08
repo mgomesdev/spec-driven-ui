@@ -60,7 +60,7 @@ Resumo:
 - Integração: [tipo de integração]
 - Fora do escopo: [lista]
 
-👉 Revise o arquivo e responda "aprovado" para prosseguir para o plan,
+👉 Revise o arquivo e responda "aprovado" para encerrar,
    ou indique o que deve ser ajustado.
 ```
 

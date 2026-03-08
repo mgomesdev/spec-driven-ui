@@ -2,6 +2,9 @@
 
 ```
 /                               # Diretório Root
+- .agent/                        # skills, rules do agente
+    - skills/                     # Skills
+    - rules/                     # Regras
 - specs/                        # Especificações do Projeto
     - docs/                     # Documentação detalhada do Projeto
         - arquitetura.md        # Arquitetura do Projeto
@@ -23,6 +26,6 @@
 - next.config.ts                # Arquivos de Configuração de Next.js
 - package.json                  # Arquivos de Configuração de Package.json
 - postcss.config.mjs            # Arquivos de Configuração de PostCSS
-- README.md                     # Arquivos de Configuração de README.md
+- README.md                     # Informações sobre o projeto
 - tsconfig.json                 # Arquivos de Configuração de TypeScript
 ```

@@ -45,7 +45,7 @@ Histórias:
   US-002: [título] (prioridade 2)
   ...
 
-👉 Revise as tasks e responda "aprovado" para iniciar o Orchestrator,
+👉 Revise as tasks e responda "aprovado" para encerrar,
    ou indique o que deve ser ajustado.
 ```
 
