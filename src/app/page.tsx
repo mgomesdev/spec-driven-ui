@@ -1,4 +1,5 @@
 import { Hero } from "@/components/organisms/hero/hero";
+import { ProjectsSection } from "@/components/organisms/projects-section/projects-section";
 
 export default function Home() {
   return (
@@ -9,6 +10,7 @@ export default function Home() {
         imageSrc="/hero.png"
         ctaText="Me Contrate"
       />
+      <ProjectsSection />
     </main>
   );
 }

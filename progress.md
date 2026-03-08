@@ -21,4 +21,6 @@
 - **Aprendizados para iterações futuras:**
   - O usuário prefere uma experiência simplificada (Single Page) e estética Shadcn/UI.
   - A navegação será minimalista, focada em conteúdo.
+  - Valores não reativos devem ser declarados fora da declaração do componente, logo abaixo de quem usa.
+  - Remover todos os comentários do código, expressar-se através dos nomes.
 ---
