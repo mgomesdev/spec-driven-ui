@@ -15,7 +15,7 @@ projetos de destaque, habilidades e depoimentos para facilitar o processo de con
 ### US-001: Validar e ajustar types da feature home
 
 **Prioridade:** 1
-**Passes:** false
+**Passes:** true
 
 **Descrição:**
 > Como desenvolvedor, eu quero garantir que as interfaces TypeScript estejam alinhadas com o planejado para que todos os componentes usem tipagem correta.
@@ -39,7 +39,7 @@ projetos de destaque, habilidades e depoimentos para facilitar o processo de con
 ### US-002: Criar content-service para leitura de dados
 
 **Prioridade:** 2
-**Passes:** false
+**Passes:** true
 
 **Descrição:**
 > Como desenvolvedor, eu quero uma abstração para leitura dos dados do content.json para que a lógica de carregamento de dados fique centralizada.
