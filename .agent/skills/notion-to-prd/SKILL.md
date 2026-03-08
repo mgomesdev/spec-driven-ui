@@ -19,11 +19,12 @@ Crie um documento de Research detalhado, claro e acionável.
 ## Funcionamento
 
 1. Solicite o nome da feature que será desenvolvida no seguinte formado: `nome-da-feature`.
-2. Leia a descrição da feature do usuário através do arquivo research.md que está localizado no diretório `specs/features/[nome-da-feature]/research.md` (crie o arquivo se ele não existir).
-3. Verifique se o arquivo `specs/features/[nome-da-feature]/research.md` está completo (solicite ao usuário que complete o arquivo se ele não estiver completo).
-4. Faça de 3 a 5 perguntas essenciais para esclarecer dúvidas (com opções identificadas por letras).
-5. Gere um research.md estruturado com base nas respostas.
-6. Salve em `specs/features/[nome-da-feature]/research.md`
+2. Leia a descrição da feature do usuário através do arquivo research.md que está localizado no diretório `specs/features/[nome-da-feature]/research.md` (crie se não existir).
+3. Crie uma nova branch apartir da branch atual no seguinte formato: `us/[nome-da-feature]`
+4. Verifique se o arquivo `specs/features/[nome-da-feature]/research.md` está completo (solicite ao usuário que complete o arquivo se ele não estiver completo).
+5. Faça de 3 a 5 perguntas essenciais para esclarecer dúvidas (com opções identificadas por letras).
+6. Gere um research.md estruturado com base nas respostas.
+7. Salve em `specs/features/[nome-da-feature]/research.md`
 
 ### Etapa 1: Esclarecendo dúvidas
 
