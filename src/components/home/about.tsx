@@ -19,7 +19,7 @@ export const About = ({ biography, proofs }: AboutProps) => {
             </p>
           ))}
         </div>
-        
+
         <div className={proofsContainerClassName}>
           <h3 className={subtitleClassName}>O que dizem sobre mim</h3>
           <div className={gridClassName}>

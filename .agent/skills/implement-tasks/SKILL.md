@@ -14,7 +14,7 @@ Executa as histórias do `tasks.md` uma por vez. A cada história, lê o context
 3. Leia o `plan.md` em `specs/features/[nome-da-feature]/plan.md` — consulte as seções relevantes para a história atual
 4. Verifique se está no branch correto (`branchName` no tasks.md). Se não, faça checkout ou crie o branch a partir da branch atual
 5. Selecione a história de **maior prioridade** onde `Passes: false`
-6. Implemente **somente essa história**
+6. Implemente **somente essa história**, seguindo o protocolo de **reset de contexto por arquivo** (seção abaixo)
 7. Execute as verificações de qualidade definidas no projeto
 8. Se passou: commit + atualiza tasks.md + registra no progress.md
 9. Verifique se ainda há histórias com `Passes: false`
@@ -23,10 +23,74 @@ Executa as histórias do `tasks.md` uma por vez. A cada história, lê o context
 
 Antes de escrever qualquer código, faça:
 
-1. **Leia `## Padrões do Projeto`** no `progress.md` — padrões descobertos em iterações anteriores
-2. **Leia a seção do `plan.md`** referenciada na história (campo `Contexto do plan`)
-3. **Identifique os arquivos que já existem** vs os que serão criados
-4. **Verifique imports necessários** — não importe o que ainda não existe
+1. **Leia `AGENTS.md`** no diretório raiz do projeto — siga os padrões gerais do projeto
+2. **Leia `## Padrões do Projeto`** no `progress.md` — padrões descobertos em iterações anteriores
+3. **Leia a seção do `plan.md`** referenciada na história (campo `Contexto do plan`)
+4. **Identifique os arquivos que já existem** vs os que serão criados
+5. **Verifique imports necessários** — não importe o que ainda não existe
+
+---
+
+## Protocolo de Reset de Contexto por Arquivo
+
+> ⚠️ **Este protocolo é obrigatório.** A cada novo arquivo a ser criado ou modificado, descarte todo o raciocínio acumulado e recomece do zero com uma leitura fresca dos documentos de referência. Isso previne alucinações causadas por contexto contaminado.
+
+### Por que fazer isso?
+
+À medida que você implementa arquivos sequencialmente, detalhes de arquivos anteriores (nomes de variáveis, props, imports) tendem a "vazar" para o próximo arquivo — causando imports incorretos, props inventadas e inconsistências silenciosas.
+
+### Como executar o reset
+
+Para **cada arquivo** da história (ex: `button.tsx`, `useButton.ts`, `button.test.tsx`):
+
+**PASSO 1 — Declare o reset:**
+```
+🔄 RESET DE CONTEXTO — iniciando [nome-do-arquivo]
+Descartando contexto acumulado. Relendo fontes primárias.
+```
+
+**PASSO 2 — Releia as fontes primárias (nesta ordem):**
+1. `progress.md` → seção `## Padrões do Projeto`
+2. `plan.md` → seção exata referenciada na história atual
+3. O arquivo atual no disco (se já existe) via `view` ou `bash cat`
+4. Os imports necessários (verifique se existem no disco antes de usar)
+
+**PASSO 3 — Implemente APENAS este arquivo**, baseando-se exclusivamente no que releu agora — não no que lembra de arquivos anteriores.
+
+**PASSO 4 — Valide o arquivo isoladamente** antes de passar para o próximo:
+- O arquivo compila sem erros?
+- Os imports apontam para caminhos que existem no disco?
+- Os tipos batem exatamente com o definido no `plan.md`?
+
+**PASSO 5 — Só então avance para o próximo arquivo** (repita do PASSO 1).
+
+### Exemplo de sequência dentro de uma história
+
+```
+História US-004: Criar componente ItemCard
+Arquivos: types.ts → ItemCard.tsx → index.ts
+
+─── Arquivo 1/3 ───
+🔄 RESET DE CONTEXTO — iniciando types.ts
+[relê progress.md → plan.md → verifica disco]
+[implementa types.ts]
+[valida: tsc --noEmit no arquivo]
+✅ types.ts concluído
+
+─── Arquivo 2/3 ───
+🔄 RESET DE CONTEXTO — iniciando ItemCard.tsx
+[relê progress.md → plan.md → cat types.ts → verifica imports no disco]
+[implementa ItemCard.tsx baseado APENAS no que releu agora]
+[valida: tsc --noEmit no arquivo]
+✅ ItemCard.tsx concluído
+
+─── Arquivo 3/3 ───
+🔄 RESET DE CONTEXTO — iniciando index.ts
+[relê progress.md → plan.md → cat ItemCard.tsx → verifica o que exportar]
+[implementa index.ts]
+[valida]
+✅ index.ts concluído
+```
 
 ---
 
@@ -217,6 +281,7 @@ Commits: [número de commits]
 ## Regras Gerais
 
 - **Uma história por iteração** — nunca pule etapas ou implemente duas de uma vez
+- **Reset de contexto por arquivo** — releia as fontes primárias antes de cada arquivo novo
 - **Não invente** — implemente apenas o que está nos critérios de aceitação
 - **Siga o plan.md** — os tipos, props e contratos estão definidos lá, não recrie
 - **Mantenha o CI verde** — não commite com erros
@@ -233,28 +298,30 @@ INÍCIO DA ITERAÇÃO:
   2. ler progress.md → seção "Padrões do Projeto"
   3. ler plan.md → seção referenciada na história
 
-IMPLEMENTAÇÃO:
-  4. criar/modificar arquivos conforme critérios
-  5. seguir types do plan.md, não reinventar
-  6. tratar loading, sucesso e erro na UI
+IMPLEMENTAÇÃO (por arquivo):
+  4. 🔄 RESET — declarar início do arquivo
+  5. reler progress.md → plan.md → arquivo no disco (se existe) → imports no disco
+  6. implementar APENAS este arquivo baseado no que releu agora
+  7. validar o arquivo isoladamente (typecheck, imports existem no disco?)
+  8. repetir passos 4-7 para cada arquivo da história
 
-VALIDAÇÃO:
-  7. rodar typecheck (obrigatório)
-  8. rodar lint (se configurado)
-  9. verificar no navegador (se história tem UI)
+VALIDAÇÃO FINAL DA HISTÓRIA:
+  9. rodar typecheck completo (obrigatório)
+  10. rodar lint (se configurado)
+  11. verificar no navegador (se história tem UI)
 
 FINALIZAÇÃO:
-  10. git commit -m "feat: US-XXX - Título"
-  11. atualizar tasks.md → Passes: true
-  12. adicionar ao progress.md (aprendizados)
-  13. atualizar AGENTS.md (se padrão reutilizável)
-  14. verificar se há mais histórias com Passes: false
+  12. git commit -m "feat: US-XXX - Título"
+  13. atualizar tasks.md → Passes: true
+  14. adicionar ao progress.md (aprendizados)
+  15. atualizar AGENTS.md (se padrão reutilizável)
+  16. verificar se há mais histórias com Passes: false
       → se sim: voltar ao passo 1 (reler tasks.md → progress.md atualizado → plan.md)
-      → se não: ir para passo 15 (destilação)
+      → se não: ir para passo 17 (destilação)
 
 SE TODAS AS HISTÓRIAS CONCLUÍDAS:
-  15. destilar progress.md nos docs gerais (AGENTS.md e specs/docs/)
-  16. limpar progress.md → esqueleto inicial
-  17. git commit -m "chore: destilar aprendizados do progress.md nos docs gerais"
-  18. responder com resumo + lista de docs atualizados
+  17. destilar progress.md nos docs gerais (AGENTS.md e specs/docs/)
+  18. limpar progress.md → esqueleto inicial
+  19. git commit -m "chore: destilar aprendizados do progress.md nos docs gerais"
+  20. responder com resumo + lista de docs atualizados
 ```

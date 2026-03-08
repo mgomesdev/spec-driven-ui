@@ -1,18 +1,13 @@
-import React from 'react';
+import type { HTMLAttributes, ReactNode } from 'react';
 
-export interface SectionProps extends React.HTMLAttributes<HTMLElement> {
-  children: React.ReactNode;
+export interface SectionProps extends HTMLAttributes<HTMLElement> {
+  children: ReactNode;
 }
 
-export function Section({ children, className = '', ...props }: SectionProps) {
-  return (
-    <section className={`${baseStyles} ${className}`} {...props}>
-      <div className={containerStyles}>
-        {children}
-      </div>
-    </section>
-  );
-}
-
-const baseStyles = 'w-full px-4 py-16 md:py-24 lg:py-32';
-const containerStyles = 'mx-auto max-w-7xl';
+export const Section = ({ children, className = '', ...props }: SectionProps) => (
+  <section className={`w-full px-4 py-16 md:py-24 lg:py-32 ${className}`} {...props}>
+    <div className="mx-auto max-w-7xl">
+      {children}
+    </div>
+  </section>
+);

@@ -7,20 +7,20 @@ export interface ExpertiseProps {
 
 export function Expertise({ skills }: ExpertiseProps) {
   const categories = Object.keys(categoryTitles) as Array<keyof typeof categoryTitles>;
-  
+
   return (
     <Section id="expertise" className={sectionStyles}>
       <div className={headerStyles}>
         <h2 className={titleStyles}>Tecnologias & Expertise</h2>
         <p className={subtitleStyles}>Ferramentas e linguagens que utilizo para construir soluções escaláveis</p>
       </div>
-      
+
       <div className={gridStyles}>
         {categories.map((category) => {
           const categorySkills = skills.filter((skill) => skill.category === category);
-          
+
           if (categorySkills.length === 0) return null;
-          
+
           return (
             <div key={category} className={categoryCardStyles}>
               <h3 className={categoryTitleStyles}>{categoryTitles[category]}</h3>

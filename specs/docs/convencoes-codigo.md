@@ -13,6 +13,7 @@
 - Trate os estados: loading, sucesso, erro
 - Mensagens de erro devem ser legíveis pelo usuário
 - Arquivos devem seguir o padrão de nomenclatura
+- As classes do tailwind devem ser declaradas diretamente no componente no atributo className.
 
 ## Componentes
 

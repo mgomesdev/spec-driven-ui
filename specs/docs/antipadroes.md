@@ -11,4 +11,10 @@
 - ❌ Não adicione comentários no código.
 - ❌ Não crie arquivos desnecessários.
 - ❌ Não ultrapasse 500 linhas por arquivo.
+- ❌ Não adicione tipagem de retorno, prefira a inferencia de tipos.
+- ❌ Não crie constantes que armazena classes do tailwind, declare diretamente no elemento.
+- ❌ Não use return quando o componente só possui elementos sem lógica.
+- ❌ Não declare componentes com function.
+- ❌ Não importe o react sem necessidade.
+- ❌ Não selecione props individualmente sem necessidade no componente, prefira desestruturar.
 

@@ -225,7 +225,7 @@ Faremos uma versão estática inicial dos top 3 projetos.
 ### US-009: Criar seção About e Prova Social
 
 **Prioridade:** 9
-**Passes:** false
+**Passes:** true
 
 **Descrição:**
 > Como potencial cliente, quero ler de forma concisa sobre a biografia do profissional e conferir as avaliações e validações do trabalho pregresso.
@@ -252,7 +252,7 @@ Faremos uma versão estática inicial dos top 3 projetos.
 ### US-010: Integrar todas as seções na page.tsx
 
 **Prioridade:** 10
-**Passes:** false
+**Passes:** true
 
 **Descrição:**
 > Como usuário visitante, acessando a raiz (/), quero que a SPA se inicie e traga todas as seções de layout em uma ordem lógica.
