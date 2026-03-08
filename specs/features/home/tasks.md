@@ -118,7 +118,7 @@ Criação da página inicial (Home) de um site estratégico voltado para o posic
 ### US-005: Criar componente ProjectCard
 
 **Prioridade:** 5
-**Passes:** false
+**Passes:** true
 
 **Descrição:**
 > Como usuário, eu quero visualizar detalhes breves de um projeto na vitrine através de um cartão visual contendo links de acesso rápidos.

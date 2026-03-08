@@ -1,9 +1,9 @@
 ## Padrões do Projeto
 
 - Não use forwardRef na criação dos componentes.
-- Constantes internas do componente que não utilizam as props, via prop-drilling, ou não dependem de re-renderização, devem ser declaradas fora do componente e abaixo de quem usa.
+- Constantes internas do componente que não utilizam as props, via prop-drilling, ou não dependem de re-renderização, devem ser declaradas fora depois da declaração do componente que as usa.
 - evite selecionar props que não são utilizadas no componente, prefira a desestruturação de props que são utilizadas.
-
+- 
 ---
 
 ## [2026-03-08 19:00] - US-001
