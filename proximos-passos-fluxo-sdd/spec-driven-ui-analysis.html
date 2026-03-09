@@ -1,0 +1,1253 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>spec-driven-ui — Análise & Melhorias</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=DM+Mono:ital,wght@0,300;0,400;0,500;1,300&family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,600;0,9..144,800;1,9..144,300&display=swap');
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg: #0b0d0f;
+    --surface: #111418;
+    --surface2: #181c22;
+    --border: #1e2530;
+    --accent: #00e5b0;
+    --accent2: #ff6b35;
+    --accent3: #7b6fff;
+    --warn: #ffcc00;
+    --text: #c8d0dc;
+    --text-dim: #5a6474;
+    --text-bright: #edf2f8;
+    --red: #ff4d6d;
+    --green: #00e5b0;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'DM Mono', monospace;
+    font-size: 13.5px;
+    line-height: 1.7;
+    min-height: 100vh;
+  }
+
+  /* NOISE OVERLAY */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 0;
+    opacity: 0.5;
+  }
+
+  /* HEADER */
+  header {
+    position: relative;
+    padding: 72px 48px 60px;
+    border-bottom: 1px solid var(--border);
+    overflow: hidden;
+  }
+
+  header::after {
+    content: '';
+    position: absolute;
+    top: -80px; right: -80px;
+    width: 400px; height: 400px;
+    background: radial-gradient(circle, rgba(0,229,176,0.07) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  .header-tag {
+    display: inline-block;
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--accent);
+    border: 1px solid rgba(0,229,176,0.3);
+    padding: 3px 10px;
+    margin-bottom: 20px;
+  }
+
+  h1 {
+    font-family: 'Fraunces', serif;
+    font-size: clamp(2.4rem, 5vw, 4rem);
+    font-weight: 800;
+    color: var(--text-bright);
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+    margin-bottom: 16px;
+  }
+
+  h1 span { color: var(--accent); }
+
+  .header-sub {
+    color: var(--text-dim);
+    font-size: 12px;
+    letter-spacing: 0.05em;
+  }
+
+  /* NAV */
+  nav {
+    display: flex;
+    gap: 4px;
+    padding: 16px 48px;
+    border-bottom: 1px solid var(--border);
+    background: var(--bg);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    flex-wrap: wrap;
+  }
+
+  nav a {
+    color: var(--text-dim);
+    text-decoration: none;
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 6px 14px;
+    border: 1px solid transparent;
+    transition: all 0.2s;
+  }
+
+  nav a:hover {
+    color: var(--accent);
+    border-color: rgba(0,229,176,0.3);
+  }
+
+  /* MAIN */
+  main {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 0 48px 80px;
+  }
+
+  /* SECTION */
+  section {
+    padding: 64px 0 0;
+  }
+
+  .section-label {
+    font-size: 10px;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 8px;
+  }
+
+  h2 {
+    font-family: 'Fraunces', serif;
+    font-size: 1.9rem;
+    font-weight: 600;
+    color: var(--text-bright);
+    letter-spacing: -0.02em;
+    margin-bottom: 32px;
+  }
+
+  h3 {
+    font-family: 'Fraunces', serif;
+    font-size: 1.15rem;
+    font-weight: 600;
+    color: var(--text-bright);
+    margin-bottom: 12px;
+    margin-top: 36px;
+  }
+
+  p { margin-bottom: 14px; color: var(--text); }
+
+  /* DIVIDER */
+  .divider {
+    border: none;
+    border-top: 1px solid var(--border);
+    margin: 56px 0 0;
+  }
+
+  /* PROBLEM CARDS */
+  .problem-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 16px;
+    margin-top: 8px;
+  }
+
+  .problem-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    padding: 24px;
+    position: relative;
+    overflow: hidden;
+    transition: border-color 0.2s;
+  }
+
+  .problem-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+  }
+
+  .problem-card.critical::before { background: var(--red); }
+  .problem-card.high::before { background: var(--accent2); }
+  .problem-card.medium::before { background: var(--warn); }
+  .problem-card.info::before { background: var(--accent3); }
+
+  .problem-card:hover { border-color: #2e3848; }
+
+  .card-badge {
+    font-size: 9px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    padding: 2px 8px;
+    margin-bottom: 12px;
+    display: inline-block;
+  }
+
+  .badge-critical { color: var(--red); border: 1px solid rgba(255,77,109,0.3); background: rgba(255,77,109,0.05); }
+  .badge-high { color: var(--accent2); border: 1px solid rgba(255,107,53,0.3); background: rgba(255,107,53,0.05); }
+  .badge-medium { color: var(--warn); border: 1px solid rgba(255,204,0,0.3); background: rgba(255,204,0,0.05); }
+  .badge-info { color: var(--accent3); border: 1px solid rgba(123,111,255,0.3); background: rgba(123,111,255,0.05); }
+
+  .card-title {
+    font-family: 'Fraunces', serif;
+    font-size: 1rem;
+    color: var(--text-bright);
+    margin-bottom: 8px;
+    font-weight: 600;
+  }
+
+  .card-desc {
+    font-size: 12px;
+    color: var(--text-dim);
+    line-height: 1.6;
+  }
+
+  /* IMPROVEMENT SECTIONS */
+  .improvement {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    margin-bottom: 20px;
+  }
+
+  .improvement-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 20px 24px;
+    border-bottom: 1px solid var(--border);
+    cursor: pointer;
+  }
+
+  .improvement-number {
+    width: 32px; height: 32px;
+    display: flex; align-items: center; justify-content: center;
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    font-size: 11px;
+    color: var(--accent);
+    flex-shrink: 0;
+  }
+
+  .improvement-title {
+    font-family: 'Fraunces', serif;
+    font-size: 1.05rem;
+    color: var(--text-bright);
+    font-weight: 600;
+    flex: 1;
+  }
+
+  .improvement-tag {
+    font-size: 9px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    padding: 2px 8px;
+    border: 1px solid var(--border);
+    color: var(--text-dim);
+  }
+
+  .improvement-body {
+    padding: 24px;
+  }
+
+  /* CODE BLOCKS */
+  pre {
+    background: #0d1117;
+    border: 1px solid var(--border);
+    padding: 20px 24px;
+    overflow-x: auto;
+    margin: 16px 0;
+    font-size: 11.5px;
+    line-height: 1.8;
+    position: relative;
+  }
+
+  pre .lang-label {
+    position: absolute;
+    top: 8px; right: 12px;
+    font-size: 9px;
+    color: var(--text-dim);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+
+  code { font-family: 'DM Mono', monospace; }
+
+  .kw { color: var(--accent3); }
+  .str { color: #98c379; }
+  .cm { color: var(--text-dim); font-style: italic; }
+  .hl { color: var(--accent); }
+  .warn-text { color: var(--warn); }
+  .red-text { color: var(--red); }
+
+  /* FLOW DIAGRAM */
+  .flow {
+    display: flex;
+    align-items: stretch;
+    gap: 0;
+    margin: 24px 0;
+    flex-wrap: wrap;
+  }
+
+  .flow-step {
+    flex: 1;
+    min-width: 140px;
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    padding: 16px 20px;
+    position: relative;
+  }
+
+  .flow-step + .flow-step::before {
+    content: '→';
+    position: absolute;
+    left: -12px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--accent);
+    font-size: 14px;
+    z-index: 1;
+  }
+
+  .flow-step-label {
+    font-size: 9px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--text-dim);
+    margin-bottom: 4px;
+  }
+
+  .flow-step-name {
+    font-family: 'Fraunces', serif;
+    font-size: 0.95rem;
+    color: var(--text-bright);
+    font-weight: 600;
+  }
+
+  .flow-step-sub {
+    font-size: 10px;
+    color: var(--text-dim);
+    margin-top: 4px;
+  }
+
+  .flow-step.new {
+    border-color: rgba(0,229,176,0.4);
+  }
+
+  .flow-step.new .flow-step-label {
+    color: var(--accent);
+  }
+
+  /* COMPARE TABLE */
+  .compare {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0;
+    font-size: 12px;
+  }
+
+  .compare th {
+    text-align: left;
+    padding: 10px 16px;
+    border-bottom: 1px solid var(--border);
+    color: var(--text-dim);
+    font-weight: 400;
+    letter-spacing: 0.08em;
+    font-size: 10px;
+    text-transform: uppercase;
+  }
+
+  .compare td {
+    padding: 12px 16px;
+    border-bottom: 1px solid var(--border);
+    vertical-align: top;
+  }
+
+  .compare tr:last-child td { border-bottom: none; }
+
+  .compare tr:hover td { background: var(--surface2); }
+
+  .x { color: var(--red); }
+  .check { color: var(--accent); }
+  .partial { color: var(--warn); }
+
+  /* CHECKLIST */
+  .checklist { list-style: none; padding: 0; }
+  .checklist li {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    padding: 8px 0;
+    border-bottom: 1px solid var(--border);
+    font-size: 12.5px;
+  }
+  .checklist li:last-child { border-bottom: none; }
+  .checklist li::before {
+    content: '▸';
+    color: var(--accent);
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+
+  /* HIGHLIGHT BOX */
+  .highlight-box {
+    border-left: 3px solid var(--accent);
+    background: rgba(0,229,176,0.04);
+    padding: 16px 20px;
+    margin: 16px 0;
+  }
+
+  .warn-box {
+    border-left: 3px solid var(--warn);
+    background: rgba(255,204,0,0.04);
+    padding: 16px 20px;
+    margin: 16px 0;
+  }
+
+  .danger-box {
+    border-left: 3px solid var(--red);
+    background: rgba(255,77,109,0.04);
+    padding: 16px 20px;
+    margin: 16px 0;
+  }
+
+  /* SCORE BOARD */
+  .score-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    gap: 12px;
+    margin: 20px 0;
+  }
+
+  .score-card {
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    padding: 20px;
+    text-align: center;
+  }
+
+  .score-value {
+    font-family: 'Fraunces', serif;
+    font-size: 2.5rem;
+    font-weight: 800;
+    line-height: 1;
+    margin-bottom: 4px;
+  }
+
+  .score-label {
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--text-dim);
+  }
+
+  .score-good { color: var(--accent); }
+  .score-warn { color: var(--warn); }
+  .score-bad { color: var(--red); }
+
+  /* FOOTER */
+  footer {
+    border-top: 1px solid var(--border);
+    padding: 32px 48px;
+    color: var(--text-dim);
+    font-size: 11px;
+    letter-spacing: 0.05em;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: gap;
+  }
+
+  /* ANIMATIONS */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(16px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  section { animation: fadeUp 0.5s ease both; }
+
+  /* RESPONSIVE */
+  @media (max-width: 700px) {
+    header, main, nav, footer { padding-left: 24px; padding-right: 24px; }
+    .flow { flex-direction: column; }
+    .flow-step + .flow-step::before { content: '↓'; left: 50%; top: -12px; transform: translateX(-50%); }
+  }
+
+  /* INLINE TAG */
+  .tag {
+    display: inline-block;
+    font-size: 10px;
+    padding: 1px 7px;
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    color: var(--text-dim);
+    font-family: 'DM Mono', monospace;
+  }
+
+  .tag.accent { color: var(--accent); border-color: rgba(0,229,176,0.3); }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-tag">Análise de Repositório</div>
+  <h1>spec-driven-<span>ui</span></h1>
+  <p class="header-sub">mgomesdev/spec-driven-ui · branch 03-project_react-next · Março 2026</p>
+</header>
+
+<nav>
+  <a href="#overview">Overview</a>
+  <a href="#problemas">Problemas</a>
+  <a href="#contexto">Contexto</a>
+  <a href="#alucinacoes">Alucinações</a>
+  <a href="#fluxo">Fluxo</a>
+  <a href="#skills">Skills</a>
+  <a href="#geral">Geral</a>
+  <a href="#summary">Resumo</a>
+</nav>
+
+<main>
+
+  <!-- OVERVIEW -->
+  <section id="overview">
+    <div class="section-label">01 — visão geral</div>
+    <h2>O que é o projeto</h2>
+
+    <p>O <strong>spec-driven-ui</strong> é um sistema de geração de UI frontend orientado a specs, estruturado em quatro etapas sequenciais com aprovação humana entre cada fase. O fluxo completo: <span class="tag accent">research</span> → <span class="tag accent">plan</span> → <span class="tag accent">tasks</span> → <span class="tag accent">orchestrator</span> — cada etapa produzindo um artefato Markdown que alimenta a próxima.</p>
+
+    <p>A ideia central é sólida e alinha-se com as melhores práticas emergentes do ecossistema de SDD (Spec-Driven Development). O repositório usa Claude Code (com skills em <code>.agent/skills/</code>) como agente executor, Next.js/React como stack alvo, e o <code>progress.md</code> como memória acumulativa entre iterações.</p>
+
+    <div class="score-grid">
+      <div class="score-card">
+        <div class="score-value score-good">A</div>
+        <div class="score-label">Arquitetura do fluxo</div>
+      </div>
+      <div class="score-card">
+        <div class="score-value score-warn">C+</div>
+        <div class="score-label">Gestão de contexto</div>
+      </div>
+      <div class="score-card">
+        <div class="score-value score-warn">C</div>
+        <div class="score-label">Prevenção de alucinações</div>
+      </div>
+      <div class="score-card">
+        <div class="score-value score-bad">D+</div>
+        <div class="score-label">Constraints explícitas</div>
+      </div>
+      <div class="score-card">
+        <div class="score-value score-warn">B-</div>
+        <div class="score-label">Documentação das skills</div>
+      </div>
+    </div>
+  </section>
+
+  <hr class="divider">
+
+  <!-- PROBLEMAS -->
+  <section id="problemas">
+    <div class="section-label">02 — diagnóstico</div>
+    <h2>Problemas identificados</h2>
+
+    <div class="problem-grid">
+
+      <div class="problem-card critical">
+        <div class="card-badge badge-critical">Crítico</div>
+        <div class="card-title">Sem orçamento de tokens explícito por task</div>
+        <div class="card-desc">O <code>tasks.md</code> não especifica o tamanho estimado de contexto de cada história. O orchestrator pode selecionar uma história que excede a janela disponível, causando truncamento silencioso.</div>
+      </div>
+
+      <div class="problem-card critical">
+        <div class="card-badge badge-critical">Crítico</div>
+        <div class="card-title">Orchestrator lê plan.md inteiro a cada iteração</div>
+        <div class="card-desc">O fluxo instrui o orchestrator a consultar a seção do <code>plan.md</code> referenciada pela task, mas na prática o agente frequentemente puxa o arquivo inteiro, consumindo tokens desnecessariamente.</div>
+      </div>
+
+      <div class="problem-card critical">
+        <div class="card-badge badge-critical">Crítico</div>
+        <div class="card-title">progress.md pode crescer ilimitadamente</div>
+        <div class="card-desc">Padrões e aprendizados são acumulados indefinidamente. Sem destilação periódica, o arquivo cresce e ocupa contexto valioso, eventualmente degradando qualidade ao ser lido pelo agente.</div>
+      </div>
+
+      <div class="problem-card high">
+        <div class="card-badge badge-high">Alto</div>
+        <div class="card-title">Ausência de constitution.md / invariantes do projeto</div>
+        <div class="card-desc">Não há um documento de "constituição" que codifique princípios não-negociáveis (stack, padrões de código, convenções de nomes). O agente pode inventar padrões conflitantes entre features.</div>
+      </div>
+
+      <div class="problem-card high">
+        <div class="card-badge badge-high">Alto</div>
+        <div class="card-title">Research sem perguntas de esclarecimento estruturadas</div>
+        <div class="card-desc">A skill de research "faz perguntas se necessário", mas não tem protocolo para identificar lacunas críticas. Informações faltantes (auth, i18n, responsividade) só emergem tarde no plano ou implementação.</div>
+      </div>
+
+      <div class="problem-card high">
+        <div class="card-badge badge-high">Alto</div>
+        <div class="card-title">Sem verificação de consistência cross-artefato</div>
+        <div class="card-desc">Não há etapa que valide se os tipos do <code>plan.md</code> batem com os contratos do <code>research.md</code>, ou se as tasks cobrem todos os critérios de aceitação do research.</div>
+      </div>
+
+      <div class="problem-card medium">
+        <div class="card-badge badge-medium">Médio</div>
+        <div class="card-title">Tasks sem critério de "janela única"</div>
+        <div class="card-desc">O README menciona que cada história deve caber em "uma janela de contexto", mas não há definição do que isso significa em termos concretos (linhas, componentes, arquivos).</div>
+      </div>
+
+      <div class="problem-card medium">
+        <div class="card-badge badge-medium">Médio</div>
+        <div class="card-title">Sem estado de rollback das tasks</div>
+        <div class="card-desc">Se o orchestrator falha no meio de uma task, não há instrução clara para reverter estado parcial. O <code>progress.md</code> pode ficar inconsistente com o código.</div>
+      </div>
+
+      <div class="problem-card medium">
+        <div class="card-badge badge-medium">Médio</div>
+        <div class="card-title">Commit message não normalizado</div>
+        <div class="card-desc">O padrão <code>feat: US-XXX - Título</code> é bom, mas falta incluir o nome da feature (<code>feat(nome-feature): US-XXX</code>) para rastreabilidade por escopo no git log.</div>
+      </div>
+
+      <div class="problem-card info">
+        <div class="card-badge badge-info">Informacional</div>
+        <div class="card-title">Sem suporte a mocks tipados automáticos</div>
+        <div class="card-desc">O README menciona mocks quando o backend não está pronto, mas as skills não têm instruções para gerar mocks tipados alinhados ao plan.md automaticamente.</div>
+      </div>
+
+      <div class="problem-card info">
+        <div class="card-badge badge-info">Informacional</div>
+        <div class="card-title">FLUXO-DEV.md e README duplicam informação</div>
+        <div class="card-desc">Dois arquivos descrevem o mesmo fluxo com pequenas variações. Risco de divergência e confusão para o agente sobre qual é a fonte de verdade.</div>
+      </div>
+
+      <div class="problem-card info">
+        <div class="card-badge badge-info">Informacional</div>
+        <div class="card-title">Sem indicadores de qualidade nos checkpoints</div>
+        <div class="card-desc">O orchestrator roda typecheck, mas não há critério mínimo de cobertura, nem verificação de acessibilidade ou lighthouse score para UIs.</div>
+      </div>
+
+    </div>
+  </section>
+
+  <hr class="divider">
+
+  <!-- CONTEXTO -->
+  <section id="contexto">
+    <div class="section-label">03 — janela de contexto</div>
+    <h2>Gestão de contexto & tokens</h2>
+
+    <div class="danger-box">
+      <strong style="color:var(--red)">Problema central:</strong> o orchestrator opera em loop, e a cada iteração carrega o histórico de mensagens + progress.md + tasks.md + seção do plan.md. Sem controles explícitos, o contexto cresce de forma quadrática — especialmente em features grandes.
+    </div>
+
+    <h3>Melhoria 1 — Token Budget por Task</h3>
+    <p>Adicionar ao template de <code>tasks.md</code> um campo <code>ctx_estimate</code> em cada história, calculado na geração pelo agente de tasks:</p>
+
+    <pre><code><span class="cm">## US-003 — Formulário de criação</span>
+<span class="hl">Passes:</span> <span class="warn-text">false</span>
+<span class="hl">Priority:</span> 3
+<span class="hl">ctx_estimate:</span> <span class="str">~2k tokens</span>   <span class="cm"># novo campo</span>
+<span class="hl">plan_ref:</span> <span class="str">"#section-form-creation"</span>
+<span class="hl">files_affected:</span>
+  - <span class="str">src/app/components/CreateForm.tsx</span>
+  - <span class="str">src/app/hooks/useCreateForm.ts</span>
+<span class="hl">AC:</span>
+  - [ ] Validação client-side com zod
+  - [ ] Estado de loading/erro visível
+<span class="lang-label">tasks.md</span></code></pre>
+
+    <p>O orchestrator então verifica: <em>contexto atual + ctx_estimate ≤ 60% da janela disponível</em> antes de iniciar. Se exceder, ele compacta o histórico ou sugere nova sessão.</p>
+
+    <h3>Melhoria 2 — Leitura Cirúrgica do plan.md</h3>
+    <p>Em vez de carregar o <code>plan.md</code> inteiro, o orchestrator deve ser instruído a:</p>
+
+    <pre><code><span class="cm"># Na skill do orchestrator:</span>
+<span class="kw">REGRA:</span> Ao iniciar uma task, leia APENAS:
+  1. A seção exata referenciada em <span class="hl">plan_ref</span>
+  2. A seção de <span class="str">"Tipos globais"</span> (sempre inclusa)
+  3. O arquivo progress.md (máx 100 linhas)
+
+<span class="cm">NUNCA carregue o plan.md inteiro.</span>
+<span class="cm">Se precisar de outra seção, pare e declare qual.</span>
+<span class="lang-label">SKILL.md orchestrator</span></code></pre>
+
+    <h3>Melhoria 3 — Destilação periódica do progress.md</h3>
+    <p>Adicionar ao fluxo do orchestrator uma verificação: <em>se progress.md > 150 linhas, antes de prosseguir execute a sub-rotina de destilação</em>.</p>
+
+    <pre><code><span class="cm">## Sub-rotina: destilar progress.md</span>
+<span class="kw">QUANDO:</span> progress.md > 150 linhas
+<span class="kw">AÇÃO:</span>
+  1. Identifique padrões repetidos ou redundantes
+  2. Consolide em seção <span class="str">"Padrões confirmados"</span> (máx 30 linhas)
+  3. Mova detalhes históricos para <span class="str">progress-archive.md</span>
+  4. Mantenha progress.md abaixo de 80 linhas operacionais
+<span class="lang-label">orchestrator flow</span></code></pre>
+
+  </section>
+
+  <hr class="divider">
+
+  <!-- ALUCINAÇÕES -->
+  <section id="alucinacoes">
+    <div class="section-label">04 — prevenção de alucinações</div>
+    <h2>Reduzindo alucinações</h2>
+
+    <p>Alucinações em sistemas agênticos ocorrem principalmente em três cenários: <em>contexto insuficiente</em> (o modelo inventa o que não sabe), <em>ambiguidade nos artefatos</em> (interpretação livre de especificações vagas), e <em>loop sem grounding</em> (o modelo confirma a si mesmo).</p>
+
+    <h3>Melhoria 4 — constitution.md (Invariantes do Projeto)</h3>
+    <p>Criar um arquivo <code>.agent/constitution.md</code> que é SEMPRE injetado no início de cada skill. Este arquivo codifica o que nunca muda:</p>
+
+    <pre><code><span class="cm"># PROJECT CONSTITUTION — lido em TODA invocação de skill</span>
+
+<span class="hl">Stack obrigatório:</span>
+  - Next.js 15 (App Router) — NÃO Pages Router
+  - TypeScript strict mode
+  - Tailwind CSS — NÃO CSS Modules, NÃO styled-components
+  - Zod para validação de formulários
+  - React Query para server state
+
+<span class="hl">Proibições absolutas:</span>
+  - ❌ NÃO use `any` em TypeScript
+  - ❌ NÃO crie componentes com lógica de negócio e UI juntas
+  - ❌ NÃO chame APIs diretamente em componentes — use hooks/services
+  - ❌ NÃO use `useState` para server state — use React Query
+
+<span class="hl">Convenções de nomes:</span>
+  - Componentes: PascalCase em src/app/components/
+  - Hooks: camelCase prefixado com "use" em src/app/hooks/
+  - Types: PascalCase com sufixo "Type" ou "Props"
+  - Services: camelCase em src/app/services/
+
+<span class="hl">Critérios de aceite mínimos:</span>
+  - Typecheck passando (tsc --noEmit)
+  - Zero console.error no browser
+  - Responsivo: mobile (320px) e desktop (1280px)
+<span class="lang-label">.agent/constitution.md</span></code></pre>
+
+    <h3>Melhoria 5 — Perguntas de Esclarecimento Estruturadas no Research</h3>
+    <p>A skill de research deve ter um checklist de domínios críticos para explorar antes de gerar o artefato:</p>
+
+    <pre><code><span class="cm">## Protocolo de esclarecimento — skill research</span>
+
+<span class="kw">ANTES de gerar research.md, confirme:</span>
+
+<span class="hl">Autenticação:</span>
+  - Esta feature requer usuário autenticado? Qual provider?
+
+<span class="hl">Dados:</span>
+  - Quais endpoints de API serão consumidos?
+  - Formato de paginação/filtro?
+
+<span class="hl">Estado:</span>
+  - Dados são persistidos localmente ou só server-side?
+  - Há otimistic updates?
+
+<span class="hl">Responsividade:</span>
+  - Breakpoints específicos além do padrão Tailwind?
+
+<span class="hl">Acessibilidade:</span>
+  - Há requisitos WCAG? Nível A, AA?
+
+<span class="hl">i18n:</span>
+  - Feature precisa de internacionalização?
+
+<span class="cm">Se qualquer item acima for ambíguo, PARE e pergunte.</span>
+<span class="cm">NÃO assuma. NÃO invente defaults silenciosos.</span>
+<span class="lang-label">skill research — protocolo</span></code></pre>
+
+    <h3>Melhoria 6 — Validação Cruzada de Artefatos (Cross-check)</h3>
+    <p>Adicionar uma nova micro-etapa <em>opcional mas recomendada</em> entre tasks e orchestrator: uma verificação de consistência.</p>
+
+    <div class="flow">
+      <div class="flow-step">
+        <div class="flow-step-label">Fase 1</div>
+        <div class="flow-step-name">research.md</div>
+        <div class="flow-step-sub">US + ACs</div>
+      </div>
+      <div class="flow-step">
+        <div class="flow-step-label">Fase 2</div>
+        <div class="flow-step-name">plan.md</div>
+        <div class="flow-step-sub">Tipos + Contratos</div>
+      </div>
+      <div class="flow-step">
+        <div class="flow-step-label">Fase 3</div>
+        <div class="flow-step-name">tasks.md</div>
+        <div class="flow-step-sub">Histórias atômicas</div>
+      </div>
+      <div class="flow-step new">
+        <div class="flow-step-label">Fase 3.5 — novo</div>
+        <div class="flow-step-name">cross-check</div>
+        <div class="flow-step-sub">Consistência AC↔tasks</div>
+      </div>
+      <div class="flow-step">
+        <div class="flow-step-label">Fase 4</div>
+        <div class="flow-step-name">orchestrator</div>
+        <div class="flow-step-sub">Implementação</div>
+      </div>
+    </div>
+
+    <pre><code><span class="cm">## Skill: cross-check (nova)</span>
+
+<span class="kw">INPUT:</span> research.md + plan.md + tasks.md
+<span class="kw">VERIFICAR:</span>
+
+1. Todo AC do research tem ao menos 1 task correspondente?
+   - Liste ACs sem cobertura: <span class="warn-text">BLOQUEANTE</span>
+
+2. Todo tipo definido no plan é usado em ao menos 1 task?
+   - Tipos órfãos: <span class="cm">aviso não-bloqueante</span>
+
+3. Os contratos de API do plan batem com os endpoints do research?
+   - Divergências: <span class="warn-text">BLOQUEANTE</span>
+
+4. Há tasks que dependem de outras ainda não marcadas como Passes:true?
+   - Gere grafo de dependências se detectado
+
+<span class="kw">OUTPUT:</span> cross-check.md com lista de issues
+<span class="kw">HUMANO APROVA:</span> Sim — só avança se zero bloqueantes
+<span class="lang-label">skill cross-check</span></code></pre>
+
+    <h3>Melhoria 7 — Anti-Hallucination Guards no Orchestrator</h3>
+    <p>Adicionar ao SKILL.md do orchestrator um conjunto de "guards" explícitos:</p>
+
+    <pre><code><span class="cm">## Anti-Hallucination Guards — orchestrator</span>
+
+<span class="red-text">NUNCA:</span>
+  - Invente nomes de componentes não listados no plan.md
+  - Assuma que uma biblioteca está instalada sem verificar package.json
+  - Crie arquivos fora dos paths definidos no plan.md
+  - Implemente lógica de negócio não descrita na task atual
+  - Marque Passes:true sem ter rodado tsc --noEmit com sucesso
+
+<span class="hl">SEMPRE:</span>
+  - Se um tipo necessário não existe no plan.md, PARE e reporte
+  - Se um endpoint de API não está no plan.md, PARE e reporte
+  - Confirme paths de import contra tsconfig.json antes de usar
+  - Leia o package.json antes de usar qualquer biblioteca externa
+
+<span class="kw">REGRA DE OURO:</span> Em caso de dúvida, reporte ao humano.
+<span class="kw">NÃO invente. NÃO adivinhe. NÃO assuma.</span>
+<span class="lang-label">orchestrator — guards</span></code></pre>
+
+  </section>
+
+  <hr class="divider">
+
+  <!-- FLUXO -->
+  <section id="fluxo">
+    <div class="section-label">05 — fluxo revisado</div>
+    <h2>Fluxo completo melhorado</h2>
+
+    <p>O fluxo proposto adiciona três elementos ao pipeline original: <em>constitution.md</em> como base sempre presente, <em>cross-check</em> como etapa de validação, e <em>compactação de contexto</em> como sub-rotina do orchestrator.</p>
+
+    <pre><code><span class="cm">## Fluxo Revisado — Research → Plan → Tasks → Cross-check → Orchestrator</span>
+
+[<span class="hl">constitution.md</span>]  ← injetado em TODAS as skills como contexto base
+       │
+[US do PO]
+       │
+       ▼
+<span class="hl">research</span>  →  research.md   →  [👤 aprovação]
+       │
+       │  <span class="cm">↳ protocolo de esclarecimento estruturado antes de gerar</span>
+       ▼
+<span class="hl">plan</span>      →  plan.md        →  [👤 aprovação]
+       │
+       │  <span class="cm">↳ seções com âncoras (#section-id) para leitura cirúrgica</span>
+       │  <span class="cm">↳ ctx_size estimada por seção</span>
+       ▼
+<span class="hl">tasks</span>     →  tasks.md       →  [👤 aprovação]
+       │
+       │  <span class="cm">↳ ctx_estimate por task</span>
+       │  <span class="cm">↳ files_affected listados</span>
+       ▼
+<span class="hl">cross-check</span>  →  cross-check.md  →  [👤 aprovação — bloqueante se issues]
+       │
+       │  <span class="cm">↳ AC coverage, tipos órfãos, contratos</span>
+       ▼
+<span class="hl">orchestrator</span>:
+  LOOP:
+    1. Verifica ctx disponível vs ctx_estimate da próxima task
+    2. Se progress.md > 150 linhas → destila
+    3. Carrega APENAS seção do plan.md referenciada
+    4. Aplica Anti-Hallucination Guards
+    5. Implementa → tsc --noEmit → browser check
+    6. Commita: <span class="str">feat(nome-feature): US-XXX - Título</span>
+    7. Atualiza tasks.md (Passes: true) e progress.md
+    8. Verifica próxima task
+  FIM LOOP → destila conhecimento → PR
+<span class="lang-label">FLUXO-DEV-v2.md</span></code></pre>
+
+  </section>
+
+  <hr class="divider">
+
+  <!-- SKILLS -->
+  <section id="skills">
+    <div class="section-label">06 — melhorias nas skills</div>
+    <h2>Templates & estrutura das skills</h2>
+
+    <h3>Melhoria 8 — Template do research.md</h3>
+    <p>O template atual não tem seções obrigatórias. Proposta de template estruturado que force captura completa:</p>
+
+    <pre><code><span class="cm"># Research: [nome-da-feature]</span>
+
+<span class="hl">## Contexto</span>
+&lt;escopo e motivação em 3 linhas&gt;
+
+<span class="hl">## Histórias de Usuário</span>
+- US-001: Como [persona], quero [ação] para [valor]
+  ACs:
+    - [ ] &lt;verificável e mensurável&gt;
+    - [ ] &lt;verificável e mensurável&gt;
+
+<span class="hl">## Integrações</span>
+| Endpoint | Método | Payload | Response | Status |
+|----------|--------|---------|----------|--------|
+| /api/... | POST   | {...}   | {...}    | confirmado / a confirmar |
+
+<span class="hl">## Dados sensíveis / Auth</span>
+&lt;requer auth? qual role? token onde?&gt;
+
+<span class="hl">## Fora de escopo (explícito)</span>
+- &lt;o que NÃO será feito nesta feature&gt;
+
+<span class="hl">## Ambiguidades abertas</span>
+- &lt;lista de itens pendentes de confirmação humana&gt;
+<span class="lang-label">research.md — template</span></code></pre>
+
+    <h3>Melhoria 9 — Âncoras de seção no plan.md</h3>
+    <p>O <code>plan.md</code> deve ter âncoras HTML em cada seção para permitir leitura cirúrgica pelo orchestrator:</p>
+
+    <pre><code><span class="cm"># Plan: [nome-da-feature]</span>
+
+<span class="cm">&lt;!-- ctx_total: ~8k tokens --&gt;</span>
+
+<span class="cm">&lt;!-- #section-types ctx: ~1.2k --&gt;</span>
+<span class="hl">## Tipos & Interfaces</span>
+<span class="kw">export type</span> CreateFormProps = { ... }
+<span class="kw">export type</span> UserType = { ... }
+
+<span class="cm">&lt;!-- #section-form-creation ctx: ~1.8k --&gt;</span>
+<span class="hl">## CreateForm Component</span>
+Props: CreateFormProps
+Hooks: useCreateForm
+...
+
+<span class="cm">&lt;!-- #section-api-contracts ctx: ~0.9k --&gt;</span>
+<span class="hl">## Contratos de API</span>
+POST /api/items → ItemType
+...
+<span class="lang-label">plan.md — com âncoras</span></code></pre>
+
+    <h3>Melhoria 10 — Skill de rollback</h3>
+    <p>Adicionar instrução explícita no orchestrator para falha parcial:</p>
+
+    <pre><code><span class="cm">## Tratamento de falha — orchestrator</span>
+
+<span class="kw">SE</span> tsc --noEmit falha após implementação:
+  1. NÃO marque Passes:true
+  2. Registre o erro exato no progress.md
+  3. Tente corrigir (máx 2 tentativas)
+  4. Se ainda falha: git stash + reporte ao humano
+     com: lista de erros + arquivos afetados
+
+<span class="kw">SE</span> implementação parcialmente completa ao fim da sessão:
+  1. Marque a task como <span class="warn-text">Passes: partial</span>
+  2. Liste o que foi feito e o que falta no progress.md
+  3. NÃO commite código com erros de tipo
+<span class="lang-label">orchestrator — error handling</span></code></pre>
+
+  </section>
+
+  <hr class="divider">
+
+  <!-- GERAL -->
+  <section id="geral">
+    <div class="section-label">07 — melhorias gerais</div>
+    <h2>Melhorias gerais no projeto</h2>
+
+    <div class="improvement">
+      <div class="improvement-header">
+        <div class="improvement-number">G1</div>
+        <div class="improvement-title">Unificar FLUXO-DEV.md e README.md</div>
+        <div class="improvement-tag">Documentação</div>
+      </div>
+      <div class="improvement-body">
+        <p>Atualmente dois arquivos descrevem o mesmo fluxo. O README deve ser a documentação para humanos (visão geral, como contribuir), enquanto <code>FLUXO-DEV.md</code> deve ser a fonte de verdade técnica consumida pelos agentes. Adicionar no topo do README: <em>"Para instruções do agente, veja FLUXO-DEV.md"</em>.</p>
+      </div>
+    </div>
+
+    <div class="improvement">
+      <div class="improvement-header">
+        <div class="improvement-number">G2</div>
+        <div class="improvement-title">Adicionar .agent/constitution.md ao .gitignore team-specific</div>
+        <div class="improvement-tag">Estrutura</div>
+      </div>
+      <div class="improvement-body">
+        <p>A <code>constitution.md</code> deve ter duas variantes: uma base commitada no repo (padrões do projeto) e uma local não-commitada para preferências do dev individual. Adicionar <code>.agent/constitution.local.md</code> ao <code>.gitignore</code>.</p>
+      </div>
+    </div>
+
+    <div class="improvement">
+      <div class="improvement-header">
+        <div class="improvement-number">G3</div>
+        <div class="improvement-title">Adicionar script de scaffold para nova feature</div>
+        <div class="improvement-tag">DX</div>
+      </div>
+      <div class="improvement-body">
+        <p>Criar um script <code>scripts/new-feature.sh [nome]</code> que cria automaticamente a estrutura <code>specs/features/[nome]/</code> com os templates vazios de research, plan, tasks e progress. Elimina erros de estrutura e acelera o início.</p>
+        <pre><code><span class="hl">#!/bin/bash</span>
+FEATURE=$1
+DIR=<span class="str">"specs/features/$FEATURE"</span>
+mkdir -p $DIR
+cp .agent/templates/research.template.md $DIR/research.md
+cp .agent/templates/plan.template.md     $DIR/plan.md
+cp .agent/templates/tasks.template.md    $DIR/tasks.md
+echo <span class="str">"# Progress: $FEATURE\n\n## Padrões confirmados\n"</span> > $DIR/progress.md
+echo <span class="str">"✅ Feature scaffold criado em $DIR"</span>
+<span class="lang-label">scripts/new-feature.sh</span></code></pre>
+      </div>
+    </div>
+
+    <div class="improvement">
+      <div class="improvement-header">
+        <div class="improvement-number">G4</div>
+        <div class="improvement-title">Padronizar commit com escopo de feature</div>
+        <div class="improvement-tag">Git</div>
+      </div>
+      <div class="improvement-body">
+        <p>Mudar o padrão de commit de <code>feat: US-XXX - Título</code> para <code>feat(nome-feature): US-XXX - Título</code>. Isso permite usar <code>git log --grep="feat(checkout)"</code> para rastrear todos os commits de uma feature específica, além de ser compatível com Conventional Commits para geração automática de CHANGELOG.</p>
+      </div>
+    </div>
+
+    <div class="improvement">
+      <div class="improvement-header">
+        <div class="improvement-number">G5</div>
+        <div class="improvement-title">Adicionar quality gates ao orchestrator</div>
+        <div class="improvement-tag">Qualidade</div>
+      </div>
+      <div class="improvement-body">
+        <p>Além do <code>tsc --noEmit</code>, o orchestrator deve ter um conjunto mínimo de quality gates configurável:</p>
+        <pre><code><span class="hl">## Quality Gates — orchestrator</span>
+<span class="cm"># Configurável em .agent/quality-gates.json</span>
+{
+  <span class="str">"typecheck"</span>: <span class="warn-text">true</span>,      <span class="cm">// sempre obrigatório</span>
+  <span class="str">"lint"</span>: <span class="warn-text">true</span>,          <span class="cm">// eslint --max-warnings 0</span>
+  <span class="str">"tests"</span>: <span class="warn-text">false</span>,         <span class="cm">// opcional por projeto</span>
+  <span class="str">"browser_check"</span>: <span class="warn-text">true</span>,  <span class="cm">// visual para tasks com UI</span>
+  <span class="str">"a11y_basic"</span>: <span class="warn-text">false</span>      <span class="cm">// axe-core quando habilitado</span>
+}
+<span class="lang-label">.agent/quality-gates.json</span></code></pre>
+      </div>
+    </div>
+
+    <div class="improvement">
+      <div class="improvement-header">
+        <div class="improvement-number">G6</div>
+        <div class="improvement-title">Índice de features em specs/INDEX.md</div>
+        <div class="improvement-tag">Navegação</div>
+      </div>
+      <div class="improvement-body">
+        <p>À medida que o projeto cresce, o diretório <code>specs/features/</code> acumula features. Adicionar um <code>specs/INDEX.md</code> mantido automaticamente pelo orchestrator ao fim de cada feature, listando: nome, status (em andamento / concluída), data, US cobertos.</p>
+      </div>
+    </div>
+
+    <div class="improvement">
+      <div class="improvement-header">
+        <div class="improvement-number">G7</div>
+        <div class="improvement-title">Suporte a mocks tipados automáticos no plan</div>
+        <div class="improvement-tag">Backend-parity</div>
+      </div>
+      <div class="improvement-body">
+        <p>Quando contratos de API estão marcados como "a confirmar" no <code>research.md</code>, a skill de plan deve gerar automaticamente uma seção <code>## Mocks</code> com factories tipadas usando os tipos definidos. O orchestrator implementa com os mocks; quando o backend entregar, apenas os mocks são substituídos — zero mudanças de tipo.</p>
+      </div>
+    </div>
+
+  </section>
+
+  <hr class="divider">
+
+  <!-- SUMMARY -->
+  <section id="summary">
+    <div class="section-label">08 — resumo executivo</div>
+    <h2>Roadmap de melhorias por prioridade</h2>
+
+    <table class="compare">
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>Melhoria</th>
+          <th>Impacto</th>
+          <th>Esforço</th>
+          <th>Categoria</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><span class="tag">G4.4</span></td>
+          <td>constitution.md — invariantes do projeto</td>
+          <td><span class="check">Alto</span></td>
+          <td><span class="check">Baixo</span></td>
+          <td>Anti-Hallucination</td>
+        </tr>
+        <tr>
+          <td><span class="tag">G4.7</span></td>
+          <td>Anti-Hallucination Guards no orchestrator</td>
+          <td><span class="check">Alto</span></td>
+          <td><span class="check">Baixo</span></td>
+          <td>Anti-Hallucination</td>
+        </tr>
+        <tr>
+          <td><span class="tag">G3.1</span></td>
+          <td>Token budget (ctx_estimate) por task</td>
+          <td><span class="check">Alto</span></td>
+          <td><span class="partial">Médio</span></td>
+          <td>Contexto</td>
+        </tr>
+        <tr>
+          <td><span class="tag">G3.2</span></td>
+          <td>Leitura cirúrgica do plan.md (âncoras)</td>
+          <td><span class="check">Alto</span></td>
+          <td><span class="partial">Médio</span></td>
+          <td>Contexto</td>
+        </tr>
+        <tr>
+          <td><span class="tag">G3.3</span></td>
+          <td>Destilação periódica do progress.md</td>
+          <td><span class="check">Alto</span></td>
+          <td><span class="check">Baixo</span></td>
+          <td>Contexto</td>
+        </tr>
+        <tr>
+          <td><span class="tag">G4.5</span></td>
+          <td>Perguntas de esclarecimento estruturadas (research)</td>
+          <td><span class="check">Alto</span></td>
+          <td><span class="check">Baixo</span></td>
+          <td>Anti-Hallucination</td>
+        </tr>
+        <tr>
+          <td><span class="tag">G4.6</span></td>
+          <td>Cross-check de consistência entre artefatos</td>
+          <td><span class="check">Alto</span></td>
+          <td><span class="partial">Médio</span></td>
+          <td>Qualidade</td>
+        </tr>
+        <tr>
+          <td><span class="tag">G5.10</span></td>
+          <td>Rollback e tratamento de falha parcial</td>
+          <td><span class="partial">Médio</span></td>
+          <td><span class="check">Baixo</span></td>
+          <td>Resiliência</td>
+        </tr>
+        <tr>
+          <td><span class="tag">G5.8</span></td>
+          <td>Templates estruturados research/plan</td>
+          <td><span class="partial">Médio</span></td>
+          <td><span class="check">Baixo</span></td>
+          <td>Qualidade</td>
+        </tr>
+        <tr>
+          <td><span class="tag">G7.3</span></td>
+          <td>Script de scaffold new-feature.sh</td>
+          <td><span class="partial">Médio</span></td>
+          <td><span class="check">Baixo</span></td>
+          <td>DX</td>
+        </tr>
+        <tr>
+          <td><span class="tag">G7.4</span></td>
+          <td>Commits com escopo da feature</td>
+          <td><span class="partial">Médio</span></td>
+          <td><span class="check">Baixo</span></td>
+          <td>Git</td>
+        </tr>
+        <tr>
+          <td><span class="tag">G7.5</span></td>
+          <td>quality-gates.json configurável</td>
+          <td><span class="partial">Médio</span></td>
+          <td><span class="partial">Médio</span></td>
+          <td>Qualidade</td>
+        </tr>
+        <tr>
+          <td><span class="tag">G7.6</span></td>
+          <td>specs/INDEX.md automático</td>
+          <td><span class="x">Baixo</span></td>
+          <td><span class="check">Baixo</span></td>
+          <td>Navegação</td>
+        </tr>
+        <tr>
+          <td><span class="tag">G7.7</span></td>
+          <td>Mocks tipados automáticos no plan</td>
+          <td><span class="partial">Médio</span></td>
+          <td><span class="partial">Médio</span></td>
+          <td>Backend-parity</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="highlight-box">
+      <strong>Quick wins (implementar primeiro):</strong> constitution.md + anti-hallucination guards + destilação do progress.md. São mudanças apenas em arquivos Markdown/texto, sem alteração de código, e têm o maior impacto no comportamento do agente com menor esforço.
+    </div>
+
+    <h3>Estrutura de arquivos proposta</h3>
+    <pre><code>.agent/
+├── constitution.md            <span class="cm"># NOVO — invariantes do projeto</span>
+├── constitution.local.md      <span class="cm"># NOVO — preferências pessoais (gitignored)</span>
+├── quality-gates.json         <span class="cm"># NOVO — quality gates configuráveis</span>
+├── skills/
+│   ├── research/SKILL.md      <span class="cm"># + protocolo de esclarecimento</span>
+│   ├── plan/SKILL.md          <span class="cm"># + âncoras de seção</span>
+│   ├── tasks/SKILL.md         <span class="cm"># + ctx_estimate por task</span>
+│   ├── cross-check/SKILL.md   <span class="cm"># NOVO — validação cruzada</span>
+│   └── orchestrator/SKILL.md  <span class="cm"># + guards + destilação + rollback</span>
+└── templates/
+    ├── research.template.md   <span class="cm"># NOVO — template estruturado</span>
+    ├── plan.template.md       <span class="cm"># NOVO — com âncoras e ctx_size</span>
+    └── tasks.template.md      <span class="cm"># NOVO — com ctx_estimate</span>
+
+specs/
+├── INDEX.md                   <span class="cm"># NOVO — índice de features</span>
+└── features/
+    └── [nome-feature]/
+        ├── research.md
+        ├── plan.md
+        ├── tasks.md
+        ├── cross-check.md     <span class="cm"># NOVO</span>
+        └── progress.md
+
+scripts/
+└── new-feature.sh             <span class="cm"># NOVO — scaffold automático</span>
+<span class="lang-label">estrutura proposta</span></code></pre>
+
+  </section>
+
+</main>
+
+<footer>
+  <span>spec-driven-ui · Análise gerada em Março 2026</span>
+  <span style="color:var(--accent)">10 melhorias críticas · 4 melhorias gerais</span>
+</footer>
+
+</body>
+</html>
