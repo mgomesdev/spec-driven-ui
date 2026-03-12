@@ -15,8 +15,11 @@
         - global.css            # Estilos Globais
         - favicon.ico           # Favicon
     - components/               # Components
-      - atoms/                  # Atoms 
-- public/                       # Arquivos Públicos
+      - atoms/                  # Atoms
+      - home/                   # Componentes da feature home
+    - data/                     # Dados estáticos (profile.ts, projects.ts)
+    - types/                    # Tipos TypeScript (home.ts)
+    - public/                   # Arquivos Públicos
     - fonts/                    # Fontes
     - images/                   # Imagens
     - og/                       # OG Images

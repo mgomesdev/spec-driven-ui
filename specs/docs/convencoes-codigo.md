@@ -1,6 +1,8 @@
 ## Convenções de código
 
 - Tipos/Interfaces PascalCase com sufixos descritivos (`FormDialogProps` para props) e (`FormDialogRef` para ref)
+- Componentes declarados como arrow functions: `export const ComponentName = ({ ... }: Props) => ...`
+- Arrow functions com retorno direto (sem `return` e `{ ... }`) quando o componente só retorna JSX
 - Constantes SCREAMING_SNAKE_CASE (`MAX_RETRY_COUNT`)
 - Variáveis booleanas prefixo is/has/can (`isActive`, `hasPermission`)
 - TypeScript Sem `any`. Use `unknown` quando o tipo não for conhecido e documente o motivo
@@ -36,3 +38,8 @@
 - Manter o uso de gradientes, backgrounds translúcidos e eefeitos backdrop-blur para alcançar a UI Premium.
 - Componentes base (`Button`, `Section`) atuam como pilares estruturais; devem sempre ser importados de `@/components/ui/`.
 - Uso do `<Image />` do Next.js deve prever preenchimento dinâmico (layout fill) e conter tratamento de fallback quando a imagem não for fornecida.
+
+### Estrutura de Dados e Tipos
+- Dados estáticos centralizados em `@/data/` (ex: `profile.ts`, `projects.ts`)
+- Tipos centralizados em `@/types/` (ex: `home.ts` para tipos de uma feature)
+- Dados são importados e passados via props aos componentes
