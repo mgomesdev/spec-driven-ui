@@ -1,0 +1,8 @@
+{
+  "typecheck": true,
+  "lint": true,
+  "tests": true,
+  "gherkin": true,
+  "browser_check": true,
+  "a11y": false
+}
