@@ -8,7 +8,7 @@ interface ProjectCardProps {
   project: Project;
 }
 
-export function ProjectCard({ project }: ProjectCardProps) {
+export const ProjectCard = ({ project }: ProjectCardProps) => {
   const [isImageError, setIsImageError] = useState(false);
 
   return (
@@ -64,4 +64,4 @@ export function ProjectCard({ project }: ProjectCardProps) {
       </div>
     </div>
   );
-}
+};

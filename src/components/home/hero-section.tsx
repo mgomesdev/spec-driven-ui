@@ -4,8 +4,7 @@ interface HeroSectionProps {
   profile: Profile;
 }
 
-export function HeroSection({ profile }: HeroSectionProps) {
-  return (
+export const HeroSection = ({ profile }: HeroSectionProps) => (
     <section className="min-h-[80vh] flex items-center justify-center px-4 md:px-8 py-20">
       <div className="max-w-4xl mx-auto text-center backdrop-blur-lg bg-white/5 border border-white/10 rounded-3xl p-8 md:p-12">
         <h1 className="text-4xl md:text-6xl font-bold mb-4 bg-gradient-to-r from-indigo-400 via-purple-400 to-pink-400 bg-clip-text text-transparent">
@@ -52,4 +51,3 @@ export function HeroSection({ profile }: HeroSectionProps) {
       </div>
     </section>
   );
-}
