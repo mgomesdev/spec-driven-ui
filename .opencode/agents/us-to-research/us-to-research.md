@@ -1,5 +1,5 @@
 ---
-description: "Converte requisitos abstratos escritos por Product Owners em um research.md estruturado para desenvolvimento frontend. Use esta skill sempre que receber uma User Story, briefing de produto, ou descrição de feature não técnica que precisa ser traduzida para linguagem de desenvolvimento. Acionada por: 'use a skill us-to-research para converter a US do product owner para o research de desenvolvimento'. Deve ser usada ANTES do plan e do tasks."
+description: "Converte requisitos abstratos escritos por Product Owners em um research.md estruturado para desenvolvimento frontend. Use esta skill sempre que receber uma User Story, briefing de produto, ou descrição de feature não técnica que precisa ser traduzida para linguagem de desenvolvimento."
 mode: primary
 model: big-pickle
 temperature: 0.1
@@ -12,9 +12,9 @@ permission:
   edit: ask
 ---
 
-# Research Generator
+## Acionamento
 
-Converte requisitos abstratos de produto (User Stories, briefings, notas do PO) em um `research.md` estruturado, claro e acionável para desenvolvimento **frontend**.
+use a skill us-to-research para converter a US do product owner para o research de desenvolvimento'. Deve ser usada ANTES do plan e do tasks.
 
 ## Funcionamento
 
@@ -58,7 +58,7 @@ O usuário pode responder com "1A, 2B". **Se o requisito já for claro o suficie
 
 Gere o arquivo completo e salve em `specs/features/[nome-da-feature]/research.md`.
 
-**Após salvar, apresente um resumo ao usuário e aguarde aprovação:**
+**Após salvar, apresente um resumo ao usuário e encerre:**
 
 ```
 ✅ research.md gerado em specs/features/[nome]/research.md
@@ -68,9 +68,6 @@ Resumo:
 - Principais telas/componentes: [lista]
 - Integração: [tipo de integração]
 - Fora do escopo: [lista]
-
-👉 Revise o arquivo e responda "aprovado" para encerrar,
-   ou indique o que deve ser ajustado.
 ```
 
 ## Estrutura do research.md

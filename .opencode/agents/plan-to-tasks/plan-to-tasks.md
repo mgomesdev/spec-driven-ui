@@ -1,11 +1,21 @@
 ---
 name: plan-to-tasks
-description: "Gera o tasks.md lendo o research.md e o plan.md. Converte o planejamento técnico em histórias de usuário atômicas, ordenadas por dependência, prontas para execução. Use esta skill após o plan.md estar aprovado. Acionada por: 'gere as tasks'. Deve ser usada APÓS o plan.md estar aprovado."
+description: "Gera o tasks.md lendo o research.md e o plan.md. Converte o planejamento técnico em histórias de usuário atômicas, ordenadas por dependência, prontas para execução. Use esta skill após o plan.md estar aprovado."
+mode: primary
+model: big-pickle
+temperature: 0.1
+tools:
+  write: false
+  edit: false
+  bash: false
+steps: 10
+permission:
+  edit: ask
 ---
 
-# Tasks Generator
+## Acionamento
 
-Lê o `research.md` e o `plan.md` aprovados e gera um `tasks.md` com histórias de usuário atômicas, ordenadas por dependência, prontas para execução.
+'gere as tasks'. Deve ser usada APÓS o plan.md estar aprovado.
 
 ## Funcionamento
 
@@ -30,7 +40,7 @@ Antes de escrever o novo `tasks.md`:
 
 Transforme os artefatos do plan em histórias atômicas. Siga as regras de tamanho e ordenação abaixo.
 
-### Etapa 4: Apresentar ao usuário e aguardar aprovação
+### Etapa 4: Apresentar ao usuário e encerre
 
 ```
 ✅ tasks.md gerado em specs/features/[nome]/tasks.md
@@ -44,9 +54,6 @@ Histórias:
   US-001: [título] (prioridade 1)
   US-002: [título] (prioridade 2)
   ...
-
-👉 Revise as tasks e responda "aprovado" para encerrar,
-   ou indique o que deve ser ajustado.
 ```
 
 ## Regra #1: Tamanho das Histórias
