@@ -42,7 +42,7 @@ Página institucional "/about" com conteúdo estático apresentando biografia pr
 ### US-002: Criar dados estáticos da feature sobre
 
 **Prioridade:** 2
-**Passes:** false
+**Passes:** true
 
 **Descrição:**
 > Como desenvolvedor, eu quero os dados estáticos da página sobre em um arquivo separado para que os componentes consumam esses dados via props.
@@ -74,7 +74,7 @@ Página institucional "/about" com conteúdo estático apresentando biografia pr
 ### US-003: Criar componente BioSection
 
 **Prioridade:** 3
-**Passes:** false
+**Passes:** true
 
 **Descrição:**
 > Como visitante, eu quero ver a biografia profissional do desenvolvedor com nome, cargo e foto para entender quem é e qual sua trajetória.
@@ -106,7 +106,7 @@ Página institucional "/about" com conteúdo estático apresentando biografia pr
 ### US-004: Criar componente ExperienceSection
 
 **Prioridade:** 4
-**Passes:** false
+**Passes:** true
 
 **Descrição:**
 > Como visitante, eu quero ver a experiência profissional em formato timeline para avaliar o background e habilidades do desenvolvedor.
@@ -138,7 +138,7 @@ Página institucional "/about" com conteúdo estático apresentando biografia pr
 ### US-005: Criar componente SkillsSection
 
 **Prioridade:** 5
-**Passes:** false
+**Passes:** true
 
 **Descrição:**
 > Como visitante, eu quero ver as tecnologias que o desenvolvedor domina organizadas por categoria para entender suas habilidades técnicas.
@@ -170,7 +170,7 @@ Página institucional "/about" com conteúdo estático apresentando biografia pr
 ### US-006: Criar componente ContactSection
 
 **Prioridade:** 6
-**Passes:** false
+**Passes:** true
 
 **Descrição:**
 > Como visitante, eu quero ver os links de contato (LinkedIn, GitHub, email) para entrar em contato ou ver os projetos do desenvolvedor.
@@ -203,7 +203,7 @@ Página institucional "/about" com conteúdo estático apresentando biografia pr
 ### US-007: Criar página /about integrando todos os componentes
 
 **Prioridade:** 7
-**Passes:** false
+**Passes:** true
 
 **Descrição:**
 > Como visitante, eu quero acessar a página /about para ler a biografia, ver experiência, habilidades e entrar em contato.
