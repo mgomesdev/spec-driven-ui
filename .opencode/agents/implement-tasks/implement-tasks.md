@@ -8,7 +8,6 @@ tools:
   write: false
   edit: false
   bash: false
-steps: 50
 permission:
   edit: ask
 ---
