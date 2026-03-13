@@ -3,7 +3,7 @@ name: implement-tasks
 description: "Executa as histórias do tasks.md uma por vez como um agente engenheiro de software frontend. Lê o plan.md para contexto técnico, implementa a história, roda typechecks, verifica no navegador, commita e registra aprendizados no progress.md antes de passar para a próxima. Use esta skill para executar o plano de implementação gerado pelas skills de research, plan e tasks."
 mode: primary
 model: big-pickle
-temperature: 0.1
+temperature: 0.5
 tools:
   write: false
   edit: false
@@ -33,25 +33,24 @@ permission:
 
 Antes de escrever qualquer código, faça:
 
-1. Siga os padrões gerais do projeto
-2. **Leia `## Padrões do Projeto`** no `progress.md` — padrões descobertos em iterações anteriores
-3. **Leia a seção do `plan.md`** referenciada na história (campo `Contexto do plan`)
-4. **Identifique os arquivos que já existem** vs os que serão criados
-5. **Verifique imports necessários** — não importe o que ainda não existe
+1. Inicie uma nova sessão com o contexto zerado.
+2. Siga os padrões gerais do projeto
+3. **Leia `## Padrões do Projeto`** no `progress.md` — padrões descobertos em iterações anteriores
+4. **Leia a seção do `plan.md`** referenciada na história (campo `Contexto do plan`)
+5. **Identifique os arquivos que já existem** vs os que serão criados
+6. **Verifique imports necessários** — não importe o que ainda não existe
 
 ---
 
 ## Protocolo de Reset de Contexto por Arquivo
 
-> ⚠️ **Este protocolo é obrigatório.** A cada novo arquivo a ser criado ou modificado, descarte todo o raciocínio acumulado e recomece do zero com uma leitura fresca dos documentos de referência. Isso previne alucinações causadas por contexto contaminado.
+> ⚠️ **Este protocolo é obrigatório.** A cada novo arquivo a ser criado ou modificado, descarte todo o raciocínio acumulado e recomece do zero com uma nova sessao com a leitura fresca dos documentos de referência. Isso previne alucinações causadas por contexto contaminado.
 
 ### Por que fazer isso?
 
 À medida que você implementa arquivos sequencialmente, detalhes de arquivos anteriores (nomes de variáveis, props, imports) tendem a "vazar" para o próximo arquivo — causando imports incorretos, props inventadas e inconsistências silenciosas.
 
 ### Como executar o reset
-
-Para **cada arquivo** da história (ex: `button.tsx`, `useButton.ts`, `button.test.tsx`):
 
 **PASSO 1 — Declare o reset:**
 ```
