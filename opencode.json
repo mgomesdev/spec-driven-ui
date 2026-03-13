@@ -6,15 +6,7 @@
       "mdns": true,
       "cors": ["http://localhost:5173"]
    },
-   "tools": {
-      "write": false,
-      "bash": false
-   },
    "autoupdate": "notify",
-   "permission": {
-      "edit": "ask",
-      "bash": "ask"
-   },
    "compaction": {
       "auto": true,
       "prune": true,
@@ -24,7 +16,5 @@
       "ignore": ["node_modules/**", "dist/**", ".git/**", "trash/**", "readme/**"]
    },
    "instructions": ["specs/docs/*.md"],
-   "disabled_providers": [],
-   "enabled_providers": ["big-pickle"],
    "share": "disabled"
 }

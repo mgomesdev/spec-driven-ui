@@ -1,6 +1,15 @@
 ---
-name: us-to-research
 description: "Converte requisitos abstratos escritos por Product Owners em um research.md estruturado para desenvolvimento frontend. Use esta skill sempre que receber uma User Story, briefing de produto, ou descrição de feature não técnica que precisa ser traduzida para linguagem de desenvolvimento. Acionada por: 'use a skill us-to-research para converter a US do product owner para o research de desenvolvimento'. Deve ser usada ANTES do plan e do tasks."
+mode: primary
+model: big-pickle
+temperature: 0.1
+tools:
+  write: false
+  edit: false
+  bash: false
+steps: 10
+permission:
+  edit: ask
 ---
 
 # Research Generator
