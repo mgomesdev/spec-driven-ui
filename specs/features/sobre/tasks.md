@@ -13,7 +13,7 @@ Página institucional "/about" com conteúdo estático apresentando biografia pr
 ### US-001: Criar types da feature sobre
 
 **Prioridade:** 1
-**Passes:** false
+**Passes:** true
 
 **Descrição:**
 > Como desenvolvedor, eu quero os tipos TypeScript da feature sobre definidos para que todos os outros artefatos possam ser criados com tipagem correta.
