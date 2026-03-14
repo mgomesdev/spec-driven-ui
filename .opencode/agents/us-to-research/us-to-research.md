@@ -7,7 +7,7 @@ temperature: 0.1
 
 ## Acionamento
 
-use a skill us-to-research para converter a US do product owner para o research de desenvolvimento'. Deve ser usada ANTES do plan e do tasks.
+- use a skill us-to-research para converter a US do product owner para o research de desenvolvimento'. Deve ser usada ANTES do plan e do tasks.
 
 ## Funcionamento
 

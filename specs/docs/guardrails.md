@@ -1,25 +1,29 @@
-**NÃO commite se houver erros de typecheck ou lint.** Corrija antes.
+## Carregamento de Arquivos Externos
 
-## Verificação no Navegador
+**CRÍTICO**: Quando encontrar uma referência de arquivo (ex: `@specs/docs/arquitecture.md`), use sua ferramenta de leitura para carregá-lo sob demanda. Eles são relevantes para a TAREFA ESPECÍFICA em questão.
 
-Para histórias com critério `"Verificar no navegador usando a skill dev-browser"`:
+### Instruções
 
-1. Use a skill dev-browser para navegar até a página afetada
-2. Verifique cada critério visual listado
-3. Faça uma captura de tela e inclua no relatório de progresso
-4. Se algo não funcionar visualmente, corrija antes de commitar
+- NÃO carregue todas as referências preventivamente — use lazy loading baseado na necessidade real
+- Quando carregado, trate o conteúdo como instruções obrigatórias que sobrepõem os padrões
+- Siga referências recursivamente quando necessário
 
-## Verificações de Qualidade
+## Antipadrôes a evitar
 
-Execute as verificações especificadas no projeto. Em projetos TypeScript/Next.js, tipicamente:
-
-```bash
-# Typecheck
-npx tsc --noEmit
-
-# Lint (se configurado)
-npx eslint src/features/[nome-da-feature]/
-
-# Build (se necessário para validar)
-npx next build
-```
+- ❌ Não implemente nada sem passar pelo fluxo research → plan → tasks
+- ❌ Não invente contratos de API — consulte o `plan.md`
+- ❌ Não use `any` no TypeScript
+- ❌ Não faça `fetch` direto em componentes
+- ❌ Não refatore código fora do escopo da história atual
+- ❌ Não crie componentes sem tipar as props
+- ❌ Não crie arquivos sem seguir o padrão de nomenclatura
+- ❌ Não adicione comentários no código.
+- ❌ Não crie arquivos desnecessários.
+- ❌ Não ultrapasse 500 linhas por arquivo.
+- ❌ Não adicione tipagem de retorno, prefira a inferencia de tipos.
+- ❌ Não crie constantes que armazena classes do tailwind, declare diretamente no elemento.
+- ❌ Não use return quando o componente só possui elementos sem lógica.
+- ❌ Não declare componentes com function.
+- ❌ Não importe o react sem necessidade.
+- ❌ Não selecione props individualmente sem necessidade no componente, prefira desestruturar.
+- ❌ NUNCA exporte componentes desnecessariamente, somente exporte se o componente for realmente ser utilizado por outro componente, do contrário, mantenha-os no mesmo aquivo.

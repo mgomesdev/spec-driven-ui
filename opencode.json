@@ -15,6 +15,5 @@
    "watcher": {
       "ignore": ["node_modules/**", "dist/**", ".git/**", "trash/**", "readme/**", "./README.md"]
    },
-   "instructions": ["specs/docs/*.md"],
    "share": "disabled"
 }
