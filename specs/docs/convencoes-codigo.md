@@ -39,6 +39,14 @@
 - Componentes base (`Button`, `Section`) atuam como pilares estruturais; devem sempre ser importados de `@/components/ui/`.
 - Uso do `<Image />` do Next.js deve prever preenchimento dinâmico (layout fill) e conter tratamento de fallback quando a imagem não for fornecida.
 
+### Padrões de Componentes de Página
+- **Seções em arquivos separados**: Cada seção de uma página (Bio, Experience, Skills, Contact) deve ser um arquivo separado para melhor organização
+- **Page Orchestrator**: A página principal (ex: `sobre-page.tsx`) funciona como orchestrator, importando as seções e passando os dados via props
+- **Avatar Placeholder**: Usar gradiente `bg-gradient-to-br from-indigo-500 via-purple-500 to-pink-500` com a inicial do nome quando não houver avatar
+- **Timeline**: Usar `border-l-2` com `absolute -left-[9px]` para os dots indicadores
+- **Skill Badges**: Usar `bg-indigo-500/20 text-indigo-300 rounded-full` para badges de habilidades
+- **Ícones SVG**: Ícones inline usando paths do Material Design diretamente no componente
+
 ### Estrutura de Dados e Tipos
 - Dados estáticos centralizados em `@/data/` (ex: `profile.ts`, `projects.ts`)
 - Tipos centralizados em `@/types/` (ex: `home.ts` para tipos de uma feature)
