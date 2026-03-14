@@ -10,27 +10,36 @@ Leia o seguinte arquivo imediatamente pois é relevante para todos os workflows:
 
 ## Tecnologias
 
-- Next.js 16.1.6 (app router)
-- React 19.2
-- TypeScript 5.9
-- Tailwind CSS v4.2
+| Tecnologia | Versão |
+|------------|--------|
+| Next.js    | 16.1.6 |
+| React      | 19.2   |
+| TypeScript | 5.9    |
+| Tailwind   | v4.2   |
 
 ## Diretrizes de Desenvolvimento
 
-- **Arquitetura geral do projeto:** `@specs/docs/arquitetura.md`
-- **Convenções e estilo de código:** `@specs/docs/convencoes-codigo.md`
+## Convenções de Código
+
+Consulte o arquivo `specs/docs/convencoes-codigo.md` para detalhes sobre:
+
+- Nomenclatura de arquivos e componentes
+- Padrões de tipagem TypeScript
+- Estrutura de componentes React
+
+- **Arquitetura geral do projeto:** `@specs/docs/architecture.md`
 - **Padrões git:** `@specs/docs/padroes-git.md`
 
 ## Fontes Confiáveis
 
 ### Documentação Oficial
 
-- https://tailwindcss.com/
-- https://nextjs.org/
-- https://www.typescriptlang.org/
-- https://react.dev/
-- https://www.conventionalcommits.org/en/v1.0.0/
+- [Tailwind CSS](https://tailwindcss.com/)
+- [Next.js](https://nextjs.org/)
+- [TypeScript](https://www.typescriptlang.org/)
+- [React](https://react.dev/)
+- [Conventional Commits](https://www.conventionalcommits.org/en/v1.0.0/)
 
 ### Blogs e Artigos
 
-- https://atomicdesign.bradfrost.com/
+- [Atomic Design](https://atomicdesign.bradfrost.com/)
