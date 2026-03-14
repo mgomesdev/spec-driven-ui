@@ -19,14 +19,7 @@ Leia o seguinte arquivo imediatamente pois é relevante para todos os workflows:
 
 ## Diretrizes de Desenvolvimento
 
-## Convenções de Código
-
-Consulte o arquivo `specs/docs/convencoes-codigo.md` para detalhes sobre:
-
-- Nomenclatura de arquivos e componentes
-- Padrões de tipagem TypeScript
-- Estrutura de componentes React
-
+- **Convenções de código:** `specs/docs/convencoes-codigo.md` (Nomenclatura de arquivos e componentes, Padrões de tipagem TypeScript, Estrutura de componentes React)
 - **Arquitetura geral do projeto:** `@specs/docs/architecture.md`
 - **Padrões git:** `@specs/docs/padroes-git.md`
 
