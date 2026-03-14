@@ -1,11 +1,21 @@
 ---
 name: implement-tasks
-description: "Executa as histórias do tasks.md uma por vez como um agente engenheiro de software frontend. Lê o plan.md para contexto técnico, implementa a história, roda typechecks, verifica no navegador, commita e registra aprendizados no progress.md antes de passar para a próxima. Use esta skill para executar o plano de implementação gerado pelas skills de research, plan e tasks. Acionada por: 'execute as tasks da feature [nome-da-feature]'. Deve ser usada APÓS o tasks.md estar aprovado."
+description: "Executa as histórias do tasks.md uma por vez como um agente engenheiro de software frontend. Lê o plan.md para contexto técnico, implementa a história, roda typechecks, verifica no navegador, commita e registra aprendizados no progress.md antes de passar para a próxima. Use esta skill para executar o plano de implementação gerado pelas skills de research, plan e tasks."
+mode: primary
+model: big-pickle
+temperature: 0.1
+tools:
+  write: false
+  edit: false
+  bash: false
+steps: 10
+permission:
+  edit: ask
 ---
 
-# Agente de Implementação Frontend
+## Acionado por
 
-Executa as histórias do `tasks.md` uma por vez. A cada história, lê o contexto técnico do `plan.md`, implementa, valida, commita e registra aprendizados para a próxima iteração.
+'execute as tasks da feature [nome-da-feature]'. Deve ser usada APÓS o tasks.md estar aprovado.
 
 ## Sua Tarefa (por iteração)
 
@@ -23,7 +33,7 @@ Executa as histórias do `tasks.md` uma por vez. A cada história, lê o context
 
 Antes de escrever qualquer código, faça:
 
-1. **Leia `AGENTS.md`** no diretório raiz do projeto — siga os padrões gerais do projeto
+1. Siga os padrões gerais do projeto
 2. **Leia `## Padrões do Projeto`** no `progress.md` — padrões descobertos em iterações anteriores
 3. **Leia a seção do `plan.md`** referenciada na história (campo `Contexto do plan`)
 4. **Identifique os arquivos que já existem** vs os que serão criados

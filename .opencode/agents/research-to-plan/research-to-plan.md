@@ -1,11 +1,20 @@
 ---
-name: research-to-plan
-description: "Gera um documento de Plan técnico a partir do research.md com foco em frontend. Mapeia todos os artefatos, interfaces TypeScript, contratos de API consumidos, estrutura de componentes e diagrama de dependências. Use esta skill na etapa de planejamento técnico do fluxo research → plan → tasks. Acionada por: 'gere o plan.md'. Deve ser usada APÓS o research.md estar aprovado e ANTES de gerar o tasks.md."
+description: "Gera um documento de Plan técnico a partir do research.md com foco em frontend. Mapeia todos os artefatos, interfaces TypeScript, contratos de API consumidos, estrutura de componentes e diagrama de dependências. Use esta skill na etapa de planejamento técnico do fluxo research → plan → tasks. Acionada por: "
+mode: primary
+model: big-pickle
+temperature: 0.1
+tools:
+  write: false
+  edit: false
+  bash: false
+steps: 10
+permission:
+  edit: ask
 ---
 
-# Plan Generator
+# Acionamento
 
-Lê o `research.md` aprovado e gera um `plan.md` com todos os artefatos técnicos de **frontend** necessários para a implementação: componentes, tipos TypeScript, contratos de API consumidos, estrutura de arquivos e diagrama de dependências.
+gere o plan.md. Deve ser usada APÓS o research.md estar aprovado e ANTES de gerar o tasks.md. 
 
 ## Funcionamento
 
@@ -47,7 +56,7 @@ Situações que exigem pergunta:
 
 Gere o arquivo em `specs/features/[nome-da-feature]/plan.md`.
 
-**Após salvar, apresente um resumo ao usuário e aguarde aprovação:**
+**Após salvar, apresente um resumo ao usuário e encerre:**
 
 ```
 ✅ plan.md gerado em specs/features/[nome]/plan.md
@@ -57,9 +66,6 @@ Resumo:
 - Z tipos/interfaces definidos
 - Contratos de API: [lista de endpoints/actions]
 - Ordem de implementação: [resumo do diagrama]
-
-👉 Revise o arquivo e responda "aprovado" para encerrar,
-   ou indique o que deve ser ajustado.
 ```
 
 ---

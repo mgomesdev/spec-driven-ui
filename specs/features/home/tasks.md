@@ -15,7 +15,7 @@ Página inicial (`/`) de posicionamento profissional. Exibe uma seção Hero com
 ### US-001: Criar interfaces TypeScript da feature home
 
 **Prioridade:** 1
-**Passes:** false
+**Passes:** true
 
 **Descrição:**
 > Como desenvolvedor, eu quero os tipos TypeScript da feature definidos em um único arquivo para que todos os outros artefatos possam ser criados com tipagem correta e sem duplicação.
@@ -43,7 +43,7 @@ Página inicial (`/`) de posicionamento profissional. Exibe uma seção Hero com
 ### US-002: Criar arquivo de dados do profissional (profile.ts)
 
 **Prioridade:** 2
-**Passes:** false
+**Passes:** true
 
 **Descrição:**
 > Como desenvolvedor que mantém o site, eu quero os dados pessoais do profissional centralizados em uma constante TypeScript para que atualizações futuras sejam feitas em um único lugar.
@@ -73,7 +73,7 @@ Usar placeholders realistas enquanto o profissional não preenche os dados defin
 ### US-003: Criar arquivo de dados de projetos (projects.ts)
 
 **Prioridade:** 3
-**Passes:** false
+**Passes:** true
 
 **Descrição:**
 > Como desenvolvedor que mantém o site, eu quero os dados dos projetos centralizados em uma constante TypeScript tipada para que atualizações sejam feitas em um único lugar sem tocar nos componentes.
@@ -104,7 +104,7 @@ Usar projetos de exemplo realistas até confirmação pelo profissional. URLs po
 ### US-004: Criar componente ProjectCard
 
 **Prioridade:** 4
-**Passes:** false
+**Passes:** true
 
 **Descrição:**
 > Como recrutador, eu quero ver cada projeto em um card visual com título, descrição, stack e link, para que eu possa avaliar a capacidade técnica de forma rápida e elegante.
@@ -141,7 +141,7 @@ O estado `isImageError: boolean` controla o fallback da imagem conforme especifi
 ### US-005: Criar componente ProjectsSection
 
 **Prioridade:** 5
-**Passes:** false
+**Passes:** true
 
 **Descrição:**
 > Como recrutador, eu quero ver os projetos em uma grade organizada com heading identificável para que eu possa avaliar os trabalhos do profissional sem precisar navegar para outra página.
@@ -176,7 +176,7 @@ O estado `isImageError: boolean` controla o fallback da imagem conforme especifi
 ### US-006: Criar componente HeroSection
 
 **Prioridade:** 6
-**Passes:** false
+**Passes:** true
 
 **Descrição:**
 > Como recrutador que acessa o site pela primeira vez, eu quero ver de imediato o nome, cargo, bio e links de contato do profissional, para que eu possa decidir em segundos se o perfil é relevante.
@@ -216,7 +216,7 @@ O scroll suave é tratado via CSS (`scroll-behavior: smooth`) e âncora HTML nat
 ### US-007: Integrar HeroSection e ProjectsSection em page.tsx
 
 **Prioridade:** 7
-**Passes:** false
+**Passes:** true
 
 **Descrição:**
 > Como recrutador que acessa `/`, eu quero ver a página completa com Hero e Projetos compostos corretamente, para que eu tenha uma experiência coesa e funcional desde o primeiro acesso.
