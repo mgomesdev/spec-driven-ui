@@ -3,13 +3,6 @@ description: "Converte requisitos abstratos escritos por Product Owners em um re
 mode: primary
 model: big-pickle
 temperature: 0.1
-tools:
-  write: false
-  edit: false
-  bash: false
-steps: 10
-permission:
-  edit: ask
 ---
 
 ## Acionamento
@@ -38,7 +31,6 @@ Faça **3 a 5 perguntas essenciais** quando o requisito for ambíguo. Foque em:
 
 **Formato das perguntas:**
 
-```
 1. Esta feature altera uma tela existente ou cria uma nova?
    A. Altera tela existente (ex: adiciona campo/botão)
    B. Cria nova tela/página
@@ -50,9 +42,9 @@ Faça **3 a 5 perguntas essenciais** quando o requisito for ambíguo. Foque em:
    B. API REST a ser criada em paralelo pelo time de backend
    C. Server Actions (Next.js / full-stack)
    D. Mock/dados estáticos por enquanto
-```
 
-O usuário pode responder com "1A, 2B". **Se o requisito já for claro o suficiente, pule esta etapa.**
+- **Importante**: O usuário pode responder com "1A, 2B". 
+- **Se o requisito já for claro o suficiente, pule esta etapa.**
 
 ### Etapa 3: Gerar e salvar o research.md
 
@@ -68,6 +60,10 @@ Resumo:
 - Principais telas/componentes: [lista]
 - Integração: [tipo de integração]
 - Fora do escopo: [lista]
+
+Sugestão de Próximos Passos
+- Revisar o research.md, modificar, aprovar ou refazer novamente.
+- Iniciar o Agente 'research-to-plan' em um novo chat (para limpar a janela de contexto) para transformar o research.md em um plano de ação.
 ```
 
 ## Estrutura do research.md
@@ -88,10 +84,10 @@ Descrição em 2–4 linhas do que será construído e qual problema resolve par
 
 Descreva como o frontend se conectará ao backend:
 
-- **Tipo:** REST API | Server Actions | GraphQL | Mock
+- **Tipo:** REST API | Server Actions | React Query | Mock
 - **Status:** Existente | A ser criado | Em desenvolvimento paralelo
 - **Contratos disponíveis:** [link para swagger/docs ou "a definir no plan"]
-- **Autenticação:** [token JWT / sessão / sem auth]
+- **Autenticação:** [token JWT / Better Auth / sessão / sem auth]
 
 ## 4. Histórias de Usuário
 
@@ -107,10 +103,10 @@ Cada história deve ser pequena o suficiente para ser implementada em uma única
 - [ ] Critério visual verificável (ex: "botão aparece desabilitado quando campo vazio")
 - [ ] Critério de comportamento (ex: "ao clicar em salvar, exibe toast de sucesso")
 - [ ] Critério de integração (ex: "chama endpoint POST /items com os dados do form")
-- [ ] Typecheck aprovado
-- [ ] **Verificar no navegador** usando a skill dev-browser
+<!-- TODO: adicionar sub-agent de testes, e2e (TDD) -->
+<!-- TODO: adicionar sub-agent de analise estatica (typecheck) -->
 
-> ⚠️ Toda história com alteração de UI deve incluir "Verificar no navegador" como critério.
+> ⚠️ Toda história com alteração de UI deve incluir **sub-agent de testes**, **sub-agent de analise estatica** como critério.
 
 ## 5. Requisitos Funcionais
 
@@ -135,7 +131,6 @@ Liste explicitamente o que NÃO será feito nesta entrega:
 
 - Link para Figma/protótipo: [url ou "não disponível"]
 - Componentes existentes que podem ser reutilizados: [lista]
-- Design system utilizado: [nome ou "não definido"]
 
 ## 9. Métricas de Sucesso
 
@@ -147,23 +142,19 @@ Liste explicitamente o que NÃO será feito nesta entrega:
 - [ ] [Dúvida que precisa ser respondida antes ou durante o desenvolvimento]
 ```
 
----
-
 ## Regras de Escrita
 
 - **Escreva para um dev júnior ou agente de IA** — seja explícito, evite jargões sem explicação
 - **Critérios de aceitação são verificáveis**, não vagos. "Funciona" é ruim. "Exibe spinner durante loading e desaparece após resposta" é bom
-- **Toda história com UI** deve ter "Verificar no navegador usando dev-browser" como critério
+- **Toda história com UI** deve ter **sub-agent de testes**, **sub-agent de analise estatica** como critério
 - **Não misture frontend e backend** — se a task é frontend, o critério é visual/comportamental, não "implementar endpoint"
 - **Integração é contrato**, não implementação — descreva o que o frontend espera receber/enviar, não como o backend deve funcionar
-
----
 
 ## Lista de Verificação (antes de salvar)
 
 - [ ] Perguntas de esclarecimento foram feitas (ou contexto era suficiente)
 - [ ] Todas as histórias têm critérios verificáveis
-- [ ] Todas as histórias com UI têm "Verificar no navegador"
+- [ ] Todas as histórias com UI têm **sub-agent de testes**, **sub-agent de analise estatica**
 - [ ] Seção de integração com backend está preenchida
 - [ ] Fora do escopo está explícito
 - [ ] Arquivo salvo em `specs/features/[nome-da-feature]/research.md`
