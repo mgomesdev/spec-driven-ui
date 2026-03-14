@@ -29,6 +29,7 @@ Leia o seguinte arquivo imediatamente pois é relevante para todos os workflows:
 - https://nextjs.org/
 - https://www.typescriptlang.org/
 - https://react.dev/
+- https://www.conventionalcommits.org/en/v1.0.0/
 
 ### Blogs e Artigos
 
