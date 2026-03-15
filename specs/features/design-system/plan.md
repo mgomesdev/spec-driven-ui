@@ -108,7 +108,6 @@ html {
 **Depois:**
 ```css
 @import "tailwindcss";
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap');
 
 :root {
   --color-bg-primary: #101828;
@@ -178,14 +177,9 @@ Ordem de implementação:
 
 ## 8. Questões em Aberto
 
-~~A fonte Inter precisa ser carregada via Google Fonts ou import local~~ → **Resolvido: carregar via Google Fonts**
-
-~~Considerar extensão futura para tema claro (dark mode)~~ → **Resolvido: manter apenas dark mode**
-
-~~Tokens de sombra (box-shadow) não estão documentados mas podem ser necessários posteriormente~~ → **Resolvido: adicionar quando o design tiver elementos com sombra**
 
 ## 9. Decisões Técnicas
 
-- **Fonte:** Inter carregada via Google Fonts (@import no CSS)
+- **Fonte:** Inter carregada via Google Fonts `next/font/google` no arquivo `src/app/layout.tsx`
 - **Tema:** Apenas dark mode (sem tema claro)
 - **Sombras:** Não incluídas agora - adicionar quando necessário
