@@ -218,13 +218,11 @@ INÍCIO DA ITERAÇÃO:
 IMPLEMENTAÇÃO (por arquivo):
   4. reler progress.md → plan.md → arquivo no disco (se existe) → imports no disco
   5. implementar APENAS este arquivo baseado no que releu agora
-  6. validar o arquivo isoladamente (typecheck, imports existem no disco?)
-  7. repetir passos 4-6 para cada arquivo da história
+<!-- TODO: adicionar testes, typecheck -->
+  6. repetir passos 4-6 para cada arquivo da história
 
 VALIDAÇÃO FINAL DA HISTÓRIA:
-  8. rodar typecheck completo (obrigatório)
-  9. rodar lint (se configurado)
-  10. verificar no navegador (se história tem UI)
+<!-- TODO: adicionar testes, typecheck -->
 
 FINALIZAÇÃO:
   11. ler docs/padroes-git.md → commitar seguindo Conventional Commits

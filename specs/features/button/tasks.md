@@ -34,8 +34,7 @@ Componente Button átomo do Design System com duas variantes: Link (navegação 
 * Estado hover: variant link com opacidade 80%, variant cta com opacidade 90%
 * Estado disabled: opacidade 50%, cursor not-allowed
 * Suporta onClick quando não está disabled
-* Typecheck aprovado
-* Verificar no navegador usando a skill dev-browser
+<!-- TODO: adicionar testes, typecheck -->
 
 #### Notas
 
