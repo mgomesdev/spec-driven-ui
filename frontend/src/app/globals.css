@@ -1,5 +1,4 @@
 @import "tailwindcss";
-@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap");
 
 :root {
    --color-bg-primary: #101828;
@@ -8,7 +7,7 @@
    --color-text-primary: #ffffff;
    --color-text-secondary: #667085;
    --color-text-muted: #f9fafb;
-   --font-family-primary: "Inter", sans-serif;
+   --font-family-primary: 'Inter', sans-serif;
    --font-size-heading-xl: 48px;
    --font-size-heading: 20px;
    --font-size-body: 16px;

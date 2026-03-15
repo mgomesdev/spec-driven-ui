@@ -34,9 +34,8 @@ Criação de um design system global através de tokens extraídos do arquivo `@
 * Incluir 4 tokens de dimensões: --height-xl, --height-md, --height-sm, --max-width-container
 * Incluir 4 tokens de border radius: --radius-sm, --radius-md, --radius-lg, --radius-full
 * Manter o import do Tailwind CSS v4 existente (@import "tailwindcss")
-* Manter o import da fonte via Google Fonts
+* Manter o import da fonte via `nextjs/fonts/google` no arquivo `src/app/layout.tsx`
 * Manter o estilo global html { scroll-behavior: smooth; }
-* Typecheck aprovado
 
 #### Notas
 

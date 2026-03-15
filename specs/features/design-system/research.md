@@ -27,10 +27,10 @@ Não aplicável. Design system é uma biblioteca de componentes e tokens visuais
 **Tela/Componente afetado:** `frontend/src/app/globals.css`
 
 **Critérios de aceitação:**
-- [ ] Criar arquivo `frontend/src/app/globals.css` com todas as variáveis CSS
+- [ ] Modificar arquivo `frontend/src/app/globals.css` existente (já contém Tailwind e estilos globais)
 - [ ] Usar o seletor `:root` para definir as variáveis customizadas
-- [ ] Incluir todas as 27 variáveis de tokens
-- [ ] Incluir import de font (Inter via Google Fonts)
+- [ ] Incluir todas as 27 variáveis de tokens (font-family carregada via next/font no layout.tsx, não conta como token)
+- [ ] Manter compatibilidade com Tailwind CSS v4 existente
 
 ## 5. Requisitos Funcionais
 
@@ -46,7 +46,7 @@ Não aplicável. Design system é uma biblioteca de componentes e tokens visuais
 - RNF-01: Tokens devem seguir nomenclatura consistente (kebab-case)
 - RNF-02: Valores devem ser extraídos diretamente do design (não inventados)
 - RNF-03: Documentação deve ser clara para consumo por desenvolvedores
-- RNF-04: Arquivo global.css deve ser compatível com Tailwind CSS v4
+- RNF-04: Arquivo global.css já existe e deve ser modificado (manter @import "tailwindcss")
 - RNF-05: Variáveis CSS devem ser definidas no `:root`
 
 ## 7. Fora do Escopo
@@ -119,6 +119,8 @@ Não aplicável. Design system é uma biblioteca de componentes e tokens visuais
 ## 10. Arquivo global.css (Preview)
 
 ```css
+@import "tailwindcss";
+
 :root {
   --color-bg-primary: #101828;
   --color-bg-secondary: #667085;
@@ -148,7 +150,13 @@ Não aplicável. Design system é uma biblioteca de componentes e tokens visuais
   --radius-lg: 16px;
   --radius-full: 9999px;
 }
+
+html {
+  scroll-behavior: smooth;
+}
 ```
+
+> **Nota:** O token `--font-family-primary` referencia a fonte Inter que é importada via `next/font/google` no arquivo `src/app/layout.tsx`. A variável CSS apenas aponta para o nome da fonte.
 
 ## 11. Métricas de Sucesso
 
@@ -157,4 +165,6 @@ Não aplicável. Design system é uma biblioteca de componentes e tokens visuais
 - Nova funcionalidade no design deve usar tokens existentes
 
 ## 12. Questões em Aberto
+
+- A fonte Inter deve ser importada via `next/font/google` no arquivo `src/app/layout.tsx` e estar disponível para uso no globals.css
 

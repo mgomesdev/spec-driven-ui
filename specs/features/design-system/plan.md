@@ -96,16 +96,6 @@ Todos os tokens documentados no research serão convertidos em variáveis CSS:
 
 ### globals.css
 
-**Antes:**
-```css
-@import "tailwindcss";
-
-html {
-   scroll-behavior: smooth;
-}
-```
-
-**Depois:**
 ```css
 @import "tailwindcss";
 
@@ -152,7 +142,6 @@ html {
 [globals.css existente]
         │
         ▼
-[globals.css modificado com tokens]
 ```
 
 Ordem de implementação:
@@ -169,7 +158,7 @@ Ordem de implementação:
 | RF-01 | Todas as cores devem ter tokens em CSS | globals.css (variables) |
 | RF-02 | Todos os tamanhos de fonte devem ter tokens | globals.css (variables) |
 | RF-03 | Todos os espaçamentos devem ter tokens | globals.css (variables) |
-| RF-04 | global.css deve conter todas as variáveis | globals.css (modificado) |
+| RF-04 | global.css deve conter todas as variáveis | globals.css (variables) |
 | RF-05 | Variáveis seguem padrão --nome-token | globals.css |
 | RF-06 | Documentação consolidada no research | research.md |
 
@@ -180,6 +169,6 @@ Ordem de implementação:
 
 ## 9. Decisões Técnicas
 
-- **Fonte:** Inter carregada via Google Fonts `next/font/google` no arquivo `src/app/layout.tsx`
+- **Fonte:** Inter carregada via `next/font/google` no arquivo `src/app/layout.tsx`
 - **Tema:** Apenas dark mode (sem tema claro)
 - **Sombras:** Não incluídas agora - adicionar quando necessário

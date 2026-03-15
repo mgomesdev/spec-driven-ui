@@ -1,4 +1,4 @@
-# Avatar - Progress
+# Progress: Avatar
 
 ## Padrões do Projeto
 
