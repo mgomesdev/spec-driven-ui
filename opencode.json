@@ -13,7 +13,16 @@
       "reserved": 10000
    },
    "watcher": {
-      "ignore": ["node_modules/**", "dist/**", ".git/**", "trash/**", "readme/**", "./README.md", "specs/report/**"]
+      "ignore": [
+         "node_modules/**",
+         "dist/**",
+         ".git/**",
+         "trash/**",
+         "readme/**",
+         "./README.md",
+         "specs/report/**",
+         "./WORKFLOW.md"
+      ]
    },
    "share": "disabled"
 }
