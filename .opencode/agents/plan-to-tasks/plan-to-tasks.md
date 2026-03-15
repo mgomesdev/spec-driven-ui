@@ -114,6 +114,7 @@ As histórias rodam em sequência. Histórias posteriores não podem depender de
 **Artefatos:**
 - Cria: `src/features/[nome]/types.ts`
 - Modifica: (nenhum)
+- Depende de: (nenhum - primeira história)
 
 **Contexto do plan:**
 > [Trecho relevante do plan.md que o agente deve consultar para esta história]
@@ -160,6 +161,65 @@ Cada história deve referenciar explicitamente qual seção do `plan.md` o agent
 > Consultar seção "3. Interfaces e Types" do plan.md para os tipos exatos.
 > O type `StatusItem` deve ser `'ativo' | 'inativo' | 'pendente'` conforme definido.
 ```
+
+## Regra #3: Inferir Dependências Automáticamente
+
+Para enabling paralelização com o worktree-runner, você DEVE adicionar o campo "Depende de:" em cada história que não seja a primeira.
+
+### Como inferir dependências:
+
+**Por tipo de arquivo:**
+| Se a história cria | Outras histórias que dependem dela |
+|-------------------|-----------------------------------|
+| `types.ts` | Qualquer uma que use tipos (services, hooks, componentes) |
+| `*Service.ts` | Hooks e componentes que usam o serviço |
+| `use*.ts` | Componentes que usam o hook |
+| `components/*.tsx` | Componentes compostos ou páginas que usam |
+| `page.tsx` | (nenhuma -通常是 última) |
+
+**Por estrutura de pastas:**
+- `src/features/feature/types.ts` → `src/features/feature/*` depende
+- `src/components/component/component.tsx` → qualquer página que usa
+
+**Por uso no código (se mencionado no plan):**
+- Se o plan.md diz que o hook usa o service → hook depende do service
+- Se o plan.md diz que o componente usa o hook → componente depende do hook
+
+### Exemplo de dependências no tasks.md:
+
+```markdown
+### US-001: Criar types
+**Artefatos:**
+- Cria: `src/features/item/types.ts`
+- Depende de: (nenhum)
+
+### US-002: Criar service
+**Artefatos:**
+- Cria: `src/features/item/services/itemService.ts`
+- Depende de: `US-001` (precisa dos tipos)
+
+### US-003: Criar hook
+**Artefatos:**
+- Cria: `src/features/item/hooks/useItems.ts`
+- Depende de: `US-002` (usa o serviço)
+
+### US-004: Criar componente Card
+**Artefatos:**
+- Cria: `src/features/item/components/ItemCard.tsx`
+- Depende de: `US-001` (usa tipos Item)
+
+### US-005: Criar componente List
+**Artefatos:**
+- Cria: `src/features/item/components/ItemList.tsx`
+- Depende de: `US-003` (usa useItems), `US-004` (usa ItemCard)
+```
+
+### Por que dependências importam:
+
+Com dependências explícitas, o `tasks-parallel-analyzer` pode:
+1. Identificar quais tasks podem rodar em paralelo
+2. Criar grupos de execução otimizados
+3. O worktree-runner pode executar groups em paralelo
 
 ## Exemplo Completo
 
@@ -363,6 +423,8 @@ filtrar por status (ativo/inativo/pendente) e clicar para ver detalhes.
 - [ ] Cada história pode ser concluída em uma única iteração
 - [ ] Histórias estão ordenadas por dependência (types → service → hook → componentes → página)
 - [ ] Nenhuma história depende de uma história posterior
+- [ ] Toda história tem campo "Depende de:" preenchido (exceto a primeira)
+- [ ] Dependências inferidas corretamente por tipo de arquivo
 - [ ] Toda história referencia qual seção do plan.md consultar
 - [ ] Toda história tem `"Typecheck aprovado"` como critério
 - [ ] Toda história com UI tem `"Verificar no navegador usando a skill dev-browser"`
