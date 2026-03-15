@@ -111,15 +111,12 @@ html {
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap');
 
 :root {
-  /* Cores */
   --color-bg-primary: #101828;
   --color-bg-secondary: #667085;
   --color-accent: #7f56d9;
   --color-text-primary: #ffffff;
   --color-text-secondary: #667085;
   --color-text-muted: #f9fafb;
-
-  /* Tipografia */
   --font-family-primary: 'Inter', sans-serif;
   --font-size-heading-xl: 48px;
   --font-size-heading: 20px;
@@ -127,22 +124,16 @@ html {
   --font-size-small: 12px;
   --font-weight-regular: 400;
   --font-weight-bold: 700;
-
-  /* Espaçamento */
   --spacing-xs: 12px;
   --spacing-sm: 14px;
   --spacing-md: 16px;
   --spacing-lg: 20px;
   --spacing-xl: 32px;
   --spacing-xxl: 131px;
-
-  /* Dimensões */
   --height-xl: 80px;
   --height-md: 48px;
   --height-sm: 60px;
   --max-width-container: 700px;
-
-  /* Border Radius */
   --radius-sm: 4px;
   --radius-md: 8px;
   --radius-lg: 16px;
