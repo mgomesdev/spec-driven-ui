@@ -13,7 +13,7 @@ Criação de um design system global através de tokens extraídos do arquivo `@
 ### US-001: Adicionar tokens de design system ao globals.css
 
 **Prioridade:** 1
-**Passes:** false
+**Passes:** true
 
 **Descrição:**
 > Como desenvolvedor frontend, eu quero que os tokens de design (cores, tipografia, espaçamento, dimensões e border radius) sejam convertidos em variáveis CSS no arquivo globals.css para que o código use variáveis CSS em vez de valores hardcoded.
