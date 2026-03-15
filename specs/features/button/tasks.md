@@ -13,7 +13,7 @@ Componente Button átomo do Design System com duas variantes: Link (navegação 
 ### US-001: Criar componente Button com variantes link e cta
 
 **Prioridade:** 1
-**Passes:** false
+**Passes:** true
 
 **Descrição:**
 > Como desenvolvedor, eu quero o componente Button com variantes link e cta para que possa ser reutilizado no header e hero do site.
