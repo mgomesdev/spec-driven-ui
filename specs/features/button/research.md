@@ -17,12 +17,8 @@ Componente de botão utilizado para ações principais (CTAs) e navegação. Faz
 - **Props Interface:**
 
 ```typescript
-interface ButtonProps {
+export interface ButtonProps extends React.DetailedHTMLProps<React.HTMLAttributes<HTMLButtonElement>, HTMLButtonElement> {
   variant: 'link' | 'cta';
-  children: React.ReactNode;
-  onClick?: () => void;
-  disabled?: boolean;
-  type?: 'button' | 'submit';
 }
 ```
 
@@ -82,6 +78,3 @@ interface ButtonProps {
 - Componente é reutilizável em diferentes contextos
 
 ## 10. Questões em Aberto
-
-- [ ] Precisamos de icon dentro do botão?
-- [ ] Precisamos de loading state com spinner?

@@ -26,15 +26,7 @@ interface AvatarProps {
 }
 ```
 
-## 4. Uso Identificado no Design
-
-### 4.1 Hero Section - Foto de Perfil
-- **Localização:** Avatar and Identification Block
-- **Formato:** Círculo perfeito (border-radius: 9999px)
-- **Tamanho:** 80-120px
-- **Fallback:** Ícone de usuário
-
-## 5. Requisitos Funcionais
+## 4. Requisitos Funcionais
 
 - RF-01: Renderizar imagem recebida via prop src
 - RF-02: Aplicar border-radius circular
@@ -42,38 +34,36 @@ interface AvatarProps {
 - RF-04: Manter aspect ratio 1:1 (quadrado)
 - RF-05: Suportar prop size para dimensionamento
 
-## 6. Requisitos Não-Funcionais
+## 5. Requisitos Não-Funcionais
 
 - RNF-01: Usar tokens CSS do design-system
 - RNF-02: Ser acessível (alt text obrigatório)
 - RNF-03: Otimizar carregamento de imagem (next/image)
 - RNF-04: Prevenir layout shift
 
-## 7. Fora do Escopo
+## 6. Fora do Escopo
 
 - Não inclui badge de status (online/offline)
 - Não inclui tooltip com nome
 - Não inclui grupo de avatars
 
-## 8. Dependências
+## 7. Dependências
 
 - **Design System:** Tokens de border-radius
 - **React:** Componente funcional
 - **Next.js:** `next/image`
 
-## 9. Decisões de Implementação
+## 8. Decisões de Implementação
 
 - Usar `<Image />` do Next.js com layout fill
 - Fallback: ícone de usuário (Lucide)
-- Tamanho padrão: 80px
+- Tamanho padrão: 92px
 
-## 10. Métricas de Sucesso
+## 9. Métricas de Sucesso
 
 - Imagem renderiza corretamente
 - Fallback funciona quando imagem falha
 - Border-radius circular aplicado
 
-## 11. Questões em Aberto
+## 10. Questões em Aberto
 
-- [ ] Qual o tamanho exato do avatar no design?
-- [ ] Precisamos de suporte a srcSet?
