@@ -1,7 +1,7 @@
 ---
+name: implement-tasks
 description: "Executa as histórias do tasks.md uma por vez como um agente engenheiro de software frontend. Lê o plan.md para contexto técnico, implementa a história, roda typechecks, verifica no navegador, commita e registra aprendizados no progress.md antes de passar para a próxima. Use esta skill para executar o plano de implementação gerado pelas skills de research, plan e tasks."
 mode: subagent
-model: big-pickle
 temperature: 0.5
 tools:
   write: false

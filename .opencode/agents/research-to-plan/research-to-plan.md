@@ -1,7 +1,7 @@
 ---
+name: research-to-plan
 description: "Gera um documento de Plan técnico a partir do research.md com foco em frontend. Mapeia todos os artefatos, interfaces TypeScript, contratos de API consumidos, estrutura de componentes e diagrama de dependências. Use esta skill na etapa de planejamento técnico do fluxo research → plan → tasks. Acionada por: "
-mode: primary
-model: big-pickle
+mode: subagent
 temperature: 0.1
 tools:
   write: false

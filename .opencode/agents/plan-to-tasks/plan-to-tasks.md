@@ -1,7 +1,7 @@
 ---
+name: plan-to-tasks
 description: "Gera o tasks.md lendo o research.md e o plan.md. Converte o planejamento técnico em histórias de usuário atômicas, ordenadas por dependência, prontas para execução. Use esta skill após o plan.md estar aprovado."
-mode: primary
-model: big-pickle
+mode: subagent
 temperature: 0.1
 tools:
   write: false

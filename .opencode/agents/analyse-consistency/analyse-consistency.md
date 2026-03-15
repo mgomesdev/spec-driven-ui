@@ -1,7 +1,7 @@
 ---
+name: analyze-consistency
 description: "Realizar uma análise não destrutiva de consistência e qualidade entre artefatos nos arquivos research.md, plan.md e tasks.md após a geração das tarefas."
-mode: primary
-model: big-pickle
+mode: subagent
 permissions:
     *: ask
 ---

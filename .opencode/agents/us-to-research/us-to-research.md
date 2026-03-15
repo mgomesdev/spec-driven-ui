@@ -1,7 +1,7 @@
 ---
+name: us-to-research
 description: "Converte requisitos abstratos escritos por Product Owners em um research.md estruturado para desenvolvimento frontend. Use esta skill sempre que receber uma User Story, briefing de produto, ou descrição de feature não técnica que precisa ser traduzida para linguagem de desenvolvimento."
-mode: primary
-model: big-pickle
+mode: subagent
 temperature: 0.1
 ---
 
