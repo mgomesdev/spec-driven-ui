@@ -5,20 +5,10 @@ export interface ButtonProps
   variant: 'link' | 'cta';
 }
 
-export const Button = ({ variant, children, className = '', disabled, ...props }: ButtonProps) => {
-  const baseStyles = 'flex items-center justify-center text-white font-semibold transition-opacity duration-200 h-[var(--height-md)] rounded-[var(--radius-md)] px-[14px]';
-
-  const variantStyles = {
-    link: 'bg-transparent border border-white hover:opacity-80',
-    cta: 'bg-[var(--color-accent)] hover:opacity-90 w-full',
-  };
-
-  const disabledStyles = 'opacity-50 cursor-not-allowed';
-
+export const Button = ({ variant, children, ...props }: ButtonProps) => {
   return (
     <button
-      className={`${baseStyles} ${variantStyles[variant]} ${disabled ? disabledStyles : ''} ${className}`}
-      disabled={disabled}
+      className={`flex items-center justify-center text-white font-semibold transition-opacity duration-200 h-(--height-md) rounded-md px-3.5 ${variant === 'link' ? 'bg-transparent border border-white hover:opacity-80' : 'bg-(--color-accent) hover:opacity-90 w-full'} ${props.disabled ? 'opacity-50 cursor-not-allowed' : ''} ${props.className || ''}`}
       {...props}
     >
       {children}

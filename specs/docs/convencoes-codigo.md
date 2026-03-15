@@ -9,14 +9,17 @@
 
 ## Componentes
 
-## Componentes
-
 - **Arrow functions obrigatórias:** `export const ComponentName = ({ ... }: Props) => ...` (PROIBIDO `React.FC`).
 - **Retorno direto:** Preferir `export const Button = ({ label }) => <button>{label}</button>` quando possível.
 - **Estilização estrita:** Utilizar APENAS classes Tailwind CSS. **PROIBIDO** o uso de atributos `style={{...}}`.
+- **Constantes de estilos:** **PROIBIDO** criar constantes que armazenam classes CSS. Inserir classes Tailwind diretamente no elemento.
+- **Dimensões dinâmicas:** Para valores dinâmicos, usar template literals: `` `w-[${size}px] h-[${size}px]` ``
+- **Tipos de retorno:** **PROIBIDO** adicionar tipo de retorno explícito (`React.JSX.Element`). Usar inferência de tipos.
+- **Props desestruturadas:** Não desestruturar props como `className` e `disabled` separadamente. Usar `props.className` diretamente.
 - **Performance de componentes:** 
     - Constantes de estilo e dados estáticos que não dependem do render devem ser declaradas **fora** (abaixo) do componente.
     - Evitar criar objetos literais dentro do corpo do componente para atributos como `style` ou `className`.
+    - Cálculos simples podem ser inlineados diretamente nos elementos quando não são reutilizados
 - Componentes puros **não fazem fetch direto** — usam hooks ou recebem dados por props
 - Mantenha responsabilidades separadas
 - Trate os estados: loading, sucesso, erro
@@ -43,13 +46,7 @@
 
 ---
 
-## Tailwind CSS v4
-
-- Import: `@import "tailwindcss";` (não usa mais `@tailwind base/components/utilities`)
-- Variáveis CSS customizadas coexistem com Tailwind diretamente no `:root`
-- Fontes externas via `next/font/google`
-
-### Tokens CSS (Design System)
+## Tokens CSS 
 
 | Tipo | Padrão | Exemplo |
 |------|--------|---------|
@@ -63,3 +60,20 @@
 - Cores: bg-primary (#101828), accent (#7f56d9)
 - Fonte: Inter (400, 700)
 - Espaçamento: 4px a 131px
+
+---
+
+- Import: `@import "tailwindcss";` (não usa mais `@tailwind base/components/utilities`)
+- Variáveis CSS customizadas coexistem com Tailwind diretamente no `:root`
+- Fontes externas via `next/font/google`
+- Classes por exemplo `rounded-[var(--radius-full)]` devem ser escritas como `rounded-(--radius-full)` sempre seguindo o tailwind `prop-(--token)`.
+
+### Abreviações de Classes
+
+Quando um token CSS tem um alias no Tailwind, usar a abreviação nativa:
+
+| Token CSS | Abreviação Tailwind |
+|-----------|---------------------|
+| `rounded-(--radius-md)` | `rounded-md` |
+| `rounded-(--radius-full)` | `rounded-full` |
+| `px-[14px]` | `px-3.5` |

@@ -1,44 +1,41 @@
-"use client";
-
-import { useState } from "react";
-import Image from "next/image";
-import { User } from "lucide-react";
+import Image from 'next/image';
+import { User } from 'lucide-react';
+import { useState } from 'react';
 
 export interface AvatarProps {
-   src: string;
-   alt: string;
-   size?: number;
+  src: string;
+  alt: string;
+  size?: number;
 }
 
 export const Avatar = ({ src, alt, size = 92 }: AvatarProps) => {
-   const [imgError, setImgError] = useState(false);
+  const [hasError, setHasError] = useState(false);
 
-   const containerStyle = {
-      "--avatar-size": `${size}px`
-   } as React.CSSProperties;
-
-   return (
+  if (hasError) {
+    return (
       <div
-         className="relative overflow-hidden rounded-[var(--radius-full)] w-[var(--avatar-size)] h-[var(--avatar-size)]"
-         style={containerStyle}
-         role="img"
-         aria-label={alt}
+        role="img"
+        aria-label={alt}
+        className={`flex items-center justify-center bg-(--color-bg-secondary) rounded-full w-[${size}px] h-[${size}px]`}
       >
-         {imgError ? (
-            <div
-               className="flex items-center justify-center w-full h-full bg-gray-200 dark:bg-gray-700"
-            >
-               <User size={size * 0.5} />
-            </div>
-         ) : (
-            <Image
-                src={src}
-                alt={alt}
-                fill
-                className="object-cover"
-                onError={() => setImgError(true)}
-            />
-         )}
+        <User size={size * 0.5} className="text-(--color-text-muted)" />
       </div>
-   );
+    );
+  }
+
+  return (
+    <div
+      role="img"
+      aria-label={alt}
+      className={`relative rounded-full overflow-hidden w-[${size}px] h-[${size}px]`}
+    >
+      <Image
+        src={src}
+        alt={alt}
+        fill
+        className="object-cover"
+        onError={() => setHasError(true)}
+      />
+    </div>
+  );
 };
