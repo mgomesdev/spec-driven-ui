@@ -19,7 +19,31 @@ Solicite ao usuário (se não fornecido):
 
 Verifique se existe `specs/features/[nome-da-feature]/research.md`. Se existir, leia-o antes de continuar — pode conter contexto parcial.
 
-### Etapa 2: Perguntas de esclarecimento
+### Etapa 2: Verificar dependências (Atomic Design)
+
+Quando a feature for uma **page, template ou organism** que contém componentes filhos (atoms, molecules, organisms):
+
+1. **Liste os componentes filhos mencionados** no requisito (ex: Button, Card, Header, etc.)
+2. **Para cada componente filho, verifique se já foi implementado:**
+   - Verifique se existe `specs/components/[tipo]/[nome-do-componente]/research.md`
+   - Verifique se existe `specs/components/[tipo]/[nome-do-componente]/plan.md`
+   - Verifique se existe `specs/components/[tipo]/[nome-do-componente]/tasks.md`
+3. **Classifique cada componente:**
+   - ✅ **Implementado:** possui research, plan e tasks
+   - ⚠️ **Parcialmente implementado:** possui research e/ou plan, mas sem tasks completo
+   - ❌ **Não implementado:** não existe ou está incompleto
+4. **Ação conforme classificação:**
+   - Se **todos os filhos estão ✅ implementados**: prosseguir normalmente com o research
+   - Se **algum filho está ❌ ou ⚠️ não implementado**:
+     - Marcar a feature como **"BLOCKED por dependências"**
+     - Listar explicitamente as dependências faltantes no research
+     - Encerrar com alerta de que a feature não pode ser implementada até que as dependências estejam disponíveis
+     - **NÃO criar tasks para esta feature** até que as dependências sejam resolvidas
+5. **Após implementação de uma dependência:**
+   - O research da feature principal deve ser **atualizado** para referenciar o componente já implementado
+   - Adicionar na seção "Referências Visuais" ou criar nova seção "Dependências Implementadas" com links para os componentes
+
+### Etapa 3: Perguntas de esclarecimento
 
 Faça **3 a 5 perguntas essenciais** quando o requisito for ambíguo. Foque em:
 
@@ -46,11 +70,29 @@ Faça **3 a 5 perguntas essenciais** quando o requisito for ambíguo. Foque em:
 - **Importante**: O usuário pode responder com "1A, 2B". 
 - **Se o requisito já for claro o suficiente, pule esta etapa.**
 
-### Etapa 3: Gerar e salvar o research.md
+### Etapa 4: Gerar e salvar o research.md
 
 Gere o arquivo completo e salve em `specs/features/[nome-da-feature]/research.md`.
 
-**Após salvar, apresente um resumo ao usuário e encerre:**
+**Se a feature está bloqueada por dependências:**
+
+O research.md deve conter:
+- Seção "Dependências Bloqueando Implementação" listando todos os componentes necessários
+- Cada dependência deve indicar: nome, tipo (atom/molecule/organism), status atual
+- Instrução clara de que tasks NÃO devem ser criadas até dependências resolvidas
+
+**Apresente um resumo ao usuário:**
+
+```
+⚠️ ATENÇÃO: Esta feature está BLOQUEADA por dependências não implementadas
+
+Dependências necessárias:
+- [ ] Button (atom) - não existe
+- [ ] Card (molecule) - research existe, mas sem tasks
+- [ ] Header (organism) - ✓ implementado
+
+Esta feature só poderá ter suas tasks geradas após as dependências acima estarem com status "implementado" (possuir research + plan + tasks).
+```
 
 ```
 ✅ research.md gerado em specs/features/[nome]/research.md
@@ -59,11 +101,15 @@ Resumo:
 - X histórias de usuário
 - Principais telas/componentes: [lista]
 - Integração: [tipo de integração]
+- Dependências: [lista de componentes e status]
 - Fora do escopo: [lista]
 
+⚠️ Status: [PROSSEGUIR / BLOQUEADO]
+- Se BLOQUEADO: listar dependências que precisam ser implementadas primeiro
+
 Sugestão de Próximos Passos
-- Revisar o research.md, modificar, aprovar ou refazer novamente.
-- Iniciar o Agente 'research-to-plan' em um novo chat (para limpar a janela de contexto) para transformar o research.md em um plano de ação.
+- Se BLOQUEADO: Implementar dependências primeiro, depois revisitar esta feature
+- Se PROSSEGUIR: Iniciar o Agente 'research-to-plan' em um novo chat (para limpar a janela de contexto) para transformar o research.md em um plano de ação.
 ```
 
 ## Estrutura do research.md
@@ -108,36 +154,57 @@ Cada história deve ser pequena o suficiente para ser implementada em uma única
 
 > ⚠️ Toda história com alteração de UI deve incluir **sub-agent de testes**, **sub-agent de analise estatica** como critério.
 
-## 5. Requisitos Funcionais
+## 5. Dependências (Atomic Design)
+
+> ⚠️ **Seção obrigatória para pages, templates e organisms**
+
+Liste os componentes necessários para esta feature e seu status:
+
+| Componente | Tipo | Status | Caminho |
+|------------|------|--------|---------|
+| Button | atom | ✅ Implementado | specs/components/atoms/button/ |
+| Card | molecule | ⚠️ Parcial | specs/components/molecules/card/ |
+| Header | organism | ❌ Não implementado | - |
+
+**Status的含义:**
+- ✅ **Implementado:** possui research.md + plan.md + tasks.md completos
+- ⚠️ **Parcialmente implementado:** possui research.md (e/ou plan.md), mas sem tasks completo
+- ❌ **Não implementado:** não existe ou está incompleto
+
+**Se houver dependências não implementadas:**
+- Esta feature está **BLOQUEADA** até que as dependências estejam ✅ implementadas
+- **NÃO criar tasks** para esta feature enquanto houver dependências ❌ ou ⚠️
+
+## 6. Requisitos Funcionais
 
 - RF-01: O sistema deve [comportamento específico e inequívoco]
 - RF-02: Quando o usuário [ação], a interface deve [resposta]
 - RF-03: Em caso de erro na API, exibir [mensagem/comportamento]
 
-## 6. Requisitos Não-Funcionais (Frontend)
+## 7. Requisitos Não-Funcionais (Frontend)
 
 - RNF-01: Componentes devem ser responsivos (mobile-first)
 - RNF-02: Estados de loading devem ser exibidos durante chamadas à API
 - RNF-03: Erros de validação devem aparecer inline nos campos
 
-## 7. Fora do Escopo
+## 8. Fora do Escopo
 
 Liste explicitamente o que NÃO será feito nesta entrega:
 - Não inclui [funcionalidade X]
 - Não altera [tela Y]
 - Não cobre [caso de uso Z]
 
-## 8. Referências Visuais
+## 9. Referências Visuais
 
 - Link para Figma/protótipo: [url ou "não disponível"]
 - Componentes existentes que podem ser reutilizados: [lista]
 
-## 9. Métricas de Sucesso
+## 10. Métricas de Sucesso
 
 - [Como será medido que a feature atingiu seu objetivo]
 - Ex: "Usuário consegue completar o fluxo em menos de 3 cliques"
 
-## 10. Questões em Aberto
+## 11. Questões em Aberto
 
 - [ ] [Dúvida que precisa ser respondida antes ou durante o desenvolvimento]
 ```
@@ -149,9 +216,19 @@ Liste explicitamente o que NÃO será feito nesta entrega:
 - **Toda história com UI** deve ter **sub-agent de testes**, **sub-agent de analise estatica** como critério
 - **Não misture frontend e backend** — se a task é frontend, o critério é visual/comportamental, não "implementar endpoint"
 - **Integração é contrato**, não implementação — descreva o que o frontend espera receber/enviar, não como o backend deve funcionar
+- **Atualização pós-implementação:** Quando uma dependência for implementada (adquirir status ✅), atualize o research.md da feature principal para refletir o novo status da dependência e permitir a criação de tasks
+
+## Fluxo de Trabalho com Dependências
+
+1. **Primeira vez:** Feature principal é criada, mas marcada como BLOQUEADA
+2. **Implementar dependências:** Cada componente filho é implementado individualmente
+3. **Atualizar research:** Após dependência atingir status ✅, atualizar research.md da feature principal
+4. **Criar tasks:** Só após todas as dependências ✅, o research-to-plan pode gerar tasks para a feature principal
 
 ## Lista de Verificação (antes de salvar)
 
+- [ ] Etapa de verificação de dependências foi executada (para pages/templates/organisms)
+- [ ] Se há dependências não implementadas, research foi marcado como BLOQUEADO
 - [ ] Perguntas de esclarecimento foram feitas (ou contexto era suficiente)
 - [ ] Todas as histórias têm critérios verificáveis
 - [ ] Todas as histórias com UI têm **sub-agent de testes**, **sub-agent de analise estatica**
