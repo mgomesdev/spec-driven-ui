@@ -31,8 +31,13 @@ permission:
 
 Antes de escrever qualquer código, faça:
 
-1. Siga os padrões gerais do projeto
-2. **Leia `## Padrões do Projeto`** no `progress.md` — padrões descobertos em iterações anteriores
+1. **Leia os documentos de padrões globais DO PROJETO:**
+   - `AGENTS.md` (raiz) → Diretrizes gerais e tecnologias
+   - `specs/docs/convencoes-codigo.md` → Padrões de código (nomenclatura, estrutura de componentes, etc)
+   - `specs/docs/guardrails.md` → Regras obrigatórias (antipadrões a evitar)
+   - `specs/docs/padroes-git.md` → Conventional Commits
+
+2. **Leia `progress.md`** — padrões descobertos em iterações anteriores (seção `## Padrões do Projeto`)
 3. **Leia a seção do `plan.md`** referenciada na história
 4. **Identifique os arquivos que já existem** vs os que serão criados
 5. **Verifique imports necessários** — não importe o que ainda não existe
@@ -163,7 +168,13 @@ Após confirmar que todo aprendizado relevante foi destilado, reescreva o `progr
 ```markdown
 ## Padrões do Projeto
 
-<!-- Padrões consolidados serão adicionados aqui durante a execução das histórias -->
+Consulte os documentos globais do projeto:
+- `AGENTS.md` — Diretrizes gerais e tecnologias
+- `specs/docs/convencoes-codigo.md` — Padrões de código
+- `specs/docs/guardrails.md` — Regras obrigatórias
+- `specs/docs/padroes-git.md` — Conventional Commits
+
+<!-- Padrões adicionais consolidados serão adicionados aqui durante a execução das histórias -->
 
 ---
 ```
