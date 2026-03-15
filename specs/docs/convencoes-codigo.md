@@ -16,6 +16,7 @@
 - **Dimensões dinâmicas:** Para valores dinâmicos, usar template literals: `` `w-[${size}px] h-[${size}px]` ``
 - **Tipos de retorno:** **PROIBIDO** adicionar tipo de retorno explícito (`React.JSX.Element`). Usar inferência de tipos.
 - **Props desestruturadas:** Não desestruturar props como `className` e `disabled` separadamente. Usar `props.className` diretamente.
+- **Props de elementos HTML nativos:** Ao spread de props (`...props`) em elementos HTML nativos (ex: `button`, `input`), não é necessário desestruturar propriedades nativas como `disabled` — elas já estão inclusas no `...props` e podem ser usadas diretamente no elemento.
 - **Performance de componentes:** 
     - Constantes de estilo e dados estáticos que não dependem do render devem ser declaradas **fora** (abaixo) do componente.
     - Evitar criar objetos literais dentro do corpo do componente para atributos como `style` ou `className`.

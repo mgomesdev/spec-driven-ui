@@ -1,6 +1,6 @@
 ---
 name: implement-tasks
-description: "Antes de qualquer coisa, leia os documentos de padrôes globais do projeto para obter o contexto critico que deve ser seguido a risca, e só depois que entender, prossiga para executar as histórias do tasks.md uma por vez como um agente engenheiro de software frontend. Lê o plan.md para contexto técnico, implementa a história, verifica no navegador, commita e registra aprendizados no progress.md antes de passar para a próxima. Use esta skill para executar o plano de implementação gerado pelas skills de research, plan e tasks."
+description: "Executa as histórias do tasks.md uma por vez como um agente engenheiro de software frontend. Lê o plan.md para contexto técnico, implementa a história, commita e registra aprendizados no progress.md antes de passar para a próxima. Use esta skill para executar o plano de implementação gerado pelas skills de research, plan e tasks."
 mode: subagent
 temperature: 0.5
 tools:
@@ -17,6 +17,7 @@ permission:
 
 ## Sua Tarefa (por iteração)
 
+0. **Leia o `AGENTS.md` na raiz do projeto** → identifique todos os docs globais referenciados → leia cada um deles (`convencoes-codigo.md`, `guardrails.md`, `padroes-git.md`, etc.) **antes de qualquer implementação** — faça isso UMA VEZ no início da sessão
 1. Leia o `tasks.md` em `specs/features/[nome-da-feature]/tasks.md`
 2. Leia o `progress.md` em `specs/features/[nome-da-feature]/progress.md` (Crie caso não exista) — **especialmente a seção `## Padrões do Projeto`**
 3. Leia o `plan.md` em `specs/features/[nome-da-feature]/plan.md` — consulte as seções relevantes para a história atual
@@ -31,15 +32,11 @@ permission:
 
 Antes de escrever qualquer código, faça:
 
-1. **Leia os documentos de padrões globais DO PROJETO:**
-   - `AGENTS.md` (raiz) → Diretrizes gerais e tecnologias
-   - `specs/docs/convencoes-codigo.md` → Padrões de código (nomenclatura, estrutura de componentes, etc)
-   - `specs/docs/guardrails.md` → Regras obrigatórias (antipadrões a evitar)
-   - `specs/docs/padroes-git.md` → Conventional Commits
-2. **Leia `progress.md`** — padrões descobertos em iterações anteriores (seção `## Padrões do Projeto`)
-3. **Leia a seção do `plan.md`** referenciada na história
-4. **Identifique os arquivos que já existem** vs os que serão criados
-5. **Verifique imports necessários** — não importe o que ainda não existe
+0. **Leia `AGENTS.md` + docs globais** — naming, imports, estrutura de arquivos e barrel files são definidos aqui. **Nunca assuma convenções — leia primeiro.** (se já leu nesta sessão, pule)
+1. **Leia `progress.md`** — padrões descobertos em iterações anteriores (seção `## Padrões do Projeto`)
+2. **Leia a seção do `plan.md`** referenciada na história
+3. **Identifique os arquivos que já existem** vs os que serão criados
+4. **Verifique imports necessários** — não importe o que ainda não existe; confirme os caminhos nos docs globais
 
 ## Implementando a História
 
@@ -48,7 +45,7 @@ Antes de escrever qualquer código, faça:
 - Implemente **apenas** o que os critérios de aceitação pedem
 - Não refatore código existente fora do escopo da história
 - Não adicione funcionalidades não listadas nos critérios
-- Siga os padrões de código existentes no projeto
+- Siga os padrões de código existentes no projeto **e os definidos nos docs globais**
 - Use os types definidos no `plan.md`
 - Props devem bater exatamente com o definido no `plan.md`
 
@@ -129,7 +126,7 @@ Antes de commitar, verifique se há aprendizados que valem para futuras sessões
 Após concluir uma história, verifique o tasks.md:
 
 **Se ainda há histórias com `Passes: false`:**
-Inicie um novo sub-agent para a próxima iteração — ele lerá o `tasks.md`, o `progress.md` atualizado (incluindo os novos padrões recém-registrados) e o `plan.md` antes de implementar a próxima história.
+Inicie um novo sub-agent para a próxima iteração — ele lerá o `AGENTS.md` + docs globais, o `tasks.md`, o `progress.md` atualizado (incluindo os novos padrões recém-registrados) e o `plan.md` antes de implementar a próxima história.
 
 **Se TODAS as histórias têm `Passes: true`:**
 Execute a **Destilação de Conhecimento** (seção abaixo) antes de encerrar.
@@ -208,6 +205,7 @@ Commits: [número de commits]
 
 ## Regras Gerais
 
+- **Leia os docs globais primeiro** — `AGENTS.md` e os docs referenciados nele definem naming, imports e estrutura. Nunca assuma convenções.
 - **Uma história por iteração** — nunca pule etapas ou implemente duas de uma vez
 - **Não invente** — implemente apenas o que está nos critérios de aceitação
 - **Siga o plan.md** — os tipos, props e contratos estão definidos lá, não recrie
@@ -220,13 +218,18 @@ Commits: [número de commits]
 ## Formato Rápido de Referência
 
 ```
-INÍCIO DA ITERAÇÃO:
+INÍCIO DA SESSÃO (uma vez, antes da primeira história):
+  0. ler AGENTS.md → ler TODOS os docs globais referenciados
+     (convencoes-codigo.md, guardrails.md, padroes-git.md, etc.)
+
+INÍCIO DE CADA ITERAÇÃO:
   1. ler tasks.md → identificar próxima história (menor prioridade com Passes: false)
   2. ler progress.md → seção "Padrões do Projeto"
   3. ler plan.md → seção referenciada na história
 
 IMPLEMENTAÇÃO (por arquivo):
   4. reler progress.md → plan.md → arquivo no disco (se existe) → imports no disco
+     → se houver dúvida de convenção (naming, import path, barrel): voltar aos docs globais
   5. implementar APENAS este arquivo baseado no que releu agora
 <!-- TODO: adicionar testes, typecheck -->
   6. repetir passos 4-6 para cada arquivo da história
