@@ -1,88 +1,123 @@
 ---
 name: diff-design-vs-code
-description: "Ler a árvore DOM do Pencil MCP e compará-la com o estado atual do projeto e Gerar um relatório de diferenças estruturado que todos os agentes subsequentes usarão."
+description: "Ler o arquivo .pen do Pencil, comparar com o código existente e gerar um relatório de diferenças em formato amigável."
 mode: subagent
 temperature: 0.1
 tools: 
-    *: false
     read: true
+    pencil_get_editor_state: true
+    pencil_batch_get: true
+    pencil_get_variables: true
 ---
 
 ## Acionamento
 
-- 'analise as alterações no design do pencil'.
+- 'analise as alterações no design do pencil'
+- 'compare o design com o código'
+- 'diff design vs código'
 
 ## Entradas
 
-- Pencil MCP: resposta da ferramenta `get-dom-tree`
-- `docs/design-tokens.md` (se existir)
-- `docs/design-system.md` (se existir)
-- Todos os arquivos `specs/*/progress.md` (para detectar o que já foi feito)
+- Arquivos `.pen` na raiz do projeto
+- `@frontend/src/app/global.css` (se existir)
+- `@frontend/src/components/**/*` (componentes React existentes)
 
 ## Funcionamento
 
-### Etapa 1 — obter a árvore DOM do Pencil MCP
+### Etapa 1 — Obter dados reais do Pencil
 
-Chamar `pencil.get-dom-tree`. Extraia para cada componente:
-- `node_id` (ID do nó no Pencil)
-- `name` (nome personalizado definido no Pencil)
-- `type` (átomo / molécula / organismo / recurso / página)
-- `variants` (lista)
-- `props` (inferido das propriedades do Pencil)
-- `tokens_used` (nomes dos tokens de design referenciados)
-- `children` (array de node_ids)
-- `checksum` (hash do nó para detecção de obsoletos)
+1. Usar `pencil_open_document` com arquivos `.pen` para carregar o design
+2. Usar `pencil_get_editor_state` para obter a estrutura do documento
+3. Usar `pencil_batch_get` com `patterns: [{type: "frame"}, {type: "text"}, {type: "rectangle"}]` para buscar componentes
+4. Usar `pencil_get_variables` para obter os tokens de design definidos
+5. Extrair valores REAIS: cores, tamanhos, fontes, spacings diretamente dos nós
 
-### Etapa 2 — Comparar com o projeto
+### Etapa 2 — Obter dados reais do código
 
-Para cada componente na árvore DOM, verifique:
-- `src/components/[nome]/` existe? → OK ou NÃO
-- `specs/[nome]/progress.md` existe? → Foi implementado?
-- Os tokens no componente correspondem a `docs/design-tokens.md`? → OK ou DESATIVADO
+1. Ler `frontend/src/app/global.css` (todo o conteúdo)
+2. Listar todos os componentes em `frontend/src/components/`
 
-### Etapa 3 — Classificar cada item
-- `OK` — sincronizado, nenhuma ação necessária
-- `DESATIVADO` — existe em ambos os lados, valores diferentes
-- `NOVO` — no Pencil, não no código-fonte
-- `AUSENTE` — deveria existir, mas está ausente (token, propriedade, variante)
-- `DESATUALIZADO` — foi sincronizado, mas o Pencil foi alterado desde então
-- `EXCLUÍDO` — no código-fonte, removido do Pencil
+### Etapa 3 — Comparação REAL
 
-### Etapa 4 — Ferar relatório
-Escrever em `docs/design-diff.md`:
+Para CADA token/componente:
+1. Pegar o valor EXATO do Pencil (ex: #101828)
+2. Pegar o valor EXATO do código (ex: --color-bg-primary: #000000)
+3. Comparar e determinar o status real
+
+### Etapa 4 — Classificação
+
+- `✅ SINCRONIZADO` — valor no Pencil = valor no código
+- `❌ DIVERGENTE` — existe em ambos, mas valores diferentes
+- `🆕 NOVO NO DESIGN` — existe no Pencil, não existe no código
+- `📦 NÃO IMPLEMENTADO` — especificado mas não implementado
+- `🗑️ REMOVIDO` — existe no código mas foi removido do design
+
+### Etapa 5 — Gerar relatório amigável
+
+Escrever em `@/specs/report/design-diff.md` com formato claro e amigável:
 
 ```markdown
+# 🎨 Design vs Código — Relatório de Comparação
+
+> Gerado em: [data]
+
+## 📊 Resumo Geral
+
+| Status | Quantidade |
+|--------|------------|
+| ✅ SINCRONIZADOS | X |
+| ❌ DIVERGENTES | X |
+| 🆕 NOVOS NO DESIGN | X |
+| 📦 NÃO IMPLEMENTADOS | X |
+
 ---
-generated_at: [data e hora ISO]
-name: [nome do componente]
+
+## 🎯 Tokens de Design
+
+### Cores
+| Token | Pencil | Código | Status |
+|-------|--------|--------|--------|
+| --color-bg | #101828 | #101828 | ✅ |
+
+### Dimensões
+| Token | Pencil | Código | Status |
+|-------|--------|--------|--------|
+| --header-height | 80px | 80px | ✅ |
+
 ---
 
-## Resumo
-ok: N | desatualizado: N | novo: N | ausente: N | desatualizado: N | Excluir: N
+## 🧩 Componentes
 
-## Tokens
-[status] [nome do token] — [valor do Pencil] vs [valor do código]
+### Header
+- **Status**: ✅ SINCRONIZADO
+- **Código**: `frontend/src/components/Header/` ✓
 
-## Componentes
-[status] [nome do componente] — [detalhe]
+### Hero Section
+- **Status**: ❌ DIVERGENTE
+- **Código**: `frontend/src/components/Hero/` ⚠️ valores diferentes
+- **Diferenças**: padding-bottom: 131px (Pencil) vs 64px (código)
 
-## Ações recomendadas (ordem de prioridade)
-1. [ação]
-```
+---
 
-### Etapa 5 — Marcar componentes obsoletos
+## 🚀 Ações Prioritárias
 
-Para qualquer componente onde o checksum foi alterado, abra o arquivo `progress.md` e defina:
-```
-status: obsoleto
-motivo_obsoleto: "Pencil atualizado — checksum alterado de [antigo] para [novo]"
+1. **[ALTA]** Corrigir divergência no Hero — padding está diferente
+2. **[ALTA]** Implementar novo componente FooterFoundations
+3. **[MÉDIA]** Sincronizar tokens de cor com o design
+
+---
+
+## 📁 Arquivos de Referência
+
+- Design: arquivos `.pen` na raiz do projeto
+- CSS: `frontend/src/app/global.css`
+- Componentes: `frontend/src/components/`
 ```
 
 ## Arquivos de saída
 
-- `docs/design-diff.md` (criado/sobrescrito)
-- `specs/*/progress.md` (status atualizado para `obsoleto` quando necessário)
+- `@/specs/report/design-diff.md` (criado/sobrescrito com relatório amigável)
 
 ## Próximo agente
 
-`us-to-research` lê `docs/design-diff.md` para selecionar o próximo componente.
+O próximo agente deve ler `@/specs/report/design-diff.md` e executar as ações prioritárias listadas.
