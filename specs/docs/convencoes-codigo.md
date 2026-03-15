@@ -9,13 +9,18 @@
 
 ## Componentes
 
-- Arrow functions com `export const ComponentName = ({ ... }: Props) => ...` 
-- Retorno direto (sem `return` e `{ ... }`) quando só retorna JSX `export const Button = ({ label }) => <button>{label}</button>`
+## Componentes
+
+- **Arrow functions obrigatórias:** `export const ComponentName = ({ ... }: Props) => ...` (PROIBIDO `React.FC`).
+- **Retorno direto:** Preferir `export const Button = ({ label }) => <button>{label}</button>` quando possível.
+- **Estilização estrita:** Utilizar APENAS classes Tailwind CSS. **PROIBIDO** o uso de atributos `style={{...}}`.
+- **Performance de componentes:** 
+    - Constantes de estilo e dados estáticos que não dependem do render devem ser declaradas **fora** (abaixo) do componente.
+    - Evitar criar objetos literais dentro do corpo do componente para atributos como `style` ou `className`.
 - Componentes puros **não fazem fetch direto** — usam hooks ou recebem dados por props
 - Mantenha responsabilidades separadas
 - Trate os estados: loading, sucesso, erro
 - Mensagens de erro devem ser legíveis pelo usuário
-- Constantes que não necessitem de re-renders devem ser declaradas abaixo do componente que as utiliza
 - Uso do `<Image />` do Next.js deve prever preenchimento dinâmico (layout fill) e conter tratamento de fallback quando a imagem não for fornecida
 
 ---
@@ -42,7 +47,7 @@
 
 - Import: `@import "tailwindcss";` (não usa mais `@tailwind base/components/utilities`)
 - Variáveis CSS customizadas coexistem com Tailwind diretamente no `:root`
-- Fontes externas via `@import url()` no CSS
+- Fontes externas via `next/font/google`
 
 ### Tokens CSS (Design System)
 

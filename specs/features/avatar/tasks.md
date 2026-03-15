@@ -13,7 +13,7 @@ Componente Avatar (átomo) para exibição de foto de perfil do usuário. Render
 ### US-001: Criar componente Avatar
 
 **Prioridade:** 1
-**Passes:** true
+**Passes:** false
 
 **Descrição:**
 > Como desenvolvedor, eu quero um componente Avatar reutilizável que exiba foto de perfil circular com fallback para ícone quando a imagem falhar para que possa ser usado em toda a aplicação.

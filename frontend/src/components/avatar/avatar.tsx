@@ -10,29 +10,34 @@ export interface AvatarProps {
    size?: number;
 }
 
-export const Avatar = ({ src, alt = "test", size = 92 }: AvatarProps) => {
+export const Avatar = ({ src, alt, size = 92 }: AvatarProps) => {
    const [imgError, setImgError] = useState(false);
+
+   const containerStyle = {
+      "--avatar-size": `${size}px`
+   } as React.CSSProperties;
 
    return (
       <div
-         className="relative overflow-hidden rounded-full"
-         style={{
-            width: size,
-            height: size,
-            borderRadius: "var(--radius-full)",
-         }}
+         className="relative overflow-hidden rounded-[var(--radius-full)] w-[var(--avatar-size)] h-[var(--avatar-size)]"
+         style={containerStyle}
          role="img"
          aria-label={alt}
       >
          {imgError ? (
             <div
                className="flex items-center justify-center w-full h-full bg-gray-200 dark:bg-gray-700"
-               style={{ width: size, height: size }}
             >
                <User size={size * 0.5} />
             </div>
          ) : (
-            <Image src={src} alt={alt} fill style={{ objectFit: "cover" }} onError={() => setImgError(true)} />
+            <Image
+                src={src}
+                alt={alt}
+                fill
+                className="object-cover"
+                onError={() => setImgError(true)}
+            />
          )}
       </div>
    );

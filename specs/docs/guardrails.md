@@ -27,9 +27,3 @@
 | 9 | Não crie arquivos desnecessários |
 | 10 | Não ultrapasse 500 linhas por arquivo |
 | 11 | Não adicione tipagem de retorno, prefira a inferência de tipos |
-| 12 | Não crie constantes que armazena classes do tailwind, declare diretamente no elemento |
-| 13 | Não use return quando o componente só possui elementos sem lógica |
-| 14 | Não declare componentes com function |
-| 15 | Não importe o react sem necessidade |
-| 16 | Não selecione props individualmente sem necessidade no componente, prefira desestruturar |
-| 17 | Não exporte componentes desnecessariamente, somente exporte se o componente for realmente ser utilizado por outro componente |
