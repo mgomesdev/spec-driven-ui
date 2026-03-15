@@ -62,3 +62,11 @@
 ## Padrões de Componentes de Página
 
 - **Seções relacionadas no mesmo arquivo**: Cada seção de uma página, se forem do mesmo contexto, deve estar no mesmo arquivo, sempre abaixo para manter a coesão
+
+---
+
+## Tailwind CSS v4
+
+- Import: `@import "tailwindcss";` (não usa mais `@tailwind base/components/utilities`)
+- Variáveis CSS customizadas coexistem com Tailwind diretamente no `:root`
+- Fontes externas via `@import url()` no CSS
