@@ -2,6 +2,7 @@
 name: diff-design-vs-code
 description: "Ler a árvore DOM do Pencil MCP e compará-la com o estado atual do projeto e Gerar um relatório de diferenças estruturado que todos os agentes subsequentes usarão."
 mode: subagent
+temperature: 0.1
 tools: 
     *: false
     read: true
