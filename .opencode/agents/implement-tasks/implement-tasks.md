@@ -1,6 +1,6 @@
 ---
 name: implement-tasks
-description: "Executa as histórias do tasks.md uma por vez como um agente engenheiro de software frontend. Lê o plan.md para contexto técnico, implementa a história, roda typechecks, verifica no navegador, commita e registra aprendizados no progress.md antes de passar para a próxima. Use esta skill para executar o plano de implementação gerado pelas skills de research, plan e tasks."
+description: "Antes de qualquer coisa, leia os documentos de padrôes globais do projeto para obter o contexto critico que deve ser seguido a risca, e só depois que entender, prossiga para executar as histórias do tasks.md uma por vez como um agente engenheiro de software frontend. Lê o plan.md para contexto técnico, implementa a história, verifica no navegador, commita e registra aprendizados no progress.md antes de passar para a próxima. Use esta skill para executar o plano de implementação gerado pelas skills de research, plan e tasks."
 mode: subagent
 temperature: 0.5
 tools:
@@ -36,7 +36,6 @@ Antes de escrever qualquer código, faça:
    - `specs/docs/convencoes-codigo.md` → Padrões de código (nomenclatura, estrutura de componentes, etc)
    - `specs/docs/guardrails.md` → Regras obrigatórias (antipadrões a evitar)
    - `specs/docs/padroes-git.md` → Conventional Commits
-
 2. **Leia `progress.md`** — padrões descobertos em iterações anteriores (seção `## Padrões do Projeto`)
 3. **Leia a seção do `plan.md`** referenciada na história
 4. **Identifique os arquivos que já existem** vs os que serão criados
