@@ -1,175 +1,149 @@
-# Relatório de Comparação: Design vs Código
+# 🎨 Design vs Código — Relatório de Comparação (Atomic Design)
 
-## 1. Visão Geral
+> Gerado em: Sun Mar 15 2026
 
-| Aspecto | Design (portfolio.pen) | Código (frontend) |
-|---------|------------------------|-------------------|
-| **Arquivo** | `portfolio.pen` | `frontend/src/app/globals.css` |
-| **Tipo** | Design Pencil | Tailwind CSS + CSS Variables |
-| **Variáveis de design** | Nenhuma definida | Tailwind CSS v4.2 |
+## 📊 Resumo Geral
 
----
-
-## 2. Estrutura do Design (portfolio.pen)
-
-### 2.1 Componentes Identificados
-
-| ID | Nome | Tipo | Descrição |
-|----|------|------|------------|
-| `oSEdx` | Body → Home Page Root Container | frame | Container principal |
-| `UUPDV` | Header Organism | frame | Cabeçalho |
-| `pVmuT` | Section - Hero Organism | frame | Seção hero |
-| `4IBSu` | Footer Organism | frame | Rodapé |
-| `Xftel` | Button - AT_BUTTON_ID (Variant: Link) | frame | Botão estilo link |
-| `LGNPK` | Button - AT_BUTTON_ID (Variant: Primary) | frame | Botão primário |
-| `WqNd8` | AT_AVATAR_ID | frame | Avatar |
-| `OsV7K` | Heading 1 - AT_HEADING_ID (Variant: Gradient) | frame | Título com gradiente |
-| `1dIdb` | Heading 2 - AT_HEADING_ID (Default) | frame | Subtítulo |
-
-### 2.2 Elementos de Texto
-
-| Conteúdo | Tamanho | Peso | Cor |
-|----------|---------|------|-----|
-| "Programador Frontend" | 48px | 700 | #f56fe3 (gradiente) |
-| "apaixonado por criação de<br>interfaces inovadoras" | 48px | 400 | #ffffffff |
-| Texto principal | 20px | 400 | #f9fafbff |
-| Botão CTA | 16px | 400 | #7f56d9ff |
-| "Download CV" | 16px | 400 | #667085ff |
-| "Entre em Contato" | 16px | 400 | #ffffffff |
-| Nome "MatheusGomesDev /" | 12px | 400 | #ffffffff |
-| Copyright | 12px | 400 | #ffffffff |
+| Status | Quantidade |
+|--------|------------|
+| ✅ SINCRONIZADOS | 13 |
+| ❌ DIVERGENTES | 3 |
+| 🆕 NOVOS NO DESIGN | 0 |
+| 📦 NÃO IMPLEMENTADOS | 0 |
 
 ---
 
-## 3. Tokens de Design (globals.css)
+## ⚛️ Átomos (Atoms)
 
-### 3.1 Cores
+Elementos indivisíveis: cores, fontes, botões, inputs, ícones, tokens
 
-| Variável CSS | Valor | Uso no Design |
-|--------------|-------|---------------|
-| `--color-bg-primary` | `#101828` | Background escuro |
-| `--color-text-secondary` | `#667085` | Textos secundários |
-| `--color-text-muted` | `#f9fafb` | Textos claros |
+### Cores
 
-### 3.2 Tipografia
+| Token | Pencil | Código | Status |
+|-------|--------|--------|--------|
+| Background | #101828 | #101828 | ✅ |
+| Accent Primary | #7f56d9 | #7f56d9 | ✅ |
+| Accent Secondary | #9e77ed | — (não implementado) | ❌ |
+| Secondary | #667085 | #667085 | ✅ |
+| Text Primary | #ffffff | #ffffff | ✅ |
+| Text Muted | #f9fafb | #f9fafb | ✅ |
 
-| Variável CSS | Valor | Equivalente no Design |
-|--------------|-------|----------------------|
-| `--font-family-primary` | `"Inter", sans-serif` | "Liberation Sans" no design |
-| `--font-size-heading-xl` | 48px | ✅ Match |
-| `--font-size-heading` | 20px | ⚠️ Design usa 48px |
-| `--font-size-body` | 16px | ✅ Match (20px no design para parágrafo) |
-| `--font-size-small` | 12px | ✅ Match |
-| `--font-weight-regular` | 400 | ✅ Match |
-| `--font-weight-bold` | 700 | ✅ Match |
+### Tipografia
 
-### 3.3 Espaçamento
+| Token | Pencil | Código | Status |
+|-------|--------|--------|--------|
+| Heading Font | Liberation Sans | Inter | ❌ |
+| Heading XL Size | 48px | 48px | ✅ |
+| Body Size | 20px | 16px | ❌ |
+| Small Size | 12px | 12px | ✅ |
 
-| Variável CSS | Valor |
-|--------------|-------|
-| `--spacing-xs` | 12px |
-| `--spacing-sm` | 14px |
-| `--spacing-md` | 16px |
-| `--spacing-lg` | 20px |
-| `--spacing-xl` | 32px |
-| `--spacing-xxl` | 131px |
+### Dimensões (Height)
 
-### 3.4 Dimensões
+| Token | Pencil | Código | Status |
+|-------|--------|--------|--------|
+| Header Height | 80px | 80px | ✅ |
+| Button Height | 48px | 48px | ✅ |
+| Footer Height | 60px | 60px | ✅ |
+| Avatar Size | 92px | — (não implementado) | ❌ |
 
-| Variável CSS | Valor |
-|--------------|-------|
-| `--height-xl` | 80px |
-| `--height-md` | 48px |
-| `--height-sm` | 60px |
-| `--max-width-container` | 700px |
+### Border Radius
 
-### 3.5 Border Radius
+| Token | Pencil | Código | Status |
+|-------|--------|--------|--------|
+| Button Radius | 8px | 8px | ✅ |
+| Avatar Radius | 9999px | 9999px | ✅ |
 
-| Variável CSS | Valor |
-|--------------|-------|
-| `--radius-sm` | 4px |
-| `--radius-md` | 8px |
-| `--radius-lg` | 16px |
-| `--radius-full` | 9999px |
+### Spacing
+
+| Token | Pencil | Código | Status |
+|-------|--------|--------|--------|
+| Hero Padding Top | 131px | 131px (spacing-xxl) | ✅ |
+| Container Max Width | 700px | 700px | ✅ |
 
 ---
 
-## 4. Análise de Divergências
+## 🔬 Moléculas (Molecules)
 
-### 4.1 ✅ Conformidades
+Combinações simples de átomos: SearchBar, CardSimple, FormGroup
 
-| Aspecto | Status |
-|---------|--------|
-| Cor de background (#101828) | ✅ Corresponde |
-| Container max-width (700px) | ✅ Corresponde |
-| Altura do header (80px) | ✅ Corresponde |
-| Altura dos botões (48px) | ✅ Corresponde |
-| Border radius (8px) | ✅ Corresponde |
-| Border radius full (9999px) | ✅ Corresponde |
-| Tamanho do título (48px) | ✅ Corresponde |
-| Tamanho small (12px) | ✅ Corresponde |
-
-### 4.2 ⚠️ Divergências Identificadas
-
-| Aspecto | Design | Código | Recomendação |
-|---------|--------|--------|--------------|
-| Fonte | Liberation Sans | Inter | Manter Inter (código) |
-| Heading 2 | 48px | 20px (--font-size-heading) | Atualizar token para 48px |
-| Parágrafo | 20px | 16px (--font-size-body) | Design parece ter 20px |
-| Cores secundárias | #667085 | --color-text-secondary | ✅ OK |
-| Gradiente botão | #7f56d9 → #9e77ed | Não definido | Adicionar ao CSS |
-
-### 4.3 🎨 Elementos do Design Não Refletidos no Código
-
-| Elemento | Observação |
-|----------|------------|
-| Gradiente no título (#f56fe3) | Não implementado via CSS |
-| Gradiente no botão primário | Não implementado via CSS |
-| Avatar circular | Implementado com border-radius 9999px |
-| Icones (SVG) | Não mapeados no CSS |
+Nenhuma molécula detectada no design atual.
 
 ---
 
-## 5. Estrutura de Componentes
+## 🧬 Organismos (Organisms)
 
-### Design (portfolio.pen)
-```
-oSEdx (Root Container)
-├── UUPDV (Header)
-│   └── Xftel (Button Link)
-├── pVmuT (Hero Section)
-│   └── pLodu (Container 700px)
-│       ├── r2XsA (Avatar Block)
-│       ├── ICFiZ (Headings)
-│       ├── l72RX (Paragraph)
-│       ├── TB4ti (Button CTA)
-│       └── aGRNu (Double CTA)
-└── 4IBSu (Footer)
-    ├── k9h12 (Copyright)
-    └── Hxa4x (Icon)
-```
+Grupos de moléculas: Header, Footer, HeroSection, Navigation
 
-### Código (frontend)
-- Não há diretório `src/components/` implementado
-- Componentes inline no arquivo `page.tsx`
+### Header
+
+- **Status**: ✅ SINCRONIZADO (tokens)
+- **Código**: `frontend/src/app/page.tsx` (implementação vazia)
+- **Moléculas/Átomos**: Logo + NavButtons
+- **Propriedades**:
+  - Height: 80px ✅
+  - Padding: [0, 20] ✅
+  - Background: #101828 ✅
+
+### Hero Section
+
+- **Status**: 📦 NÃO IMPLEMENTADO
+- **Código**: Não existe no código
+- **Moléculas/Átomos**: Avatar + Headings + Paragraph + CTAs
+- **Propriedades**:
+  - Padding-top: 131px ✅
+  - Background: #101828 ✅
+  - Max-width: 700px ✅
+
+### Footer
+
+- **Status**: 📦 NÃO IMPLEMENTADO
+- **Código**: Não existe no código
+- **Moléculas/Átomos**: Copyright Text + Icon
+- **Propriedades**:
+  - Height: 60px ✅
+  - Padding: 16px ✅
+  - Background: #101828 ✅
 
 ---
 
-## 6. Recomendações
+## 📐 Templates
 
-1. **Atualizar `--font-size-heading`** de 20px para 48px para corresponder ao design
-2. **Criar variável para gradiente do botão**: `--gradient-primary`
-3. **Adicionar fonte Liberation Sans** ou manter Inter (preferido)
-4. **Criar componentes React** para Organisms (Header, Hero, Footer)
-5. **Mapear variáveis de design** para tokens Tailwind
+Estruturas de layout: PageLayout, DashboardLayout, FormLayout
+
+### PageLayout
+
+- **Status**: 📦 NÃO IMPLEMENTADO
+- **Código**: Não existe (layout.tsx existente mas básico)
+- **Elementos**: Header + Main Content + Footer
 
 ---
 
-## 7. Conclusão
+## 📄 Páginas (Pages)
 
-O código frontend segue o design de forma geral, com divergências menores principalmente em:
-- Tamanho de alguns textos (heading vs body)
-- Gradientes não implementados no CSS
-- Estrutura de componentes não modularizada
+Instâncias concretas: HomePage, AboutPage, ContactPage
 
-**Nível de conformidade: ~85%**
+### HomePage
+
+- **Status**: 📦 NÃO IMPLEMENTADO (arquivo vazio)
+- **Código**: `frontend/src/app/page.tsx` (retorna `<></>`)
+- **Elementos**: PageLayout + HeroSection
+
+---
+
+## 🚀 Ações Prioritárias
+
+1. **[ALTA]** Implementar Hero Section — não existe no código
+2. **[ALTA]** Implementar Header — não existe componente
+3. **[ALTA]** Implementar Footer — não existe componente
+4. **[MÉDIA]** Corrigir fonte — Liberation Sans (Pencil) vs Inter (código)
+5. **[MÉDIA]** Adicionar cor secundária #9e77ed ao CSS
+6. **[MÉDIA]** Corrigir font-size body — 20px (Pencil) vs 16px (código)
+7. **[BAIXA]** Adicionar avatar circle ao CSS
+
+---
+
+## 📁 Arquivos de Referência
+
+- Design: `portfolio.pen`
+- CSS: `frontend/src/app/globals.css`
+- Componentes: `frontend/src/app/page.tsx` (vazio)

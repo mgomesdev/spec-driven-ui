@@ -1,6 +1,6 @@
 ---
 name: diff-design-vs-code
-description: "Ler o arquivo .pen do Pencil, comparar com o código existente e gerar um relatório de diferenças em formato amigável."
+description: "Ler o arquivo .pen do Pencil, comparar com o código existente usando Atomic Design e gerar um relatório de diferenças em formato amigável."
 mode: subagent
 temperature: 0.1
 tools: 
@@ -22,6 +22,16 @@ tools:
 - `@frontend/src/app/global.css` (se existir)
 - `@frontend/src/components/**/*` (componentes React existentes)
 
+## Atomic Design - Estrutura de Classificação
+
+O agente deve classificar os elementos em:
+
+- **Atom** (Átomo): Elementos indivisíveis — botões, ícones, labels, inputs, cores, fontes, spacings, tokens de design
+- **Molecule** (Molécula): Combinação simples de átomos — SearchBar (input + botão), CardSimple (título + descrição)
+- **Organism** (Organismo): Grupo de moléculas funcionando junto — Header (Logo + Nav + SearchBar), Footer (Links + Copyright), CardComplex (Image + Title + Description + Button)
+- **Template** (Template): Estrutura de layout sem conteúdo — PageLayout, DashboardLayout, FormLayout
+- **Page** (Página): Instância concreta de template com conteúdo real — HomePage, AboutPage, ContactPage
+
 ## Funcionamento
 
 ### Etapa 1 — Obter dados reais do Pencil
@@ -31,18 +41,46 @@ tools:
 3. Usar `pencil_batch_get` com `patterns: [{type: "frame"}, {type: "text"}, {type: "rectangle"}]` para buscar componentes
 4. Usar `pencil_get_variables` para obter os tokens de design definidos
 5. Extrair valores REAIS: cores, tamanhos, fontes, spacings diretamente dos nós
+6. **Classificar cada nó no nível atômico apropriado** (Atom/Molecule/Organism/Template/Page)
 
 ### Etapa 2 — Obter dados reais do código
 
 1. Ler `frontend/src/app/global.css` (todo o conteúdo)
 2. Listar todos os componentes em `frontend/src/components/`
+3. **Mapear componentes para estrutura Atomic Design**:
+   - `components/atoms/` → Atoms
+   - `components/molecules/` → Molecules
+   - `components/organisms/` → Organisms
+   - `components/templates/` → Templates
+   - `components/pages/` → Pages
 
-### Etapa 3 — Comparação REAL
+### Etapa 3 — Comparação REAL por Nível Atômico
 
-Para CADA token/componente:
-1. Pegar o valor EXATO do Pencil (ex: #101828)
-2. Pegar o valor EXATO do código (ex: --color-bg-primary: #000000)
-3. Comparar e determinar o status real
+Para CADA elemento, classificar primeiro o nível (Atom/Molecule/Organism/Template/Page), depois:
+
+1. **Para Atoms (Tokens)**:
+   - Pegar o valor EXATO do Pencil (ex: #101828)
+   - Pegar o valor EXATO do código (ex: --color-bg-primary: #000000)
+   - Comparar cores, fonts, spacings, sizes
+
+2. **Para Molecules**:
+   - Comparar composição de átomos
+   - Verificar propriedades de cada átomo interno
+   - Comparar estilos e props
+
+3. **Para Organisms**:
+   - Comparar moléculas que o compõe
+   - Verificar layout e posicionamento
+   - Comparar propriedades de estilo
+
+4. **Para Templates**:
+   - Comparar estrutura de layout
+   - Verificar regions/grids
+   - Comparar positioning
+
+5. **Para Pages**:
+   - Comparar instâncias de templates
+   - Verificar conteúdo específico
 
 ### Etapa 4 — Classificação
 
@@ -57,9 +95,9 @@ Para CADA token/componente:
 Escrever em `@/specs/report/design-diff.md` com formato claro e amigável:
 
 ```markdown
-# 🎨 Design vs Código — Relatório de Comparação
+# 🎨 Design vs Código — Relatório de Comparação (Atomic Design)
 
-> Gerado em: [data]
+> Gerado em: [data e hora horário de brasília]
 
 ## 📊 Resumo Geral
 
@@ -72,38 +110,88 @@ Escrever em `@/specs/report/design-diff.md` com formato claro e amigável:
 
 ---
 
-## 🎯 Tokens de Design
+## ⚛️ Átomos (Atoms)
+
+Elementos indivisíveis: cores, fontes, botões, inputs, ícones, tokens
 
 ### Cores
 | Token | Pencil | Código | Status |
 |-------|--------|--------|--------|
 | --color-bg | #101828 | #101828 | ✅ |
 
-### Dimensões
+### Tipografia
 | Token | Pencil | Código | Status |
 |-------|--------|--------|--------|
-| --header-height | 80px | 80px | ✅ |
+| --font-heading | Inter | Inter | ✅ |
 
 ---
 
-## 🧩 Componentes
+## 🔬 Moléculas (Molecules)
+
+Combinações simples de átomos: SearchBar, CardSimple, FormGroup
+
+### SearchBar
+- **Status**: ✅ SINCRONIZADO
+- **Código**: `frontend/src/components/molecules/SearchBar/` ✓
+- **Átomos**: Input + Button
+
+### CardSimple
+- **Status**: ❌ DIVERGENTE
+- **Código**: `frontend/src/components/molecules/CardSimple/` ⚠️
+- **Diferenças**: border-radius: 8px (Pencil) vs 12px (código)
+
+---
+
+## 🧬 Organismos (Organisms)
+
+Grupos de moléculas: Header, Footer, CardComplex, Navigation
 
 ### Header
 - **Status**: ✅ SINCRONIZADO
-- **Código**: `frontend/src/components/Header/` ✓
+- **Código**: `frontend/src/components/organisms/Header/` ✓
+- **Moléculas**: Logo + NavMenu + SearchBar
 
-### Hero Section
+### HeroSection
 - **Status**: ❌ DIVERGENTE
-- **Código**: `frontend/src/components/Hero/` ⚠️ valores diferentes
+- **Código**: `frontend/src/components/organisms/HeroSection/` ⚠️
 - **Diferenças**: padding-bottom: 131px (Pencil) vs 64px (código)
+
+---
+
+## 📐 Templates
+
+Estruturas de layout: PageLayout, DashboardLayout, FormLayout
+
+### PageLayout
+- **Status**: ✅ SINCRONIZADO
+- **Código**: `frontend/src/components/templates/PageLayout/` ✓
+
+### DashboardLayout
+- **Status**: 🆕 NOVO NO DESIGN
+- **Não implementado no código**
+
+---
+
+## 📄 Páginas (Pages)
+
+Instâncias concretas: HomePage, AboutPage, ContactPage
+
+### HomePage
+- **Status**: ✅ SINCRONIZADO
+- **Código**: `frontend/src/app/page.tsx` ✓
+
+### AboutPage
+- **Status**: 🆕 NOVO NO DESIGN
+- **Não implementado no código**
 
 ---
 
 ## 🚀 Ações Prioritárias
 
-1. **[ALTA]** Corrigir divergência no Hero — padding está diferente
-2. **[ALTA]** Implementar novo componente FooterFoundations
-3. **[MÉDIA]** Sincronizar tokens de cor com o design
+1. **[ALTA]** Corrigir divergência no CardSimple — border-radius diferente
+2. **[ALTA]** Implementar novo template DashboardLayout
+3. **[ALTA]** Implementar nova página AboutPage
+4. **[MÉDIA]** Sincronizar tokens de cor com o design
 
 ---
 
@@ -111,7 +199,7 @@ Escrever em `@/specs/report/design-diff.md` com formato claro e amigável:
 
 - Design: arquivos `.pen` na raiz do projeto
 - CSS: `frontend/src/app/global.css`
-- Componentes: `frontend/src/components/`
+- Componentes: `frontend/src/components/` (atoms|molecules|organisms|templates|pages/)
 ```
 
 ## Arquivos de saída
