@@ -188,7 +188,7 @@ Gere um relatório em Markdown (sem gravar arquivos) com a seguinte estrutura:
 
 Ao final do relatório, apresente um bloco conciso de Próximas Ações:
 
-- Se existirem problemas CRÍTICOS: Recomenda-se resolvê-los antes de `/speckit.implement`
+- Se existirem problemas CRÍTICOS: Recomenda-se resolvê-los antes da implementação
 - Se apenas BAIXO/MÉDIO: O usuário pode prosseguir para implementação
 - Forneça sugestões explícitas de comandos: por exemplo, "Execute /speckit.research-to-plan com refinamento", "Edite manualmente tasks.md para adicionar cobertura para 'performance-metrics'"
 
