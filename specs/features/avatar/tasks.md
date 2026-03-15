@@ -36,8 +36,6 @@ Componente Avatar (átomo) para exibição de foto de perfil do usuário. Render
 * Renderiza ícone de fallback quando imagem falha (onError)
 * Suporta prop `size` para dimensionamento (padrão 92px)
 * Acessibilidade: requer prop `alt` obrigatória e usa role="img"
-* Typecheck aprovado
-* Verificar no navegador usando a skill dev-browser
 
 #### Notas
 

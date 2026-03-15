@@ -1,3 +1,9 @@
+import { Avatar } from "@/components/avatar/avatar";
+
 export default function Home() {
-   return <></>;
+   return (
+      <>
+         <Avatar src="/images/avatar.png" alt="test" />
+      </>
+   );
 }

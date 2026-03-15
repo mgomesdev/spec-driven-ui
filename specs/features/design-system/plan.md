@@ -96,19 +96,8 @@ Todos os tokens documentados no research serão convertidos em variáveis CSS:
 
 ### globals.css
 
-**Antes:**
 ```css
 @import "tailwindcss";
-
-html {
-   scroll-behavior: smooth;
-}
-```
-
-**Depois:**
-```css
-@import "tailwindcss";
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap');
 
 :root {
   --color-bg-primary: #101828;
@@ -153,7 +142,6 @@ html {
 [globals.css existente]
         │
         ▼
-[globals.css modificado com tokens]
 ```
 
 Ordem de implementação:
@@ -170,7 +158,7 @@ Ordem de implementação:
 | RF-01 | Todas as cores devem ter tokens em CSS | globals.css (variables) |
 | RF-02 | Todos os tamanhos de fonte devem ter tokens | globals.css (variables) |
 | RF-03 | Todos os espaçamentos devem ter tokens | globals.css (variables) |
-| RF-04 | global.css deve conter todas as variáveis | globals.css (modificado) |
+| RF-04 | global.css deve conter todas as variáveis | globals.css (variables) |
 | RF-05 | Variáveis seguem padrão --nome-token | globals.css |
 | RF-06 | Documentação consolidada no research | research.md |
 
@@ -178,14 +166,9 @@ Ordem de implementação:
 
 ## 8. Questões em Aberto
 
-~~A fonte Inter precisa ser carregada via Google Fonts ou import local~~ → **Resolvido: carregar via Google Fonts**
-
-~~Considerar extensão futura para tema claro (dark mode)~~ → **Resolvido: manter apenas dark mode**
-
-~~Tokens de sombra (box-shadow) não estão documentados mas podem ser necessários posteriormente~~ → **Resolvido: adicionar quando o design tiver elementos com sombra**
 
 ## 9. Decisões Técnicas
 
-- **Fonte:** Inter carregada via Google Fonts (@import no CSS)
+- **Fonte:** Inter carregada via `next/font/google` no arquivo `src/app/layout.tsx`
 - **Tema:** Apenas dark mode (sem tema claro)
 - **Sombras:** Não incluídas agora - adicionar quando necessário
