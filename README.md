@@ -13,6 +13,9 @@ Neste artigo irei compartilhar meus experimentos de geração de código seguind
 
 **Neste artigo**:
 - [Projeto de Exemplo](#)
+- [Ferramentas Utilizadas](#)
+    - [Opencode](#)
+    - [LLM Big Picle](#)
 - [Context Enginner](#)
 - [Prompt Enginner](#)
 - [Human in the loop](#)
