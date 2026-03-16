@@ -20,7 +20,7 @@
          "trash/**",
          "readme/**",
          "./README.md",
-         "specs/report/**",
+         "./design-diff.md",
          "marketing/**"
       ]
    },
