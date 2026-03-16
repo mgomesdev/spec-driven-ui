@@ -212,6 +212,20 @@ git checkout -b feat/[nome-da-feature]/[us-id]
 
 ### 2. Commit com Conventional Commits
 
+**⚠️ CHECKPOINT: Pergunte antes de commitar**
+
+```
+Pronto para commit. Revise o diff antes de prosseguir:
+
+git diff --staged
+
+Aprova o commit? (sim/não/corrigir)
+```
+
+Se o usuário aprovar → faça o commit.
+Se o usuário pedir correção → faça a correção → peça nova aprovação.
+Se o usuário dizer "não" → não faça o commit e aguarde instruções.
+
 Siga o padrão definido em `specs/docs/padroes-git.md`:
 
 ```bash

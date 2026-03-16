@@ -249,6 +249,7 @@ Commits: [número de commits]
 - **Playwright deve estar rodando** — o servidor dev deve estar ativo na porta 3000 para testes E2E
 - **SEMPRE crie branch específica da US** — antes de implementar, faça `git checkout -b feat/[nome-feature]/[us-id]`
 - **SEMPRE commite ao final** — nunca finalize uma task sem commit. O progresso será perdido.
+- **SEMPRE peça aprovação antes de operações irreversíveis** — commits, pushes, merges devem ser validados pelo usuário
 
 ---
 

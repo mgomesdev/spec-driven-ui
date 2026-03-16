@@ -68,6 +68,7 @@ Para cada worktree criado, executar a task correspondente:
 **Importante:** 
 - Cada worktree é independente. Execute o trabalho de forma isolada.
 - **APÓS executar cada US, faça o commit** — siga o padrão de Conventional Commits em `specs/docs/padroes-git.md`
+- **⚠️ CHECKPOINT:** Sempre pergunte antes de commitar: "Aprova o commit para [US-ID]?"
 - **Atualize o tasks.md** marcando `Passes: true` para cada história concluída
 - **Registre os aprendizados no progress.md**
 
