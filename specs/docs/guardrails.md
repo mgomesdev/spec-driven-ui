@@ -27,3 +27,26 @@
 | 9 | Não crie arquivos desnecessários |
 | 10 | Não ultrapasse 500 linhas por arquivo |
 | 11 | Não adicione tipagem de retorno, prefira a inferência de tipos |
+| 12 | Não crie testes para componentes sem página de teste |
+
+---
+
+## Testes E2E com Playwright
+
+### Configuração
+
+- Framework: Playwright (`@playwright/test`)
+- Arquivo de config: `frontend/playwright.config.ts`
+- Testes em: `frontend/tests/features/[feature]/[us-id].spec.ts`
+
+### Página de Teste
+
+Para testar componentes React, criar página de teste em `frontend/src/app/test-button/page.tsx`:
+- Renderiza o componente com `data-testid`
+- Permite verificação E2E dos comportamentos
+
+### Estados com Tailwind
+
+Para estilizar estados de elementos desabilitados, usar prefixo `disabled:`:
+- `disabled:opacity-50`
+- `disabled:cursor-not-allowed`
