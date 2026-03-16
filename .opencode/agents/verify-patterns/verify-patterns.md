@@ -86,14 +86,14 @@ Execute as verificações na seguinte ordem:
 | 9 | Não criar arquivos desnecessários | Verificar se todos são usados |
 | 10 | Não ultrapassar 500 linhas | Contar linhas dos arquivos |
 | 11 | Não adicionar tipagem de retorno | Grep por `: React.JSX.Element` |
+| 12 | Não criar barrel exports | Imports diretos dos arquivos |
 
 #### C. Verificação de Arquitetura
 
 | Regra | O que verificar |
 |-------|------------------|
-| Estrutura de pastas | Componentes em `src/features/[nome]/components/` |
-| Barrel exports | `index.ts` exporta tudo |
-| Tipos | Arquivos em `src/features/[nome]/types/` |
+| Estrutura de pastas | Componentes em local apropriado |
+| Tipos no mesmo arquivo | Para componentes simples, tipos no mesmo arquivo |
 
 #### D. Verificação de Contrato (plan.md)
 
@@ -138,7 +138,7 @@ Execute as verificações na seguinte ordem:
 
 #### C. Arquitetura
 - [✅/❌] Estrutura de pastas
-- [✅/❌] Barrel exports
+- [✅/❌] Tipos no mesmo arquivo (quando aplicável)
 
 #### D. Contrato plan.md
 - [✅/❌] Props batem com plan

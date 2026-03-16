@@ -86,55 +86,6 @@ cd frontend && npm install -D @playwright/test && npx playwright install --with-
 
 ---
 
-## Ciclo TDD por User Story
-
-### Etapa 1: Analisar a User Story
-
-1. Leia o `tasks.md` da feature para obter a US especificada
-2. Extraia os **critérios de aceitação** da US
-3. Cada critério de aceitação = 1 teste
-
-### Etapa 2: Criar Testes que Falham (Vermelho)
-
-1. Crie o arquivo de teste em `frontend/tests/features/[nome-da-feature]/[us-id].spec.ts`
-2. Escreva **um teste para cada critério de aceitação**
-3. O teste deve verificar o comportamento esperado
-4. Execute os testes → **DEVEM FALHAR** (comportamento ainda não implementado)
-
-```bash
-cd frontend && npx playwright test --grep "US-001"
-```
-
-### Etapa 3: Implementar Código para Passar (Verde)
-
-1. Após os testes falharem, implemente o código necessário
-2. Use o `plan.md` para entender os tipos, props e estrutura
-3. Execute os testes novamente → **DEVEM PASSAR**
-
-### Etapa 4: Refatorar (Opcional)
-
-1. Se necessário, refatore o código mantendo os testes passando
-2. Mantenha as convenções do projeto
-
-### Etapa 5: Registrar Aprendizados
-
-Ao final, adicione ao `progress.md` da feature:
-
-```markdown
-## [YYYY-MM-DD HH:MM] - [US-ID] - TDD
-
-**Testes criados:**
-- [Lista de testes criados com seus critérios]
-
-**Comportamento validado:**
-- [O que cada teste verifica]
-
-**Aprendizados:**
-- [Insights durante a implementação TDD]
-```
-
----
-
 ## Estrutura de Testes
 
 ### Padrão de Nomenclatura
@@ -174,9 +125,11 @@ test.describe('US-001: Criar componente de login', () => {
 
 - **UM teste por critério de aceitação** — não agrupe múltiplos critérios em um teste
 - **Teste deve ser determinístico** — evitar flakiness
-- **Use locators semânticos** — `getByLabel`, `getByRole`, `getByText`
+- **Use locators semânticos** — `getByLabel`, `getByRole`, `getByText`, `getByTestId`
 - **Não teste implementação** — teste comportamento, não detalhes internos
 - **Mantenha testes isolados** — cada teste deve funcionar independentemente
+- **Tipos no mesmo arquivo** — para componentes simples, definir tipos no mesmo arquivo
+- **Sem barrel exports** — importe diretamente o arquivo do componente
 
 ---
 

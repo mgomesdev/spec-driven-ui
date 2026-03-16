@@ -33,60 +33,7 @@ permission:
 9. Se aprovado: verifique se o commit foi feito → atualiza tasks.md + registra no progress.md
 10. Verifique se ainda há histórias com `Passes: false`
 
----
-
-## Integração TDD e Verificação de Padrões
-
-### Fluxo Completo por User Story
-
-```
-[Selecionar US] → [TDD (tdd-playwright)] → [Verificação (verify-patterns)] → [Commit]
-                         ↓                          ↓
-                   Teste falha                 Drift detectado
-                   Código passa                   ↓
-                   Teste passa              Retorna para TDD
-```
-
-### Chamando o Sub-agent TDD
-
-Para executar o ciclo TDD para uma US:
-
-```
-execute tdd da US-[ID] para [nome-da-feature]
-```
-
-O sub-agent tdd-playwright:
-1. Verifica/configura Playwright se necessário
-2. Cria testes que falham para cada critério de aceitação
-3. Implementa código para fazer os testes passarem
-4. Registra aprendizados no progress.md
-
-### Chamando o Sub-agent de Verificação
-
-Após o TDD passar, execute a verificação de padrões:
-
-```
-execute verify-patterns para [nome-da-feature] US-[ID]
-```
-
-O sub-agent verify-patterns:
-1. Carrega convenções (convencoes-codigo.md, guardrails.md, architecture.md)
-2. Carrega contrato do plan.md
-3. Verifica todos os arquivos modificados
-4. Se drift detectado: retorna para TDD corrigir
-5. Se aprovado: permite commit
-
-### Loop de Correção
-
-Se verify-patterns detectar drift:
-1. Liste os drifts encontrados
-2. Acione o tdd-playwright novamente com a correção
-3. Execute verify-patterns novamente
-4. Repita até aprovação
-
----
-
-## Atualizar tasks.md
+## Condição de Parada
 
 Após o commit, marque a história como concluída:
 
@@ -112,7 +59,7 @@ Após o commit, marque a história como concluída:
 
 **Aprendizados para iterações futuras:**
 - [Padrão descoberto: ex "este projeto usa X para Y"]
-- [Problema encontrado: ex "não esquecer de registrar o componente em index.ts"]
+- [Problema encontrado: ex "verificar se props estão tipadas"]
 - [Contexto útil: ex "a página de listagem está em app/(dashboard)/items/page.tsx"]
 
 ---
@@ -125,8 +72,8 @@ Se descobriu algo **geral e reutilizável** que outras histórias devem saber, a
 ```markdown
 ## Padrões do Projeto
 
-- Componentes são exportados via `src/features/[nome]/index.ts` — sempre atualize o barrel
-- Imports de tipos devem vir de `@/features/[nome]/types`, não relativos
+- Tipos de componentes simples definirlos no mesmo arquivo
+- Imports usam caminhos absolutos quando possível
 - Sempre use `useToast()` do shadcn para feedback de sucesso/erro, nunca `alert()`
 ```
 
@@ -151,8 +98,6 @@ Antes de commitar, verifique se há aprendizados que valem para futuras sessões
 - Detalhes específicos da história
 - Notas de debug temporárias
 - Informações já no progress.md
-
----
 
 ## Condição de Parada
 

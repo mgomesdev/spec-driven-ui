@@ -139,7 +139,6 @@ As histórias rodam em sequência. Histórias posteriores não podem depender de
 - "Componente exibe skeleton loader quando `isLoading` é true"
 - "Ao submeter form com campo vazio, exibe mensagem 'Campo obrigatório' abaixo do input"
 - "Typecheck aprovado"
-- "Verificar no navegador usando a skill dev-browser"
 
 **Critérios ruins (vagos):**
 - "Funciona corretamente"
@@ -148,7 +147,6 @@ As histórias rodam em sequência. Histórias posteriores não podem depender de
 
 **Regras fixas:**
 - Toda história: adicionar `"Typecheck aprovado"` como critério final
-- Toda história com componente/UI: adicionar `"Verificar no navegador usando a skill dev-browser"`
 - Toda história com lógica de dados: adicionar critério que verifica o contrato da API (ex: "chama `GET /api/items` com o header Authorization")
 
 ## Incluir Contexto do Plan nas Histórias
@@ -351,7 +349,6 @@ filtrar por status (ativo/inativo/pendente) e clicar para ver detalhes.
 * Exibe badge de status: verde (ativo), cinza (inativo), amarelo (pendente)
 * Ao clicar no card, chama `onClick` com o id do item
 * Typecheck aprovado
-* Verificar no navegador usando a skill dev-browser
 
 #### Notas
 
@@ -381,7 +378,6 @@ filtrar por status (ativo/inativo/pendente) e clicar para ver detalhes.
 * Exibe mensagem "Nenhum item encontrado" quando lista está vazia
 * Exibe mensagem de erro quando `erro` não é null
 * Typecheck aprovado
-* Verificar no navegador usando a skill dev-browser
 
 #### Notas
 
@@ -410,7 +406,6 @@ filtrar por status (ativo/inativo/pendente) e clicar para ver detalhes.
 * Título da página é "Items"
 * Página é acessível sem autenticação (conforme research.md)
 * Typecheck aprovado
-* Verificar no navegador usando a skill dev-browser: navegar até /items e confirmar que a lista carrega
 
 #### Notas
 
@@ -427,7 +422,6 @@ filtrar por status (ativo/inativo/pendente) e clicar para ver detalhes.
 - [ ] Dependências inferidas corretamente por tipo de arquivo
 - [ ] Toda história referencia qual seção do plan.md consultar
 - [ ] Toda história tem `"Typecheck aprovado"` como critério
-- [ ] Toda história com UI tem `"Verificar no navegador usando a skill dev-browser"`
 - [ ] Critérios de aceitação são verificáveis (não vagos)
 - [ ] Arquivo salvo em `specs/features/[nome-da-feature]/tasks.md`
 - [ ] Resumo apresentado ao usuário para aprovação
