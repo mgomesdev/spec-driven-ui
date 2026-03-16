@@ -21,7 +21,7 @@
          "readme/**",
          "./README.md",
          "specs/report/**",
-         "./WORKFLOW.md"
+         "marketing/**"
       ]
    },
    "share": "disabled"
