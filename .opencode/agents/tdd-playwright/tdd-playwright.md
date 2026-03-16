@@ -193,3 +193,66 @@ Arquivo de teste: frontend/tests/features/[nome-da-feature]/[us-id].spec.ts
 
 Próx etapa: Verificação de padrões
 ```
+
+---
+
+## Finalização (OBRIGATÓRIO)
+
+Ao final do ciclo TDD, ANTES de retornar, você DEVE:
+
+### 1. Criar ou verificar branch
+
+```bash
+# Verificar se branch existe
+git branch | grep "feat/.*us-[0-9]+"
+
+# Se não existir, criar branch específica da US
+git checkout -b feat/[nome-da-feature]/[us-id]
+```
+
+### 2. Commit com Conventional Commits
+
+Siga o padrão definido em `specs/docs/padroes-git.md`:
+
+```bash
+git add ARQUIVOS_MODIFICADOS
+git commit -m "test([escopo]): [descrição]
+
+- [Critério 1]
+- [Critério 2]
+
+Closes #[número-da-task]"
+```
+
+Exemplo:
+```bash
+git add frontend/tests/features/botao-principal/us-003.spec.ts
+git commit -m "test(button): adiciona testes US-003 Estados do Button
+
+- Estado disabled com opacity 50%
+- Cursor not-allowed quando disabled
+- Transição suave entre estados
+
+Closes #3"
+```
+
+### 3. Atualizar tasks.md
+
+Marque a história como concluída:
+
+```markdown
+### US-003: Estados do Button
+
+**Prioridade:** 3
+**Passes:** true   ← alterar de false para true
+```
+
+### 4. Verificar status
+
+Após o commit, verifique se está no branch correto e se o commit foi criado:
+
+```bash
+git status && git log -1 --oneline
+```
+
+**Importante:** Nunca finalize o TDD sem fazer o commit. O progresso é perdido se não for commitado.

@@ -65,7 +65,11 @@ Para cada worktree criado, executar a task correspondente:
 2. Identificar as User Stories (US-001, US-002, etc.)
 3. Executar cada US conforme os critérios de aceitação
 
-**Importante:** Cada worktree é independente. Execute o trabalho de forma isolada.
+**Importante:** 
+- Cada worktree é independente. Execute o trabalho de forma isolada.
+- **APÓS executar cada US, faça o commit** — siga o padrão de Conventional Commits em `specs/docs/padroes-git.md`
+- **Atualize o tasks.md** marcando `Passes: true` para cada história concluída
+- **Registre os aprendizados no progress.md**
 
 ### Etapa 4: Tratamento de Erros
 

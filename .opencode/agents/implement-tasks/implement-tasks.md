@@ -23,35 +23,68 @@ permission:
 3. Leia o `plan.md` em `specs/features/[nome-da-feature]/plan.md` — consulte as seções relevantes para a história atual
 4. Verifique se está no branch correto (`branchName` no tasks.md). Se não, faça checkout ou crie o branch a partir da branch atual
 5. Selecione a história de **maior prioridade** onde `Passes: false`
-6. Implemente **somente essa história**
-7. Execute as verificações de qualidade definidas no projeto
-8. Se passou: commit + atualiza tasks.md + registra no progress.md
-9. Verifique se ainda há histórias com `Passes: false`
+6. **Execute o ciclo TDD** (chame sub-agent tdd-playwright):
+   - O sub-agent cria testes que falham → implementa código → testes passam
+   - **O sub-agent DEVE criar branch, commitar e atualizar tasks.md**
+   - Verifique se o commit foi feito após o sub-agent retornar
+7. **Execute verificação de padrões** (chame sub-agent verify-patterns):
+   - Verifica convenções, guardrails, arquitetura e contrato plan.md
+8. Se drift detectado: retorne para etapa 6 (TDD)
+9. Se aprovado: verifique se o commit foi feito → atualiza tasks.md + registra no progress.md
+10. Verifique se ainda há histórias com `Passes: false`
 
-## Antes de Implementar: Leia o Contexto
+---
 
-Antes de escrever qualquer código, faça:
+## Integração TDD e Verificação de Padrões
 
-0. **Leia `AGENTS.md` + docs globais** — naming, imports, estrutura de arquivos e barrel files são definidos aqui. **Nunca assuma convenções — leia primeiro.** (se já leu nesta sessão, pule)
-1. **Leia `progress.md`** — padrões descobertos em iterações anteriores (seção `## Padrões do Projeto`)
-2. **Leia a seção do `plan.md`** referenciada na história
-3. **Identifique os arquivos que já existem** vs os que serão criados
-4. **Verifique imports necessários** — não importe o que ainda não existe; confirme os caminhos nos docs globais
+### Fluxo Completo por User Story
 
-## Implementando a História
+```
+[Selecionar US] → [TDD (tdd-playwright)] → [Verificação (verify-patterns)] → [Commit]
+                         ↓                          ↓
+                   Teste falha                 Drift detectado
+                   Código passa                   ↓
+                   Teste passa              Retorna para TDD
+```
 
-### Foco e Minimalismo
+### Chamando o Sub-agent TDD
 
-- Implemente **apenas** o que os critérios de aceitação pedem
-- Não refatore código existente fora do escopo da história
-- Não adicione funcionalidades não listadas nos critérios
-- Siga os padrões de código existentes no projeto **e os definidos nos docs globais**
-- Use os types definidos no `plan.md`
-- Props devem bater exatamente com o definido no `plan.md`
+Para executar o ciclo TDD para uma US:
 
-## Commit
+```
+execute tdd da US-[ID] para [nome-da-feature]
+```
 
-- Os commits seguem o padrão **Conventional Commits**. Os detalhes e convenções do projeto estão especificados em `docs/padroes-git.md` — leia esse arquivo antes de commitar.
+O sub-agent tdd-playwright:
+1. Verifica/configura Playwright se necessário
+2. Cria testes que falham para cada critério de aceitação
+3. Implementa código para fazer os testes passarem
+4. Registra aprendizados no progress.md
+
+### Chamando o Sub-agent de Verificação
+
+Após o TDD passar, execute a verificação de padrões:
+
+```
+execute verify-patterns para [nome-da-feature] US-[ID]
+```
+
+O sub-agent verify-patterns:
+1. Carrega convenções (convencoes-codigo.md, guardrails.md, architecture.md)
+2. Carrega contrato do plan.md
+3. Verifica todos os arquivos modificados
+4. Se drift detectado: retorna para TDD corrigir
+5. Se aprovado: permite commit
+
+### Loop de Correção
+
+Se verify-patterns detectar drift:
+1. Liste os drifts encontrados
+2. Acione o tdd-playwright novamente com a correção
+3. Execute verify-patterns novamente
+4. Repita até aprovação
+
+---
 
 ## Atualizar tasks.md
 
@@ -212,6 +245,10 @@ Commits: [número de commits]
 - **Mantenha o CI verde** — não commite com erros
 - **Documente aprendizados** — o progress.md é memória coletiva entre iterações
 - **Leia antes de escrever** — sempre consulte padrões do projeto antes de implementar
+- **SEMPRE use TDD** — nunca implemente sem testes; o fluxo é: teste falha → código passa → verifica padrões → commit
+- **Playwright deve estar rodando** — o servidor dev deve estar ativo na porta 3000 para testes E2E
+- **SEMPRE crie branch específica da US** — antes de implementar, faça `git checkout -b feat/[nome-feature]/[us-id]`
+- **SEMPRE commite ao final** — nunca finalize uma task sem commit. O progresso será perdido.
 
 ---
 
@@ -227,15 +264,15 @@ INÍCIO DE CADA ITERAÇÃO:
   2. ler progress.md → seção "Padrões do Projeto"
   3. ler plan.md → seção referenciada na história
 
-IMPLEMENTAÇÃO (por arquivo):
-  4. reler progress.md → plan.md → arquivo no disco (se existe) → imports no disco
-     → se houver dúvida de convenção (naming, import path, barrel): voltar aos docs globais
-  5. implementar APENAS este arquivo baseado no que releu agora
-<!-- TODO: adicionar testes, typecheck -->
-  6. repetir passos 4-6 para cada arquivo da história
+IMPLEMENTAÇÃO (TDD por arquivo):
+  4. Chamar sub-agent tdd-playwright para a US atual
+     → Sub-agent cria testes que falham → implementa código → testes passam
+  5. Chamar sub-agent verify-patterns após TDD
+     → Se drift: retorna para passo 4
+     → Se aprovado: prossegue para commit
 
 VALIDAÇÃO FINAL DA HISTÓRIA:
-<!-- TODO: adicionar testes, typecheck -->
+  6. Verify-patterns passou: commit + atualizar tasks.md + progress.md
 
 FINALIZAÇÃO:
   11. ler docs/padroes-git.md → commitar seguindo Conventional Commits
