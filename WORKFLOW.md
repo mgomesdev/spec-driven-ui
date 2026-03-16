@@ -331,6 +331,7 @@ O plan-to-tasks transforma arquitetura em **histórias de usuário atômicas** �
 - Cada história é **completamente independente**
 - Define critérios de aceitação **verificáveis**
 - Determina a ordem de implementação (types → services → hooks → componentes → página)
+- **Adiciona campo "Depende de:"** para enable paralelização
 
 **Regras importantes que o agente segue:**
 - **Cada história deve caber em uma iteração** (uma sessão de código)
@@ -466,11 +467,78 @@ Você não está trabalhando sozinho! Tem uma **equipe de agentes especializados
 | **research-to-plan** | Transforma análise em arquitetura | Já tem research aprovado |
 | **plan-to-tasks** | Cria histórias pequenas | Já tem plan aprovado |
 | **implement-tasks** | Executa o código | Já tem tasks aprovados |
+| **tasks-parallel-analyzer** | Analisa tasks para paralelização | Quer otimizar execução com worktree-runner |
 | **worktree-runner** | Roda múltiplas features em paralelo | Precisa implementar várias coisas ao mesmo tempo |
 | **export-code-to-design** | Envia código para revisão visual | Quer propor algo ao design |
 | **import-design-to-code** | Traz design validado para código | Design aprovou algo no Pencil |
 | **diff-design-vs-code** | Compara design com código | Quer ver o que está diferente |
 | **analyse-consistency** | Analisa qualidade dos artefatos | Quer verificar se tudo está coerente |
+
+---
+
+## Análise de Paralelização de Tasks
+
+Quando você tem **múltiplas tasks** dentro de uma mesma feature, nem todas precisam ser executadas em sequência. O `tasks-parallel-analyzer` identifica quais tasks podem rodar em paralelo!
+
+### Por que isso importa?
+
+```
+Sem paralelização:  US-001 → US-002 → US-003 → US-004 (4 rodadas)
+Com paralelização:  US-001 → US-002,US-003 → US-004 (3 rodadas)
+```
+
+### Como usar:
+
+**1. Gere as tasks normalmente:**
+```
+"gere as tasks para [nome-da-feature]"
+```
+
+**2. Analise a paralelização:**
+```
+"analise paralelização [nome-da-feature]"
+```
+
+**3. O agente retorna:**
+```
+=== Análise de Paralelização ===
+
+Feature: icon
+Total de Tasks: 2
+
+📊 Grupos de Execução:
+
+Group 1: US-001 (sem dependências)
+    ↓
+Group 2: US-002 (depende de: US-001)
+
+💡 Sugestão: Execute US-001 primeiro, depois US-002
+```
+
+### Campo "Depende de:"
+
+Para enable a paralelização, o `plan-to-tasks` adiciona automaticamente o campo **"Depende de:"** em cada história:
+
+```markdown
+### US-001: Criar tipos
+**Artefatos:**
+- Cria: `src/components/icon/icon.types.ts`
+- Depende de: (nenhum)
+
+### US-002: Criar componente
+**Artefatos:**
+- Cria: `src/components/icon/icon.tsx`
+- Depende de: `US-001` (precisa dos tipos)
+```
+
+### Regras de dependência:
+
+| Se cria | Dependem dele |
+|---------|---------------|
+| `types.ts` | Services, hooks, componentes |
+| `*Service.ts` | Hooks e componentes |
+| `use*.ts` | Componentes que usam o hook |
+| `components/*.tsx` | Páginas que usam o componente |
 
 ---
 
