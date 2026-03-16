@@ -27,7 +27,7 @@
 ### US-002: Variantes do Button
 
 **Prioridade:** 2
-**Passes:** false
+**Passes:** true
 
 **Contexto:** plan.md - Variantes
 
@@ -45,7 +45,7 @@
 ### US-003: Estados do Button
 
 **Prioridade:** 3
-**Passes:** false
+**Passes:** true
 
 **Contexto:** plan.md - Estados
 

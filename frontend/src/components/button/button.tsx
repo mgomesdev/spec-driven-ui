@@ -12,7 +12,7 @@ export const Button = ({
   <button
     {...props}
     className={`
-      rounded-[--radius-md] transition-opacity cursor-pointer font-medium
+      rounded-md transition-opacity cursor-pointer font-medium
       disabled:opacity-50 disabled:cursor-not-allowed
       ${size === 'sm' ? 'h-8 text-sm px-3' : ''}
       ${size === 'md' ? 'h-10 text-base px-4' : ''}
