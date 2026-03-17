@@ -3,10 +3,6 @@ name: verify-patterns
 description: "Verifica se o código implementado segue as convenções do projeto (convencoes-codigo.md, guardrails.md, architecture.md) e o contrato do plan.md. Detecta drift e solicita correção se necessário."
 mode: subagent
 temperature: 0.2
-tools:
-  read: true
-  grep: true
-  glob: true
 permission:
   edit: ask
 ---
@@ -52,8 +48,9 @@ Carregar os seguintes documentos **OBRIGATORIAMENTE** antes de iniciar:
 ### Etapa 2: Identificar Arquivos Modificados
 
 Determine quais arquivos foram criados/modificados pela US:
-- Procure em `frontend/src/features/[nome-da-feature]/`
-- Identifique componentes, hooks, types, etc.
+- Componentes: procure em `frontend/src/features/[nome-da-feature]/` ou `frontend/src/components/`
+- Testes: procure em `frontend/tests/`
+- Identifique componentes, hooks, types, testes, etc.
 
 ### Etapa 3: Executar Verificações
 
@@ -82,7 +79,7 @@ Execute as verificações na seguinte ordem:
 | 5 | Não reforar código fora do escopo | Verificar arquivos modificados |
 | 6 | Não criar componentes sem tipar props | Verificar interface/type de props |
 | 7 | Não criar arquivos sem padrão de nomenclatura | Comparar com convencoes-codigo.md |
-| 8 | Não adicionar comentários | Grep por `//` ou `/*` |
+| 8 | Não adicionar comentários | Grep por `//` ou `/*` em .tsx e .spec.ts |
 | 9 | Não criar arquivos desnecessários | Verificar se todos são usados |
 | 10 | Não ultrapassar 500 linhas | Contar linhas dos arquivos |
 | 11 | Não adicionar tipagem de retorno | Grep por `: React.JSX.Element` |
@@ -168,6 +165,7 @@ Execute as verificações na seguinte ordem:
 
 ## Regras
 
+- **NUNCA use a ferramenta `task`** para chamar subagents
 - **NUNCA modifique arquivos** — apenas detecte e relate
 - **Verifique TODAS as categorias** — não pule nenhuma verificação
 - **Seja preciso** — cite arquivo e linha onde encontrou o problema
