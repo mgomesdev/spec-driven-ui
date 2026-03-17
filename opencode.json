@@ -21,7 +21,7 @@
          "readme/**",
          "./README.md",
          "./design-diff.md",
-         "marketing/**"
+         ".trash/**/*"
       ]
    },
    "share": "disabled"
