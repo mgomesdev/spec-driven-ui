@@ -15,6 +15,29 @@ execute verify-patterns para [nome-da-feature] US-[ID]
 
 Ou quando o implement-tasks chama este sub-agent após o TDD passar, antes do commit.
 
+## Modo Não-Interativo (pre-commit hook)
+
+Este sub-agent pode ser executado em modo não-interativo pelo pre-commit hook:
+- Sem perguntas ao usuário
+- Retorna código de saída 0 (sucesso) ou 1 (falha)
+- Usado pelo script `frontend/scripts/pre-commit-validate.js`
+
+---
+
+## Verificações Executadas
+
+### Modo Interativo (chamado por implement-tasks)
+
+Executa verificação completa conforme fluxo abaixo.
+
+### Modo Não-Interativo (pre-commit hook)
+
+O script `pre-commit-validate.js` executa verificações simplificadas:
+- Verifica uso de `any` 
+- Verifica estilos inline (`style={{`)
+- Verifica comentários em código
+- Verifica tipagem de retorno explícita
+
 ## Entrada
 
 Este sub-agent DEVE receber:

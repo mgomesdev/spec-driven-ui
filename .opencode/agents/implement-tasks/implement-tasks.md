@@ -197,6 +197,20 @@ Commits: [número de commits]
 - **SEMPRE crie branch específica da US** — antes de implementar, faça `git checkout -b feat/[nome-feature]/[us-id]`
 - **SEMPRE commite ao final** — nunca finalize uma task sem commit. O progresso será perdido.
 - **SEMPRE peça aprovação antes de operações irreversíveis** — commits, pushes, merges devem ser validados pelo usuário
+- **Pre-commit hook bloqueia commits inválidos** — o hook `.husky/pre-commit` executa verify-patterns + testes antes de permitir commit
+
+---
+
+## Pre-commit Hook
+
+O projeto possui um hook configurado em `.husky/pre-commit` que executa automaticamente:
+
+1. **verify-patterns** — verifica se código segue convenções e guardrails
+2. **Playwright tests** — executa testes E2E da feature
+
+Se qualquer verificação falhar, o commit será bloqueado.
+
+**Branches que não seguem o padrão** (`feat/[feature]/US-XXX`) terão as validações puladas automaticamente.
 
 ---
 

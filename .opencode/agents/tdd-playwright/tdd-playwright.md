@@ -160,10 +160,51 @@ git branch | grep "feat/.*us-[0-9]+"
 git checkout -b feat/[nome-da-feature]/[us-id]
 ```
 
-### 2. Commit com Conventional Commits
+### 2. Commit Automático (OBRIGATÓRIO)
 
-**⚠️ CHECKPOINT: Pergunte antes de commitar**
+**Fluxo automático**: Após os testes passarem, o commit será feito automaticamente pelo sub-agent.
 
+O pre-commit hook (.husky/pre-commit) executará:
+1. **verify-patterns** — verifica convenções e guardrails
+2. **Playwright tests** — executa os testes E2E
+
+Se qualquer verificação falhar, o commit será bloqueado.
+
+O sub-agent DEVE:
+1. Verificar se branch existe, criar se necessário
+2. Fazer commit com Conventional Commits automaticamente
+3. Atualizar tasks.md
+
+**Verificar branch:**
+```bash
+git branch | grep "feat/.*us-[0-9]+"
+
+# Se não existir, criar branch específica da US
+git checkout -b feat/[nome-da-feature]/[us-id]
+```
+
+**Commit com Conventional Commits:**
+
+```bash
+git add ARQUIVOS_MODIFICADOS
+git commit -m "test([escopo]): [descrição]
+
+- [Critério 1]
+- [Critério 2]
+
+Closes #[número-da-task]"
+```
+
+Exemplo:
+```bash
+git add frontend/tests/features/botao-principal/us-003.spec.ts
+git commit -m "test(button): adiciona testes US-003 Estados do Button
+
+- Estado disabled com opacity 50%
+- Cursor not-allowed quando disabled
+- Transição suave entre estados
+
+Closes #3"
 ```
 Pronto para commit. Revise o diff antes de prosseguir:
 
