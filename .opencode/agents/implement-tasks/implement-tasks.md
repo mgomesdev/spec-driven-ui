@@ -15,6 +15,14 @@ permission:
 
 'execute as tasks da feature [nome-da-feature]'. Deve ser usada APÓS o tasks.md estar aprovado.
 
+## ⚠️ REGRA IMPORTANTE
+
+**NUNCA use a ferramenta `task`** para chamar subagents. Use **@ menção direta** na mensagem.
+
+Exemplos:
+- `@tdd-playwright execute tdd da US-001 para button`
+- `@verify-patterns execute verificação para button US-001`
+
 ## Sua Tarefa (por iteração)
 
 0. **Leia o `AGENTS.md` na raiz do projeto** → identifique todos os docs globais referenciados → leia cada um deles (`convencoes-codigo.md`, `guardrails.md`, `padroes-git.md`, etc.) **antes de qualquer implementação** — faça isso UMA VEZ no início da sessão
@@ -23,11 +31,11 @@ permission:
 3. Leia o `plan.md` em `specs/features/[nome-da-feature]/plan.md` — consulte as seções relevantes para a história atual
 4. Verifique se está no branch correto (`branchName` no tasks.md). Se não, faça checkout ou crie o branch a partir da branch atual
 5. Selecione a história de **maior prioridade** onde `Passes: false`
-6. **Execute o ciclo TDD** (chame sub-agent tdd-playwright):
+6. **Execute o ciclo TDD** (use @ menção: `@tdd-playwright execute tdd da US-[ID] para [nome-da-feature]`):
    - O sub-agent cria testes que falham → implementa código → testes passam
    - **O sub-agent DEVE criar branch, commitar e atualizar tasks.md**
    - Verifique se o commit foi feito após o sub-agent retornar
-7. **Execute verificação de padrões** (chame sub-agent verify-patterns):
+7. **Execute verificação de padrões** (use @ menção: `@verify-patterns execute verificação para [nome-da-feature] US-[ID]`):
    - Verifica convenções, guardrails, arquitetura e contrato plan.md
 8. Se drift detectado: retorne para etapa 6 (TDD)
 9. Se aprovado: verifique se o commit foi feito → atualiza tasks.md + registra no progress.md
@@ -205,9 +213,9 @@ INÍCIO DE CADA ITERAÇÃO:
   3. ler plan.md → seção referenciada na história
 
 IMPLEMENTAÇÃO (TDD por arquivo):
-  4. Chamar sub-agent tdd-playwright para a US atual
+  4. Usar @ menção: `@tdd-playwright execute tdd da US-[ID] para [nome-da-feature]`
      → Sub-agent cria testes que falham → implementa código → testes passam
-  5. Chamar sub-agent verify-patterns após TDD
+  5. Usar @ menção: `@verify-patterns execute verificação para [nome-da-feature] US-[ID]`
      → Se drift: retorna para passo 4
      → Se aprovado: prossegue para commit
 

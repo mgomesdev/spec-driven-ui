@@ -3,12 +3,6 @@ name: tdd-playwright
 description: "Executa TDD para cada User Story: cria teste que falha, implementa código para passar, e registra aprendizados no progress.md. Configura Playwright se necessário."
 mode: subagent
 temperature: 0.3
-tools:
-  write: true
-  edit: true
-  bash: true
-permission:
-  edit: ask
 ---
 
 ## Acionado por
@@ -123,6 +117,9 @@ test.describe('US-001: Criar componente de login', () => {
 
 ## Regras
 
+- **NUNCA use a ferramenta `task`** para chamar subagents
+- **USE @ menção direta** para invocar verify-patterns quando necessário
+- **Para invocar verify-patterns**, use: `@verify-patterns execute verificação para [nome-da-feature] US-[ID]`
 - **UM teste por critério de aceitação** — não agrupe múltiplos critérios em um teste
 - **Teste deve ser determinístico** — evitar flakiness
 - **Use locators semânticos** — `getByLabel`, `getByRole`, `getByText`, `getByTestId`
