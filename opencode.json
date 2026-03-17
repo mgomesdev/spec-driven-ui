@@ -17,7 +17,7 @@
          "node_modules/**",
          "dist/**",
          ".git/**",
-         "trash/**",
+         ".trash/**",
          "readme/**",
          "./README.md",
          "./design-diff.md",
