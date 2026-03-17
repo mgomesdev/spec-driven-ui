@@ -52,7 +52,7 @@ function validateCommitMessage(messageFile) {
     process.exit(1);
   }
 
-  const conventionalCommitRegex = /^(feat|fix|docs|style|refactor|test|chore)(\([\w-]+\))?!?: .+/;
+  const conventionalCommitRegex = /^(feat|fix|docs|style|refactor|test|chore|config)(\([\w-]+\))?!?: .+/;
   
   const lines = message.split('\n');
   const firstLine = lines[0].trim();
