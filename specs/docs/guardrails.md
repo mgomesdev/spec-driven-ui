@@ -28,6 +28,7 @@
 | 10 | Não ultrapasse 500 linhas por arquivo |
 | 11 | Não adicione tipagem de retorno, prefira a inferência de tipos |
 | 12 | Não crie testes para componentes sem página de teste |
+| 13 | Não adicione comentários em código (.tsx) nem em testes (.spec.ts) |
 
 ---
 
