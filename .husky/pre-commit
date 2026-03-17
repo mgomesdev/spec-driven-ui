@@ -1,2 +1,16 @@
 #!/bin/sh
+
+# Agent Learnings Destiller
+npx ts-node --transpile-only -P .opencode/tsconfig.json .opencode/scripts/agent-learnings-destiller.ts
+DESTILLER_RESULT=$?
+
+if [ $DESTILLER_RESULT -ne 0 ]; then
+  echo "❌ Agent Learnings Destiller failed"
+  exit 1
+fi
+
+# Add updated learnings if modified
+git diff --quiet agent-learnings.json || git add agent-learnings.json
+
+# Continue with existing pre-commit validation
 cd frontend && pnpm run pre-commit

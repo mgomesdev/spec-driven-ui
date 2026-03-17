@@ -1,0 +1,29 @@
+{
+  "learnings": [
+    {
+      "id": "mmutogl9kov2r267u",
+      "pattern": "Executei npm run dev sem verificar se havia",
+      "category": "comando_errado",
+      "originalIncident": "Executei npm run dev sem verificar se havia servidor rodando → port conflict",
+      "createdAt": "2026-03-17T16:24:16.893Z"
+    },
+    {
+      "id": "mmutoglaqqzm82m95",
+      "pattern": "Entendi \"btn\" como shadcn default, mas design system",
+      "category": "mal_entendido",
+      "originalIncident": "Entendi \"btn\" como shadcn default, mas design system tem cor específica",
+      "createdAt": "2026-03-17T16:24:16.894Z"
+    },
+    {
+      "id": "mmutoglaa84iz96g5",
+      "pattern": "Rodei comando em pasta errada (specs/ ao invés",
+      "category": "comando_errado",
+      "originalIncident": "Rodei comando em pasta errada (specs/ ao invés de app/)",
+      "createdAt": "2026-03-17T16:24:16.894Z"
+    }
+  ],
+  "meta": {
+    "lastDestillation": "2026-03-17T16:24:16.894Z",
+    "totalPatterns": 3
+  }
+}

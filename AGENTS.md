@@ -6,7 +6,21 @@ Site estratégico de posicionamento de autoridade profissional como desenvolvedo
 
 ## Diretrizes Gerais
 
-Leia o seguinte arquivo imediatamente pois é relevante para todos os workflows: `./specs/docs/guardrails.md`
+**⚠️ PRIORIDADE MÁXIMA — Leia primeiro:**
+
+1. **`agent-learnings.json`**: Padrões consolidados das sessões anteriores — **sempre leia antes de implementar**. Evita erros recorrentes.
+
+2. **`specs/docs/guardrails.md`**: Regras mandatory do projeto — **nunca violar**. Define o que pode e não pode fazer.
+
+## Início de Sessão
+
+1. Leia `agent-learnings.json` para evitar erros recorrentes
+2. Inicie o subagente `@agent-learnings-runner` em paralelo para registrar incidents durante a sessão
+
+Leia também:
+- `./specs/docs/convencoes-codigo.md`
+- `@specs/docs/architecture.md`
+- `@specs/docs/padroes-git.md`
 
 ## Tecnologias
 
@@ -41,6 +55,7 @@ Leia o seguinte arquivo imediatamente pois é relevante para todos os workflows:
 
 | Sub-agent | Arquivo | Descrição |
 |-----------|---------|-----------|
+| agent-learnings-runner | `.opencode/agents/agent-learnings-runner/` | Registra incidents durante a sessão para destilação futura |
 | us-to-research | `.opencode/agents/us-to-research/` | Converte requisitos abstratos em research.md estruturado |
 | research-to-plan | `.opencode/agents/research-to-plan/` | Gera plano técnico a partir do research.md |
 | plan-to-tasks | `.opencode/agents/plan-to-tasks/` | Converte plano em tarefas/atoms (user stories) |
@@ -61,3 +76,19 @@ research.md → plan.md → tasks.md → implement-tasks
                               ↘ (TDD) → tdd-playwright
                               ↘ (Verify) → verify-patterns
 ```
+
+### Descrição do Fluxo
+
+| Etapa | Artefato | Descrição |
+|-------|----------|-----------|
+| 1 | `research.md` | Requisitos e análise de mercado |
+| 2 | `plan.md` | Plano técnico com interfaces e estrutura |
+| 3 | `tasks.md` | User stories atômicas |
+| 4 | `implement-tasks` | Implementação com TDD + verify-patterns |
+
+### Boas Práticas
+
+- **Sempre siga o fluxo** — não pule etapas
+- **Leia os artefatos antes de implementar** — entenda o contexto
+- **Commite frequentemente** — cada história = 1 commit
+- **Respeite os guardrails** — nunca viole as regras do projeto
