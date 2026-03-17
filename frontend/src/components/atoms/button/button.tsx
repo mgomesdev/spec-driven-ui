@@ -1,8 +1,10 @@
+import { ReactNode } from 'react';
+
 export type ButtonVariant = 'primary' | 'secondary' | 'outline' | 'ghost' | 'danger';
 export type ButtonSize = 'sm' | 'md' | 'lg';
 
 export interface ButtonProps {
-  children: React.ReactNode;
+  children: ReactNode;
   variant?: ButtonVariant;
   size?: ButtonSize;
   disabled?: boolean;
@@ -42,13 +44,16 @@ export const Button = ({
     <button
       type={type}
       disabled={isDisabled}
+      data-size={size}
+      data-variant={variant}
       onClick={onClick}
       className={`
-        inline-flex items-center justify-center rounded-md font-medium transition-colors
-        focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent
-        disabled:opacity-50 disabled:cursor-not-allowed
+        inline-flex items-center justify-center rounded-md font-medium
+        transition-colors duration-200
+        focus:outline-none focus:ring-2 focus:ring-accent focus:ring-offset-2 focus:ring-offset-gray-900
         ${variantStyles[variant]}
         ${sizeStyles[size]}
+        ${isDisabled ? 'opacity-50 cursor-not-allowed' : ''}
         ${className}
       `}
     >
