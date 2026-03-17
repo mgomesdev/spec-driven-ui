@@ -13,7 +13,7 @@ Componente Button atômico reutilizável com suporte a variantes (primary, secon
 ### US-001: Criar componente Button com tipos
 
 **Prioridade:** 1
-**Passes:** false
+**Passes:** true
 
 **Descrição:**
 > Como desenvolvedor, eu quero um componente Button com todas as variantes, tamanhos e estados com tipos definidos no mesmo arquivo para que eu possa reutilizá-lo em toda a aplicação.
@@ -50,7 +50,7 @@ Componente Button atômico reutilizável com suporte a variantes (primary, secon
 ### US-002: Criar página de teste do Button
 
 **Prioridade:** 2
-**Passes:** false
+**Passes:** true
 
 **Descrição:**
 > Como desenvolvedor, eu quero uma página de teste para verificar visualmente o componente Button em diferentes estados.
