@@ -3,12 +3,11 @@ name: agent-learnings-runner
 description: "Assistente que registra incidents e aprendizados durante a sessão. Roda em paralelo ao agente principal, registrando erros e acertos para consolidação futura via destillation."
 mode: subagent
 temperature: 0.3
-tools:
-  read: true
-  write: true
 permission:
   edit: deny
   bash: deny
+  write: allow
+  read: allow
 ---
 
 ## Sobre
