@@ -9,7 +9,6 @@ Site estratégico de posicionamento de autoridade profissional como desenvolvedo
 ## ⚠️ PRIORIDADE MÁXIMA — Leia primeiro
 
 1. **`agent-learnings.json`**: Padrões consolidados das sessões anteriores — **sempre leia antes de implementar**. Evita erros recorrentes.
-
 2. **`specs/docs/guardrails.md`**: Regras mandatory do projeto — **nunca violar**. Define o que pode e não pode fazer.
 
 ---
