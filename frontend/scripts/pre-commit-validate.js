@@ -5,9 +5,25 @@ const path = require('path');
 const RED = '\x1b[31m';
 const GREEN = '\x1b[32m';
 const YELLOW = '\x1b[33m';
+const CYAN = '\x1b[36m';
 const RESET = '\x1b[0m';
 
-const PROJECT_ROOT = path.join(__dirname, '..', '..');
+function findGitRoot(startPath) {
+  let currentPath = startPath;
+  while (currentPath) {
+    const gitPath = path.join(currentPath, '.git');
+    if (fs.existsSync(gitPath)) {
+      return currentPath;
+    }
+    const parent = path.dirname(currentPath);
+    if (parent === currentPath) break;
+    currentPath = parent;
+  }
+  return startPath;
+}
+
+const PROJECT_ROOT = findGitRoot(path.join(__dirname, '..'));
+const FRONTEND_ROOT = path.join(__dirname, '..');
 
 function log(message, color = RESET) {
   console.log(`${color}${message}${RESET}`);
@@ -75,7 +91,7 @@ function getRuleCheckers() {
 }
 
 function runVerifyPatterns(stagedFiles) {
-  log(`\n${YELLOW}🔍 Verificando padrões do projeto...${RESET}\n`);
+  log(`\n${CYAN}🔍 Verificando padrões do projeto...${RESET}\n`);
 
   const srcFiles = stagedFiles.filter(f => 
     f.startsWith('frontend/src/') && 
@@ -138,52 +154,58 @@ function runVerifyPatterns(stagedFiles) {
 }
 
 function runPlaywrightTests(stagedFiles) {
-  log(`\n${YELLOW}🧪 Verificando testes Playwright...${RESET}\n`);
+  log(`\n${CYAN}🧪 Executando testes Playwright...${RESET}\n`);
 
-  const testFiles = stagedFiles.filter(f => 
-    f.startsWith('frontend/tests/') && f.endsWith('.spec.ts')
+  const sourceFiles = stagedFiles.filter(f => 
+    f.startsWith('frontend/src/') && (f.endsWith('.tsx') || f.endsWith('.ts'))
   );
 
-  if (testFiles.length === 0) {
-    log(`${GREEN}✅ Sem testes para executar${RESET}`);
-    return true;
+  let features = [];
+  
+  if (sourceFiles.length > 0) {
+    features = [...new Set(sourceFiles.map(f => {
+      const parts = f.split('/');
+      return parts[2];
+    }))];
+    log(`📁 Testando features relacionadas aos arquivos modificados: ${features.join(', ')}\n`);
+  } else {
+    log(`${YELLOW}⚠️  Nenhum arquivo fonte staged - executando todos os testes${RESET}\n`);
   }
 
-  log(`📁 Testes staged: ${testFiles.length}\n`);
-
-  const features = [...new Set(testFiles.map(f => {
-    const parts = f.split('/');
-    return parts[2]; // tests/features/[feature]/...
-  }))];
-
-  for (const feature of features) {
-    log(`🎯 Executando testes de: ${feature}`);
-
-    const testDir = path.join(PROJECT_ROOT, 'frontend', 'tests', 'features', feature);
-    if (!fs.existsSync(testDir)) {
-      log(`${YELLOW}⚠️  Diretório de testes não encontrado: ${feature}${RESET}`);
-      continue;
-    }
-
-    try {
-      execSync(`npx playwright test "tests/features/${feature}" --reporter=line`, {
-        cwd: path.join(PROJECT_ROOT, 'frontend'),
+  try {
+    if (features.length > 0) {
+      for (const feature of features) {
+        log(`🎯 Executando testes de: ${feature}`);
+        const testDir = path.join(PROJECT_ROOT, 'frontend', 'tests', 'features', feature);
+        if (!fs.existsSync(testDir)) {
+          log(`${YELLOW}⚠️  Diretório de testes não encontrado: ${feature}${RESET}`);
+          continue;
+        }
+        execSync(`npx playwright test "tests/features/${feature}" --reporter=line`, {
+          cwd: FRONTEND_ROOT,
+          stdio: 'inherit',
+          env: { ...process.env, CI: 'true' }
+        });
+      }
+    } else {
+      execSync(`npx playwright test --reporter=line`, {
+        cwd: FRONTEND_ROOT,
         stdio: 'inherit',
         env: { ...process.env, CI: 'true' }
       });
-    } catch (error) {
-      const stderr = error.stderr ? error.stderr.toString() : '';
-      
-      if (stderr.includes("Can't resolve 'tailwindcss'") || 
-          stderr.includes("Cannot find module") ||
-          stderr.includes("ERR_MODULE_NOT_FOUND")) {
-        log(`${YELLOW}⚠️  Ambiente não configurado - pulando testes${RESET}`);
-        return true;
-      }
-      
-      log(`${RED}❌ Testes falharam para ${feature}${RESET}`);
-      return false;
     }
+  } catch (error) {
+    const stderr = error.stderr ? error.stderr.toString() : '';
+    
+    if (stderr.includes("Can't resolve 'tailwindcss'") || 
+        stderr.includes("Cannot find module") ||
+        stderr.includes("ERR_MODULE_NOT_FOUND")) {
+      log(`${YELLOW}⚠️  Ambiente não configurado - pulando testes${RESET}`);
+      return true;
+    }
+    
+    log(`${RED}❌ Testes falharam${RESET}`);
+    return false;
   }
 
   log(`${GREEN}✅ Todos os testes passaram${RESET}`);
@@ -191,8 +213,9 @@ function runPlaywrightTests(stagedFiles) {
 }
 
 function main() {
-  log(`${YELLOW}🚀 Pre-commit validation...${RESET}\n`);
+  log(`${CYAN}🚀 Pre-commit validation...${RESET}\n`);
 
+  // 1. Get staged files
   const stagedFiles = getStagedFiles();
   
   if (stagedFiles.length === 0) {
@@ -203,11 +226,13 @@ function main() {
 
   log(`📌 Arquivos staged: ${stagedFiles.length}\n`);
 
+  // 2. Run code pattern verification
   if (!runVerifyPatterns(stagedFiles)) {
-    log(`\n${RED}❌ PRE-COMMIT BLOQUEADO${RESET}`);
+    log(`\n${RED}❌ PRE-COMMIT BLOQUEADO - Padrões de código${RESET}`);
     process.exit(1);
   }
 
+  // 3. Run Playwright tests
   if (!runPlaywrightTests(stagedFiles)) {
     log(`\n${RED}❌ PRE-COMMIT BLOQUEADO - Testes falharam${RESET}`);
     process.exit(1);

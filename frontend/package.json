@@ -8,6 +8,7 @@
     "start": "next start",
     "lint": "eslint",
     "pre-commit": "node scripts/pre-commit-validate.js",
+    "validate-commit-msg": "node scripts/validate-commit-msg.js",
     "prepare": "husky"
   },
   "dependencies": {
