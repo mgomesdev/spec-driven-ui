@@ -1,0 +1,28 @@
+[
+  {
+    "date": "2026-03-18",
+    "session": "US-001 Header Types",
+    "learnings": [
+      {
+        "topic": "TypeScript validation",
+        "insight": "The project doesn't have a 'typecheck' npm script. Use 'npx tsc --noEmit' for TypeScript validation, or 'npx tsc --noEmit src/path/to/file.ts' to check specific files."
+      },
+      {
+        "topic": "ESLint from frontend directory",
+        "insight": "When running eslint from the frontend directory, use paths relative to that directory (e.g., 'npx eslint src/generated/types.ts'), not full paths from the workspace root."
+      },
+      {
+        "topic": "Generated types location",
+        "insight": "The 'frontend/src/generated/' directory exists and is the designated location for shared types across the application."
+      },
+      {
+        "topic": "Pre-commit hook",
+        "insight": "The pre-commit hook runs Agent Learnings Destiller, Pattern Validation, and Playwright tests. Commit messages are validated with 'conventional commit' format."
+      },
+      {
+        "topic": "implement-tasks workflow (CRITICAL)",
+        "insight": "ALWAYS follow implement-tasks.md workflow for every US, even simple tasks. Steps: 1) Create progress.md before starting, 2) Run Gate via subagents (@tdd-playwright, @verify-patterns), 3) Run typecheck + lint, 4) Register in progress.md, 5) Return to human for review BEFORE committing. NEVER commit directly without human approval. Only commit after human approves."
+      }
+    ]
+  }
+]
