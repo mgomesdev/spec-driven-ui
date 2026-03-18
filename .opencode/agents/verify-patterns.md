@@ -1,19 +1,31 @@
 ---
 name: verify-patterns
-description: "Verifica se o código implementado segue as convenções do projeto (convencoes-codigo.md, guardrails.md, architecture.md) e o contrato do plan.md. Detecta drift e solicita correção se necessário."
+description: "Verifica se o código implementado segue as convenções do projeto (convencoes-codigo.md, guardrails.md, architecture.md) e o contrato do plan.md. Faz parte do GATE do implement-tasks."
 mode: subagent
 temperature: 0.2
 permission:
-  edit: ask
+  edit: deny
 ---
+
+## Contexto: GATE do Implement-Tasks
+
+Este subagent é parte do **GATE de validação**:
+
+```
+Gate:
+  1. TDD (tdd-playwright)
+  2. Verify Patterns (este subagent) ←
+  3. Typecheck
+  4. Lint
+```
 
 ## Acionado por
 
 ```
-execute verify-patterns para [nome-da-feature] US-[ID]
+@verify-patterns execute verificação para [nome-da-feature] [us-id] subtask [subtask-id]
 ```
 
-Ou quando o implement-tasks chama este sub-agent após o TDD passar, antes do commit.
+Este subagent é chamado pelo implement-tasks APÓS o TDD passar, como parte do gate de validação.
 
 ## Modo Não-Interativo (pre-commit hook)
 
@@ -189,10 +201,11 @@ Execute as verificações na seguinte ordem:
 ## Regras
 
 - **NUNCA use a ferramenta `task`** para chamar subagents
-- **NUNCA modifique arquivos** — apenas detecte e relate
+- **NUNCA modifique arquivos** — apenas detecte e relate (edit: deny)
 - **Verifique TODAS as categorias** — não pule nenhuma verificação
 - **Seja preciso** — cite arquivo e linha onde encontrou o problema
 - **Compare com plan.md** — tipos e props devem bater exatamente
+- **Este subagent é READ-ONLY** — não faz commits, não modifica código
 
 ---
 

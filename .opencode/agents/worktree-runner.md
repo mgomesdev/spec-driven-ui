@@ -1,6 +1,6 @@
 ---
 name: worktree-runner
-description: "Cria worktrees Git параллельно para múltiplas features e executa as tasks de cada uma em sua própria branch isolada. Ideal para implementar múltiplos componentes em paralelo sem conflitos."
+description: "Cria worktrees Git em paralelo para múltiplas features. Cada worktree fica pronto para uso individual via implement-tasks. Ideal para preparar ambiente de desenvolvimento paralelo."
 mode: subagent
 temperature: 0.2
 tools:
@@ -40,7 +40,7 @@ Exemplos:
 
 ### Etapa 2: Setup dos Worktrees
 
-Para cada feature em paralelo (usar jobs ou subagents):
+Para cada feature em paralelo:
 
 1. Criar worktree:
    ```bash
@@ -57,63 +57,66 @@ Para cada feature em paralelo (usar jobs ou subagents):
    ✅ Worktree criado: ../spec-driven-ui-[feature] (branch: us/[feature])
    ```
 
-### Etapa 3: Execução das Tasks
-
-Para cada worktree criado, executar a task correspondente:
-
-1. Ler `specs/features/[feature]/tasks.md`
-2. Identificar as User Stories (US-001, US-002, etc.)
-3. Executar cada US conforme os critérios de aceitação
-
 **Importante:** 
-- Cada worktree é independente. Execute o trabalho de forma isolada.
-- **APÓS executar cada US, faça o commit** — siga o padrão de Conventional Commits em `specs/docs/padroes-git.md`
-- **⚠️ CHECKPOINT:** Sempre pergunte antes de commitar: "Aprova o commit para [US-ID]?"
-- **Atualize o tasks.md** marcando `Passes: true` para cada história concluída
-- **Registre os aprendizados no progress.md**
+- NÃO execute as tasks automaticamente
+- O humano chamará `@implement-tasks` manualmente para cada US após setup
+- Worktrees ficam prontos para uso individual
 
-### Etapa 4: Tratamento de Erros
-
-- Se uma feature falhar → continuar com as outras
-- Registrar erro para relatório final
-- Não fazer cleanup automático
-
-### Etapa 5: Relatório Final
+### Etapa 3: Relatório Final
 
 ```
-=== Execução Paralela Concluída ===
+=== Setup Paralelo Concluído ===
 
-Features processadas: X
-✅ Sucesso: [lista]
-❌ Falhou: [lista]
+Features configuradas: X
 
 Worktrees criados:
-- ../spec-driven-ui-avatar → us/avatar
-- ../spec-driven-ui-button → us/button
+- ../spec-driven-ui-[feature1] → us/[feature1]
+- ../spec-driven-ui-[feature2] → us/[feature2]
 
-Pronto para PR manual.
+Pronto para uso individual via @implement-tasks.
 ```
 
-## Comandos Úteis (durante execução)
+### Etapa 4: Como Usar
+
+Após o setup, o humano pode:
+
+1. Entrar em um worktree específico:
+   ```bash
+   cd ../spec-driven-ui-[feature]
+   ```
+
+2. Chamar implement-tasks para executar uma US:
+   ```
+   @implement-tasks implemente a subtask 1.1 da US-001 para [feature]
+   ```
+
+3. Após US completa, o humano chama próximo implement-tasks ou faz destilação
+
+---
+
+## Comandos Úteis
 
 ```bash
 # Verificar worktrees ativos
 git worktree list
 
+# Entrar em um worktree específico
+cd ../spec-driven-ui-[feature]
+
 # Ver status de um worktree específico
 cd ../spec-driven-ui-[feature] && git status
-
-# Ver logs de uma feature
-cd ../spec-driven-ui-[feature] && git log --oneline -5
 ```
+
+---
 
 ## Checklist (antes de finalizar)
 
 - [ ] Todos os worktrees criados com sucesso
 - [ ] Dependências instaladas em cada worktree
-- [ ] Features executadas (ou erro registrado)
-- [ ] Relatório final apresentado ao usuário
-- [ ] Não fez cleanup - worktrees prontos para revisão
+- [ ] Worktrees prontos para uso individual
+- [ ] Relatório final apresentado ao humano
+
+---
 
 ## Exemplo de Execução
 
@@ -121,31 +124,24 @@ cd ../spec-driven-ui-[feature] && git log --oneline -5
 
 **Output:**
 ```
-=== Setup Worktrees ===
+=== Setup de Worktrees ===
 
 ✅ Worktree criado: ../spec-driven-ui-avatar (branch: us/avatar)
 ✅ Worktree criado: ../spec-driven-ui-button (branch: us/button)
 
-=== Execução das Features ===
+=== Setup Paralelo Concluído ===
 
-📦 avatar: Executando US-001...
-   - Criando src/components/avatar/avatar.tsx
-   ✅ Concluído
-
-📦 button: Executando US-001...
-   - Criando src/components/button/button.tsx
-   - Criando src/components/button/button.module.css
-   ✅ Concluído
-
-=== Execução Paralela Concluída ===
-
-Features processadas: 2
-✅ Sucesso: avatar, button
-❌ Falhou: (nenhum)
+Features configuradas: 2
 
 Worktrees criados:
 - ../spec-driven-ui-avatar → us/avatar
 - ../spec-driven-ui-button → us/button
 
-Pronto para PR manual.
+Pronto para uso individual via @implement-tasks.
 ```
+
+**Próximos passos (human-in-the-loop):**
+1. cd ../spec-driven-ui-avatar
+2. @implement-tasks implemente a US-001 para avatar
+3. (após US completa) destilação ou próxima US
+4. Repita para outras features
