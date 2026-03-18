@@ -25,9 +25,9 @@ Quando a feature for uma **page, template ou organism** que contém componentes 
 
 1. **Liste os componentes filhos mencionados** no requisito (ex: Button, Card, Header, etc.)
 2. **Para cada componente filho, verifique se já foi implementado:**
-   - Verifique se existe `specs/components/[tipo]/[nome-do-componente]/research.md`
-   - Verifique se existe `specs/components/[tipo]/[nome-do-componente]/plan.md`
-   - Verifique se existe `specs/components/[tipo]/[nome-do-componente]/tasks.md`
+    - Verifique se existe `specs/features/[nome-do-componente]/research.md`
+    - Verifique se existe `specs/features/[nome-do-componente]/plan.md`
+    - Verifique se existe `specs/features/[nome-do-componente]/tasks.md`
 3. **Classifique cada componente:**
    - ✅ **Implementado:** possui research, plan e tasks
    - ⚠️ **Parcialmente implementado:** possui research e/ou plan, mas sem tasks completo

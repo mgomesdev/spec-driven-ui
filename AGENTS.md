@@ -30,14 +30,10 @@ Site estratégico de posicionamento de autoridade profissional como desenvolvedo
 | Tópico | Arquivo |
 |--------|---------|
 | Tecnologias e fontes | `@specs/docs/tecnologias.md` |
-| Fluxo de implementação | `@specs/docs/fluxo-implementacao.md` |
-| Pre-commit hook | `@specs/docs/pre-commit.md` |
-| Sub-agents | `@specs/docs/sub-agents.md` |
 | Convenções de código | `@specs/docs/convencoes-codigo.md` |
 | Guardrails | `@specs/docs/guardrails.md` |
 | Arquitetura | `@specs/docs/architecture.md` |
 | Padrões git | `@specs/docs/padroes-git.md` |
-| Agent learnings | `@specs/docs/agent-learnings.md` |
 
 ---
 

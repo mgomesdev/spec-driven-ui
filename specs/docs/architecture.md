@@ -14,15 +14,6 @@
 
 ---
 
-## .husky/ — Git Hooks
-
-| Arquivo | Descrição |
-|---------|-----------|
-| `pre-commit` | Executa validações antes do commit (destiller + tests) |
-| `commit-msg` | Valida mensagem de commit (Conventional Commits) |
-
----
-
 ## frontend/ — Projeto Next.js
 
 | Arquivo/Pasta | Descrição |
@@ -48,13 +39,9 @@
 
 | Arquivo | Descrição |
 |---------|-----------|
-| `agent-learnings.md` | Sistema de memória institucional |
 | `architecture.md` | Este arquivo - estrutura do projeto |
 | `convencoes-codigo.md` | Convenções de código |
-| `fluxo-implementacao.md` | Pipeline de implementação |
 | `guardrails.md` | Regras obrigatórias |
 | `padroes-git.md` | Padrões de commits |
-| `pre-commit.md` | Hook de validação |
-| `sub-agents.md` | Lista de sub-agents |
 | `tecnologias.md` | Versões das tecnologias |
 
