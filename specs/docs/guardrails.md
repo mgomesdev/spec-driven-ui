@@ -51,3 +51,10 @@ Para testar componentes React, criar página de teste em `frontend/src/app/test-
 Para estilizar estados de elementos desabilitados, usar prefixo `disabled:`:
 - `disabled:opacity-50`
 - `disabled:cursor-not-allowed`
+
+### Elementos Duplicados
+
+Quando um componente está no layout (ex: Header) e também é renderizado na página de teste, usar `.first()` para evitar strict mode violation:
+```typescript
+const header = page.locator('[data-testid="header"]').first();
+```
