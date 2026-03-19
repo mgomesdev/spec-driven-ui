@@ -4,28 +4,28 @@
     "session": "US-001 Header Types",
     "learnings": [
       {
-        "topic": "TypeScript validation",
-        "insight": "The project doesn't have a 'typecheck' npm script. Use 'npx tsc --noEmit' for TypeScript validation, or 'npx tsc --noEmit src/path/to/file.ts' to check specific files."
+        "topic": "Validação TypeScript",
+        "insight": "O projeto não tem script 'typecheck'. Use 'npx tsc --noEmit' para validação TypeScript, ou 'npx tsc --noEmit src/caminho/para/arquivo.ts' para verificar arquivos específicos."
       },
       {
-        "topic": "ESLint from frontend directory",
-        "insight": "When running eslint from the frontend directory, use paths relative to that directory (e.g., 'npx eslint src/generated/types.ts'), not full paths from the workspace root."
+        "topic": "ESLint no diretório frontend",
+        "insight": "Ao executar eslint no diretório frontend, use caminhos relativos a esse diretório (ex: 'npx eslint src/generated/types.ts'), não caminhos completos do workspace root."
       },
       {
-        "topic": "Generated types location",
-        "insight": "The 'frontend/src/generated/' directory exists and is the designated location for shared types across the application."
+        "topic": "Localização dos tipos gerados",
+        "insight": "O diretório 'frontend/src/generated/' existe e é o local designado para tipos compartilhados em toda a aplicação."
       },
       {
         "topic": "Pre-commit hook",
-        "insight": "The pre-commit hook runs Agent Learnings Destiller, Pattern Validation, and Playwright tests. Commit messages are validated with 'conventional commit' format."
+        "insight": "O pre-commit hook executa Agent Learnings Destiller, Pattern Validation e Playwright tests. Mensagens de commit são validadas com formato 'conventional commit'."
       },
       {
-        "topic": "implement-tasks workflow (CRITICAL)",
-        "insight": "ALWAYS follow implement-tasks.md workflow for every US, even simple tasks. Steps: 1) Create progress.md before starting, 2) Run Gate via subagents (@tdd-playwright, @verify-patterns), 3) Run typecheck + lint, 4) Register in progress.md, 5) Return to human for review BEFORE committing. NEVER commit directly without human approval. Only commit after human approves."
+        "topic": "Workflow implement-tasks (CRÍTICO)",
+        "insight": "SEMPRE siga o workflow implement-tasks.md para cada US, mesmo tarefas simples. Passos: 1) Criar progress.md antes de iniciar, 2) Executar Gate via subagents (@tdd-playwright, @verify-patterns), 3) Executar typecheck + lint, 4) Registrar no progress.md, 5) Retornar ao humano para revisão ANTES de commitar. NUNCA commite diretamente sem aprovação humana."
       },
       {
-        "topic": "Update tasks.md Passes",
-        "insight": "After completing a US successfully, ALWAYS update tasks.md and set 'Passes: true' for that US. This step was missing from the implement-tasks prompt and caused US-001 to remain with Passes: false."
+        "topic": "Atualizar Passes no tasks.md",
+        "insight": "Após completar uma US com sucesso, SEMPRE atualize tasks.md e defina 'Passes: true' para essa US. Este passo estava faltando no prompt do implement-tasks e causou US-001 permanecer com Passes: false."
       }
     ]
   },
@@ -35,23 +35,23 @@
     "learnings": [
       {
         "topic": "GR-006 False Positive",
-        "insight": "Validation GR-006 (component without props typing) falsely flagged components that import props from external files. Fix: update pre-commit-validate.js to recognize external Props imports with regex pattern /import\\s+(?:type\\s+)?\\{[^}]*Props[^}]*\\}/"
+        "insight": "A validação GR-006 (componente sem tipagem de props) sinalizava erroneamente componentes que importam props de arquivos externos. Correção: atualizar pre-commit-validate.js para reconhecer imports externos de Props com padrão regex /import\\s+(?:type\\s+)?\\{[^}]*Props[^}]*\\}/"
       },
       {
-        "topic": "Duplicate Elements in Playwright Tests",
-        "insight": "When a component (like Header) is in the layout AND also rendered in the test page, use .first() on locators to avoid strict mode violation. Also ensure test page doesn't manually render components that are already in the layout."
+        "topic": "Elementos Duplicados nos Testes Playwright",
+        "insight": "Quando um componente (como Header) está no layout E também é renderizado na página de teste, use .first() nos locators para evitar violação do strict mode. Também certifique-se de que a página de teste não renderize manualmente componentes que já estão no layout."
       },
       {
-        "topic": "implement-tasks workflow - Human Confirmation",
-        "insight": "CRITICAL: Always show git status + git diff to human BEFORE committing distill. Wait for human confirmation 'Confirma o commit da destilação?' before executing the commit. Never commit automatically."
+        "topic": "Workflow implement-tasks - Confirmação Humana",
+        "insight": "CRÍTICO: Sempre mostre git status + git diff ao humano ANTES de commitar a destilação. Aguarde confirmação 'Confirma o commit da destilação?' antes de executar o commit. Nunca commite automaticamente."
       },
       {
-        "topic": "Global Distillation",
-        "insight": "After US completion, implement-tasks must: 1) Update tasks.md with Passes: true, 2) Execute first commit (agent-learnings destillation), 3) Execute global destillation (progress.md -> specs/docs/*), 4) Show files to human, 5) Wait confirmation, 6) Execute second commit, 7) Clear progress.md"
+        "topic": "Destilação Global",
+        "insight": "Após completar uma US, implement-tasks deve: 1) Atualizar tasks.md com Passes: true, 2) Executar primeiro commit (destilação agent-learnings), 3) Executar destilação global (progress.md -> specs/docs/*), 4) Mostrar arquivos ao humano, 5) Aguardar confirmação, 6) Executar segundo commit, 7) Limpar progress.md"
       },
       {
-        "topic": "E2E Tests Location",
-        "insight": "E2E tests belong in frontend/tests/features/[feature]/[us-id].spec.ts. When component is already in layout, test page should NOT re-render the component to avoid duplicates."
+        "topic": "Localização dos Testes E2E",
+        "insight": "Testes E2E pertencem em frontend/tests/features/[feature]/[us-id].spec.ts. Quando o componente já está no layout, a página de teste NÃO deve re-renderizar o componente para evitar duplicatas."
       }
     ]
   }

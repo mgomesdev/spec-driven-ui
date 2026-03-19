@@ -10,7 +10,7 @@ const RESET = '\x1b[0m';
 interface Learning {
   id: string;
   pattern: string;
-  category: 'comando_errado' | 'mal_entendido' | 'correcao_humana' | 'acerto_evitou_problema';
+  category: 'comando_errado' | 'mal_entendido' | 'correcao_humana';
   originalIncident: string;
   createdAt: string;
 }

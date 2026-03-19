@@ -44,7 +44,6 @@ Quando receber uma solicitação de registro, você DEVE:
    - `comando_errado` — Comando executado incorretamente
    - `mal_entendido` — Interpretação incorreta de algo
    - `correcao_humana` — Correção feita por humano
-   - `acerto_evitou_problema` — Ao perguntar/verificar, evitou um erro
 
 4. Salvar o arquivo atualizado
 5. Confirmar com: `✅ Registrado: [breve resumo]`
