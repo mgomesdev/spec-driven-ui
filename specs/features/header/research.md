@@ -8,7 +8,7 @@ Header de navegação principal do site com logo, menu de navegação e menu ham
 
 - Header fixo no topo da página com altura de 80px
 - Logo clicável que redireciona para a página inicial
-- Menu de navegação com 3 opções: Início, Sobre, Descrição
+- Menu de navegação com 4 opções: Início, Sobre, Descrição, Contato
 - Menu hamburger em mobile (< 768px) com overlay/slide menu
 - Transição suave entre estados mobile/desktop
 
@@ -31,7 +31,7 @@ Header de navegação principal do site com logo, menu de navegação e menu ham
 - [ ] Header ocupa 100% da largura da tela
 - [ ] Header tem altura fixa de 80px
 - [ ] Logo aparece à esquerda do header
-- [ ] Menu com 3 itens (Início, Sobre, Descrição) aparece à direita
+- [ ] Menu com 4 itens (Início, Sobre, Descrição, Contato) aparece à direita
 - [ ] Itens do menu são clicáveis e exibem pointer cursor
 - [ ] Estado hover nos itens do menu exibe feedback visual (underline ou cor)
 - [ ] sub-agent: tdd-playwright para validar renderização desktop
@@ -47,7 +47,7 @@ Header de navegação principal do site com logo, menu de navegação e menu ham
 - [ ] Em telas < 768px, menu horizontal é substituído por botão hamburger
 - [ ] Botão hamburger exibe ícone de 3 barras horizontais
 - [ ] Ao clicar no hamburger, menu overlay aparece com animação
-- [ ] Menu overlay lista as 3 opções (Início, Sobre, Descrição)
+- [ ] Menu overlay lista as 4 opções (Início, Sobre, Descrição, Contato)
 - [ ] Botão X fecha o menu overlay
 - [ ] Clicar fora do menu fecha o overlay
 - [ ] Menu overlay cobre toda a tela com fundo semi-transparente
@@ -83,7 +83,7 @@ Header de navegação principal do site com logo, menu de navegação e menu ham
 ## 6. Requisitos Funcionais
 
 - RF-01: Header deve permanecer fixo no topo durante scroll
-- RF-02: Menu desktop exibe 3 itens em linha horizontal
+- RF-02: Menu desktop exibe 4 itens em linha horizontal
 - RF-03: Menu mobile exibe overlay fullscreen com animação slide-in
 - RF-04: Botão hamburger alterna estado do menu mobile
 - RF-05: Links do menu devem ter href válido para navegação

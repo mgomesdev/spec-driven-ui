@@ -133,3 +133,32 @@ Header de navegação principal responsivo, fixo no topo da página (80px altura
 #### Notas
 
 (Sem notas)
+
+---
+
+### US-005: Adicionar item Contato ao menu
+
+**Prioridade:** 5
+**Passes:** true
+
+**Descrição:**
+> Como visitante, eu quero ver a opção "Contato" no menu de navegação para que eu possa acessar a página de contato.
+
+**Artefatos:**
+- Modifica: `src/generated/types.ts`
+- Depende de: `US-001` (tipos), `US-002` (header.tsx)
+
+**Contexto do plan:**
+> Consultar seção "4. Contratos de API" do plan.md.
+> Adicionar novo item ao DEFAULT_NAV_ITEMS.
+
+#### Critérios de Aceitação
+
+* Novo item "Contato" presente em DEFAULT_NAV_ITEMS com href "/contato"
+* Menu desktop exibe 4 itens (Início, Sobre, Descrição, Contato)
+* Menu mobile overlay exibe 4 opções
+* Typecheck aprovado
+
+#### Notas
+
+(Sem notas)

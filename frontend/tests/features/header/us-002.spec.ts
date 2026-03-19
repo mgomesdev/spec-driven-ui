@@ -17,7 +17,7 @@ test.describe('Header Component', () => {
     await expect(desktopMenu).toBeVisible();
 
     const navLinks = page.locator('[data-testid="desktop-menu"] a');
-    await expect(navLinks).toHaveCount(3);
+    await expect(navLinks).toHaveCount(4);
   });
 
   test('desktop nav links have correct hrefs', async ({ page }) => {
@@ -29,6 +29,9 @@ test.describe('Header Component', () => {
 
     const descricaoLink = page.locator('[data-testid="nav-link-descrição"]').first();
     await expect(descricaoLink).toHaveAttribute('href', '/descricao');
+
+    const contatoLink = page.locator('[data-testid="nav-link-contato"]').first();
+    await expect(contatoLink).toHaveAttribute('href', '/contato');
   });
 
   test('hamburger button is hidden on desktop', async ({ page }) => {
@@ -97,7 +100,7 @@ test.describe('Header Component', () => {
     await expect(mobileNav).toBeVisible();
 
     const mobileLinks = page.locator('[data-testid="mobile-nav"] a');
-    await expect(mobileLinks).toHaveCount(3);
+    await expect(mobileLinks).toHaveCount(4);
   });
 
   test('clicking outside overlay closes mobile menu', async ({ page }) => {

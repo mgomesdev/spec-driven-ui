@@ -12,6 +12,7 @@ export const DEFAULT_NAV_ITEMS: NavItem[] = [
   { label: 'Início', href: '/' },
   { label: 'Sobre', href: '/sobre' },
   { label: 'Descrição', href: '/descricao' },
+  { label: 'Contato', href: '/contato' },
 ];
 
 export const DEFAULT_LOGO_ALT = 'Logo - Página inicial';
