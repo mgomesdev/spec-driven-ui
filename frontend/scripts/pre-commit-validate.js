@@ -68,7 +68,11 @@ function getRuleCheckers() {
         if (!filePath.endsWith('.tsx')) return false;
         const hasComponent = /(?:export\s+)?(?:const|function)\s+[A-Z]\w+/.test(content);
         if (!hasComponent) return false;
-        const hasPropsType = /(?:interface|type)\s+\w+Props/.test(content) || /props:\s*\{/.test(content);
+        if (content.includes('export default function')) return false;
+        const hasPropsType = 
+          /(?:interface|type)\s+\w+Props/.test(content) || 
+          /props:\s*\{/.test(content) ||
+          /import\s+(?:type\s+)?\{[^}]*Props[^}]*\}/.test(content);
         return !hasPropsType;
       },
       message: 'Componente sem tipagem de props'

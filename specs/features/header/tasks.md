@@ -13,7 +13,7 @@ Header de navegação principal responsivo, fixo no topo da página (80px altura
 ### US-001: Definir tipos do Header
 
 **Prioridade:** 1
-**Passes:** false
+**Passes:** true
 
 **Descrição:**
 > Como desenvolvedor, eu quero definir os tipos TypeScript do Header para que o componente e testes possam usá-los com tipagem correta.
@@ -42,7 +42,7 @@ Header de navegação principal responsivo, fixo no topo da página (80px altura
 ### US-002: Criar componente Header
 
 **Prioridade:** 2
-**Passes:** false
+**Passes:** true
 
 **Descrição:**
 > Como visitante, eu quero ver um header de navegação fixo no topo para que eu possa navegar entre as páginas do site em desktop e mobile.

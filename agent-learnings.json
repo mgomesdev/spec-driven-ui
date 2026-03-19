@@ -22,6 +22,10 @@
       {
         "topic": "implement-tasks workflow (CRITICAL)",
         "insight": "ALWAYS follow implement-tasks.md workflow for every US, even simple tasks. Steps: 1) Create progress.md before starting, 2) Run Gate via subagents (@tdd-playwright, @verify-patterns), 3) Run typecheck + lint, 4) Register in progress.md, 5) Return to human for review BEFORE committing. NEVER commit directly without human approval. Only commit after human approves."
+      },
+      {
+        "topic": "Update tasks.md Passes",
+        "insight": "After completing a US successfully, ALWAYS update tasks.md and set 'Passes: true' for that US. This step was missing from the implement-tasks prompt and caused US-001 to remain with Passes: false."
       }
     ]
   }
