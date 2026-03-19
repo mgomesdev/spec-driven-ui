@@ -106,7 +106,7 @@ Header de navegação principal responsivo, fixo no topo da página (80px altura
 ### US-004: Criar testes E2E do Header
 
 **Prioridade:** 4
-**Passes:** false
+**Passes:** true
 
 **Descrição:**
 > Como desenvolvedor, eu quero testes E2E que validem o comportamento do Header para garantir que funciona corretamente em desktop e mobile.
