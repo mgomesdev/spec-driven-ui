@@ -77,7 +77,7 @@ Header de navegação principal responsivo, fixo no topo da página (80px altura
 ### US-003: Integrar Header no layout
 
 **Prioridade:** 3
-**Passes:** false
+**Passes:** true
 
 **Descrição:**
 > Como visitante, eu quero ver o header em todas as páginas para que eu possa navegar a qualquer momento.

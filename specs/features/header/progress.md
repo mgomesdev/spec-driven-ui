@@ -28,3 +28,23 @@
 - ✅ `aria-hidden` no overlay quando fechado
 - ✅ Typecheck aprovado
 
+---
+
+## US-003: Integrar Header no layout
+**Status:** ✅ Complete
+
+### Task 1: Integrar Header no layout.tsx
+**Status:** ✅ Complete
+
+#### Registros:
+- ✅ Header importado de `@/components/header/header` em `frontend/src/app/layout.tsx`
+- ✅ Componente `<Header />` renderizado dentro do `<body>`, antes do `{children}`
+- ✅ Typecheck aprovado (`npx tsc --noEmit`)
+- ✅ ESLint aprovado
+
+#### Critérios de Aceitação Validados:
+- ✅ Importação do componente Header presente no layout.tsx
+- ✅ Componente `<Header />` renderizado dentro do `<body>`
+- ✅ Header posicionado antes do children (aparece no topo)
+- ✅ Typecheck aprovado
+
