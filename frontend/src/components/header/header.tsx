@@ -65,7 +65,7 @@ export const Header = ({
           aria-label={logoAlt}
         >
           <div
-            className="w-10 h-10 bg-[--color-accent] rounded-full flex items-center justify-center"
+            className="w-10 h-10 bg-amber-300 rounded-full flex items-center justify-center"
             aria-hidden="true"
           >
             <span className="text-white font-bold text-lg">S</span>
@@ -98,9 +98,9 @@ export const Header = ({
           onClick={toggleMenu}
           ref={hamburgerRef}
         >
-          <span className={`block w-6 h-0.5 bg-[--color-text-primary] transition-transform duration-300 ${isMenuOpen ? 'rotate-45 translate-y-2' : ''}`} />
-          <span className={`block w-6 h-0.5 bg-[--color-text-primary] transition-opacity duration-300 ${isMenuOpen ? 'opacity-0' : ''}`} />
-          <span className={`block w-6 h-0.5 bg-[--color-text-primary] transition-transform duration-300 ${isMenuOpen ? '-rotate-45 -translate-y-2' : ''}`} />
+          <span className={`block w-6 h-0.5 bg-amber-600 transition-transform duration-300 ${isMenuOpen ? 'rotate-45 translate-y-2' : ''}`} />
+          <span className={`block w-6 h-0.5 bg-amber-600 transition-opacity duration-300 ${isMenuOpen ? 'opacity-0' : ''}`} />
+          <span className={`block w-6 h-0.5 bg-amber-600 transition-transform duration-300 ${isMenuOpen ? '-rotate-45 -translate-y-2' : ''}`} />
         </button>
       </div>
 

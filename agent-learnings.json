@@ -28,5 +28,31 @@
         "insight": "After completing a US successfully, ALWAYS update tasks.md and set 'Passes: true' for that US. This step was missing from the implement-tasks prompt and caused US-001 to remain with Passes: false."
       }
     ]
+  },
+  {
+    "date": "2026-03-18",
+    "session": "Header Feature - US-002, US-003, US-004",
+    "learnings": [
+      {
+        "topic": "GR-006 False Positive",
+        "insight": "Validation GR-006 (component without props typing) falsely flagged components that import props from external files. Fix: update pre-commit-validate.js to recognize external Props imports with regex pattern /import\\s+(?:type\\s+)?\\{[^}]*Props[^}]*\\}/"
+      },
+      {
+        "topic": "Duplicate Elements in Playwright Tests",
+        "insight": "When a component (like Header) is in the layout AND also rendered in the test page, use .first() on locators to avoid strict mode violation. Also ensure test page doesn't manually render components that are already in the layout."
+      },
+      {
+        "topic": "implement-tasks workflow - Human Confirmation",
+        "insight": "CRITICAL: Always show git status + git diff to human BEFORE committing distill. Wait for human confirmation 'Confirma o commit da destilação?' before executing the commit. Never commit automatically."
+      },
+      {
+        "topic": "Global Distillation",
+        "insight": "After US completion, implement-tasks must: 1) Update tasks.md with Passes: true, 2) Execute first commit (agent-learnings destillation), 3) Execute global destillation (progress.md -> specs/docs/*), 4) Show files to human, 5) Wait confirmation, 6) Execute second commit, 7) Clear progress.md"
+      },
+      {
+        "topic": "E2E Tests Location",
+        "insight": "E2E tests belong in frontend/tests/features/[feature]/[us-id].spec.ts. When component is already in layout, test page should NOT re-render the component to avoid duplicates."
+      }
+    ]
   }
 ]
