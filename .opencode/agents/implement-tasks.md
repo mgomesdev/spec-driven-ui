@@ -40,37 +40,48 @@ Exemplo:
 
 ---
 
-## Ciclo de Execução por Subtask
+## Ciclo de Execução por Subtask (TDD)
 
 ```
 ┌─────────────────────────────────────────────────────────────┐
-│  LOOP: Até gate verde                                       │
+│  LOOP: Até gate verde (TDD First)                           │
 │                                                             │
-│  1. Implementa o código da subtask                         │
-│  2. Executa o GATE (seção abaixo)                          │
-│  3. Se falhou:                                             │
+│  1. CRIAR teste que falha (TDD - RED)                       │
+│  2. Executar @tdd-playwright (deve falhar primeiro)        │
+│  3. Se teste passou sem implementação: CORRIGIR            │
+│  4. Implementar código da subtask                          │
+│  5. Executar @tdd-playwright novamente (deve passar)        │
+│  6. Se falhou:                                             │
 │     - Corrigir o código                                     │
-│     - Registrar ERRO no progress.md                          │
-│     - Voltar ao passo 2                                     │
-│  4. Se verde:                                              │
+│     - Registrar ERRO no progress.md                         │
+│     - Voltar ao passo 5                                     │
+│  7. Se verde:                                              │
+│     - Executar @verify-patterns                             │
+│     - Executar Typecheck                                    │
+│     - Executar Lint                                         │
 │     - Registrar ACERTO no progress.md                       │
-│     - Retornar ao humano para revisão                       │
-│     - Aguardar aprovação ou diretrizes                       │
+│     - Retornar ao humano para revisão                        │
+│     - Aguardar aprovação ou diretrizes                      │
 └─────────────────────────────────────────────────────────────┘
 ```
 
 ---
 
-## Gate de Validação
+## Gate de Validação (TDD First)
 
-Execute nesta ordem. Se qualquer um falhar, CORRIJA antes de prosseguir.
+**REGRA CRÍTICA**: SEMPRE criar teste que falha ANTES de escrever qualquer código de implementação.
 
-### 1. TDD (Playwright)
+Execute nesta ordem:
+
+### 1. TDD (Playwright) - RED first
 ```
 @tdd-playwright execute tdd da [us-id] subtask [subtask-id] para [nome-da-feature]
 ```
-- Aguarde resultado
-- Se falhou: corrija + registre erro + retry
+**PASSO 1**: Execute @tdd-playwright PRIMEIRO - o teste deve FALHAR sem implementação
+**PASSO 2**: Implemente o código mínimo para passar
+**PASSO 3**: Execute @tdd-playwright novamente - agora deve PASSAR
+- Se falhou na etapa 1 (sem código): corrija teste ou aguarde implementação
+- Se falhou na etapa 3: corrija código + registre erro + retry
 
 ### 2. Verify Patterns
 ```
@@ -81,13 +92,13 @@ Execute nesta ordem. Se qualquer um falhar, CORRIJA antes de prosseguir.
 
 ### 3. Typecheck
 ```bash
-npm run typecheck
+cd frontend && npx tsc --noEmit
 ```
 - Se falhou: corrija + registre erro + retry
 
 ### 4. Lint
 ```bash
-npm run lint
+cd frontend && npx eslint src/
 ```
 - Se falhou: corrija + registre erro + retry
 
@@ -204,11 +215,15 @@ INÍCIO:
   2. Ler tasks.md + plan.md + progress.md
   3. Verificar/criar branch
 
-POR SUBTASK:
-  1. Implementar código
-  2. Gate: TDD → Verify → Typecheck → Lint
-  3. Se falhou: corrigir + registrar erro + retry
-  4. Se verde: registrar acerto + retornar ao humano
+POR SUBTASK (TDD FIRST):
+  1. @tdd-playwright: criar teste que FALHA (RED)
+  2. Implementar código mínimo
+  3. @tdd-playwright: teste deve PASSAR (GREEN)
+  4. @verify-patterns: verificar padrões
+  5. Typecheck: npx tsc --noEmit
+  6. Lint: npx eslint
+  7. Se falhou: corrigir + registrar erro + retry
+  8. Se verde: registrar acerto + retornar ao humano
 
 US COMPLETA + APROVADO:
   1. Atualizar tasks.md (Passes: true)
