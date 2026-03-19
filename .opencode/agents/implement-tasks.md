@@ -133,11 +133,13 @@ Quando TODAS as subtasks de uma US estiverem verdes:
 1. Retorne ao humano: "✅ US [ID] completa. Aprova o encerramento?"
 2. Se humano APPROVA:
    - Atualize `tasks.md`: altere `Passes: false` para `Passes: true` na US
-   - Execute COMMIT (pre-commit hook executa destilação do agent-learnings)
+   - CHAME @agent-learnings-runner para registrar aprendizados da US (deduplição >60%)
+   - Execute COMMIT
    - Execute DESTILAÇÃO GLOBAL dos padrões (ler progress.md → mapear para specs/docs/*)
    - Mostre ao humano: execute `git status` e `git diff` dos arquivos a serem commitados
    - Aguarde confirmação: "Confirma o commit da destilação?"
    - Se confirmado: Execute COMMIT da destilação
+   - Limpe progress.md
    - ENCERRE o agente
 3. Se humano NEGA:
    - Aguarde novas diretrizes
@@ -210,11 +212,12 @@ POR SUBTASK:
 
 US COMPLETA + APROVADO:
   1. Atualizar tasks.md (Passes: true)
-  2. Commitar (pre-commit executa destilação do agent-learnings)
-  3. Executar destilação GLOBAL (progress.md → specs/docs/*)
-  4. Mostrar git status + git diff ao humano
-  5. Aguardar confirmação para commit da destilação
-  6. Limpar progress.md
-  7. ENCERRAR
+  2. CHAMAR @agent-learnings-runner (deduplição >60%)
+  3. Commitar
+  4. Executar destilação GLOBAL (progress.md → specs/docs/*)
+  5. Mostrar git status + git diff ao humano
+  6. Aguardar confirmação para commit da destilação
+  7. Limpar progress.md
+  8. ENCERRAR
 
 ```
