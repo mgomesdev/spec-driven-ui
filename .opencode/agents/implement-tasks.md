@@ -132,6 +132,7 @@ Quando TODAS as subtasks de uma US estiverem verdes:
 
 1. Retorne ao humano: "✅ US [ID] completa. Aprova o encerramento?"
 2. Se humano APPROVA:
+   - Atualize `tasks.md`: altere `Passes: false` para `Passes: true` na US
    - Execute DESTILAÇÃO
    - ENCERRE o agente
 3. Se humano NEGA:
