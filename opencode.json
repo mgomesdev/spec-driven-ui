@@ -22,7 +22,8 @@
           "./README.md",
           "./design-diff.md",
           ".trash/**/*",
-          "**/*.spec.docs.md"
+          "**/*.spec.docs.md",
+          "**/guardrails.json"
        ]
    },
    "share": "disabled"

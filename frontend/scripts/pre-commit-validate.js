@@ -41,61 +41,72 @@ function getStagedFiles() {
   }
 }
 
-function getRuleCheckers() {
-  return [
-    {
-      id: 'GR-003',
-      name: 'Não usar `any` no TypeScript',
-      severity: 'error',
-      check: (content) => /: any|<any>/.test(content),
-      message: 'Uso de "any" detectado'
-    },
-    {
-      id: 'GR-004',
-      name: 'Não fazer `fetch` direto em componentes',
-      severity: 'error',
-      check: (content, filePath) => {
-        if (!filePath.endsWith('.tsx')) return false;
-        return /useEffect.*fetch|fetch\(/.test(content);
-      },
-      message: 'Fetch direto em componente'
-    },
-    {
-      id: 'GR-006',
-      name: 'Não criar componentes sem tipar props',
-      severity: 'error',
-      check: (content, filePath) => {
-        if (!filePath.endsWith('.tsx')) return false;
-        const hasComponent = /(?:export\s+)?(?:const|function)\s+[A-Z]\w+/.test(content);
-        if (!hasComponent) return false;
-        if (content.includes('export default function')) return false;
-        const hasPropsType = 
-          /(?:interface|type)\s+\w+Props/.test(content) || 
-          /props:\s*\{/.test(content) ||
-          /import\s+(?:type\s+)?\{[^}]*Props[^}]*\}/.test(content);
-        return !hasPropsType;
-      },
-      message: 'Componente sem tipagem de props'
-    },
-    {
-      id: 'GR-008',
-      name: 'Não adicionar comentários no código',
-      severity: 'warning',
-      check: (content) => /\/\/|\/\*/.test(content),
-      message: 'Comentário detectado'
-    },
-    {
-      id: 'GR-011',
-      name: 'Não adicionar tipagem de retorno',
-      severity: 'warning',
-      check: (content) => /: React\.JXSElement|: JSX\.Element/.test(content),
-      message: 'Tipagem de retorno explícita'
-    }
-  ];
+function loadGuardrailsConfig() {
+  const configPath = path.join(PROJECT_ROOT, 'specs', 'docs', 'guardrails.json');
+  
+  if (!fs.existsSync(configPath)) {
+    log(`${YELLOW}⚠️  guardrails.json não encontrado - usando regras fallback${RESET}`, YELLOW);
+    return getFallbackRules();
+  }
+  
+  try {
+    const content = fs.readFileSync(configPath, 'utf8');
+    return JSON.parse(content);
+  } catch {
+    log(`${YELLOW}⚠️  Erro ao ler guardrails.json - usando regras fallback${RESET}`, YELLOW);
+    return getFallbackRules();
+  }
 }
 
-function runVerifyPatterns(stagedFiles) {
+function checkRegex(content, pattern) {
+  try {
+    return new RegExp(pattern).test(content);
+  } catch {
+    return false;
+  }
+}
+
+function checkComponentProps(content) {
+  if (!content.endsWith('.tsx')) return false;
+  const hasComponent = /(?:export\s+)?(?:const|function)\s+[A-Z]\w+/.test(content);
+  if (!hasComponent) return false;
+  if (content.includes('export default function')) return false;
+  const hasPropsType = 
+    /(?:interface|type)\s+\w+Props/.test(content) || 
+    /props:\s*\{/.test(content) ||
+    /import\s+(?:type\s+)?\{[^}]*Props[^}]*\}/.test(content);
+  return !hasPropsType;
+}
+
+function checkKebabCase(filePath) {
+  const fileName = path.basename(filePath);
+  if (fileName === 'page.tsx' || fileName === 'layout.tsx') return false;
+  if (fileName.endsWith('.spec.ts')) return false;
+  if (fileName.endsWith('.json')) return false;
+  if (fileName.endsWith('.config.ts')) return false;
+  const kebabCasePattern = /^[a-z][a-z0-9]*(?:-[a-z0-9]+)*\.(tsx?|ts)$/;
+  return !kebabCasePattern.test(fileName);
+}
+
+function checkLineCount(content) {
+  const lines = content.split('\n').length;
+  return lines > 500;
+}
+
+function checkTestPage(filePath, allFiles) {
+  if (!filePath.endsWith('.spec.ts')) return false;
+  const featureMatch = filePath.match(/features\/([^\/]+)/);
+  if (!featureMatch) return false;
+  const feature = featureMatch[1];
+  const testPageExists = allFiles.some(f => 
+    f.includes(`features/${feature}`) && f.includes('/test-') && f.endsWith('/page.tsx')
+  );
+  return !testPageExists;
+}
+
+function runVerifyPatterns(stagedFiles, config) {
   log(`\n${CYAN}🔍 Verificando padrões do projeto...${RESET}\n`);
+  log(`${CYAN}📋 Regras carregadas de guardrails.json${RESET}\n`);
 
   const srcFiles = stagedFiles.filter(f => 
     f.startsWith('frontend/src/') && 
@@ -109,7 +120,7 @@ function runVerifyPatterns(stagedFiles) {
 
   log(`📁 Arquivos staged: ${srcFiles.length}\n`);
 
-  const rules = getRuleCheckers();
+  const rules = config.rules || [];
   let hasError = false;
   const issues = [];
 
@@ -121,11 +132,45 @@ function runVerifyPatterns(stagedFiles) {
     const content = fs.readFileSync(fullPath, 'utf8');
 
     for (const rule of rules) {
+      if (!rule.check) continue;
+      
       try {
-        if (rule.check(content, fullPath)) {
-          const issue = `${rule.severity === 'error' ? '❌' : '⚠️'} ${file}: ${rule.message} [${rule.id}]`;
-          issues.push({ rule: rule.severity, message: issue });
-          if (rule.severity === 'error') {
+        let violated = false;
+        const check = rule.check;
+        
+        switch (check.type) {
+          case 'regex':
+            if (check.pattern) {
+              violated = checkRegex(content, check.pattern);
+            }
+            break;
+            
+          case 'line-count':
+            violated = checkLineCount(content);
+            break;
+            
+          case 'component-props':
+            violated = checkComponentProps(content);
+            break;
+            
+          case 'kebab-case':
+            violated = checkKebabCase(fullPath);
+            break;
+            
+          case 'test-page':
+            violated = checkTestPage(file, stagedFiles);
+            break;
+            
+          default:
+            break;
+        }
+        
+        if (violated) {
+          const severity = rule.severity === 'warning' ? 'warning' : 'error';
+          const icon = severity === 'error' ? '❌' : '⚠️';
+          const issue = `${icon} ${file}: ${check.message} [${rule.id}]`;
+          issues.push({ rule: severity, message: issue });
+          if (severity === 'error') {
             hasError = true;
           }
         }
@@ -141,15 +186,17 @@ function runVerifyPatterns(stagedFiles) {
   if (errors.length > 0) {
     log(`${RED}Erros encontrados:${RESET}`);
     errors.forEach(e => log(e.message, RED));
+    log('');
   }
 
   if (warnings.length > 0) {
     log(`${YELLOW}Avisos:${RESET}`);
     warnings.forEach(w => log(w.message, YELLOW));
+    log('');
   }
 
   if (hasError) {
-    log(`\n${RED}❌ VERIFICAÇÃO FALHOU${RESET}`);
+    log(`${RED}❌ VERIFICAÇÃO FALHOU${RESET}`);
     return false;
   }
 
@@ -219,7 +266,6 @@ function runPlaywrightTests(stagedFiles) {
 function main() {
   log(`${CYAN}🚀 Pre-commit validation...${RESET}\n`);
 
-  // 1. Get staged files
   const stagedFiles = getStagedFiles();
   
   if (stagedFiles.length === 0) {
@@ -230,13 +276,13 @@ function main() {
 
   log(`📌 Arquivos staged: ${stagedFiles.length}\n`);
 
-  // 2. Run code pattern verification
-  if (!runVerifyPatterns(stagedFiles)) {
+  const config = loadGuardrailsConfig();
+
+  if (!runVerifyPatterns(stagedFiles, config)) {
     log(`\n${RED}❌ PRE-COMMIT BLOQUEADO - Padrões de código${RESET}`);
     process.exit(1);
   }
 
-  // 3. Run Playwright tests
   /* if (!runPlaywrightTests(stagedFiles)) {
     log(`\n${RED}❌ PRE-COMMIT BLOQUEADO - Testes falharam${RESET}`);
     process.exit(1);

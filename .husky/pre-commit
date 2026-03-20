@@ -1,4 +1,10 @@
 #!/bin/sh
 
+# Generate guardrails.json from markdown
+bun .opencode/scripts/generate-guardrails-json.ts
+
+# Agent Learnings Destillation
+bun .opencode/scripts/agent-learnings-destiller.ts
+
 # Pre-commit validation
 cd frontend && pnpm run pre-commit

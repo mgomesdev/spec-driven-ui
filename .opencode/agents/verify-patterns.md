@@ -60,10 +60,12 @@ Este sub-agent DEVE receber:
 
 Carregar os seguintes documentos **OBRIGATORIAMENTE** antes de iniciar:
 
-1. `specs/docs/convencoes-codigo.md` — Nomenclatura, padrões de código
-2. `specs/docs/guardrails.md` — Antipadrões a evitar
+1. `specs/docs/guardrails.json` — Antipadrões a evitar (gerado automaticamente do .md)
+2. `specs/docs/convencoes-codigo.md` — Nomenclatura, padrões de código
 3. `specs/docs/architecture.md` — Estrutura de pastas
 4. `specs/features/[nome-da-feature]/plan.md` — Contrato da feature
+
+> **Nota**: `guardrails.json` é gerado automaticamente do `guardrails.md` pelo script `.opencode/scripts/generate-guardrails-json.ts` durante o pre-commit. Se não existir, leia o `guardrails.md` como fallback.
 
 ---
 
