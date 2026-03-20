@@ -89,7 +89,7 @@ Exemplo: feat(header): add logo navigation
 
 | Papél | Responsabilidade |
 |-------|------------------|
-| **Dev Junior** | Implementar seguindo TDD/BDD |
+| **Dev** | Implementar seguindo TDD/BDD |
 | **Dev Senior** | Code review, arquitetura |
 | **Tech Lead** | Decisões técnicas, mentor |
 | **PO** | Requisitos de negócio |

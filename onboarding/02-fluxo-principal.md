@@ -140,7 +140,7 @@ Gate executa automaticamente:
 
 ```
 ┌─────────────────────────────────────────────────────────────────────────┐
-│                         SUA ENTRADA COMO DEV JÚNIOR                     │
+│                         SUA ENTRADA NO FLUXO                          │
 └─────────────────────────────────────────────────────────────────────────┘
 
    RESEARCH ──→ PLAN ──────→ *.feature
@@ -175,7 +175,7 @@ Gate executa automaticamente:
 |-------|-------------------|
 | **PO** | Research, Requirements, *.feature |
 | **Tech Lead** | Plan, Code Review, Architecture |
-| **Dev Junior** | TDD, Implementação, Gate |
+| **Dev** | TDD, Implementação, Gate |
 | **Husky (bot)** | Validação automática no commit |
 
 ---

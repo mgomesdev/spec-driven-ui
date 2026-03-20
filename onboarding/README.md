@@ -1,4 +1,4 @@
-# Onboarding: Desenvolvedor Júnior
+# Onboarding
 
 Bem-vindo(a) ao time! Este guia vai te levar do zero ao pahlawan (héroi) do spec-driven development.
 
@@ -37,7 +37,7 @@ Bem-vindo(a) ao time! Este guia vai te levar do zero ao pahlawan (héroi) do spe
 
 ```
 ┌─────────────────────────────────────────────────────────────────┐
-│                    SEU CAMINHO COMO DEV JÚNIOR                   │
+│                    SEU CAMINHO NO PROJETO                         │
 └─────────────────────────────────────────────────────────────────┘
 
    ┌──────────────┐
@@ -68,7 +68,7 @@ Bem-vindo(a) ao time! Este guia vai te levar do zero ao pahlawan (héroi) do spe
 | Erro no setup | `03-primeiros-passos.md` |
 | Erro no Gate | `06-gate.md` |
 | Conceito unclear | `10-glossario.md` |
-| Ainda perdido? | Pergunte no canal #dev-junior |
+| Ainda perdido? | Pergunte no canal do time |
 
 ---
 

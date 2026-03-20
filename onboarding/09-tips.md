@@ -235,7 +235,7 @@ Se TUDO verde → git add . && git commit -m "feat: ..."
   
   Cada pequeno passo conta!
   
-  Compartilhe suas conquistas no #dev-junior!
+  Compartilhe suas conquistas no time!
 ```
 
 ---
