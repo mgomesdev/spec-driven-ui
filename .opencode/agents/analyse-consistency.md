@@ -34,7 +34,7 @@ research.md → plan.md → *.feature → implement
 Cada artefato é gerado pelo agente anterior:
 - **us-to-research**: Gera `research.md` a partir de requisitos/US
 - **research-to-plan**: Gera `plan.md` a partir de `research.md`
-- **plan-to-feature**: Gera cenários `*.feature` a partir de `plan.md`
+- **bdd-generator**: Gera cenários `*.feature` a partir de `plan.md`
 - **implement**: Implementa os cenários do *.feature
 
 ## Etapas de Execução

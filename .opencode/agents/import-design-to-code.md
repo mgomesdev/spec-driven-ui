@@ -1,5 +1,5 @@
 ---
-name: import-design-to-design
+name: import-design-to-code
 description: "Importa design validado do Pencil de volta para o código. Após o design revisar e ajustar a proposal, este agente lê as alterações do .pen e atualiza o código fonte."
 mode: subagent
 temperature: 0.3
