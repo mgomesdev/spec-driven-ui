@@ -31,7 +31,6 @@ Este sub-agent DEVE receber:
 - `nome-da-feature`: Nome da feature em kebab-case
 - `us-id`: ID da User Story (ex: US-001)
 - `subtask-id`: ID da subtask (ex: 1.1)
-- `caminho-tasks`: Caminho para tasks.md da feature
 
 ---
 

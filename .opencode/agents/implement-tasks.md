@@ -31,12 +31,91 @@ Exemplo:
    - `specs/docs/pre-commit.md`
 
 2. **Leia o contexto da feature**:
-   - `specs/features/[nome-da-feature]/tasks.md`
+   - `specs/features/[nome-da-feature]/features/[nome-da-feature].feature`
    - `specs/features/[nome-da-feature]/plan.md`
    - `specs/features/[nome-da-feature]/progress.md`
 
 3. **Verifique o branch**:
    - Se não existir, crie: `git checkout -b feat/[nome-feature]/[us-id]`
+
+---
+
+## Integração com BDD Workflow
+
+Se existir `*.spec.docs.md` (gerado por `@tdd-generator`), leia-o para guidance:
+
+```
+specs/features/[nome-da-feature]/features/[nome-da-feature].feature  → Cenários BDD
+frontend/tests/features/[nome-da-feature]/[nome-da-feature].spec.docs.md  → Docs de implementação
+```
+
+**O que obter do *.spec.docs.md:**
+
+| Informação | Como Usar |
+|-----------|-----------|
+| **data-testids** | Usar nos locators dos testes e implementação |
+| **Passos de implementação** | Seguir ordem sugerida |
+| **Referências (links)** | Consultar para validar Tailwind/React correto |
+| **Snippets de código** | Usar como referência inicial, adaptar ao contexto |
+
+**Se *.spec.docs.md NÃO existir:**
+- Usar convenções padrão de data-testids
+- Seguir *.feature para cenários BDD
+
+---
+
+## Fluxo BDD Direto (Mudança de Requisito)
+
+Quando um requisito muda mas NÃO precisa de research completo:
+
+### Quando Usar BDD Direto
+
+| Situação | Exemplo | Ação |
+|----------|---------|------|
+| Valor numérico mudou | "Header 80px" → "Header 64px" | BDD Direto |
+| Cor/styling mudou | "Botão primário #FF5733" | BDD Direto |
+| Quantidade em lista | "Menu 5 itens" (era 4) | BDD Direto |
+| Novo viewport | Adicionar @tablet | BDD Direto |
+| Validação simples | "Email válido", "6+ caracteres" | BDD Direto |
+
+### Quando Usar Research Completo
+
+| Situação | Exemplo | Ação |
+|----------|---------|------|
+| Nova funcionalidade | "Adicionar checkout" | Research Completo |
+| Prop nova na interface | `onLogout: () => void` | Research Completo |
+| Serviço novo parâmetro | `fetchUser(id, { token })` | Research Completo |
+| Novo endpoint/página | "/settings" | Research Completo |
+
+### Fluxo BDD Direto
+
+```
+1. PO atualiza *.feature (cenário modificado ou novo)
+2. @tdd-generator feature=[nome] → Regenera *.spec.ts
+3. @implement-tasks → Implementa cenários afetados
+4. *.feature: @pending → @done
+5. PR
+```
+
+### Árvore de Decisão Rápida
+
+```
+Requisito mudou
+      │
+      ├── Nova funcionalidade/arquitetura?
+      │      │
+      │      ├── Sim → @us-to-research → research.md → plan.md → @bdd-generator
+      │      │
+      │      └── Não (só ajusta/refina)
+      │             │
+      │             ├── *.feature atualizado
+      │             ├── @tdd-generator
+      │             └── @implement-tasks
+      │
+      └── Só critério de aceite mudou?
+             │
+             └── *.feature (critério) → @tdd-generator → @implement-tasks
+```
 
 ---
 
@@ -67,6 +146,34 @@ Exemplo:
 
 ---
 
+## Uso de Data-Testids do *.spec.docs.md
+
+Ao criar testes ou implementar código, siga os data-testids documentados:
+
+```typescript
+// Exemplo de uso em testes
+const header = page.locator('[data-testid="header"]');
+const logo = page.locator('[data-testid="header-logo"]');
+const menu = page.locator('[data-testid="header-desktop-menu"]');
+const hamburger = page.locator('[data-testid="hamburger-button"]');
+const overlay = page.locator('[data-testid="header-mobile-overlay"]');
+```
+
+```tsx
+// Exemplo de uso em componentes
+<header data-testid="header" className="fixed top-0 w-full h-[80px]">
+  <a data-testid="header-logo" href="/">Logo</a>
+  <nav data-testid="header-desktop-menu">...</nav>
+</header>
+```
+
+**Convenção de nomenclatura:**
+- `{component}-{element}` para elementos específicos (ex: `header-logo`)
+- `{element}` para elementos globais (ex: `header`, `hamburger-button`)
+- `{component}-{element}-{index}` para listas (ex: `header-nav-0`)
+
+---
+
 ## Gate de Validação (TDD First)
 
 **REGRA CRÍTICA**: SEMPRE criar teste que falha ANTES de escrever qualquer código de implementação.
@@ -78,8 +185,12 @@ Execute nesta ordem:
 @tdd-playwright execute tdd da [us-id] subtask [subtask-id] para [nome-da-feature]
 ```
 **PASSO 1**: Execute @tdd-playwright PRIMEIRO - o teste deve FALHAR sem implementação
-**PASSO 2**: Implemente o código mínimo para passar
-**PASSO 3**: Execute @tdd-playwright novamente - agora deve PASSAR
+
+**PASSO 2**: Se *.spec.docs.md existir, leia os passos de implementação documentados para o cenário atual. Use os data-testids especificados e as referências de Tailwind/React recomendadas.
+
+**PASSO 3**: Implemente o código mínimo para passar
+
+**PASSO 4**: Execute @tdd-playwright novamente - agora deve PASSAR
 - Se falhou na etapa 1 (sem código): corrija teste ou aguarde implementação
 - Se falhou na etapa 3: corrija código + registre erro + retry
 
@@ -143,7 +254,7 @@ Quando TODAS as subtasks de uma US estiverem verdes:
 
 1. Retorne ao humano: "✅ US [ID] completa. Aprova o encerramento?"
 2. Se humano APPROVA:
-   - Atualize `tasks.md`: altere `Passes: false` para `Passes: true` na US
+   - Atualize `*.feature`: altere `@pending` para `@done` no cenário correspondente
    - CHAME @agent-learnings-runner para registrar aprendizados da US (deduplição >60%)
    - Execute COMMIT
    - Execute DESTILAÇÃO GLOBAL dos padrões (ler progress.md → mapear para specs/docs/*)
@@ -212,7 +323,7 @@ git commit -m "docs: destilação de aprendizados da US-[id] para [nome-da-featu
 ```
 INÍCIO:
   1. Ler docs globais (uma vez)
-  2. Ler tasks.md + plan.md + progress.md
+  2. Ler *.feature + plan.md + progress.md
   3. Verificar/criar branch
 
 POR SUBTASK (TDD FIRST):
@@ -226,7 +337,7 @@ POR SUBTASK (TDD FIRST):
   8. Se verde: registrar acerto + retornar ao humano
 
 US COMPLETA + APROVADO:
-  1. Atualizar tasks.md (Passes: true)
+  1. Atualizar *.feature (@pending → @done)
   2. CHAMAR @agent-learnings-runner (deduplição >60%)
   3. Commitar
   4. Executar destilação GLOBAL (progress.md → specs/docs/*)

@@ -31,9 +31,10 @@ Exemplos:
 
 1. Parsear a entrada para extrair nomes das features
 2. Para cada feature, verificar:
-   - `specs/features/[feature]/tasks.md` existe
+   - `specs/features/[feature]/features/[feature].feature` existe
    - Branch `us/[feature]` não existe
    - Diretório `../spec-driven-ui-[feature]` não existe
+   - `frontend/tests/features/[feature]/[feature].spec.ts` será gerado
 
 3. Se alguma validação falhar:
    - Informar erro e abortar

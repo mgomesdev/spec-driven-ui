@@ -42,6 +42,18 @@ frontend/tests/features/[feature]/
 
 ---
 
+## Mapeamento de Tags para Testes
+
+| Tag | Significado | Como Testar |
+|-----|-------------|-------------|
+| `@happy` | Fluxo normal (sucesso) | Teste positivo |
+| `@rule` | Regra de negócio | Assert de validação/bloqueio |
+| `@defensive` | Proteção (Lei de Murphy) | Double-click, rapid toggle |
+| `@state` | Estados (loading/erro/sucesso) | Espera de estado |
+| `@component` | Componente específico | Renderização |
+
+---
+
 ## Templates de Mapeamento
 
 ### Given → Setup
@@ -215,16 +227,168 @@ const DATA_TESTID_CONVENTION = {
   'fechar': 'close-overlay-button',
   'nav item': 'header-nav-{index}',
   
-  // Form
+  // Form / Checkout
   'form': '{component}-form',
   'input': '{component}-input',
   'submit': '{component}-submit',
+  'submit button': '{component}-submit-button',
   'erro': '{component}-error',
+  'loading': '{component}-loading',
   
   // Generic
   'botão': '{component}-button',
   'link': '{component}-link',
   'container': '{component}-container',
+};
+```
+
+### Templates para Cenários @defensive (Lei de Murphy)
+
+```typescript
+const DEFENSIVE_TEMPLATES = {
+  'double-click prevention': {
+    template: `// Simular clique duplo/rápido
+await page.locator('{selector}').click();
+await page.locator('{selector}').click();
+await page.locator('{selector}').click();
+
+// Verificar que ação ocorreu apenas uma vez
+const counter = await getActionCounter();
+expect(counter).toBe(1);`,
+    description: 'Previne double-click causando ações duplicadas',
+    references: [
+      { name: 'click', link: 'https://playwright.dev/docs/input#click' },
+    ],
+  },
+  
+  'button disabled on click': {
+    template: `// Clicar e verificar desabilitação imediata
+await expect(page.locator('{selector}')).toBeEnabled();
+await page.locator('{selector}').click();
+await expect(page.locator('{selector}')).toBeDisabled();
+await expect(page.locator('{selector}')).toHaveText(/loading|processando/i);`,
+    description: 'Botão desabilita imediatamente após clique',
+    references: [
+      { name: 'toBeDisabled', link: 'https://playwright.dev/docs/test-assertions#expect-locator-to-be-disabled' },
+    ],
+  },
+  
+  'rapid toggle': {
+    template: `// Toggle rápido
+for (let i = 0; i < 5; i++) {
+  await page.locator('{selector}').click();
+}
+// Verificar estado final consistente
+await expect(page.locator('{state-selector}')).toHaveState('closed');`,
+    description: 'Toggle rápido não causa estado inconsistente',
+    references: [
+      { name: 'click', link: 'https://playwright.dev/docs/input#click' },
+    ],
+  },
+  
+  'timeout preserves data': {
+    template: `// Preencher form
+await page.fill('{input-selector}', 'valor');
+// Forçar timeout (simular)
+// Verificar dados preservados
+await expect(page.locator('{input-selector}')).toHaveValue('valor');`,
+    description: 'Timeout não perde dados do formulário',
+    references: [
+      { name: 'page.fill', link: 'https://playwright.dev/docs/input#filling-inputs' },
+      { name: 'toHaveValue', link: 'https://playwright.dev/docs/test-assertions#expect-locator-to-have-value' },
+    ],
+  },
+};
+```
+
+### Templates para Cenários @state (Estados)
+
+```typescript
+const STATE_TEMPLATES = {
+  'loading state': {
+    template: `// Trigger ação assíncrona
+await page.click('{submit-selector}');
+// Verificar loading
+await expect(page.locator('{loading-selector}')).toBeVisible();
+// Aguardar conclusão
+await page.waitForSelector('{success-selector}');`,
+    description: 'Estado de loading durante processamento',
+    references: [
+      { name: 'waitForSelector', link: 'https://playwright.dev/docs/api/class-page#page-wait-for-selector' },
+    ],
+  },
+  
+  'error state': {
+    template: `// Trigger ação
+await page.click('{submit-selector}');
+// Simular erro (mock ou intercept)
+// Verificar mensagem de erro
+await expect(page.locator('{error-selector}')).toContainText('{error-message}');
+// Verificar que dados permanecem
+await expect(page.locator('{input-selector}')).toHaveValue('{previous-value}');`,
+    description: 'Estado de erro com mensagem clara',
+    references: [
+      { name: 'toContainText', link: 'https://playwright.dev/docs/test-assertions#expect-locator-to-contain-text' },
+    ],
+  },
+  
+  'success state': {
+    template: `// Trigger ação
+await page.click('{submit-selector}');
+// Aguardar sucesso
+await expect(page.locator('{success-selector}')).toBeVisible();
+await expect(page.locator('{success-selector}')).toContainText('{success-message}');`,
+    description: 'Estado de sucesso com feedback',
+    references: [
+      { name: 'toBeVisible', link: 'https://playwright.dev/docs/test-assertions#expect-locator-to-be-visible' },
+    ],
+  },
+};
+```
+
+### Templates para Cenários @rule (Regras de Negócio)
+
+```typescript
+const RULE_TEMPLATES = {
+  'required field validation': {
+    template: `// Deixar campo vazio
+// Tentar submeter
+await page.click('{submit-selector}');
+// Verificar erro
+await expect(page.locator('{error-selector}')).toContainText(/obrigatório|campo.*vazio/i);
+// Verificar que nada foi enviado
+expect(apiRequest).not.toHaveBeenSent();`,
+    description: 'Campo obrigatório não pode ser vazio',
+    references: [
+      { name: 'toContainText', link: 'https://playwright.dev/docs/test-assertions#expect-locator-to-contain-text' },
+    ],
+  },
+  
+  'stock validation': {
+    template: `// Tentar adicionar quantidade maior que estoque
+await page.fill('{quantity-selector}', '100');
+await page.click('{submit-selector}');
+// Verificar bloqueio
+await expect(page.locator('{error-selector}')).toContainText(/estoque|disponível/i);
+// Verificar que transação não ocorreu
+expect(apiRequest).not.toHaveBeenCalled();`,
+    description: 'Estoque insuficiente bloqueia transação',
+    references: [
+      { name: 'toContainText', link: 'https://playwright.dev/docs/test-assertions#expect-locator-to-contain-text' },
+    ],
+  },
+  
+  'zero value validation': {
+    template: `// Valor zero no carrinho
+// Tentar finalizar
+await page.click('{submit-selector}');
+// Verificar bloqueio
+await expect(page.locator('{error-selector}')).toContainText(/carrinho.*vazio|valor.*zero/i);`,
+    description: 'Valor zero bloqueia transação',
+    references: [
+      { name: 'toContainText', link: 'https://playwright.dev/docs/test-assertions#expect-locator-to-contain-text' },
+    ],
+  },
 };
 ```
 

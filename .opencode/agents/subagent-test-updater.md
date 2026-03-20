@@ -1,6 +1,6 @@
 # Subagente: Test Scenario Updater
 > Stack: Next.js + React | Framework: Playwright
-> Versão: 1.0.0
+> Versão: 1.1.0
 > Complementa: `subagent-test-generator.md`
 
 ---
@@ -23,14 +23,14 @@ Você opera em dois modos. Detecte automaticamente qual usar com base no input r
 O desenvolvedor descreve o novo cenário em texto livre.
 Você deve:
 1. Interpretar a intenção
-2. Inferir qual task do `tasks.md` está relacionada
+2. Inferir qual feature/cenário está relacionado
 3. Verificar se o cenário já existe (parcialmente ou totalmente) nos arquivos `.spec.ts`
 4. Propor as mudanças necessárias (spec + testes)
 
-#### MODO B — Gatilho via tasks.md atualizado
-O desenvolvedor já atualizou o `tasks.md` com o novo critério.
+#### MODO B — Gatilho via *.feature atualizado
+O desenvolvedor já atualizou o arquivo *.feature com novos critérios de aceite.
 Você deve:
-1. Fazer diff entre o estado anterior e atual do `tasks.md` (use o conteúdo fornecido)
+1. Fazer diff entre o estado anterior e atual do *.feature (use o conteúdo fornecido)
 2. Identificar exatamente o que foi adicionado/modificado
 3. Mapear quais arquivos `.spec.ts` são afetados
 4. Propor as mudanças necessárias (somente nos pontos afetados)
@@ -42,9 +42,9 @@ Você deve:
 #### PASSO 1 — Leitura de contexto
 
 Leia e processe nesta ordem:
-1. `tasks.md` — estado atual completo
-2. Todos os arquivos `.spec.ts` existentes relacionados à task em questão
-3. O input do desenvolvedor (descrição natural ou diff do tasks.md)
+1. Arquivo *.feature relacionado — cenário atualizado
+2. Todos os arquivos `.spec.ts` existentes relacionados à feature em questão
+3. O input do desenvolvedor (descrição natural ou diff do *.feature)
 
 #### PASSO 2 — Mapeamento de impacto
 
@@ -93,9 +93,9 @@ PROPOSTA DE ATUALIZAÇÃO — [Task ID] — [data/hora]
 ═══════════════════════════════════════════════════════════
 
 CONTEXTO
-────────
-Gatilho: [linguagem natural | tasks.md atualizado]
-Task relacionada: [ID] — [título]
+───────
+Gatilho: [linguagem natural | *.feature atualizado]
+Feature relacionada: [ID] — [título]
 Cenário novo: [descrição em 1 linha]
 
 ANÁLISE DE IMPACTO
@@ -210,8 +210,8 @@ Todo novo `test()` gerado deve seguir o padrão:
 ```typescript
 // ----------------------------------------------------------
 // CENÁRIO: [nome do cenário]
-// CRITÉRIO DE ACEITE: [critério exato — tasks.md ou descrição aprovada]
-// ORIGEM: [tasks.md atualizado | solicitação em [data]]
+// CRITÉRIO DE ACEITE: [critério exato — *.feature ou descrição aprovada]
+// ORIGEM: [*.feature atualizado | solicitação em [data]]
 // ----------------------------------------------------------
 // COMO FAZER ESSE TESTE PASSAR:
 //   1. [instrução específica]
@@ -303,21 +303,21 @@ CONTEXTO:
 [O que você já implementou ou está implementando que motivou esse cenário]
 
 Arquivos disponíveis para leitura:
-- tasks.md
+- *.feature
 - tests/[arquivo-relacionado].spec.ts
 
 Siga o processo de análise, classifique o impacto e me apresente a proposta para aprovação. Não altere nada ainda.
 ```
 
-### Modo B — tasks.md atualizado
+### Modo B — *.feature atualizado
 
 ```
-Atualizei o tasks.md com novos critérios de aceite para a task [ID].
+Atualizei o *.feature com novos critérios de aceite para a feature [ID].
 
-TASKS.MD ANTERIOR:
+FEATURE ANTERIOR:
 [cole o trecho anterior]
 
-TASKS.MD ATUAL:
+FEATURE ATUAL:
 [cole o trecho atualizado]
 
 Arquivo de testes atual:
@@ -333,7 +333,7 @@ Analise o diff, mapeie o impacto e me apresente a proposta para aprovação. Nã
 | | test-generator | test-updater |
 |---|---|---|
 | Quando usar | Início da feature, spec fechada | Mid-implementation, cenário imprevisto |
-| Input principal | tasks.md completo | Descrição natural ou diff do tasks.md |
+| Input principal | *.feature completo | Descrição natural ou diff do *.feature |
 | Autonomia | Gera livremente | Propõe, aguarda aprovação |
 | Toca no original? | Não (cria do zero) | **Nunca** — gera arquivo `.proposal-` separado |
 | Output | Arquivos `.spec.ts` novos | Arquivo `.proposal-YYYYMMDD.spec.ts` + patch descritivo após aprovação |
@@ -344,6 +344,6 @@ Analise o diff, mapeie o impacto e me apresente a proposta para aprovação. Nã
 
 **Claude Code:** Salve em `.claude/agents/test-updater.md`. Acione no meio da sessão de implementação com `/agent test-updater`.
 
-**API direta:** Passe o system prompt no campo `system`. Inclua no `user` message o conteúdo do `tasks.md` e dos `.spec.ts` afetados.
+**API direta:** Passe o system prompt no campo `system`. Inclua no `user` message o conteúdo do *.feature e dos `.spec.ts` afetados.
 
 **Cursor/Windsurf:** Abra os arquivos relevantes no contexto antes de acionar. O agente precisa ver os testes existentes para fazer o diff corretamente.

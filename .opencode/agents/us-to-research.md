@@ -7,7 +7,7 @@ temperature: 0.1
 
 ## Acionamento
 
-- use a skill us-to-research para converter a US do product owner para o research de desenvolvimento'. Deve ser usada ANTES do plan e do tasks.
+- use a skill us-to-research para converter a US do product owner para o research de desenvolvimento'. Deve ser usada ANTES do plan.
 
 ## Funcionamento
 
@@ -27,10 +27,10 @@ Quando a feature for uma **page, template ou organism** que contém componentes 
 2. **Para cada componente filho, verifique se já foi implementado:**
     - Verifique se existe `specs/features/[nome-do-componente]/research.md`
     - Verifique se existe `specs/features/[nome-do-componente]/plan.md`
-    - Verifique se existe `specs/features/[nome-do-componente]/tasks.md`
+    - Verifique se existe `specs/features/[nome-do-componente]/*.feature`
 3. **Classifique cada componente:**
-   - ✅ **Implementado:** possui research, plan e tasks
-   - ⚠️ **Parcialmente implementado:** possui research e/ou plan, mas sem tasks completo
+   - ✅ **Implementado:** possui research, plan e *.feature com cenários implementados
+   - ⚠️ **Parcialmente implementado:** possui research e/ou plan, mas sem *.feature completo
    - ❌ **Não implementado:** não existe ou está incompleto
 4. **Ação conforme classificação:**
    - Se **todos os filhos estão ✅ implementados**: prosseguir normalmente com o research
@@ -38,7 +38,7 @@ Quando a feature for uma **page, template ou organism** que contém componentes 
      - Marcar a feature como **"BLOCKED por dependências"**
      - Listar explicitamente as dependências faltantes no research
      - Encerrar com alerta de que a feature não pode ser implementada até que as dependências estejam disponíveis
-     - **NÃO criar tasks para esta feature** até que as dependências sejam resolvidas
+     - **NÃO criar *.feature para esta feature** até que as dependências sejam resolvidas
 5. **Após implementação de uma dependência:**
    - O research da feature principal deve ser **atualizado** para referenciar o componente já implementado
    - Adicionar na seção "Referências Visuais" ou criar nova seção "Dependências Implementadas" com links para os componentes
@@ -79,7 +79,7 @@ Gere o arquivo completo e salve em `specs/features/[nome-da-feature]/research.md
 O research.md deve conter:
 - Seção "Dependências Bloqueando Implementação" listando todos os componentes necessários
 - Cada dependência deve indicar: nome, tipo (atom/molecule/organism), status atual
-- Instrução clara de que tasks NÃO devem ser criadas até dependências resolvidas
+- Instrução clara de que *.feature NÃO deve ser criado até dependências resolvidas
 
 **Apresente um resumo ao usuário:**
 
@@ -88,10 +88,10 @@ O research.md deve conter:
 
 Dependências necessárias:
 - [ ] Button (atom) - não existe
-- [ ] Card (molecule) - research existe, mas sem tasks
+- [ ] Card (molecule) - research existe, mas sem *.feature completo
 - [ ] Header (organism) - ✓ implementado
 
-Esta feature só poderá ter suas tasks geradas após as dependências acima estarem com status "implementado" (possuir research + plan + tasks).
+Esta feature só poderá ter seus cenários *.feature gerados após as dependências acima estarem com status "implementado" (possuir research + plan + *.feature).
 ```
 
 ```
@@ -167,13 +167,13 @@ Liste os componentes necessários para esta feature e seu status:
 | Header | organism | ❌ Não implementado | - |
 
 **Status的含义:**
-- ✅ **Implementado:** possui research.md + plan.md + tasks.md completos
-- ⚠️ **Parcialmente implementado:** possui research.md (e/ou plan.md), mas sem tasks completo
+- ✅ **Implementado:** possui research.md + plan.md + *.feature completos
+- ⚠️ **Parcialmente implementado:** possui research.md (e/ou plan.md), mas sem *.feature completo
 - ❌ **Não implementado:** não existe ou está incompleto
 
 **Se houver dependências não implementadas:**
 - Esta feature está **BLOQUEADA** até que as dependências estejam ✅ implementadas
-- **NÃO criar tasks** para esta feature enquanto houver dependências ❌ ou ⚠️
+- **NÃO criar *.feature** para esta feature enquanto houver dependências ❌ ou ⚠️
 
 ## 6. Requisitos Funcionais
 
@@ -223,7 +223,7 @@ Liste explicitamente o que NÃO será feito nesta entrega:
 1. **Primeira vez:** Feature principal é criada, mas marcada como BLOQUEADA
 2. **Implementar dependências:** Cada componente filho é implementado individualmente
 3. **Atualizar research:** Após dependência atingir status ✅, atualizar research.md da feature principal
-4. **Criar tasks:** Só após todas as dependências ✅, o research-to-plan pode gerar tasks para a feature principal
+4. **Criar *.feature:** Só após todas as dependências ✅, o plan pode ser convertido para cenários *.feature
 
 ## Lista de Verificação (antes de salvar)
 

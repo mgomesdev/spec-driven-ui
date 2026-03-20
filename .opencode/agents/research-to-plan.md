@@ -13,7 +13,7 @@ permission:
 
 # Acionamento
 
-gere o plan.md. Deve ser usada APÓS o research.md estar aprovado e ANTES de gerar o tasks.md. 
+gere o plan.md. Deve ser usada APÓS o research.md estar aprovado e ANTES de gerar os cenários *.feature. 
 
 ## Funcionamento
 

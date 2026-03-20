@@ -1,6 +1,6 @@
 ---
 name: analyze-consistency
-description: "Realizar uma análise não destrutiva de consistência e qualidade entre artefatos nos arquivos research.md, plan.md e tasks.md após a geração das tarefas."
+description: "Realizar uma análise não destrutiva de consistência e qualidade entre artefatos nos arquivos research.md, plan.md e *.feature após a geração dos cenários."
 mode: subagent
 temperature: 0.1
 permissions:
@@ -17,7 +17,7 @@ Você **DEVE** considerar a entrada do usuário antes de prosseguir (se não est
 
 ## Meta
 
-Identifique inconsistências, duplicações, ambiguidades e itens subespecificados nos três artefatos principais (`research.md`, `plan.md`, `tasks.md`) antes da implementação. Este comando DEVE ser executado somente após o arquivo `tasks.md` ter cido gerado com sucesso.
+Identifique inconsistências, duplicações, ambiguidades e itens subespecificados nos três artefatos principais (`research.md`, `plan.md`, `*.feature`) antes da implementação. Este comando DEVE ser executado somente após o arquivo `*.feature` ter sido gerado com sucesso.
 
 ## Restrições Operacionais
 
@@ -28,14 +28,14 @@ Identifique inconsistências, duplicações, ambiguidades e itens subespecificad
 O projeto segue o seguinte fluxo de artefatos:
 
 ```
-research.md → plan.md → tasks.md → implement-tasks
+research.md → plan.md → *.feature → implement
 ```
 
 Cada artefato é gerado pelo agente anterior:
 - **us-to-research**: Gera `research.md` a partir de requisitos/US
 - **research-to-plan**: Gera `plan.md` a partir de `research.md`
-- **plan-to-tasks**: Gera `tasks.md` a partir de `plan.md`
-- **implement-tasks**: Executa as histórias do `tasks.md`
+- **plan-to-feature**: Gera cenários `*.feature` a partir de `plan.md`
+- **implement**: Implementa os cenários do *.feature
 
 ## Etapas de Execução
 
@@ -46,7 +46,7 @@ O usuário deve fornecer o nome da feature no formato `nome-da-feature`.
 Derive os caminhos absolutos:
 - RESEARCH = `specs/features/[nome-da-feature]/research.md`
 - PLANO = `specs/features/[nome-da-feature]/plan.md`
-- TAREFAS = `specs/features/[nome-da-feature]/tasks.md`
+- FEATURE = `specs/features/[nome-da-feature]/*.feature`
 
 Interrompa o processo com uma mensagem de erro se algum arquivo necessário estiver faltando (instrua o usuário a executar o comando necessário para o arquivo em falta).
 
@@ -71,11 +71,10 @@ Carregar apenas o contexto mínimo necessário de cada artefato:
 - Hooks Customizados
 - Diagrama de Dependências
 
-**Do arquivo tasks.md:**
-- IDs de User Stories
-- Descrições
-- Artefatos (cria/modifica)
-- Contexto do plan
+**Dos arquivos *.feature:**
+- IDs de Cenários
+- Descrições (Given/When/Then)
+- Tags (@pending, @ui, @api, etc.)
 - Critérios de Aceitação
 
 **Da constituição do projeto:**
@@ -150,7 +149,7 @@ Gere um relatório em Markdown (sem gravar arquivos) com a seguinte estrutura:
 
 - Research: `specs/features/[nome-da-feature]/research.md`
 - Plan: `specs/features/[nome-da-feature]/plan.md`
-- Tasks: `specs/features/[nome-da-feature]/tasks.md`
+- Feature: `specs/features/[nome-da-feature]/*.feature`
 
 ### Tabela de Descobertas
 
@@ -179,9 +178,9 @@ Gere um relatório em Markdown (sem gravar arquivos) com a seguinte estrutura:
 ### Métricas
 
 - Total de User Stories no research: X
-- Total de User Stories no tasks: Y
+- Total de Cenários no *.feature: Y
 - Total de requisitos funcionais: Z
-- Cobertura % (RF com >=1 task): W%
+- Cobertura % (RF com >=1 cenário): W%
 - Contagem de ambiguidades: N
 - Contagem de duplicatas: M
 
@@ -191,7 +190,7 @@ Ao final do relatório, apresente um bloco conciso de Próximas Ações:
 
 - Se existirem problemas CRÍTICOS: Recomenda-se resolvê-los antes da implementação
 - Se apenas BAIXO/MÉDIO: O usuário pode prosseguir para implementação
-- Forneça sugestões explícitas de comandos: por exemplo, "Execute /speckit.research-to-plan com refinamento", "Edite manualmente tasks.md para adicionar cobertura para 'performance-metrics'"
+- Forneça sugestões explícitas de comandos: por exemplo, "Execute /speckit.research-to-plan com refinamento", "Edite manualmente *.feature para adicionar cobertura para 'performance-metrics'"
 
 ### 8. Oferecer Remediação
 
