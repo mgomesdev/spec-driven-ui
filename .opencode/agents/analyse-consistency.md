@@ -120,7 +120,7 @@ Qualquer requisito ou elemento do plano que entre em conflito com um princípio 
 #### E. Lacunas de Cobertura
 
 - User Stories sem tarefas associadas
-- Requisitos funcionais do research sem cobertura no plan/tasks
+- Requisitos funcionais do research sem cobertura no plan/*.feature
 - Requisitos não funcionais (性能, segurança, acessibilidade) não refletidos nas tarefas
 
 #### F. Inconsistência

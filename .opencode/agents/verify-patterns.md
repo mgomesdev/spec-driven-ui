@@ -107,7 +107,7 @@ Execute as verificações na seguinte ordem:
 
 | # | Regra | Como verificar |
 |---|-------|----------------|
-| 1 | Não implementar sem research→plan→tasks | Verificar existência dos arquivos |
+| 1 | Não implementar sem research→plan→*.feature | Verificar existência dos arquivos |
 | 2 | Não inventar contratos de API | Comparar tipos com plan.md |
 | 3 | Não usar `any` | Grep por `: any` ou `<any>` |
 | 4 | Não fazer fetch direto em componentes | Grep por `useEffect.*fetch` |

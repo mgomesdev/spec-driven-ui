@@ -216,7 +216,7 @@ Liste explicitamente o que NÃO será feito nesta entrega:
 - **Toda história com UI** deve ter **sub-agent de testes**, **sub-agent de analise estatica** como critério
 - **Não misture frontend e backend** — se a task é frontend, o critério é visual/comportamental, não "implementar endpoint"
 - **Integração é contrato**, não implementação — descreva o que o frontend espera receber/enviar, não como o backend deve funcionar
-- **Atualização pós-implementação:** Quando uma dependência for implementada (adquirir status ✅), atualize o research.md da feature principal para refletir o novo status da dependência e permitir a criação de tasks
+- **Atualização pós-implementação:** Quando uma dependência for implementada (adquirir status ✅), atualize o research.md da feature principal para refletir o novo status da dependência e permitir a criação de cenários *.feature
 
 ## Fluxo de Trabalho com Dependências
 

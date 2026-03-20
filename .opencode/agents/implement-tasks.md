@@ -1,6 +1,6 @@
 ---
 name: implement-tasks
-description: "Executa uma subtask específica de uma User Story (US). Implementa código, executa gate (TDD + Verify + Typecheck + Lint), registra no progress.md e retorna ao humano para revisão. O agente encerra a cada US completa após aprovação humana. Use este subagent para executar o plano de implementação gerado pelas skills de research, plan e tasks."
+description: "Executa uma subtask específica de uma User Story (US). Implementa código, executa gate (TDD + Verify + Typecheck + Lint), registra no progress.md e retorna ao humano para revisão. O agente encerra a cada US completa após aprovação humana. Use este subagent para executar a implementação a partir dos cenários *.feature gerados pelo @bdd-generator."
 mode: subagent
 temperature: 0.3
 tools:
