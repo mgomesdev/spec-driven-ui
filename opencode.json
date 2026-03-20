@@ -13,16 +13,17 @@
       "reserved": 10000
    },
    "watcher": {
-      "ignore": [
-         "./node_modules/**",
-         "./dist/**",
-         ".git/**",
-         ".trash/**",
-         "./readme/**",
-         "./README.md",
-         "./design-diff.md",
-         ".trash/**/*"
-      ]
+"ignore": [
+          "./node_modules/**",
+          "./dist/**",
+          ".git/**",
+          ".trash/**",
+          "./readme/**",
+          "./README.md",
+          "./design-diff.md",
+          ".trash/**/*",
+          "**/*.spec.docs.md"
+       ]
    },
    "share": "disabled"
 }
