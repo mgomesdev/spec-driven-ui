@@ -22,6 +22,10 @@ export default function Dashboard() {
             </li>
           ))}
         </ul>
+
+        <div className="flex flex-col">
+          <button data-testid="sidebar-premium-button">Upgrade Now</button>
+        </div>
       </aside>
     </div>
   );

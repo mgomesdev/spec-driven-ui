@@ -34,7 +34,21 @@ Output:
 
 ## Passos de Execução
 
-### Passo 1: Verificar Pré-requisitos
+### Etapa 0: Verificar .feature existente
+
+Antes de gerar, verificar se o .feature já existe:
+
+1. Verificar se existe `specs/features/${feature}/features/${feature}.feature`
+2. Se existir:
+   - Perguntar ao usuário: "O arquivo ${feature}.feature já existe. Deseja sobrescrever?"
+   - Se NÃO: manter existente, não fazer alterações
+   - Se SIM: prosseguir com geração (sobrescrever)
+3. Se não existir: prosseguir com geração normalmente
+
+**Importante:** Esta verificação se aplica APENAS para features normais.
+Para design-system, a verificação é por componente individual (atoms/*.feature, etc).
+
+### Etapa 1: Verificar Pré-requisitos
 
 ```typescript
 // Verificar se research.md existe
@@ -727,3 +741,189 @@ Feature: Header de Navegação
 | "research.md não encontrado" | Não executou @research-to-plan | Execute @research-to-plan primeiro |
 | "Cenários vazios" | AC não mapeados | Verificar formato do research.md |
 | "Tags duplicadas" | Contexto identificado errado | Ajustar padrões de contexto |
+
+---
+
+## Design System - Geração Especial
+
+Quando a feature é `design-system`, o comportamento muda:
+
+### Detecção
+
+```typescript
+const isDesignSystem = feature === 'design-system' || feature === 'design_system';
+```
+
+### Estrutura de Saída
+
+Para design-system, a estrutura de saída é diferente:
+
+```
+specs/features/design-system/features/
+├── design-tokens.feature     # Testa CSS vars (SEM pencil_id)
+├── atoms/
+│   ├── button.feature       # pencil_id: "btn001"
+│   ├── badge.feature       # pencil_id: "badge001"
+│   ├── input.feature       # pencil_id: "input001"
+│   ├── avatar.feature      # pencil_id: "avatar001"
+│   └── icon.feature        # pencil_id: "icon001"
+├── molecules/
+│   ├── card.feature        # pencil_id: "card001"
+│   ├── search-bar.feature  # pencil_id: "search001"
+│   ├── breadcrumbs.feature # pencil_id: "bread001"
+│   ├── pagination.feature  # pencil_id: "page001"
+│   ├── banner.feature      # pencil_id: "banner001"
+│   └── quick-actions.feature # pencil_id: "quick001"
+└── organisms/
+    ├── sidebar.feature     # pencil_id: "ncY1p"
+    ├── summary-cards.feature # pencil_id: "L1zBB"
+    ├── chart-section.feature # pencil_id: "chart001"
+    ├── table-section.feature # pencil_id: "table001"
+    ├── gallery-section.feature # pencil_id: "gallery001"
+    └── stacked-list.feature # pencil_id: "stack001"
+```
+
+### Regras para Design System
+
+| Categoria | pencil_id | Testa |
+|----------|-----------|-------|
+| design-tokens | N/A | CSS vars em globals.css |
+| atoms | ✅ Sim | Componente vs design tokens |
+| molecules | ✅ Sim | Componente vs design tokens |
+| organisms | ✅ Sim | Componente vs design tokens |
+
+### Template de .feature para Design System
+
+```markdown
+# language: pt
+@[pending] @[atom|molecule|organism]
+Funcionalidade: [Nome do Componente]
+  **pencil_id:** "[id_no_pencil]"
+
+  @[pending] @smoke
+  Cenário: [Nome do cenário]
+    Dado que o componente [nome] deve seguir o design system
+    Quando renderizado
+    Entao deve ter [propriedade] [valor]
+```
+
+### Exemplo: button.feature
+
+```markdown
+# language: pt
+@pending @atom
+Funcionalidade: Button
+  **pencil_id:** "btn001"
+
+  @pending @smoke
+  Cenário: Button primário com estilo correto
+    Dado que o componente Button é renderizado
+    Quando tem variant="primary"
+    Entao deve ter background #FF5C00
+    E deve ter border-radius 8px
+    E deve ter padding 12px vertical, 16px horizontal
+
+  @pending @smoke
+  Cenário: Button secundário com estilo correto
+    Dado que o componente Button é renderizado
+    Quando tem variant="secondary"
+    Entao deve ter background transparent
+    E deve ter border 1px solid #A1A1AA
+    E deve ter text color #A1A1AA
+```
+
+### Exemplo: design-tokens.feature
+
+```markdown
+# language: pt
+@pending @design-tokens
+Funcionalidade: Design Tokens
+  **referencia:** Design tokens do sistema
+
+  @pending @smoke
+  Cenário: Cores primárias definidas corretamente
+    Dado que o CSS está configurado
+    Entao --color-bg-primary deve ser #0A0A0B
+    E --color-bg-secondary deve ser #141417
+    E --color-accent deve ser #FF5C00
+
+  @pending @smoke
+  Cenário: Cores semânticas definidas corretamente
+    Dado que o CSS está configurado
+    Entao --color-success deve ser #22C55E
+    E --color-error deve ser #EF4444
+
+  @pending @smoke
+  Cenário: Tipografia configurada corretamente
+    Dado que o CSS está configurado
+    Entao --font-family deve ser 'Inter', sans-serif
+    E --font-size-heading deve ser 20px
+    E --font-weight-heading deve ser 600
+```
+
+### Fluxo para Design System
+
+```
+1. Detectar: feature === 'design-system'
+2. Criar estrutura de diretórios:
+   - features/
+   - features/atoms/
+   - features/molecules/
+   - features/organisms/
+3. Gerar design-tokens.feature (sem pencil_id)
+4. Para cada componente no plan.md:
+   - Determinar categoria (atom/molecule/organism)
+   - Extrair pencil_id se disponível
+   - Gerar .feature com pencil_id
+```
+
+### Extração de pencil_id
+
+O bdd-generator deve extrair pencil_id de:
+1. research.md (seção de componentes)
+2. plan.md (se existir mapping)
+3. Ou perguntar ao usuário se não encontrado
+
+```typescript
+// Prioridade de extração
+const extractPencilId = (componentName: string, research: string, plan: string): string | null => {
+  // 1. Procurar em research.md
+  const researchMatch = research.match(new RegExp(`${componentName}.*pencil_id:\\s*["']?([\\w-]+)`, 'i'));
+  if (researchMatch) return researchMatch[1];
+  
+  // 2. Procurar em plan.md
+  const planMatch = plan.match(new RegExp(`${componentName}.*pencil_id:\\s*["']?([\\w-]+)`, 'i'));
+  if (planMatch) return planMatch[1];
+  
+  // 3. Perguntar ao usuário
+  return null;
+};
+```
+
+### Cenários Obrigatórios por Categoria
+
+**design-tokens:**
+- Cores primárias
+- Cores semânticas (success, error, warning)
+- Tipografia
+- Spacing scale
+- Border radius scale
+- Shadows (se houver)
+
+**atoms:**
+- Renderização correta
+- Variants (primary, secondary, ghost)
+- Estados (hover, focus, disabled)
+- Tamanhos (sm, md, lg)
+
+**molecules:**
+- Composição de átomos
+- Estilos herdados dos átomos
+- Layout interno
+- Estados
+
+**organisms:**
+- Composição de moléculas
+- Layout e posicionamento
+- Estilos consistentes
+- Responsividade (se aplicável)

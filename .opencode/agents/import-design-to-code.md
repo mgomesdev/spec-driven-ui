@@ -1,6 +1,6 @@
 ---
 name: import-design-to-code
-description: "Importa design validado do Pencil de volta para o código. Após o design revisar e ajustar a proposal, este agente lê as alterações do .pen e atualiza o código fonte."
+description: "Importa design APÓS aprovação do designer. Busca componente aprovado no Pencil (por pencil_id), extrai propriedades e atualiza o código React."
 mode: subagent
 temperature: 0.3
 tools:
@@ -17,99 +17,181 @@ permission:
 
 ## Acionamento
 
-- 'importar design validado'
-- 'pull do pencil para código'
-- 'atualizar código com design aprovado'
-- 'import design to code [nome-da-feature]'
+- 'importar design aprovado'
+- 'importar do pencil para código'
+- 'import --component=[nome]'
+- 'sincronizar código com design'
 
-## Pré-requisitos
+## Regras Fundamentais
 
-1. O `export-code-to-design` já enviou uma proposal para revisão
-2. O design revisou e validou (ou ajustou) no Pencil
-3. O usuário solicitou importar de volta para o código
+⚠️ **IMPORTANTE**: Este agente requer que o designer TENHA APROVADO a proposta.
+
+- Verificar status: `approved` ou `approved_with_changes`
+- Se não aprovado, informar usuário e abortar
+- Nunca importar proposta pendente ou rejeitada
 
 ## Fluxo de Execução
 
 ### Etapa 1: Identificar o que importar
 
-1. Receba o nome da feature/componente validado
-2. Confirme se foi uma proposal do dev exportada anteriormente
+1. Receba o nome do componente
+2. Buscar spec (.feature) com pencil_id
 
-### Etapa 2: Ler o design validado
+### Etapa 2: Buscar componente no Pencil
 
-1. Abra o documento: `pencil_open_document` com arquivo `.pen`
-2. Obtenha estrutura: `pencil_get_editor_state`
-3. Localize o frame da proposal (busque por nome "Proposal: [nome]")
-4. Extraia todas as propriedades visuais validadas:
-   - Cores (fill)
-   - Tamanhos (width, height)
-   - Padding/Margin
-   - Border radius
-   - Tipografia
-   - Espaçamento entre elementos
+1. Abrir documento: `pencil_open_document`
+2. Se tem `pencil_id` de proposta, usar esse ID
+3. Se tem apenas `pencil_id` original, usar esse
 
-### Etapa 3: Comparar com código existente
+```typescript
+// Prioridade de busca
+const proposalId = `${pencilId}_PROPOSTA_${timestamp}`;
+const nodeData = await pencil_batch_get({
+  filePath: 'pencil-demo.pen',
+  nodeIds: [proposalId],  // Tentativa 1: proposta
+  // Se não encontrado, usar pencilId original
+});
+```
 
-1. Leia o arquivo do componente atual em `frontend/src/`
-2. Compare valores: design validado vs código atual
-3. Identifique mudanças necessárias
+### Etapa 3: Extrair propriedades do Pencil
 
-### Etapa 4: Atualizar o código
+Extrair todas as propriedades visuais:
+- `fill` → cor de background
+- `stroke` → bordas
+- `cornerRadius` → border-radius
+- `width`, `height` → dimensões
+- `padding` → espaçamento
+- Tipografia
 
-1. Aplique as mudanças no código:
-   - Atualize valores de estilo
-   - Ajuste props
-   - Modifique estrutura se necessário
-2. Mantenha a estrutura React/TypeScript existente
-3. Apenas altere valores que foram validados no design
+```typescript
+const pencilValues = {
+  background: nodeData.fill,
+  borderRadius: nodeData.cornerRadius,
+  width: nodeData.width,
+  padding: nodeData.padding,
+  // ...
+};
+```
 
-### Etapa 5: Verificar integridade
+### Etapa 4: Converter para Tailwind/CSS
 
-1. Execute lint se disponível
-2. Verifique se o código continua compilando
-3. Confirme que as mudanças refletem o design validado
+Converter valores do Pencil para formato do código:
+
+```typescript
+const toTailwind = {
+  fill: (color) => `bg-[${color}]`,
+  cornerRadius: (radius) => {
+    if (radius === 8) return 'rounded';
+    if (radius === 10) return 'rounded-lg';
+    if (radius === 12) return 'rounded-xl';
+    if (radius === 9999) return 'rounded-full';
+    return `rounded-[${radius}px]`;
+  },
+  padding: (value) => {
+    if (value === 12) return 'p-3';
+    if (value === 16) return 'p-4';
+    if (value === 24) return 'p-6';
+    return `p-[${value}px]`;
+  }
+};
+```
+
+### Etapa 5: Atualizar código
+
+1. Ler arquivo do componente em `frontend/src/components/`
+2. Aplicar mudanças nos valores de estilo
+3. Manter estrutura React/TypeScript existente
+
+### Etapa 6: Verificar integridade
+
+1. Executar lint se disponível
+2. Verificar se código compila
+3. Confirmar que mudanças refletem o design
+
+### Etapa 7: Confirmar e informar
+
+Retornar resumo do que foi importado:
+- Componente importado
+- Valores aplicados
+- Arquivos modificados
 
 ---
 
 ## Formato de Saída
 
+**Sucesso:**
 ```
 ✅ Design importado para o código
 
+**Componente:** [nome]
+**Pencil ID:** [id]
+**Aprovado por:** [designer]
+**Data:** [data]
+
 **Arquivos modificados:**
-- `frontend/src/components/[nome]/[nome].tsx`
+- `frontend/src/components/[categoria]/[nome].tsx`
 
 **Mudanças aplicadas:**
-- [lista de mudanças baseadas no design validado]
+- background: #141417 (antes: #FF5500)
+- borderRadius: 12 (antes: 8)
+- padding: 24 (antes: 16)
 
 **Status:** Pronto para review/commitar
+```
+
+**Erro (não aprovado):**
+```
+❌ Import bloqueado
+
+A proposta para [nome] ainda não foi aprovada.
+
+Status atual: pending
+Designer precisa revisar no Pencil primeiro.
+```
+
+---
+
+## Fluxo Completo do Ciclo
+
+```
+┌─────────────────────────────────────────────────────────────────┐
+│  1. DEV modifica código                                         │
+│     export-code-to-design --component=[nome]                    │
+│     → Nova proposta criada no Pencil: "[Nome] [PROPOSTA]"       │
+└────────────────────────────┬────────────────────────────────────┘
+                             │
+                             ▼
+┌─────────────────────────────────────────────────────────────────┐
+│  2. DESIGNER revisa no Pencil                                  │
+│     → Aprova / Modifica e Approva / Rejeita                   │
+│     → Marca status como "approved"                            │
+└────────────────────────────┬────────────────────────────────────┘
+                             │
+                             ▼
+┌─────────────────────────────────────────────────────────────────┐
+│  3. DEV importa                                                 │
+│     import-design-to-code --component=[nome]                    │
+│     → Código atualizado com base no Pencil                     │
+└─────────────────────────────────────────────────────────────────┘
 ```
 
 ---
 
 ## Regras
 
-- **APENAS** importe alterações que foram validadas pelo design
-- Não invente valores não presentes no design
+- **VERIFIQUE status** antes de importar (deve ser `approved`)
+- **NÃO importe** propostas pendentes ou rejeitadas
 - Preserve a estrutura React existente
-- Atualize apenas o necessário
+- Aplique apenas valores presentes no Pencil
 - Documente as mudanças no commit
-
----
-
-## Caso de Uso: Iteração do Fluxo
-
-```
-1. Dev cria ideia → export-code-to-design → Pencil
-2. Design revisa → ajusta no Pencil → valida
-3. Dev importa → import-design-to-code → Código atualizado
-4. Ciclo recomeça com nova iteração se necessário
-```
+- Atualize spec com status `imported`
 
 ---
 
 ## Relacionamento com Outros Agentes
 
-- **export-code-to-design**: Envia proposal para revisão
-- **import-design-to-code**: Traz de volta após validação
-- **diff-design-vs-code**: Pode ser usado para comparar antes/depois
+| Agente | Direção | Uso |
+|--------|---------|-----|
+| `export-code-to-design` | Código → Pencil | Criar proposta |
+| `import-design-to-code` | Pencil → Código | Importar após aprovação |
+| `diff-design-vs-code` | Comparar | Verificar sincronização |

@@ -1,211 +1,218 @@
 ---
 name: diff-design-vs-code
-description: "Ler o arquivo .pen do Pencil, comparar com o código existente usando Atomic Design e gerar um relatório de diferenças em formato amigável."
+description: "Compara design tokens e componentes entre o Pencil (via pencil_id na spec) e o código. Suporta modo individual (--component) e em massa (--all). Retorna exit code: 0 = synced, 1 = diff."
 mode: subagent
 temperature: 0.1
 tools: 
     read: true
+    pencil_open_document: true
     pencil_get_editor_state: true
     pencil_batch_get: true
     pencil_get_variables: true
+    bash: true
 ---
 
 ## Acionamento
 
-- 'analise as alterações no design do pencil'
-- 'compare o design com o código'
 - 'diff design vs código'
+- 'diff --component=[nome]'
+- 'diff --all'
+- 'comparar design com código'
+- 'analise sincronização do design'
+
+## Modos de Execução
+
+| Modo | Comando | Descrição |
+|------|---------|-----------|
+| **Individual** | `diff-design-to-code --component=sidebar` | Compara apenas um componente |
+| **Em massa** | `diff-design-to-code --all` | Compara todos os componentes |
 
 ## Entradas
 
 - Arquivos `.pen` na raiz do projeto
+- `@specs/features/*/features/*.feature` (especificações BDD)
 - `@frontend/src/app/global.css` (se existir)
 - `@frontend/src/components/**/*` (componentes React existentes)
 
-## Atomic Design - Estrutura de Classificação
+## Fonte da Verdade
 
-O agente deve classificar os elementos em:
+**BDD Spec (.feature) é a fonte da verdade.**
 
-- **Atom** (Átomo): Elementos indivisíveis — botões, ícones, labels, inputs, cores, fontes, spacings, tokens de design
-- **Molecule** (Molécula): Combinação simples de átomos — SearchBar (input + botão), CardSimple (título + descrição)
-- **Organism** (Organismo): Grupo de moléculas funcionando junto — Header (Logo + Nav + SearchBar), Footer (Links + Copyright), CardComplex (Image + Title + Description + Button)
-- **Template** (Template): Estrutura de layout sem conteúdo — PageLayout, DashboardLayout, FormLayout
-- **Page** (Página): Instância concreta de template com conteúdo real — HomePage, AboutPage, ContactPage
+O diff compara:
+1. **Spec (.feature)** → Contém `pencil_id` e valores esperados
+2. **Pencil (.pen)** → Busca nó por `pencil_id` via MCP
+3. **Código** → Implementação React/Tailwind
 
 ## Funcionamento
 
-### Etapa 1 — Obter dados reais do Pencil
+### Etapa 1 — Identificar o que comparar
 
-1. Usar `pencil_open_document` com arquivos `.pen` para carregar o design
-2. Usar `pencil_get_editor_state` para obter a estrutura do documento
-3. Usar `pencil_batch_get` com `patterns: [{type: "frame"}, {type: "text"}, {type: "rectangle"}]` para buscar componentes
-4. Usar `pencil_get_variables` para obter os tokens de design definidos
-5. Extrair valores REAIS: cores, tamanhos, fontes, spacings diretamente dos nós
-6. **Classificar cada nó no nível atômico apropriado** (Atom/Molecule/Organism/Template/Page)
+**Modo Individual (`--component=[nome]`):**
+1. Localizar `.feature` do componente especificado
+2. Extrair `pencil_id` da especificação
+3. Comparar apenas esse componente
 
-### Etapa 2 — Obter dados reais do código
+**Modo All (`--all`):**
+1. Listar todos os `.feature` em `specs/features/*/features/`
+2. Para cada um, extrair `pencil_id` se existir
+3. Comparar todos os componentes
 
-1. Ler `frontend/src/app/global.css` (todo o conteúdo)
-2. Listar todos os componentes em `frontend/src/components/`
-3. **Mapear componentes para estrutura Atomic Design**:
-   - `components/atoms/` → Atoms
-   - `components/molecules/` → Molecules
-   - `components/organisms/` → Organisms
-   - `components/templates/` → Templates
-   - `components/pages/` → Pages
+### Etapa 2 — Obter dados da Spec (.feature)
 
-### Etapa 3 — Comparação REAL por Nível Atômico
+1. Ler arquivo `.feature` do componente
+2. Extrair `pencil_id` (formato: `**pencil_id:** "xxx"`)
+3. Parsear cenários para extrair valores esperados:
+   - Cores (hex codes)
+   - Tamanhos (px, rem)
+   - Border radius
+   - Padding/Margin
+   - Tipografia
 
-Para CADA elemento, classificar primeiro o nível (Atom/Molecule/Organism/Template/Page), depois:
+```typescript
+// Extração de pencil_id
+const pencilIdMatch = featureContent.match(/\*\*pencil_id:\*\*\s*["']?([\w-]+)/i);
+const pencilId = pencilIdMatch ? pencilIdMatch[1] : null;
 
-1. **Para Atoms (Tokens)**:
-   - Pegar o valor EXATO do Pencil (ex: #101828)
-   - Pegar o valor EXATO do código (ex: --color-bg-primary: #000000)
-   - Comparar cores, fonts, spacings, sizes
-
-2. **Para Molecules**:
-   - Comparar composição de átomos
-   - Verificar propriedades de cada átomo interno
-   - Comparar estilos e props
-
-3. **Para Organisms**:
-   - Comparar moléculas que o compõe
-   - Verificar layout e posicionamento
-   - Comparar propriedades de estilo
-
-4. **Para Templates**:
-   - Comparar estrutura de layout
-   - Verificar regions/grids
-   - Comparar positioning
-
-5. **Para Pages**:
-   - Comparar instâncias de templates
-   - Verificar conteúdo específico
-
-### Etapa 4 — Classificação
-
-- `✅ SINCRONIZADO` — valor no Pencil = valor no código
-- `❌ DIVERGENTE` — existe em ambos, mas valores diferentes
-- `🆕 NOVO NO DESIGN` — existe no Pencil, não existe no código
-- `📦 NÃO IMPLEMENTADO` — especificado mas não implementado
-- `🗑️ REMOVIDO` — existe no código mas foi removido do design
-
-### Etapa 5 — Gerar relatório amigável
-
-Escrever em `@/specs/report/design-diff.md` com formato claro e amigável:
-
-```markdown
-# 🎨 Design vs Código — Relatório de Comparação (Atomic Design)
-
-> Gerado em: [data e hora horário de brasília]
-
-## 📊 Resumo Geral
-
-| Status | Quantidade |
-|--------|------------|
-| ✅ SINCRONIZADOS | X |
-| ❌ DIVERGENTES | X |
-| 🆕 NOVOS NO DESIGN | X |
-| 📦 NÃO IMPLEMENTADOS | X |
-
----
-
-## ⚛️ Átomos (Atoms)
-
-Elementos indivisíveis: cores, fontes, botões, inputs, ícones, tokens
-
-### Cores
-| Token | Pencil | Código | Status |
-|-------|--------|--------|--------|
-| --color-bg | #101828 | #101828 | ✅ |
-
-### Tipografia
-| Token | Pencil | Código | Status |
-|-------|--------|--------|--------|
-| --font-heading | Inter | Inter | ✅ |
-
----
-
-## 🔬 Moléculas (Molecules)
-
-Combinações simples de átomos: SearchBar, CardSimple, FormGroup
-
-### SearchBar
-- **Status**: ✅ SINCRONIZADO
-- **Código**: `frontend/src/components/molecules/SearchBar/` ✓
-- **Átomos**: Input + Button
-
-### CardSimple
-- **Status**: ❌ DIVERGENTE
-- **Código**: `frontend/src/components/molecules/CardSimple/` ⚠️
-- **Diferenças**: border-radius: 8px (Pencil) vs 12px (código)
-
----
-
-## 🧬 Organismos (Organisms)
-
-Grupos de moléculas: Header, Footer, CardComplex, Navigation
-
-### Header
-- **Status**: ✅ SINCRONIZADO
-- **Código**: `frontend/src/components/organisms/Header/` ✓
-- **Moléculas**: Logo + NavMenu + SearchBar
-
-### HeroSection
-- **Status**: ❌ DIVERGENTE
-- **Código**: `frontend/src/components/organisms/HeroSection/` ⚠️
-- **Diferenças**: padding-bottom: 131px (Pencil) vs 64px (código)
-
----
-
-## 📐 Templates
-
-Estruturas de layout: PageLayout, DashboardLayout, FormLayout
-
-### PageLayout
-- **Status**: ✅ SINCRONIZADO
-- **Código**: `frontend/src/components/templates/PageLayout/` ✓
-
-### DashboardLayout
-- **Status**: 🆕 NOVO NO DESIGN
-- **Não implementado no código**
-
----
-
-## 📄 Páginas (Pages)
-
-Instâncias concretas: HomePage, AboutPage, ContactPage
-
-### HomePage
-- **Status**: ✅ SINCRONIZADO
-- **Código**: `frontend/src/app/page.tsx` ✓
-
-### AboutPage
-- **Status**: 🆕 NOVO NO DESIGN
-- **Não implementado no código**
-
----
-
-## 🚀 Ações Prioritárias
-
-1. **[ALTA]** Corrigir divergência no CardSimple — border-radius diferente
-2. **[ALTA]** Implementar novo template DashboardLayout
-3. **[ALTA]** Implementar nova página AboutPage
-4. **[MÉDIA]** Sincronizar tokens de cor com o design
-
----
-
-## 📁 Arquivos de Referência
-
-- Design: arquivos `.pen` na raiz do projeto
-- CSS: `frontend/src/app/global.css`
-- Componentes: `frontend/src/components/` (atoms|molecules|organisms|templates|pages/)
+// Extração de valores esperados dos cenários
+const expectedValues = parseScenarios(featureContent);
 ```
 
-## Arquivos de saída
+### Etapa 3 — Obter dados do Pencil (via MCP)
 
-- `@/specs/report/design-diff.md` (criado/sobrescrito com relatório amigável)
+1. Abrir documento: `pencil_open_document` com arquivo `.pen`
+2. Buscar nó pelo `pencil_id`: usar `pencil_batch_get` com nodeIds
+3. Extrair propriedades:
+   - `fill` → cor de background
+   - `cornerRadius` → border-radius
+   - `width`, `height` → dimensões
+   - `padding` → espaçamento interno
+   - `stroke` → bordas
 
-## Próximo agente
+```typescript
+// Buscar nó no Pencil por ID
+const nodeData = await pencil_batch_get({
+  filePath: 'pencil-demo.pen',
+  nodeIds: [pencilId],
+  readDepth: 3
+});
 
-O próximo agente deve ler `@/specs/report/design-diff.md` e executar as ações prioritárias listadas.
+// Extrair valores do Pencil
+const pencilValues = {
+  fill: nodeData.fill,
+  cornerRadius: nodeData.cornerRadius,
+  width: nodeData.width,
+  // ...
+};
+```
+
+### Etapa 4 — Obter dados do Código
+
+1. Ler componente React em `frontend/src/components/`
+2. Parsear Tailwind classes ou CSS inline
+3. Converter para formato comparável
+
+```typescript
+// Exemplo de conversão Tailwind → valores
+const tailwindToValue = {
+  'bg-[#141417]': '#141417',
+  'rounded-xl': 12,
+  'w-[260px]': 260,
+  'py-6': 24,
+  'px-5': 20,
+};
+```
+
+### Etapa 5 — Comparação
+
+Comparar valores: **Spec vs Pencil vs Código**
+
+| Propriedade | Spec (BDD) | Pencil | Código | Resultado |
+|-------------|------------|--------|--------|----------|
+| fill | #141417 | #141417 | #141417 | ✅ |
+| cornerRadius | 12 | 12 | 8 | ❌ |
+| width | 260 | 260 | 260 | ✅ |
+
+### Etapa 6 — Classificação
+
+- `✅ SINCRONIZADO` — Spec = Pencil = Código
+- `❌ DIVERGENTE_PENCIL` — Spec ≠ Pencil
+- `❌ DIVERGENTE_CODIGO` — Spec ≠ Código
+- `⚠️ PARCIAL` — Pencil e Código sincronizados, mas Spec desatualizada
+- `🆕 SEM_IMPLEMENTACAO` — Spec existe, Pencil/Código não
+
+### Etapa 7 — Gerar relatório
+
+**Modo Individual:**
+```
+diff-design-to-code --component=sidebar
+
+✅ Sidebar (ncY1p) está sincronizado
+   - fill: #141417 ✅
+   - radius: 12 ✅
+   - width: 260px ✅
+```
+
+```
+diff-design-to-code --component=button
+
+❌ Button (btn001) dessincronizado
+   - fill: BDD #FF5C00 ≠ Pencil #FF5500 ❌
+   - radius: BDD 8 = Código 8 ✅
+```
+
+**Modo All:**
+```
+diff-design-to-code --all
+
+📊 Relatório Geral:
+─────────────────────────────────────────────────────
+✅ 14 componentes sincronizados
+❌ 3 componentes com divergências
+
+Componentes Dessincronizados:
+─────────────────────────────────────────────────────
+❌ Sidebar (ncY1p)
+   - fill: BDD #141417 ≠ Pencil #FF5500
+
+❌ Button (btn001)
+   - radius: BDD 8 ≠ Código 12
+
+❌ Card (card001)
+   - padding: BDD 24 ≠ Código 16
+
+─────────────────────────────────────────────────────
+Exit Code: 1 (há divergências)
+```
+
+### Etapa 8 — Exit Codes
+
+| Código | Significado |
+|--------|------------|
+| 0 | Todos os componentes sincronizados |
+| 1 | Há divergências (spec ≠ pencil ou spec ≠ código) |
+
+**Para CI/Hooks:**
+```bash
+diff-design-to-code --all
+if [ $? -eq 0 ]; then
+  echo "✅ Design sincronizado"
+else
+  echo "❌ Design dessincronizado"
+  exit 1
+fi
+```
+
+## Arquivos de Saída
+
+- Relatório formatado no terminal (stdout)
+- Exit code para automação (0 = synced, 1 = diff)
+
+## Fluxo para Design System
+
+Quando a feature é `design-system`:
+
+1. Listar todos os `.feature` em `specs/features/design-system/features/`
+2. Para cada categoria (atoms, molecules, organisms):
+   - design-tokens.feature: testar CSS vars diretamente
+   - Demais: extrair pencil_id e comparar com Pencil
+3. Gerar relatório consolidado

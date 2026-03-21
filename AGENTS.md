@@ -54,17 +54,62 @@ Detalhes em `@specs/docs/pre-commit.md`
 
 Use `@nome-do-subagente` para invocar:
 
+### Fluxo Spec-Driven
+
 | Subagente | Descrição | Arquivo |
 |-----------|-----------|---------|
+| `us-to-research` | Converte requisitos de PO em research.md estruturado | `.opencode/agents/us-to-research.md` |
+| `research-to-plan` | Gera plan.md técnico a partir do research.md | `.opencode/agents/research-to-plan.md` |
+| `bdd-generator` | Gera arquivos *.feature (Gherkin) a partir de research.md e plan.md | `.opencode/agents/bdd-generator.md` |
 | `analyze-consistency` | Análise não destrutiva de consistência entre research.md, plan.md e *.feature | `.opencode/agents/analyze-consistency.md` |
 | `tdd-generator` | Gera testes Playwright (*.spec.ts) e documentação (*.spec.docs.md) a partir de *.feature | `.opencode/agents/tdd-generator.md` |
 | `tdd-playwright` | Executa ciclo TDD: cria teste que falha → implementa código → teste passa | `.opencode/agents/tdd-playwright.md` |
+| `verify-patterns` | Verifica se código segue convenções e contrato do plan.md | `.opencode/agents/verify-patterns.md` |
+| `implement-tasks` | Executa subtask de US com GATE: TDD + Verify + Typecheck + Lint | `.opencode/agents/implement-tasks.md` |
+
+### Utilitários
+
+| Subagente | Descrição | Arquivo |
+|-----------|-----------|---------|
+| `agent-learnings-runner` | Registra incidents e aprendizados durante a sessão | `.opencode/agents/agent-learnings-runner.md` |
+
+### Fluxo Worktree
+
+| Subagente | Descrição | Arquivo |
+|-----------|-----------|---------|
 | `worktree-mapper` | Mapeia dependências de componentes e gera distribuição otimizada para worktrees Git | `.opencode/agents/worktree-mapper.md` |
+| `worktree-runner` | Cria worktrees Git em paralelo para múltiplas features | `.opencode/agents/worktree-runner.md` |
+
+### Design System (Pencil ↔ Código)
+
+| Subagente | Descrição | Arquivo |
+|-----------|-----------|---------|
+| `design-system-builder` | Implementa estrutura completa do design-system: atualiza agentes, cria arquivos | `.opencode/agents/design-system-builder.md` |
+| `export-code-to-design` | Cria NOVA proposta no Pencil (não altera original) | `.opencode/agents/export-code-to-design.md` |
+| `import-design-to-code` | Importa design APÓS aprovação do designer | `.opencode/agents/import-design-to-code.md` |
+| `diff-design-vs-code` | Compara BDD spec ↔ Pencil (--component ou --all) | `.opencode/agents/diff-design-vs-code.md` |
 
 ### Como usar
 
 ```
+# Spec-Driven (fluxo completo)
+@us-to-research [requisito do PO]
+@research-to-plan [nome-da-feature]
+@bdd-generator feature=[nome]
+@analyze-consistency analise: [feature]
+@tdd-generator feature=[nome]
+@tdd-playwright execute tdd da [us-id] subtask [subtask-id] para [feature]
+@verify-patterns execute verificação para [feature] [us-id] subtask [subtask-id]
+@implement-tasks implemente a subtask [n] da US-[id] para [feature]
+
+# Worktrees
 @worktree-mapper analise a feature: dashboard-analytics
-@analyze-consistency analise: dashboard-analytics
-@tdd-generator gere testes para: sidebar.feature
+@worktree-runner [feature1] [feature2]
+
+# Design System
+@design-system-builder execute implementação
+@export-code-to-design --component=button
+@import-design-to-code --component=button
+@diff-design-vs-code --component=button
+@diff-design-vs-code --all
 ```

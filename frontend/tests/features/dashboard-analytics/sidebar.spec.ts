@@ -72,7 +72,6 @@ test.describe('Feature: Sidebar de Navegação', () => {
       const sidebarPage = new SidebarPage(page);
       await sidebarPage.setDesktopViewport();
       await sidebarPage.goto();
-
       await expect(sidebarPage.premiumButton).toBeVisible();
       await expect(sidebarPage.premiumButton).toContainText(/premium|upgrade/i);
     });
