@@ -16,9 +16,8 @@
 
 | # | Regra |
 |---|-------|
-| 1 | Não implemente nada sem passar pelo fluxo research → plan → tasks |
+| 1 | Não implemente nada sem passar pelo fluxo RPI completo |
 | 2 | Não invente contratos de API — consulte o `plan.md` |
 | 3 | Não refatore código fora do escopo da história atual |
 | 4 | Não crie arquivos desnecessários |
-
----
+| 5 | Design System (tokens) **SEMPRE** primeiro, antes de componentes |

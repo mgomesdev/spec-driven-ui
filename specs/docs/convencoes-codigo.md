@@ -10,10 +10,10 @@
 
 ---
 
-## Arquivos
+## Arquivos e Pastas
 
 - Arquivos devem respeitar o maximo de 500 linhas, acima disso deverá ser criado em arquivo separado e importado onde é utizado.
-
+- Pastas devem ser criadas em lowercase, separado por `-` quando necessário.
 ---
 
 ## Identação
@@ -33,6 +33,16 @@
 
 - Testes não devem fazer exportações, cada teste deve ser isolado com responsabilidade unica - **single responsability - solid**
 - Classes **page object** e **constantes globais** gerais devem ficar no final do arquivo de teste
+- Cada componente/feature tem **spec próprio**: `frontend/tests/features/[nome]/[nome].spec.ts`
+- Estrutura de spec por componente:
+
+```
+frontend/tests/features/[nome]/
+├── [nome].spec.ts       # Testes Playwright
+└── [nome].spec.docs.md  # Documentação (gerado por @tdd-generator)
+```
+
+> **Ordem de implementação de testes**: componentes com menos dependências primeiro (bottom-up). Mockar dependências nos specs dos componentes pais.
 
 ---
 

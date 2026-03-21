@@ -36,49 +36,73 @@
 
 ### specs/features/ — Estrutura de Features
 
+Cada feature/componente tem **pasta própria** com fluxo RPI completo:
+
 ```
 specs/features/
-├── [nome-da-feature]/           # Feature normal
+├── design-system/              # Design System (tokens globais)
+│   ├── research.md
+│   ├── plan.md
+│   └── features/
+│       └── design-tokens.feature  # Tokens GLOBAIS
+│
+├── [nome-do-componente]/      # Cada componente = 1 pasta
 │   ├── research.md
 │   ├── plan.md
 │   └── features/
 │       └── [nome].feature
 │
-└── design-system/              # Design System (special)
-    ├── research.md
-    ├── plan.md
-    └── features/
-        ├── design-tokens.feature  # Tokens GLOBAIS
-        ├── atoms/
-        │   └── *.feature
-        ├── molecules/
-        │   └── *.feature
-        └── organisms/
-            └── *.feature
+├── [nome-da-feature]/          # Features normais
+│   ├── research.md
+│   ├── plan.md
+│   └── features/
+│       └── [nome].feature
 ```
 
-### Fluxo: Design System vs Features Normais
+> **Importante**: Cada componente possui pasta própria com research, plan e *.feature. Arquivos de componentes **NUNCA** ficam em subpastas de outra feature (ex: não usar `design-system/features/atoms/`).
 
-| Aspecto | Features Normais | Design System |
-|---------|------------------|---------------|
-| **Source of Truth** | `*.feature` | `*.feature` (BDD) |
-| **Testes** | Gera `*.spec.ts` via @tdd-generator | Não gera testes |
-| **Output CSS** | N/A | `globals.css` via @design-tokens-generator |
-| **Arquivos** | Um `*.feature` por feature | Múltiplos `*.feature` (tokens + componentes) |
+### Ordem de Implementação (Atomic Design)
 
-### Modelo Híbrido de Tokens
+Implementar sempre **bottom-up** seguindo a dependência de componentes:
 
-| Tipo | Fonte | Destino |
-|------|-------|---------|
-| **Globais** | `design-tokens.feature` | `:root` do `globals.css` |
-| **Componente** | `atoms/*.feature`, etc | CSS inline do componente |
-
-**Fluxo de Extração:**
 ```
-*.feature (BDD)
-    ↓
-@design-tokens-generator
-    ↓
-globals.css (Tailwind CSS vars)
+1. Design System (tokens globais)
+   ↓
+2. Atoms (base: icon, button, avatar, logo, etc)
+   ↓
+3. Molecules (compostas de atoms: nav-list, card, etc)
+   ↓
+4. Organisms (compostos de molecules: sidebar, header, etc)
 ```
+
+### frontend/src/components/ — Estrutura de Componentes
+
+Componentes em **pasta plana** (sem separação por tipo):
+
+```
+frontend/src/components/
+├── icon/
+│   └── Icon.tsx
+├── button/
+│   └── Button.tsx
+├── nav-item/
+│   └── NavItem.tsx
+├── avatar/
+│   └── Avatar.tsx
+├── logo/
+│   └── Logo.tsx
+├── nav-list/
+│   └── NavList.tsx
+├── sidebar/
+│   └── Sidebar.tsx
+```
+
+### Fluxo: Design System vs Features vs Componentes
+
+| Aspecto | Design System | Componentes (RPI) | Features Normais |
+|---------|---------------|------------------|------------------|
+| **Source of Truth** | `design-tokens.feature` | `*.feature` por componente | `*.feature` |
+| **Testes** | Não gera | Gera via @tdd-generator | Gera via @tdd-generator |
+| **Output CSS** | `globals.css` via @design-tokens-generator | Componente.tsx | N/A |
+| **Propósito** | Tokens globais | UI components | Funcionalidades |
 
