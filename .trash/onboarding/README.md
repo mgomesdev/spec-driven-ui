@@ -1,76 +1,59 @@
 # Onboarding
 
-Bem-vindo(a) ao time! Este guia vai te levar do zero ao pahlawan (héroi) do spec-driven development.
+Bem-vindo(a) ao spec-driven-ui! Este guia te leva do zero à implementação de features.
 
-## Mapa de Aprendizado
+## ⚠️ Comece Por Aqui
+
+Leia nesta ordem antes de qualquer implementação:
 
 ```
-📚 LEITURA RECOMENDADA (em ordem)
+1. @specs/docs/guardrails.md      ← REGRAS CRÍTICAS
+2. @specs/docs/architecture.md    ← Estrutura do projeto
+3. @specs/docs/convencoes-codigo.md ← Como escrever código
+4. @specs/docs/padroes-git.md     ← Commits e branches
+```
+
+## 🗺️ Mapa de Aprendizado
+
+```
+📚 LEITURA OBRIGATÓRIA (em ordem)
 │
-├── 01-intro.md              🚀 15 min     « Por que fazemos assim? 
-├── 02-fluxo-principal.md    🔄 20 min     « Veja o fluxo completo
-├── 03-primeiros-passos.md   ⚙️  30 min     « Configure seu ambiente
-├── 04-bdd-basico.md         🎯 25 min     « Entenda BDD
-├── 05-implementando.md       💻 30 min     « Como codificar
-├── 06-gate.md               ✅ 15 min     « Validação do código
+├── 01-intro.md              🚀 15 min     « Por que spec-driven?
+├── 02-fluxo-rpi.md          🔄 20 min     « Fluxo Research→Plan→Implement
+├── 03-estrutura-projeto.md  📁 15 min     « Pastas e arquivos
+├── 04-bdd-basico.md         🎯 25 min     « Cenários Given-When-Then
+├── 05-implementando.md       💻 30 min     « TDD com Playwright
+├── 06-gate.md               ✅ 15 min     « Validação automática
 ├── 07-worktrees.md          🌳 15 min     « Trabalho paralelo
-├── 08-comandos.md           ⌨️  20 min     « Referência rápida
-├── 09-tips.md               💡 15 min     « Dicas valiosas
-├── 10-glossario.md          📖 10 min     « Termos e siglas
-└── 11-agents.md             🤖 20 min     « Agentes disponíveis
+├── 08-comandos.md           ⌨️  15 min     « Referência rápida
+├── 09-glossario.md          📖 10 min     « Termos e siglas
+└── 10-agents.md             🤖 20 min     « Agentes disponíveis
 ```
 
-## Tempo Total Estimado
+## 🎯 Fluxo Resumido
 
-| Modo | Tempo |
-|------|-------|
-| Leitura completa | ~3 horas |
-| Prática + Leitura | ~1 dia |
+```
+PO/Requisito → RESEARCH → PLAN → *.feature → TDD → CÓDIGO → GATE → PR
+```
 
 ## Próximos Passos
 
-1. **Faça setup** → `03-primeiros-passos.md`
-2. **Rode o projeto** → Deve estar funcionando localmente
-3. **Escolha uma tarefa** → Procure tarefas com `@pending` nos arquivos `*.feature`
-4. **Coloque a mão na massa** → `05-implementando.md`
+1. **Leia os guardrails** → `specs/docs/guardrails.md`
+2. **Configure o ambiente** → `03-estrutura-projeto.md`
+3. **Escolha uma task** → Procure `@pending` em `specs/features/*/features/*.feature`
+4. **Implemente** → `05-implementando.md`
 
-## Diagrama de Contexto
+## 📁 Onde Encontrar Tudo
 
-```
-┌─────────────────────────────────────────────────────────────────┐
-│                    SEU CAMINHO NO PROJETO                         │
-└─────────────────────────────────────────────────────────────────┘
-
-   ┌──────────────┐
-   │   ONBOARDING │  ← Você está aqui! 🎉
-   └──────┬───────┘
-          │
-          ▼
-   ┌──────────────┐
-   │  PRIMEIRA US │  ← Sua primeira história de usuário
-   └──────┬───────┘
-          │
-          ▼
-   ┌──────────────┐
-   │  PRIMEIRO PR │  ← Seu primeiro Pull Request
-   └──────┬───────┘
-          │
-          ▼
-   ┌──────────────┐
-   │    MENTOR    │  ← Peça review, tire dúvidas
-   └──────────────┘
-```
-
-## Precisa de Ajuda?
-
-| Situação | Onde Pedir |
-|----------|------------|
-| Dúvida de código | Revise os módulos 04-05 |
-| Erro no setup | `03-primeiros-passos.md` |
-| Erro no Gate | `06-gate.md` |
-| Conceito unclear | `10-glossario.md` |
-| Ainda perdido? | Pergunte no canal do time |
+| O que precisa | Onde está |
+|--------------|-----------|
+| Requisitos | `specs/features/[nome]/research.md` |
+| Plano técnico | `specs/features/[nome]/plan.md` |
+| Cenários BDD | `specs/features/[nome]/features/*.feature` |
+| Progresso | `specs/features/[nome]/progress.md` |
+| Código | `frontend/src/components/[nome]/` |
+| Testes | `frontend/tests/features/[nome]/` |
 
 ---
 
-**Vamos começar?** Vá para `01-intro.md` e descubra por que fazemos spec-driven!
+**Vamos começar?** Vá para `01-intro.md`
