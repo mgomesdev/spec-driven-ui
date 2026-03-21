@@ -3,6 +3,7 @@
 ## Geral
 
 - Não adicionar comentários no código `.ts`, `.tsx`, apenas é permitido em cenarios de teste ou planejamento.
+- Não adicionar o tipo de retorno da função, use a **inferencia de tipos** do typescript
 
 ## Tipos e Interfaces
 
@@ -24,7 +25,7 @@
 ## Componentes
 
 - Componentes só devem ser exportados se forem realmente ser utilizados por outros componentes.
-- Quando um arquivo só possui apenas um componente, e ele será utilizado em em outros lugares, ele deverá ser exportado como default `export default`.
+-  Use `export default` para arquivos com apenas 1 componente.
 
 ---
 
@@ -35,7 +36,7 @@
 
 ---
 
-## Padrôes Next.js
+## Next.js
 
 - Utilize o component `Image` de `next/image` para imagens
 - As fonts devem ser importadas de `next/font/google` no arquivo de layout

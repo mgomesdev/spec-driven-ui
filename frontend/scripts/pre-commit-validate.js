@@ -283,10 +283,10 @@ function main() {
     process.exit(1);
   }
 
-  /* if (!runPlaywrightTests(stagedFiles)) {
+   if (!runPlaywrightTests(stagedFiles)) {
     log(`\n${RED}❌ PRE-COMMIT BLOQUEADO - Testes falharam${RESET}`);
     process.exit(1);
-  } */
+  } 
 
   log(`\n${GREEN}✅ Commit permitido${RESET}\n`);
   process.exit(0);
