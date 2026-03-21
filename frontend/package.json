@@ -10,7 +10,8 @@
     "pre-commit": "node scripts/pre-commit-validate.js",
     "validate-commit-msg": "node scripts/validate-commit-msg.js",
     "prepare": "husky",
-    "test": "npx playwright test"
+    "test": "npx playwright test",
+    "test:ui": "npx playwright test --ui"
   },
   "dependencies": {
     "next": "16.1.6",
