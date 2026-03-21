@@ -1,4 +1,4 @@
-# Gate de Validação: Seu Código Passa Aqui!
+# Gate de Validação
 
 ## O Que É o Gate?
 
@@ -9,15 +9,15 @@ O Gate é um **checkpoint automático** que valida seu código antes de cada com
 │                        GATE DE VALIDAÇÃO                         │
 └─────────────────────────────────────────────────────────────────┘
 
-   Seu código                        Se passar
-   entra aqui                        → Commit OK
-        │                                 ▲
-        ▼                                 │
+    Seu código                        Se passar
+    entra aqui                        → Commit OK
+         │
+         ▼
 ┌───────────────────────────────────────────────────────────────┐
 │                                                               │
 │   ┌───────────┐    ┌────────────┐    ┌───────────┐         │
 │   │    TDD    │───→│   Verify   │───→│  Typecheck│───→     │
-│   │ (Playwright)   │  Patterns  │    │   (tsc)   │         │
+│   │(Playwright)   │  Patterns  │    │   (tsc)   │         │
 │   └───────────┘    └────────────┘    └───────────┘         │
 │        │                  │                 │               │
 │        │                  │                 │               │
@@ -40,12 +40,10 @@ O Gate é um **checkpoint automático** que valida seu código antes de cada com
 
 ```bash
 cd frontend
-npx playwright test
+pnpm playwright test
 ```
 
-**O que verifica:**
-- Cenários BDD estão passando
-- Comportamento está correto
+**Verifica:** Cenários BDD passando, comportamento correto.
 
 **Se falhar:**
 ```
@@ -61,10 +59,12 @@ npx playwright test
 
 ```bash
 cd frontend
-npx pre-commit  # ou node scripts/pre-commit-validate.js
+pnpm pre-commit
+# ou
+node scripts/pre-commit-validate.js
 ```
 
-**O que verifica:**
+**Verifica:**
 - Props tipadas em componentes
 - Sem uso de `any`
 - Sem fetch em componentes
@@ -73,8 +73,7 @@ npx pre-commit  # ou node scripts/pre-commit-validate.js
 **Se falhar:**
 ```
 Error: GR-003 - Component without typed props
-  File: src/components/header/header.tsx
-  Line: 3
+  File: src/components/sidebar/sidebar.tsx
 ```
 → Adicione tipagem às props.
 
@@ -84,12 +83,12 @@ Error: GR-003 - Component without typed props
 
 ```bash
 cd frontend
-npx tsc --noEmit
+pnpm tsc
+# ou
+pnpm typecheck
 ```
 
-**O que verifica:**
-- Tipos corretos
-- Sem erros de TypeScript
+**Verifica:** Tipos corretos, sem erros TypeScript.
 
 **Se falhar:**
 ```
@@ -104,23 +103,21 @@ Error: TS2322 - Type 'string' is not assignable to type 'number'
 
 ```bash
 cd frontend
-npx eslint src/
+pnpm lint
 ```
 
-**O que verifica:**
-- Estilo de código
-- Boas práticas
+**Verifica:** Estilo de código, boas práticas.
 
 **Se falhar:**
 ```
 Warning: Prop 'className' should be camelCase
-  src/components/header/header.tsx:10
+  src/components/sidebar/sidebar.tsx:10
 ```
 → Corrija o estilo.
 
 ---
 
-## Diagrama: Fluxo do Gate
+## Fluxo do Gate
 
 ```
 ┌─────────────────────────────────────────────────────────────────┐
@@ -167,10 +164,9 @@ Warning: Prop 'className' should be camelCase
 ### Situação 1: Teste Falhou
 
 ```typescript
-// ❌ Teste falhou
 test('Logo click navigates to home', async ({ page }) => {
   await page.goto('/about');
-  await page.click('[data-testid="header-logo"]');
+  await page.click('[data-testid="sidebar-logo"]');
   await expect(page).toHaveURL('/'); // Falhou! Ficou em /about
 });
 ```
@@ -213,61 +209,17 @@ Warning: 'console.log' should not be used
 
 ---
 
-## Quando Pedir Ajuda
-
-```ascii
-┌─────────────────────────────────────────────────────────────────┐
-│                    QUANDO PERGUNTAR?                             │
-└─────────────────────────────────────────────────────────────────┘
-
-  PERGUNTE SE:
-  ────────────
-  □ Erro que você nunca viu antes
-  □ TDD não passa depois de 3 tentativas
-  □ Erro de arquitetura (não sabe onde colocar código)
-  □ Conflito entre requisitos e padrão do projeto
-  
-  NÃO PRECISA PERGUNTAR:
-  ─────────────────────
-  □ Erro de digitação
-  □ Tag faltando
-  □ Import faltando
-  □ Erro de tipagem simples
-```
-
----
-
-## Validação Manual (Opcional)
-
-Antes do commit, você pode validar manualmente:
-
-```bash
-# Na pasta frontend
-cd frontend
-
-# 1. Testes
-npx playwright test --reporter=list
-
-# 2. Typecheck
-npx tsc --noEmit
-
-# 3. Lint
-npx eslint src/ --max-warnings=0
-```
-
----
-
 ## Pré-commit Hook
 
 O `.husky/pre-commit` executa **automaticamente**:
 
-```
-git commit -m "feat: implement header logo"
+```bash
+git commit -m "feat: implement sidebar logo"
     │
     ▼
 ┌─────────────────┐
 │  Agent Learnings │ ← Salva padrões
-│  Destiller      │
+│  Destiller       │
 └────────┬────────┘
          │
          ▼
@@ -288,15 +240,53 @@ git commit -m "feat: implement header logo"
 
 ---
 
+## Validação Manual (Opcional)
+
+Antes do commit:
+
+```bash
+cd frontend
+
+# 1. Testes
+pnpm playwright test --reporter=list
+
+# 2. Typecheck
+pnpm tsc --noEmit
+
+# 3. Lint
+pnpm lint --max-warnings=0
+```
+
+---
+
 ## Checklist Pré-Commit
 
-```ascii
-□ TDD: npx playwright test passou
-□ Verify: node scripts/pre-commit-validate.js passou
-□ Typecheck: npx tsc --noEmit passou
-□ Lint: npx eslint src/ passou
+```
+□ TDD: pnpm playwright test passou
+□ Verify: pnpm pre-commit passou
+□ Typecheck: pnpm tsc --noEmit passou
+□ Lint: pnpm lint passou
 □ progress.md atualizado
 □ *.feature: @pending → @done (se US completa)
+```
+
+---
+
+## Quando Pedir Ajuda
+
+```
+PERGUNTE SE:
+───────────────────────────────────────
+□ Erro que você nunca viu antes
+□ TDD não passa depois de 3 tentativas
+□ Erro de arquitetura (onde colocar código)
+□ Conflito entre requisitos e padrão do projeto
+
+NÃO PRECISA PERGUNTAR:
+───────────────────────────────────────
+□ Erro de digitação
+□ Import faltando
+□ Erro de tipagem simples
 ```
 
 ---

@@ -12,11 +12,11 @@ git branch
 git branch -a
 
 # Criar e trocar de branch
-git checkout -b feat/header/US-001
+git checkout -b feat/sidebar/US-001
 
 # Trocar de branch
 git checkout main
-git checkout feat/header/US-001
+git checkout feat/sidebar/US-001
 ```
 
 ### Commit e Push
@@ -27,10 +27,10 @@ git add .
 git add arquivo-especifico.ts
 
 # Commitar (formato conventional commits)
-git commit -m "feat(header): add logo navigation"
+git commit -m "feat(sidebar): add logo navigation"
 
 # Push
-git push -u origin feat/header/US-001
+git push -u origin feat/sidebar/US-001
 
 # Amend (só se NÃO tiver pushado!)
 git commit --amend -m "fix: corrigir mensagem"
@@ -66,23 +66,20 @@ git worktree remove ../pasta
 
 ---
 
-## NPM/PNPM
+## Frontend (pasta frontend/)
 
 ```bash
 # Instalar dependências
 pnpm install
-npm install
-
-# Instalar nova dependência
-pnpm add nome-do-pacote
-pnpm add -D nome-do-pacote  # dev dependency
 
 # Rodar scripts
-pnpm dev        # desenvolvimento
-pnpm build      # produção
-pnpm start      # iniciar produção
-pnpm test       # Playwright
-pnpm lint       # ESLint
+pnpm dev          # desenvolvimento (localhost:3000)
+pnpm build        # produção
+pnpm start        # iniciar produção
+pnpm test         # Playwright
+pnpm lint         # ESLint
+pnpm tsc          # TypeScript
+pnpm pre-commit   # Validação completa
 ```
 
 ---
@@ -91,22 +88,19 @@ pnpm lint       # ESLint
 
 ```bash
 # Rodar todos os testes
-npx playwright test
+pnpm playwright test
 
 # Rodar teste específico
-npx playwright test tests/features/header/US-001.spec.ts
+pnpm playwright test tests/features/sidebar/sidebar.spec.ts
 
 # Modo watch (re-runs on change)
-npx playwright test --watch
+pnpm playwright test --watch
 
-# Gerar relatório HTML
-npx playwright test --reporter=html
+# Modo UI para debug
+pnpm playwright test --ui
 
-# Abrir UI para debug
-npx playwright test --ui
-
-# Apenas checar se página carrega
-npx playwright open http://localhost:3000
+# Abrir página para debug
+pnpm playwright open http://localhost:3000
 ```
 
 ---
@@ -114,11 +108,11 @@ npx playwright open http://localhost:3000
 ## TypeScript
 
 ```bash
-# Verificar tipos (todo projeto)
-cd frontend && npx tsc --noEmit
+# Verificar tipos
+cd frontend && pnpm tsc
 
 # Verificar arquivo específico
-cd frontend && npx tsc --noEmit src/components/header/header.tsx
+cd frontend && pnpm tsc src/components/sidebar/sidebar.tsx
 ```
 
 ---
@@ -127,48 +121,15 @@ cd frontend && npx tsc --noEmit src/components/header/header.tsx
 
 ```bash
 # Verificar todo o código
-cd frontend && npx eslint src/
+cd frontend && pnpm lint
 
 # Corrigir automaticamente
-cd frontend && npx eslint src/ --fix
+cd frontend && pnpm lint --fix
 ```
 
 ---
 
-## Pre-commit
-
-```bash
-# Rodar validação manualmente
-cd frontend && node scripts/pre-commit-validate.js
-
-# Validar mensagem de commit
-node scripts/validate-commit-msg.js "feat(header): add logo"
-```
-
----
-
-## Atalhos Úteis (Terminal)
-
-```bash
-# Limpar tela
-Ctrl + L
-
-# Cancelar comando
-Ctrl + C
-
-# Auto-complete
-Tab
-
-# Histórico de comandos
-↑ / ↓
-
-# Sair do terminal
-exit
-```
-
----
-
-## VS Code - Atalhos
+## Atalhos VS Code
 
 ```bash
 # Command Palette
@@ -177,14 +138,8 @@ Ctrl + Shift + P
 # Multi-cursor
 Alt + Click
 
-# Selecionar tudo igual
-Ctrl + Shift + L
-
 # Mover linha
 Alt + ↑ / ↓
-
-# Duplicar linha
-Shift + Alt + ↑ / ↓
 
 # Format code
 Shift + Alt + F
@@ -194,7 +149,7 @@ Shift + Alt + F
 
 ## Resumo Visual
 
-```ascii
+```
 ┌─────────────────────────────────────────────────────────────────┐
 │                    CHEAT SHEET RÁPIDO                           │
 └─────────────────────────────────────────────────────────────────┘
@@ -203,13 +158,13 @@ Shift + Alt + F
   ────────────────
   pnpm dev              → Roda projeto
   pnpm build            → Build produção
-  npx playwright test   → Testa
+  pnpm playwright test  → Testa
 
   VALIDAÇÃO:
   ──────────
-  npx tsc --noEmit      → Tipos
-  npx eslint src/       → Estilo
-  node scripts/pre-...  → Padrões
+  pnpm tsc              → Tipos
+  pnpm lint             → Estilo
+  pnpm pre-commit       → Tudo
 
   GIT:
   ────
@@ -224,4 +179,4 @@ Shift + Alt + F
 
 ## Próximo Passo
 
-Dicas e boas práticas → `09-tips.md`
+Consulte o glossário → `09-glossario.md`

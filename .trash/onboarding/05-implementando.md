@@ -1,162 +1,112 @@
-# Implementando: Como Codificar com Confiança
+# Implementando: TDD First
 
-## O Segredo: TDD First
+## O Ciclo TDD
 
-TDD (Test-Driven Development) é codificar **escrevendo o teste antes**.
+TDD = Escrever o **teste antes** do código.
 
 ```
 ┌─────────────────────────────────────────────────────────────────┐
-│                    CICLO TDD: RED → GREEN → REFACTOR             │
+│                    CICLO TDD: RED → GREEN                         │
 └─────────────────────────────────────────────────────────────────┘
 
-    ┌──────────────────────────────────────────────────────┐
-    │                                                      │
-    │   1. RED          2. GREEN          3. REFACTOR      │
-    │   ┌────────┐       ┌────────┐       ┌────────┐       │
-    │   │ ESCREVE│       │ ESCREVE│       │ MELHORA│       │
-    │   │TESTE   │──────→│ CÓDIGO │──────→│ CÓDIGO │──────→│
-    │   │QUE     │  FAIL │MÍNIMO │  PASS │SEMMUDAR│       │
-    │   │FAIL   │       │PARA   │       │COMPORT.│       │
-    │   └────────┘       │PASSAR │       └────────┘       │
-    │                    └────────┘                        │
-    │                                                      │
-    └──────────────────────────────────────────────────────┘
+   1. RED           2. GREEN          3. REFACTOR (opcional)
+   ┌────────┐       ┌────────┐       ┌────────┐
+   │ ESCREVE│       │ ESCREVE│       │ MELHORA│
+   │TESTE   │──────→│ CÓDIGO │──────→│ CÓDIGO │──────→
+   │QUE     │ FAIL  │ MINIMO │ PASS  │SEMMUDAR│
+   │FAIL   │       │PARA    │       │COMPORT.│
+   └────────┘       │PASSAR  │       └────────┘
+                    └────────┘
 ```
 
 ---
 
-## Passo a Passo: Implementando Uma Tarefa
+## Passo a Passo
 
 ### Cenário de Exemplo
 
 ```gherkin
-# *.feature
 @desktop @pending
 Scenario: Logo click navigates to home
   Given I am on the "/about" page
-  When I click the header logo
+  When I click the sidebar logo
   Then I should be navigated to "/"
 ```
 
-### Passo 1: Leia o *.spec.docs.md
-
-Se existir, leia para guidance:
+### Passo 1: Leia o *.spec.docs.md (se existir)
 
 ```bash
 # Verifique se existe
-ls frontend/tests/features/header/*.spec.docs.md
+ls frontend/tests/features/sidebar/*.spec.docs.md
 ```
 
-**O que encontrar:**
-- data-testids documentados
-- Passos de implementação sugeridos
-- Referências de código
+Contém: data-testids documentados, passos sugeridos, referências.
 
 ### Passo 2: Crie/Execute o Teste (RED)
 
 ```bash
-# Execute o teste (vai falhar!)
 cd frontend
-npx playwright test tests/features/header/US-001.spec.ts
+pnpm playwright test tests/features/sidebar/sidebar.spec.ts
 ```
 
-**Saída esperada:**
+**Saída esperada (falha):**
 ```
-  ✗ Logo click navigates to home
-    Error: locator.click("[data-testid="header-logo"]")
-    Error: No such element: [data-testid="header-logo"]
+✗ Logo click navigates to home
+  Error: No such element: [data-testid="sidebar-logo"]
 ```
 
-**Isso é bom!** Significa que o teste está funcionando.
+**Isso é bom!** Teste está funcionando.
 
 ### Passo 3: Implemente o Código Mínimo (GREEN)
 
-Edite `frontend/src/components/header/header.tsx`:
+`frontend/src/components/sidebar/sidebar.tsx`:
 
 ```tsx
 import Link from 'next/link';
 
-export const Header = () => {
+export const Sidebar = () => {
   return (
-    <header data-testid="header" className="fixed top-0 w-full h-[80px]">
-      <Link href="/" data-testid="header-logo">
+    <aside data-testid="sidebar">
+      <Link href="/" data-testid="sidebar-logo">
         Logo
       </Link>
-    </header>
+    </aside>
   );
 };
 ```
 
-### Passo 4: Execute o Teste Novamente (GREEN)
+### Passo 4: Execute o Teste Novamente
 
 ```bash
-npx playwright test tests/features/header/US-001.spec.ts
+pnpm playwright test tests/features/sidebar/sidebar.spec.ts
 ```
 
 **Saída esperada:**
 ```
-  ✓ Logo click navigates to home
+✓ Logo click navigates to home
 ```
 
-### Passo 5: Refatore (Se Necessário)
+### Passo 5: Refatore (se necessário)
 
 ```tsx
 import Link from 'next/link';
 
-interface HeaderProps {
+interface SidebarProps {
   className?: string;
 }
 
-export const Header = ({ className }: HeaderProps) => {
+export const Sidebar = ({ className }: SidebarProps) => {
   return (
-    <header 
-      data-testid="header" 
-      className={`fixed top-0 w-full h-[80px] bg-white ${className || ''}`}
+    <aside
+      data-testid="sidebar"
+      className={`w-[240px] h-screen bg-[#141417] ${className || ''}`}
     >
-      <Link href="/" data-testid="header-logo" className="flex items-center">
-        <span className="text-xl font-bold">Logo</span>
+      <Link href="/" data-testid="sidebar-logo" className="flex items-center">
+        <span className="text-xl font-bold text-white">Logo</span>
       </Link>
-    </header>
+    </aside>
   );
 };
-```
-
----
-
-## Diagrama: Fluxo de Implementação
-
-```
-┌─────────────────────────────────────────────────────────────────┐
-│              FLUXO DE IMPLEMENTAÇÃO POR TAREFA                  │
-└─────────────────────────────────────────────────────────────────┘
-
-    *.feature                    *.spec.docs.md
-    ─────────                    ────────────────
-         │                             │
-         │  Leia cenários               │ Leia guidance
-         │  e data-testids             │ e referências
-         ▼                             ▼
-    ┌────────────────────────────────────────┐
-    │         ENTENDA O REQUISITO            │
-    └────────────────┬───────────────────────┘
-                     │
-         ┌───────────┼───────────┐
-         ▼           ▼           ▼
-    ┌─────────┐ ┌─────────┐ ┌─────────┐
-    │   RED   │ │  GREEN  │ │ REFAC.  │
-    │  Teste  │ │ Código  │ │  Clean  │
-    │  first! │ │  min.   │ │  code   │
-    └────┬────┘ └────┬────┘ └────┬────┘
-         │           │           │
-         │           │           │
-         ▼           ▼           ▼
-    ┌────────────────────────────────────────┐
-    │              GATE VALIDA                │
-    │  TDD → Verify → Typecheck → Lint      │
-    └────────────────┬───────────────────────┘
-                     │
-                     ▼
-                 ✅ DONE
 ```
 
 ---
@@ -167,51 +117,43 @@ export const Header = ({ className }: HeaderProps) => {
 frontend/
 ├── src/
 │   ├── app/                    ← Páginas Next.js
-│   │   ├── page.tsx           ← Home
-│   │   ├── about/page.tsx     ← About
-│   │   └── test-[name]/       ← Páginas de teste
-│   │
 │   └── components/            ← Componentes
-│       ├── header/
-│       │   ├── header.tsx     ← Componente
-│       │   └── index.ts       ← Export
-│       │
-│       └── button/
-│           ├── button.tsx
-│           └── index.ts
+│       └── sidebar/
+│           ├── sidebar.tsx    ← Componente
+│           └── index.ts       ← Export
 │
 └── tests/
     └── features/              ← Testes E2E
-        └── header/
-            ├── header.spec.ts ← Teste gerado
-            └── US-001.spec.ts  ← Seu teste
+        └── sidebar/
+            ├── sidebar.spec.ts
+            └── sidebar.spec.docs.md
 ```
 
 ---
 
-## Como Saber Se Está Pronto?
+## Checklist: Está Pronto?
 
-```ascii
+```
 ┌─────────────────────────────────────────────────────────────────┐
 │                    CHECKLIST PRONTO!                            │
 └─────────────────────────────────────────────────────────────────┘
 
 □ Teste criado seguindo *.feature
-□ Teste passa com @tdd-playwright
+□ Teste passa com pnpm playwright test
 □ @verify-patterns passou
-□ npx tsc --noEmit passou
-□ npx eslint passou
+□ pnpm tsc --noEmit passou
+□ pnpm eslint passou
 □ progress.md atualizado
 □ Revisão humana aprovada
 
-Se tudo verde → Você está pronto para o PR! 🎉
+Se tudo verde → PR! 🎉
 ```
 
 ---
 
-## Exemplo Completo: Header
+## Exemplo: Sidebar com NavItems
 
-### 1. O Cenário
+### O Cenário
 
 ```gherkin
 @desktop @pending
@@ -224,47 +166,45 @@ Scenario: Desktop menu shows all navigation items
     | Contact  |
 ```
 
-### 2. O Teste (primeiro!)
+### O Teste
 
 ```typescript
-// US-003.spec.ts
 test('Desktop menu shows all navigation items', async ({ page }) => {
   await page.goto('/');
-  
+
   const items = ['Home', 'About', 'Projects', 'Contact'];
   for (let i = 0; i < items.length; i++) {
-    await expect(page.locator(`[data-testid="header-nav-${i}"]`))
+    await expect(page.locator(`[data-testid="sidebar-nav-${i}"]`))
       .toHaveText(items[i]);
   }
 });
 ```
 
-### 3. A Implementação
+### A Implementação
 
 ```tsx
-// header.tsx
 const NAV_ITEMS = ['Home', 'About', 'Projects', 'Contact'];
 
-export const Header = () => {
+export const Sidebar = () => {
   return (
-    <header data-testid="header" className="h-[80px]">
-      <nav data-testid="header-desktop-menu" className="flex gap-6">
+    <aside data-testid="sidebar">
+      <nav data-testid="sidebar-desktop-menu" className="flex flex-col gap-4">
         {NAV_ITEMS.map((item, index) => (
-          <Link 
+          <Link
             key={item}
             href={`/${item.toLowerCase()}`}
-            data-testid={`header-nav-${index}`}
+            data-testid={`sidebar-nav-${index}`}
           >
             {item}
           </Link>
         ))}
       </nav>
-    </header>
+    </aside>
   );
 };
 ```
 
-### 4. O Resultado
+### O Resultado
 
 ```
 ✓ Desktop menu shows all navigation items
@@ -272,14 +212,14 @@ export const Header = () => {
 
 ---
 
-## Err Common Mistakes
+## Erros Comuns
 
 | ❌ Error | ✅ Correção |
 |----------|------------|
 | Implementar antes do teste | RED primeiro! |
-| Escrever teste complexo | Um assert por vez |
+| Teste complexo | Um assert por vez |
 | Ignorar o data-testid | Use o que está no *.spec.docs.md |
-| Testar implementação, não comportamento | Given-When-Then = comportamento |
+| Testar implementação | Given-When-Then = comportamento |
 
 ---
 
