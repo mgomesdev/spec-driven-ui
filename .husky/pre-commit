@@ -1,2 +1,2 @@
 #!/bin/sh
-cd frontend && pnpm run test
+cd frontend 

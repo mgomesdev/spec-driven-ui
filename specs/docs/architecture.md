@@ -34,13 +34,3 @@
 | `docs/` | Documentação geral do projeto |
 | `features/` | Especificações por feature |
 
-### specs/docs/ — Documentação
-
-| Arquivo | Descrição |
-|---------|-----------|
-| `architecture.md` | Este arquivo - estrutura do projeto |
-| `convencoes-codigo.md` | Convenções de código |
-| `guardrails.md` | Regras obrigatórias |
-| `padroes-git.md` | Padrões de commits |
-| `tecnologias.md` | Versões das tecnologias |
-

@@ -1,6 +1,5 @@
 const fs = require('fs');
 const path = require('path');
-
 const RED = '\x1b[31m';
 const GREEN = '\x1b[32m';
 const RESET = '\x1b[0m';
