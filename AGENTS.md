@@ -1,26 +1,34 @@
-# AGENTS.md — Agente Geral do Projeto
+# AGENTS.md
 
-## Visão geral rápida
+## ⚠️ PRIORIDADE MÁXIMA
 
-Site estratégico de posicionamento de autoridade profissional como desenvolvedor frontend. O objetivo é facilitar o processo de contratação apresentando projetos, habilidades e experiência de forma clara e convincente para recrutadores e potenciais clientes.
-
----
-
-## ⚠️ PRIORIDADE MÁXIMA — Leia primeiro
-
-1. **`specs/docs/guardrails.md`**: Regras mandatory do projeto — **nunca violar**. Define o que pode e não pode fazer.
+Leia primeiro: `@specs/docs/guardrails.md`
 
 ---
 
 ## 🚀 Início de Sessão
 
-```
-1. Leia specs/docs/guardrails.md
-2. Leia .opencode/agent-session-log.json (evitar erros recorrentes)
-3. Leia specs/docs/design.md
-4. Leia specs/docs/convencoes-codigo.md
-5. Leia specs/docs/padroes-git.md
-```
+1. `@specs/docs/guardrails.md`
+2. `.opencode/agent-session-log.json`
+3. `@specs/docs/convencoes-codigo.md`
+4. `@specs/docs/padroes-git.md`
+
+---
+
+## 🧠 Agentes
+
+| Agente | Função |
+|--------|--------|
+| `@us-to-research` | Converte US em research.md |
+| `@research-to-plan` | Gera plano de ação |
+| `@bdd-generator` | Gera cenários BDD (*.feature) |
+| `@tdd-generator` | Gera testes *.spec.ts |
+| `@implement-tasks` | Implementa código via TDD |
+| `@verify-patterns` | Valida padrões e convenções |
+| `@design-tokens-generator` | Extrai tokens → globals.css |
+| `@diff-design-vs-code` | Compara design com código |
+| `@export-code-to-design` | Exporta código para Pencil |
+| `@import-design-to-code` | Importa design aprovado |
 
 ---
 
@@ -28,17 +36,15 @@ Site estratégico de posicionamento de autoridade profissional como desenvolvedo
 
 | Tópico | Arquivo |
 |--------|---------|
-| Design System | `@specs/docs/design.md` |
-| Tecnologias e fontes | `@specs/docs/tecnologias.md` |
+| Arquitetura e Fluxos | `@specs/docs/architecture.md` |
+| Tecnologias | `@specs/docs/tecnologias.md` |
 | Convenções de código | `@specs/docs/convencoes-codigo.md` |
 | Guardrails | `@specs/docs/guardrails.md` |
-| Arquitetura | `@specs/docs/architecture.md` |
 | Padrões git | `@specs/docs/padroes-git.md` |
 
 ---
 
 ## ⚓ Pre-commit
 
-Antes de commitar, os hooks `.husky/` executam:
-1. **commit-msg**: Validação de Conventional Commits
+1. **commit-msg**: Validação Conventional Commits
 2. **pre-commit**: Playwright Tests
