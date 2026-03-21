@@ -143,6 +143,6 @@ Pronto para uso individual via @implement-tasks.
 
 **Próximos passos (human-in-the-loop):**
 1. cd ../spec-driven-ui-avatar
-2. @implement-tasks implemente a US-001 para avatar
+2. @implement-tasks implemente a subtask 1.1 da US-001 para avatar
 3. (após US completa) destilação ou próxima US
 4. Repita para outras features

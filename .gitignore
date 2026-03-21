@@ -1,6 +1,3 @@
-# Agent Session Log (buffer temporário, não versionar)
-.opencode/agent-session-log.json
-
 # Dependencies
 node_modules/
 .pnp/

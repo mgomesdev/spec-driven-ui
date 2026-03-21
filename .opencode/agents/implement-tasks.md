@@ -131,7 +131,7 @@ if (await fileExists(specFile)) {
   await executeSkipFlow(specFile, feature);
 } else {
   // 🔄 FLUXO TRADICIONAL (@tdd-playwright cria testes)
-  await @tdd-playwright execute tdd da [us-id] subtask [subtask-id] para [feature]
+  @tdd-playwright execute tdd da [us-id] subtask [subtask-id] para [feature]
 }
 ```
 

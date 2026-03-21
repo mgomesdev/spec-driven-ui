@@ -9,8 +9,8 @@
 | `frontend/` | Projeto Next.js principal |
 | `specs/` | Especificações e documentação do projeto |
 | `AGENTS.md` | Configuração do agente principal |
-| `agent-learnings.json` | Aprendizados consolidados |
 | `opencode.json` | Configuração do OpenCode |
+| `.opencode/agent-session-log.json` | Aprendizados da sessão (versionado) |
 
 ---
 
@@ -21,7 +21,6 @@
 | `src/app/` | Next.js App Router (páginas) |
 | `src/components/` | Componentes React |
 | `tests/features/` | Testes E2E Playwright por feature |
-| `scripts/pre-commit-validate.js` | Script de validação de código |
 | `playwright.config.ts` | Configuração do Playwright |
 | `next.config.ts` | Configuração do Next.js |
 | `eslint.config.mjs` | Configuração do ESLint |

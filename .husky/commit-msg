@@ -1,2 +1,2 @@
 #!/bin/sh
-cd frontend && pnpm run validate-commit-msg "../$1"
+cd frontend && node scripts/validate-commit-msg.js

@@ -24,8 +24,8 @@ tools:
 
 | Modo | Comando | Descrição |
 |------|---------|-----------|
-| **Individual** | `diff-design-to-code --component=sidebar` | Compara apenas um componente |
-| **Em massa** | `diff-design-to-code --all` | Compara todos os componentes |
+| **Individual** | `diff-design-vs-code --component=sidebar` | Compara apenas um componente |
+| **Em massa** | `diff-design-vs-code --all` | Compara todos os componentes |
 
 ## Entradas
 
@@ -144,7 +144,7 @@ Comparar valores: **Spec vs Pencil vs Código**
 
 **Modo Individual:**
 ```
-diff-design-to-code --component=sidebar
+diff-design-vs-code --component=sidebar
 
 ✅ Sidebar (ncY1p) está sincronizado
    - fill: #141417 ✅
@@ -153,7 +153,7 @@ diff-design-to-code --component=sidebar
 ```
 
 ```
-diff-design-to-code --component=button
+diff-design-vs-code --component=button
 
 ❌ Button (btn001) dessincronizado
    - fill: BDD #FF5C00 ≠ Pencil #FF5500 ❌
@@ -162,7 +162,7 @@ diff-design-to-code --component=button
 
 **Modo All:**
 ```
-diff-design-to-code --all
+diff-design-vs-code --all
 
 📊 Relatório Geral:
 ─────────────────────────────────────────────────────
@@ -193,7 +193,7 @@ Exit Code: 1 (há divergências)
 
 **Para CI/Hooks:**
 ```bash
-diff-design-to-code --all
+diff-design-vs-code --all
 if [ $? -eq 0 ]; then
   echo "✅ Design sincronizado"
 else
