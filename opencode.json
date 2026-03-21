@@ -17,11 +17,10 @@
           "./node_modules/**",
           "./dist/**",
           ".git/**",
-          ".trash/**",
           "./readme/**",
           "./README.md",
           "./design-diff.md",
-          ".trash/**/*",
+          "wiki/**/*",
           "**/*.spec.docs.md",
           "**/guardrails.json"
        ]
