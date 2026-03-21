@@ -25,10 +25,15 @@ Leia primeiro: `@specs/docs/guardrails.md`
 | `@tdd-generator` | Gera testes *.spec.ts |
 | `@implement-tasks` | Implementa código via TDD |
 | `@verify-patterns` | Valida padrões e convenções |
+| `@analyze-consistency` | Analisa consistência entre artefatos |
 | `@design-tokens-generator` | Extrai tokens → globals.css |
 | `@diff-design-vs-code` | Compara design com código |
 | `@export-code-to-design` | Exporta código para Pencil |
 | `@import-design-to-code` | Importa design aprovado |
+| `@design-system-builder` | Construção do design system |
+| `@tdd-playwright` | Executa TDD por teste |
+| `@worktree-mapper` | Mapeia dependências entre componentes |
+| `@worktree-runner` | Cria worktrees Git paralelos |
 
 ---
 

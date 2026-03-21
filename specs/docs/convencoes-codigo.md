@@ -6,6 +6,7 @@
 - Não adicionar o tipo de retorno da função, use a **inferencia de tipos** do typescript
 - Props de componentes devem ser nomeadas de maneira descritiva para props `ComponentProps`
 - Props que utilizam `ForwardRef` devem tipar as suas interfaces de maneira descritiva para ref `ComponentRef`.
+- Não use `any` faça a tipagem correta.
 
 ---
 
