@@ -1,6 +1,6 @@
 ---
 name: implement-tasks
-description: "Executa uma subtask específica de uma User Story (US). Implementa código, executa gate (TDD + Verify + Typecheck + Lint), registra no progress.md por TESTE e retorna ao humano para aprovação. Suporta dois fluxos: (1) Skip Progressivo quando *.spec.ts existe, (2) TDD Tradicional quando cria novos testes. Encerra apenas após aprovação humana."
+description: "Executa uma subtask específica de uma User Story (US). Implementa código, executa gate (TDD + Verify), registra no progress.md por TESTE e retorna ao humano para aprovação. Suporta dois fluxos: (1) Skip Progressivo quando *.spec.ts existe, (2) TDD Tradicional quando cria novos testes. Encerra apenas após aprovação humana."
 mode: subagent
 temperature: 0.3
 tools:
@@ -28,7 +28,6 @@ Exemplo:
    - `specs/docs/convencoes-codigo.md`
    - `specs/docs/guardrails.md`
    - `specs/docs/architecture.md`
-   - `specs/docs/pre-commit.md`
 
 2. **Leia o contexto da feature**:
    - `specs/features/[nome-da-feature]/features/[nome-da-feature].feature`
@@ -262,10 +261,8 @@ async function countScenarioTests(specFile: string, scenarioName: string): Promi
 │    → Se falhou: corrigir + retry + registrar no progress │
 │    → Se passou: continuar                                 │
 │                                                             │
-│ 6. GATE:                                                  │
+│  6. GATE:                                                  │
 │    a. @verify-patterns                                    │
-│    b. cd frontend && npx tsc --noEmit                    │
-│    c. cd frontend && npx eslint src/                     │
 │    → Se falhou: corrigir + retry                         │
 │                                                             │
 │ 7. Registrar ACERTO no progress.md (por teste)           │
@@ -307,8 +304,6 @@ async function countScenarioTests(specFile: string, scenarioName: string): Promi
 │     - Voltar ao passo 5                                     │
 │  7. Se verde:                                              │
 │     - Executar @verify-patterns                             │
-│     - Executar Typecheck                                    │
-│     - Executar Lint                                         │
 │     - Registrar ACERTO no progress.md                       │
 │     - Retornar ao humano para revisão                        │
 │     - Aguardar aprovação ou diretrizes                      │
@@ -365,28 +360,22 @@ Execute nesta ordem:
 - Se falhou na etapa 1 (sem código): corrija teste ou aguarde implementação
 - Se falhou na etapa 3: corrija código + registre erro + retry
 
-### 2. Verify Patterns
+### 2. @verify-patterns (convenções do projeto)
 ```
 @verify-patterns execute verificação para [nome-da-feature] [us-id] subtask [subtask-id]
 ```
 - Verifica convenções, guardrails, arquitetura
 - Se falhou: corrija + registre erro + retry
 
-### 3. Typecheck
-```bash
-cd frontend && npx tsc --noEmit
-```
-- Se falhou: corrija + registre erro + retry
-
-### 4. Lint
-```bash
-cd frontend && npx eslint src/
-```
-- Se falhou: corrija + registre erro + retry
-
 ### Se TODOS passaram (verde):
 ✅ Registre acerto no progress.md
 ✅ Retorne ao humano: "Subtask [X.Y] verde. Revise e continue."
+
+### Nota sobre CI/CD
+Typecheck e Lint são executados pela CI/CD Pipeline a cada push/PR:
+- `lint` → ESLint
+- `build` → Next.js build (inclui typecheck)
+- `test` → Playwright Tests
 
 ---
 
@@ -485,7 +474,7 @@ Quando TODAS as subtasks e cenários estão completos:
 | **Aprovação** | Pedir confirmação entre cada teste |
 | **Progresso** | Registrar cada teste individualmente no progress.md |
 | **Skip** | Remover .skip() do próximo após teste passar |
-| **Gate** | Verify + Typecheck + Lint devem passar |
+| **Gate** | @verify-patterns + Playwright devem passar |
 | **Encerra** | Só quando US completa + aprovação humana |
 | **NUNCA use `task`** | Use @ menção direta para subagents |
 
@@ -506,7 +495,7 @@ FLUXO COM SKIP (@tdd-generator):
   3. Se teste já passa: PERGUNTAR "Pular?"
   4. Implementar código mínimo
   5. Executar teste
-  6. GATE: verify + typecheck + lint
+  6. GATE: @verify-patterns
   7. Registrar acerto no progress.md (por teste)
   8. PERGUNTAR: "Teste verde. Continuar?"
   9. Ativar próximo teste (.skip → test)
@@ -517,10 +506,8 @@ FLUXO TRADICIONAL (@tdd-playwright):
   2. Implementar código mínimo
   3. @tdd-playwright: teste deve PASSAR (GREEN)
   4. @verify-patterns: verificar padrões
-  5. Typecheck: npx tsc --noEmit
-  6. Lint: npx eslint
-  7. Se falhou: corrigir + registrar erro + retry
-  8. Se verde: PERGUNTAR + retornar ao humano
+  5. Se falhou: corrigir + registrar erro + retry
+  6. Se verde: PERGUNTAR + retornar ao humano
 
 US COMPLETA + APROVADO:
   1. Mostrar git status + git diff
