@@ -1,6 +1,6 @@
 ---
 name: tdd-generator
-description: "Gera testes Playwright documentados (*.spec.ts) e documentação (*.spec.docs.md) a partir de um arquivo *.feature. Inclui referências detalhadas, passos de implementação e snippets."
+description: "Gera testes Playwright documentados (*.spec.ts) e documentação (*.spec.docs.md) a partir de um arquivo *.feature. Inclui referências detalhadas, passos de implementação e snippets. TODOS os testes começam como SKIP exceto o primeiro."
 mode: subagent
 temperature: 0.1
 tools:
@@ -612,8 +612,8 @@ function generateSpecTs(feature: string, scenarios: Scenario[]): string {
   // Feature header
   output += `test.describe('Feature: ${formatFeatureName(feature)}', () => {\n`;
   
-  for (const scenario of scenarios) {
-    output += generateScenarioTests(scenario);
+  for (const [index, scenario] of scenarios.entries()) {
+    output += generateScenarioTests(scenario, index);
   }
   
   output += `});\n`;
@@ -621,7 +621,7 @@ function generateSpecTs(feature: string, scenarios: Scenario[]): string {
   return output;
 }
 
-function generateScenarioTests(scenario: Scenario): string {
+function generateScenarioTests(scenario: Scenario, scenarioIndex: number): string {
   let output = `\n  test.describe('Scenario: ${scenario.name}', () => {\n`;
   
   // beforeEach baseado no Given
@@ -629,9 +629,12 @@ function generateScenarioTests(scenario: Scenario): string {
   output += generateGivenSetup(scenario.given);
   output += `    });\n\n`;
   
-  // Tests baseados no Then
+  // Tests baseados no Then - primeiro é skip por padrão
+  const isFirstScenario = scenarioIndex === 0;
+  
   for (const [index, then] of scenario.then.entries()) {
-    output += generateTest(then, index);
+    const isFirstTest = isFirstScenario && index === 0;
+    output += generateTest(then, index, isFirstTest);
   }
   
   output += `  });\n`;
@@ -746,29 +749,130 @@ function mapGivenToPlaywright(given: string): string {
 }
 ```
 
-### generateTestDoc
+---
+
+## Funções Auxiliares (Test Generation)
+
+### formatThenToTestName
 
 ```typescript
-function generateTestDoc(then: string, scenario: Scenario): string {
-  // Identificar elemento
+function formatThenToTestName(then: string): string {
+  // Remove "Then " do início
+  let testName = then.replace(/^Then\s+/i, '');
+  
+  // Converte para minúsculas
+  testName = testName.toLowerCase();
+  
+  // Substitui placeholders por descrições genéricas
+  testName = testName.replace(/\{[\w_]+\}/g, 'valor');
+  
+  // Remove caracteres especiais
+  testName = testName.replace(/[^a-z0-9\s]/g, '');
+  
+  // Substitui múltiplos espaços por um único
+  testName = testName.replace(/\s+/g, ' ').trim();
+  
+  // Limita tamanho
+  if (testName.length > 60) {
+    testName = testName.substring(0, 60);
+  }
+  
+  return testName;
+}
+```
+
+### generateThenAssertion
+
+```typescript
+function generateThenAssertion(then: string): string {
+  const thenLower = then.toLowerCase();
+  
+  // Extrair elemento do Then
   const element = extractElement(then);
-  const dataTestid = mapToDataTestid(element);
+  const selector = mapToDataTestid(element);
   
-  // Identificar asserção
-  const assertion = extractAssertion(then);
-  const playwrightCode = mapToPlaywright(assertion, dataTestid);
+  // Mapear para asserção Playwright
+  if (thenLower.includes('visível') || thenLower.includes('visible')) {
+    return `      await expect(page.locator('[data-testid="${selector}"]')).toBeVisible();\n`;
+  }
   
-  // Identificar Tailwind classes necessárias
-  const tailwindClasses = extractTailwindClasses(then);
-  const tailwindRefs = tailwindClasses.map(c => TAILWIND_REFERENCES[c]).filter(Boolean);
+  if (thenLower.includes('oculto') || thenLower.includes('hidden')) {
+    return `      await expect(page.locator('[data-testid="${selector}"]')).toBeHidden();\n`;
+  }
   
-  return {
-    element,
-    dataTestid,
-    playwrightCode,
-    tailwindRefs,
-    references: [...tailwindRefs, ...REACT_REFERENCES, ...NEXTJS_REFERENCES],
+  if (thenLower.includes('contém') || thenLower.includes('text')) {
+    const textMatch = then.match(/['""]?([^'"",]+)['""]?/);
+    const text = textMatch ? textMatch[1] : '';
+    return `      await expect(page.locator('[data-testid="${selector}"]')).toContainText('${text}');\n`;
+  }
+  
+  if (thenLower.includes('contador') || thenLower.includes('count')) {
+    const countMatch = then.match(/\d+/);
+    const count = countMatch ? countMatch[0] : '0';
+    return `      await expect(page.locator('[data-testid="${selector}"]')).toHaveCount(${count});\n`;
+  }
+  
+  // Default: verificar visibilidade
+  return `      await expect(page.locator('[data-testid="${selector}"]')).toBeVisible();\n`;
+}
+```
+
+### extractElement
+
+```typescript
+function extractElement(then: string): string {
+  // Padrões comuns:
+  // - "a sidebar" → "sidebar"
+  // - "o logo" → "logo"
+  // - "menu de navegação" → "nav-menu"
+  // - "botão" → "button"
+  
+  let element = then
+    .replace(/^(Then|And)\s+/i, '')
+    .replace(/^(está|tem|exibe|mostra|é)\s+/i, '')
+    .trim();
+  
+  // Mapeamento de tradução
+  const elementMap: Record<string, string> = {
+    'a sidebar': 'sidebar',
+    'o logo': 'logo',
+    'a empresa': 'logo',
+    'menu de navegação': 'nav',
+    'navegação': 'nav',
+    'botão': 'button',
+    'botão hamburger': 'hamburger',
+    'botão premium': 'premium-button',
+    'área de perfil': 'profile',
+    'perfil': 'profile',
+    'avatar': 'profile-avatar',
+    'nome': 'profile-name',
+    'overlay': 'overlay',
+    'item': 'nav-item',
+    'itens': 'nav-item',
+    'conteúdo': 'content',
+    'main': 'content',
   };
+  
+  for (const [key, value] of Object.entries(elementMap)) {
+    if (element.toLowerCase().includes(key)) {
+      return value;
+    }
+  }
+  
+  return element.split(' ')[0].toLowerCase();
+}
+```
+
+### mapToDataTestid
+
+```typescript
+function mapToDataTestid(element: string): string {
+  const kebabCase = element
+    .replace(/([a-z])([A-Z])/g, '$1-$2')
+    .replace(/[\s_]+/g, '-')
+    .toLowerCase();
+  
+  return kebabCase;
 }
 ```
 
@@ -784,13 +888,18 @@ Arquivos criados:
 - frontend/tests/features/[feature]/[feature].spec.docs.md
 
 Testes gerados: N
+  - 1 ATIVO (primeiro teste - implementar primeiro)
+  - N-1 SKIPPED (implementar depois)
+
 Cenários: M
 
 Próx passos:
-1. Leia [feature].spec.docs.md para implementar
-2. Execute @implement-tasks para cada cenário
-3. Testes iniciarão RED (sem código)
-4. Implemente código para passar os testes
+1. Execute: npx playwright test
+   → Apenas 1 teste falhará (fácil de debugar)
+2. Implemente o código mínimo para passar
+3. Remova .skip() do próximo teste
+4. Repita até o primeiro cenário completo
+5. Passe para o próximo cenário
 ```
 
 ---
@@ -805,6 +914,8 @@ Antes de salvar:
 - [ ] data-testids seguem convenção
 - [ ] *.spec.docs.md tem referências completas
 - [ ] Links estão corretos e formatados
+- [ ] Primeiro teste SEM skip (ativo)
+- [ ] Demais testes COM skip
 
 ---
 
@@ -815,6 +926,9 @@ Antes de salvar:
 3. **Referências completas** - incluir links e seções
 4. **Given no beforeEach** - setup agrupado
 5. **Then = 1 teste** - cada Then = 1 assertion
+6. **Skip por padrão** - TODOS os testes começam como `test.skip()` exceto o primeiro
+   - Primeiro cenário + primeira asserção = `test()` (ATIVO para implementação)
+   - Demais cenários e asserções = `test.skip()` (implementar depois)
 
 ---
 
@@ -838,24 +952,114 @@ test.describe('Feature: Header de Navegação', () => {
       await page.goto('/test-header');
     });
 
-    test('deve ter header fixed com altura de HEADER_HEIGHT', async ({ page }) => {
+    // ✅ PRIORIDADE: Implementar primeiro
+    test('header deve ser visível', async ({ page }) => {
       const header = page.locator('[data-testid="header"]');
       await expect(header).toBeVisible();
+    });
+
+    // ⏭️ Implementar após o primeiro teste passar
+    test.skip('header deve ter altura HEADER_HEIGHT', async ({ page }) => {
+      const header = page.locator('[data-testid="header"]');
       const box = await header.boundingBox();
       expect(box?.height).toBe(HEADER_HEIGHT);
     });
 
-    test('deve exibir logo à esquerda', async ({ page }) => {
+    // ⏭️ Implementar após o primeiro teste passar
+    test.skip('deve exibir logo à esquerda', async ({ page }) => {
       const logo = page.locator('[data-testid="header-logo"]');
       await expect(logo).toBeVisible();
     });
 
-    test('deve exibir NAV_COUNT itens de navegação', async ({ page }) => {
+    // ⏭️ Implementar após o primeiro teste passar
+    test.skip('deve exibir NAV_COUNT itens de navegação', async ({ page }) => {
       const menuItems = page.locator('[data-testid="header-desktop-menu"] a');
       await expect(menuItems).toHaveCount(NAV_COUNT);
     });
   });
 
+  // ⏭️ SEGUNDO CENÁRIO: Todos skip
+  test.describe('Scenario: Header mobile exibe hamburger', () => {
+    test.beforeEach(async ({ page }) => {
+      await page.setViewportSize({ width: MOBILE_WIDTH, height: MOBILE_HEIGHT });
+      await page.goto('/test-header');
+    });
+
+    // ⏭️ Implementar após primeiro cenário completo
+    test.skip('sidebar deve estar oculta', async ({ page }) => {
+      const sidebar = page.locator('[data-testid="sidebar"]');
+      await expect(sidebar).toBeHidden();
+    });
+
+    // ⏭️ Implementar após primeiro cenário completo
+    test.skip('hamburger deve estar visível', async ({ page }) => {
+      const hamburger = page.locator('[data-testid="hamburger-button"]');
+      await expect(hamburger).toBeVisible();
+    });
+  });
+
+});
+```
+
+---
+
+## Estratégia: TDD Incremental com Skip
+
+### Fluxo de Trabalho
+
+```
+1. @tdd-generator feature=sidebar
+   ↓
+2. Testes gerados com PRIMEIRO ativo, demais skip
+   ↓
+3. Executar: npx playwright test
+   ↓ (apenas 1 teste falha - fácil de debugar)
+4. Implementar componente mínimo para passar
+   ↓
+5. Teste passa ✅ → Remover .skip() do próximo
+   ↓
+6. Repetir até o primeiro cenário completo
+   ↓
+7. Passar para o segundo cenário
+   ↓
+8. Repetir até todos os testes passarem
+```
+
+### Comandos Úteis
+
+```bash
+# Executar apenas o primeiro teste (ignora skips)
+npx playwright test --grep "@PRIORIDADE" --grep-invert
+
+# Ou usar grep para buscar apenas testes sem skip
+npx playwright test | grep -v "skipped"
+
+# Executar em modo watch durante implementação
+npx playwright test --watch
+
+# Ver apenas testes ativos (não-skipped)
+npx playwright test --list | grep -v "skip"
+```
+
+### Critérios para Prioridade
+
+| Prioridade | Critério | Status |
+|------------|----------|--------|
+| 1º | Primeiro cenário, primeira asserção | ATIVO |
+| 2º | Primeiro cenário, demais asserções | SKIP |
+| 3º | Demais cenários | SKIP |
+
+### Removendo Skip Progressivamente
+
+```typescript
+// Antes (gerado)
+test.skip('deve ter sidebar visível', async ({ page }) => {
+  // ...
+});
+
+// Depois de implementar
+test('deve ter sidebar visível', async ({ page }) => {
+  // ...
 });
 ```
 

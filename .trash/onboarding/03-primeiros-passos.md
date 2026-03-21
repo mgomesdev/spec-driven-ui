@@ -122,8 +122,9 @@ pnpm start
 📁 specs/features/[nome-da-feature]/
 ├── research.md      ← Contexto e requisitos
 ├── plan.md          ← Plano de implementação
-├── tasks.md         ← Lista de tarefas
-└── *.feature        ← Cenários BDD (busque @pending)
+├── features/        ← Cenários BDD
+│   └── *.feature    ← Busque @pending
+└── progress.md      ← Progresso (gerado pelo implement-tasks)
 ```
 
 ### Identificando Tarefas Pendentes

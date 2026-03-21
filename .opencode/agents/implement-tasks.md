@@ -1,6 +1,6 @@
 ---
 name: implement-tasks
-description: "Executa uma subtask específica de uma User Story (US). Implementa código, executa gate (TDD + Verify + Typecheck + Lint), registra no progress.md e retorna ao humano para revisão. O agente encerra a cada US completa após aprovação humana. Use este subagent para executar a implementação a partir dos cenários *.feature gerados pelo @bdd-generator."
+description: "Executa uma subtask específica de uma User Story (US). Implementa código, executa gate (TDD + Verify + Typecheck + Lint), registra no progress.md por TESTE e retorna ao humano para aprovação. Suporta dois fluxos: (1) Skip Progressivo quando *.spec.ts existe, (2) TDD Tradicional quando cria novos testes. Encerra apenas após aprovação humana."
 mode: subagent
 temperature: 0.3
 tools:
@@ -119,7 +119,178 @@ Requisito mudou
 
 ---
 
-## Ciclo de Execução por Subtask (TDD)
+## Detecção de Fluxo
+
+No início de cada execução, verificar qual fluxo usar:
+
+```typescript
+const specFile = `frontend/tests/features/${feature}/${feature}.spec.ts`;
+
+if (await fileExists(specFile)) {
+  // ✅ FLUXO COM SKIP (testes do @tdd-generator)
+  await executeSkipFlow(specFile, feature);
+} else {
+  // 🔄 FLUXO TRADICIONAL (@tdd-playwright cria testes)
+  await @tdd-playwright execute tdd da [us-id] subtask [subtask-id] para [feature]
+}
+```
+
+---
+
+## Fluxo com Testes Skip (TDD Generator)
+
+Quando `*.spec.ts` existe com `test.skip()`, usar este fluxo:
+
+### Estrutura Esperada
+
+```
+frontend/tests/features/[feature]/[feature].spec.ts
+├── 1 teste ATIVO (primeiro)
+└── N testes SKIPPED
+```
+
+### Funções Auxiliares
+
+```typescript
+// 1. Encontrar próximo teste SEM skip
+async function findNextActiveTest(specFile: string): Promise<{ name: string; line: number } | null> {
+  const content = await readFile(specFile);
+  const lines = content.split('\n');
+  
+  for (let i = 0; i < lines.length; i++) {
+    if (lines[i].match(/^    test\('/)) {
+      const match = lines[i].match(/test\('([^']+)/);
+      return { name: match?.[1] || 'unnamed', line: i };
+    }
+  }
+  return null;
+}
+
+// 2. Remover .skip() do próximo teste
+async function activateNextTest(specFile: string): Promise<boolean> {
+  const content = await readFile(specFile);
+  const lines = content.split('\n');
+  
+  let foundFirst = false;
+  for (let i = 0; i < lines.length; i++) {
+    if (!foundFirst && lines[i].match(/^    test\('/)) {
+      foundFirst = true;
+      continue;
+    }
+    if (foundFirst && lines[i].includes('test.skip(')) {
+      lines[i] = lines[i].replace('test.skip(', 'test(');
+      await writeFile(specFile, lines.join('\n'));
+      return true;
+    }
+  }
+  return false;
+}
+
+// 3. Verificar se cenário está completo
+async function isScenarioComplete(specFile: string, scenarioName: string): Promise<boolean> {
+  const content = await readFile(specFile);
+  const lines = content.split('\n');
+  
+  let inScenario = false;
+  for (const line of lines) {
+    if (line.includes(`'${scenarioName}'`)) {
+      inScenario = true;
+    }
+    if (inScenario && line.match(/test\.describe\(/)) {
+      break;
+    }
+    if (inScenario && line.includes('test.skip(')) {
+      return false;
+    }
+  }
+  return true;
+}
+
+// 4. Contar testes do cenário
+async function countScenarioTests(specFile: string, scenarioName: string): Promise<{ active: number; total: number }> {
+  const content = await readFile(specFile);
+  const lines = content.split('\n');
+  
+  let inScenario = false;
+  let active = 0;
+  let total = 0;
+  
+  for (const line of lines) {
+    if (line.includes(`'${scenarioName}'`)) {
+      inScenario = true;
+      continue;
+    }
+    if (inScenario && line.match(/test\.describe\(/)) {
+      break;
+    }
+    if (inScenario) {
+      if (line.match(/^    test\('/)) {
+        active++;
+        total++;
+      }
+      if (line.match(/^    test\.skip\('/)) {
+        total++;
+      }
+    }
+  }
+  return { active, total };
+}
+```
+
+### Loop Principal
+
+```
+┌─────────────────────────────────────────────────────────────┐
+│ LOOP: Até cenário completo                                 │
+│                                                             │
+│ 1. Encontrar próximo teste SEM skip                        │
+│    → Se não existe: cenário completo ✅                    │
+│                                                             │
+│ 2. PERGUNTAR ao humano:                                   │
+│    "Implementar teste: [nome]?"                            │
+│    → Se NÃO: aguardar diretrizes                          │
+│    → Se SIM: continuar                                    │
+│                                                             │
+│ 3. Executar: npx playwright test [teste]                  │
+│    → Se passou (já implementado):                         │
+│      PERGUNTAR: "Teste já passa. Pular?"                 │
+│      → Se PULAR: ativar próximo + voltar ao passo 1      │
+│      → Se IMPLEMENTAR: continuar                          │
+│                                                             │
+│ 4. Implementar código mínimo                              │
+│ 5. Executar teste novamente                              │
+│    → Se falhou: corrigir + retry + registrar no progress │
+│    → Se passou: continuar                                 │
+│                                                             │
+│ 6. GATE:                                                  │
+│    a. @verify-patterns                                    │
+│    b. cd frontend && npx tsc --noEmit                    │
+│    c. cd frontend && npx eslint src/                     │
+│    → Se falhou: corrigir + retry                         │
+│                                                             │
+│ 7. Registrar ACERTO no progress.md (por teste)           │
+│ 8. PERGUNTAR: "Teste verde. Continuar?"                  │
+│    → Se NÃO: retornar ao humano                          │
+│    → Se SIM: continuar                                    │
+│                                                             │
+│ 9. ✏️ REMOVER .skip() do próximo teste                  │
+│ 10. Voltar ao passo 1                                     │
+└─────────────────────────────────────────────────────────────┘
+```
+
+### Mensagens ao Humano
+
+| Momento | Mensagem |
+|---------|----------|
+| Antes de implementar | `"Implementar teste: [nome]?"` |
+| Teste já passa | `"Teste já passa. Pular?"` |
+| Após Gate verde | `"✅ Teste verde. Continuar?"` |
+| Cenário completo | `"✅ Cenário [nome] completo (X/X). Ir para próximo?"` |
+| US completa | `"✅ US [ID] completa. Revise e aprove."` |
+
+---
+
+## Ciclo de Execução por Subtask (TDD Tradicional)
 
 ```
 ┌─────────────────────────────────────────────────────────────┐
@@ -219,7 +390,7 @@ cd frontend && npx eslint src/
 
 ---
 
-## Progress.md — Formato
+## Progress.md — Formato (por Teste)
 
 ```markdown
 # Progress: [Nome da Feature]
@@ -228,11 +399,24 @@ cd frontend && npx eslint src/
 **Status:** 🔄 In Progress
 
 ### Task [N.X]: [Título da subtask]
-**Status:** ✅ Complete
+**Status:** 🔄 In Progress
+
+### Cenário: [Nome do cenário]
+**Status:** 🔄 In Progress (2/8 testes)
+
+#### Testes:
+- ✅ [2024-01-15 10:30] Teste 1: "a sidebar deve ser visível"
+- ✅ [2024-01-15 10:35] Teste 2: "a sidebar deve ter largura SIDEBAR_WIDTH"
+- 🔄 [2024-01-15 10:40] Teste 3: "logo deve aparecer no topo" ← ATUAL
+- ⏳ Teste 4: "menu deve exibir NAV_COUNT itens"
+- ⏳ Teste 5: "botão premium deve estar visível"
+- ⏳ Teste 6: "área de perfil deve estar visível"
+- ⏳ Teste 7: "avatar deve estar visível"
+- ⏳ Teste 8: "nome do usuário deve ser exibido"
 
 #### Registros:
-- ✅ [Acerto 1]
-- ⚠️ Error: [descrição do erro e como foi corrigido]
+- ✅ [Acerto] Sidebar implementada com data-testid correto
+- ⚠️ Error: "CSS width não aplicado" → Corrigido com inline style
 
 ---
 
@@ -242,66 +426,55 @@ cd frontend && npx eslint src/
 ### Task [M.1]: [Título da subtask]
 **Status:** 🔄 In Progress
 
+### Cenário: [Nome do cenário]
+**Status:** 🔄 In Progress (0/5 testes)
+
+#### Testes:
+- 🔄 Teste 1: "..." ← ATUAL
+- ⏳ Teste 2: "..."
+- ⏳ Teste 3: "..."
+- ⏳ Teste 4: "..."
+- ⏳ Teste 5: "..."
+
 #### Registros:
 - ⚠️ Error: [erro encontrado]
 ```
 
 ---
 
-## Condição de Parada por US
+## Condição de Parada
 
-Quando TODAS as subtasks de uma US estiverem verdes:
+### Por Cenário:
 
-1. Retorne ao humano: "✅ US [ID] completa. Aprova o encerramento?"
+```typescript
+if (await isScenarioComplete(specFile, currentScenario)) {
+  // ✅ Cenário completo
+  // Registrar no progress.md
+  // PERGUNTAR: "Cenário completo. Ir para próximo?"
+}
+```
+
+### Por Subtarefa:
+
+| Situação | Ação |
+|----------|------|
+| Próximo teste já passa | Perguntar: "Pular ou implementar?" |
+| Próximo teste não existe | Cenário completo ✅ |
+| Teste falha após implementação | Corrigir + retry |
+
+### Por US:
+
+Quando TODAS as subtasks e cenários estão completos:
+
+1. Retornar ao humano: `"✅ US [ID] completa. Revise e aprove."`
 2. Se humano APPROVA:
-   - Atualize `*.feature`: altere `@pending` para `@done` no cenário correspondente
-   - CHAME @agent-learnings-runner para registrar aprendizados da US (deduplição >60%)
-   - Execute COMMIT
-   - Execute DESTILAÇÃO GLOBAL dos padrões (ler progress.md → mapear para specs/docs/*)
-   - Mostre ao humano: execute `git status` e `git diff` dos arquivos a serem commitados
-   - Aguarde confirmação: "Confirma o commit da destilação?"
-   - Se confirmado: Execute COMMIT da destilação
-   - Limpe progress.md
+   - Mostrar: `git status` e `git diff` dos arquivos modificados
+   - Aguardar confirmação: `"Confirma o commit?"`
+   - Se confirmado: `git commit`
+   - Limpar progress.md
    - ENCERRE o agente
 3. Se humano NEGA:
-   - Aguarde novas diretrizes
-   - Continue ou ajuste conforme solicitado
-
----
-
-## Destilação (após US completa + aprovação)
-
-### 1. Leia progress.md completo
-
-### 2. Mapeie para documentos destino
-
-| Tipo | Destino |
-|------|---------|
-| Padrão componente | `specs/docs/convencoes-codigo.md` |
-| Nova regra | `specs/docs/guardrails.md` |
-| Decisão arquitetural | `specs/docs/architecture.md` |
-
-### 3. Deduplicação Semântica
-
-Antes de adicionar, compare com conteúdo existente:
-- Se similaridade ≥ 60% → PULAR (duplicado)
-- Se similaridade < 60% → REGISTRAR
-
-### 4. Limpe progress.md
-
-```markdown
-# Progress: [Nome da Feature]
-
----
-
-```
-
-### 5. Commite a destilação
-
-```bash
-git add specs/docs/ progress.md
-git commit -m "docs: destilação de aprendizados da US-[id] para [nome-da-feature]"
-```
+   - Aguardar novas diretrizes
 
 ---
 
@@ -309,11 +482,11 @@ git commit -m "docs: destilação de aprendizados da US-[id] para [nome-da-featu
 
 | Regra | Detalhe |
 |-------|---------|
-| **A cada verde** | Retorna ao humano para revisão |
-| **A cada erro** | Registra no progress + corrige |
+| **Aprovação** | Pedir confirmação entre cada teste |
+| **Progresso** | Registrar cada teste individualmente no progress.md |
+| **Skip** | Remover .skip() do próximo após teste passar |
+| **Gate** | Verify + Typecheck + Lint devem passar |
 | **Encerra** | Só quando US completa + aprovação humana |
- | **Destilação** | Ocorre automaticamente no pre-commit durante o commit |
-| **Typecheck + Lint** | Sempre verde antes de prosseguir |
 | **NUNCA use `task`** | Use @ menção direta para subagents |
 
 ---
@@ -325,8 +498,21 @@ INÍCIO:
   1. Ler docs globais (uma vez)
   2. Ler *.feature + plan.md + progress.md
   3. Verificar/criar branch
+  4. Detectar fluxo: *.spec.ts com skip?
 
-POR SUBTASK (TDD FIRST):
+FLUXO COM SKIP (@tdd-generator):
+  1. Encontrar próximo teste SEM skip
+  2. PERGUNTAR: "Implementar teste: [nome]?"
+  3. Se teste já passa: PERGUNTAR "Pular?"
+  4. Implementar código mínimo
+  5. Executar teste
+  6. GATE: verify + typecheck + lint
+  7. Registrar acerto no progress.md (por teste)
+  8. PERGUNTAR: "Teste verde. Continuar?"
+  9. Ativar próximo teste (.skip → test)
+  10. Voltar ao passo 1
+
+FLUXO TRADICIONAL (@tdd-playwright):
   1. @tdd-playwright: criar teste que FALHA (RED)
   2. Implementar código mínimo
   3. @tdd-playwright: teste deve PASSAR (GREEN)
@@ -334,16 +520,12 @@ POR SUBTASK (TDD FIRST):
   5. Typecheck: npx tsc --noEmit
   6. Lint: npx eslint
   7. Se falhou: corrigir + registrar erro + retry
-  8. Se verde: registrar acerto + retornar ao humano
+  8. Se verde: PERGUNTAR + retornar ao humano
 
 US COMPLETA + APROVADO:
-  1. Atualizar *.feature (@pending → @done)
-  2. CHAMAR @agent-learnings-runner (deduplição >60%)
-  3. Commitar
-  4. Executar destilação GLOBAL (progress.md → specs/docs/*)
-  5. Mostrar git status + git diff ao humano
-  6. Aguardar confirmação para commit da destilação
-  7. Limpar progress.md
-  8. ENCERRAR
-
+  1. Mostrar git status + git diff
+  2. PERGUNTAR: "Confirma o commit?"
+  3. Se sim: git commit
+  4. Limpar progress.md
+  5. ENCERRAR
 ```

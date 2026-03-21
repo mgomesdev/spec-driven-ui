@@ -1,20 +1,16 @@
 import { Inter } from "next/font/google";
 import "./globals.css";
-import { Header } from "@/components/header/header";
 
 const inter = Inter({ subsets: ["latin"] });
 
 export default function RootLayout({
-   children,
+  children,
 }: Readonly<{
-   children: React.ReactNode;
+  children: React.ReactNode;
 }>) {
-   return (
-      <html lang="pt-BR">
-         <body className={inter.className}>
-            <Header />
-            {children}
-         </body>
-      </html>
-   );
+  return (
+    <html lang="pt-BR">
+      <body className={inter.className}>{children}</body>
+    </html>
+  );
 }

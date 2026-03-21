@@ -3,8 +3,12 @@ name: analyze-consistency
 description: "Realizar uma análise não destrutiva de consistência e qualidade entre artefatos nos arquivos research.md, plan.md e *.feature após a geração dos cenários."
 mode: subagent
 temperature: 0.1
-permissions:
-    *: ask
+tools:
+  write: false
+  edit: false
+  read: true
+permission:
+  edit: ask
 ---
 
 ## Entrada do usuário

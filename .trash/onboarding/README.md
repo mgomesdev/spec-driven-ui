@@ -16,7 +16,8 @@ Bem-vindo(a) ao time! Este guia vai te levar do zero ao pahlawan (héroi) do spe
 ├── 07-worktrees.md          🌳 15 min     « Trabalho paralelo
 ├── 08-comandos.md           ⌨️  20 min     « Referência rápida
 ├── 09-tips.md               💡 15 min     « Dicas valiosas
-└── 10-glossario.md          📖 10 min     « Termos e siglas
+├── 10-glossario.md          📖 10 min     « Termos e siglas
+└── 11-agents.md             🤖 20 min     « Agentes disponíveis
 ```
 
 ## Tempo Total Estimado
