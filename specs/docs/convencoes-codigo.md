@@ -1,12 +1,9 @@
 # Convenções de Código
 
-## Geral
+## TypeScript
 
 - Não adicionar comentários no código `.ts`, `.tsx`, apenas é permitido em cenarios de teste ou planejamento.
 - Não adicionar o tipo de retorno da função, use a **inferencia de tipos** do typescript
-
-## Tipos e Interfaces
-
 - Props de componentes devem ser nomeadas de maneira descritiva para props `ComponentProps`
 - Props que utilizam `ForwardRef` devem tipar as suas interfaces de maneira descritiva para ref `ComponentRef`.
 
@@ -16,7 +13,9 @@
 
 - Arquivos devem respeitar o maximo de 500 linhas, acima disso deverá ser criado em arquivo separado e importado onde é utizado.
 
-### Espaçamentos
+---
+
+## Identação
 
 - Evite espaçamentos desnecessários entre linhas (vertical).
 
@@ -38,5 +37,11 @@
 
 ## Next.js
 
-- Utilize o component `Image` de `next/image` para imagens
+- Utilize o component `Image` de `next/image` para imagens com a prop `alt` obrigatória
 - As fonts devem ser importadas de `next/font/google` no arquivo de layout
+
+---
+
+## React
+
+- Em loops `map` adicionar a `key` unica no elemento e priorizando a prop do array da iteração no lugar da key 

@@ -52,28 +52,23 @@ test.describe('Feature: Sidebar de Navegação', () => {
       await expect(sidebarPage.sidebarLogo).toBeVisible();
     });
 
-    // ⏭️ Implementar após o primeiro teste passar
-    test.skip('o menu de navegação deve exibir NAV_COUNT itens', async ({ page }) => {
+    test('o menu de navegação deve exibir NAV_COUNT itens', async ({ page }) => {
       const sidebarPage = new SidebarPage(page);
       await sidebarPage.setDesktopViewport();
       await sidebarPage.goto();
-
       await expect(sidebarPage.sidebarNavItems).toHaveCount(NAV_COUNT);
     });
 
-    // ⏭️ Implementar após o primeiro teste passar
-    test.skip('os itens do menu devem ter os labels corretos', async ({ page }) => {
+    test('os itens do menu devem ter os labels corretos', async ({ page }) => {
       const sidebarPage = new SidebarPage(page);
       await sidebarPage.setDesktopViewport();
       await sidebarPage.goto();
-
       for (let i = 0; i < NAV_COUNT; i++) {
         await expect(sidebarPage.sidebarNavItems.nth(i)).toContainText(NAV_ITEMS[i]);
       }
     });
 
-    // ⏭️ Implementar após o primeiro teste passar
-    test.skip('o botão de upgrade premium deve estar visível', async ({ page }) => {
+    test('o botão de upgrade premium deve estar visível', async ({ page }) => {
       const sidebarPage = new SidebarPage(page);
       await sidebarPage.setDesktopViewport();
       await sidebarPage.goto();
