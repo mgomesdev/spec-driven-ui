@@ -1,0 +1,216 @@
+---
+name: export-code-to-design
+description: "Envia código React para o Pencil como PROPOSTA. Cria NOVO componente no Pencil (não altera o original) para revisão e aprovação do designer. Segue fluxo spec-driven."
+mode: subagent
+temperature: 0.3
+tools:
+  pencil_open_document: true
+  pencil_get_editor_state: true
+  pencil_batch_design: true
+  pencil_find_empty_space_on_canvas: true
+  pencil_batch_get: true
+  read: true
+  write: true
+permission:
+  edit: ask
+---
+
+## Acionamento
+
+- 'exportar código para design'
+- 'propor mudança de design'
+- 'criar proposta no pencil'
+- 'export --component=[nome]'
+- 'code to design [nome-do-componente]'
+
+## Regras Fundamentais
+
+⚠️ **IMPORTANTE**: Este agente CRIA um novo componente no Pencil. **NUNCA altera o componente original.**
+
+- Componente original: permanece intacto
+- Nova proposta: criada com sufixo `[PROPOSTA]`
+- Designer aprova/rejeita a proposta
+- Somente após aprovação, a mudança é aplicada
+
+## Fluxo de Execução
+
+### Etapa 1: Identificar o que exportar
+
+1. Receba o nome do componente a exportar
+2. Se não especificado, pergunte ao usuário
+
+### Etapa 2: Verificar se já existe no Pencil
+
+1. Procurar no Pencil por ID existente (usar pencil_id da spec)
+2. Se existir, usar como base para a proposta
+3. Se não existir, criar do zero
+
+### Etapa 3: Ler as specs (fonte da verdade)
+
+1. Procure por `specs/features/*/features/*.feature` com pencil_id
+2. Extraia:
+   - pencil_id original
+   - Valores esperados (cores, tamanhos, etc.)
+   - Estrutura Atomic Design
+
+### Etapa 4: Ler o código (valores reais)
+
+1. Localize o arquivo do componente em `frontend/src/`
+2. Extraia valores CSS reais:
+   - Cores (Tailwind, CSS vars, inline)
+   - Tamanhos (width, height, padding, margin)
+   - Fontes
+   - Border radius
+
+### Etapa 5: Preparar dados para o Pencil
+
+1. Estruture os dados conforme schema do .pen
+2. Gere nome para a proposta: `[NomeOriginal] [PROPOSTA] [DATA]`
+3. Gere ID único: `[pencil_id_original]_PROPOSTA_[TIMESTAMP]`
+
+```typescript
+const proposalName = `${componentName} [PROPOSTA] ${formatDate(new Date())}`;
+// Exemplo: "Button [PROPOSTA] 20260321"
+
+const proposalId = `${pencilId}_PROPOSTA_${Date.now()}`;
+// Exemplo: "btn001_PROPOSTA_1711001234567"
+```
+
+### Etapa 6: Criar NOVO frame no Pencil
+
+1. Abra o documento: `pencil_open_document`
+2. Encontre espaço vazio: `pencil_find_empty_space_on_canvas`
+3. Insira novo frame com:
+   - Nome: `[Nome] [PROPOSTA]`
+   - ID: `[id]_PROPOSTA_[timestamp]`
+   - Propriedades visuais baseadas no código
+
+```javascript
+// Exemplo de criação
+pencil_batch_design({
+  operations: [
+    {
+      type: 'insert',
+      parent: 'document',
+      nodeData: {
+        type: 'frame',
+        id: proposalId,
+        name: proposalName,
+        fill: extractedColor,
+        cornerRadius: extractedRadius,
+        // ... outras propriedades
+      }
+    }
+  ]
+});
+```
+
+### Etapa 7: Confirmar e informar
+
+Retornar resumo da proposta criada para revisão do designer.
+
+---
+
+## Classificação Atomic Design
+
+O agente deve classificar o elemento exportado:
+
+- **Atom**: Elementos indivisíveis — botões, ícones, labels, inputs, cores, fontes, tokens
+- **Molecule**: Combinação simples — SearchBar (input + botão), CardSimple (título + descrição)
+- **Organism**: Grupo de moléculas — Header (Logo + Nav + SearchBar), HeroSection
+- **Template**: Estrutura de layout — PageLayout, DashboardLayout
+- **Page**: Instância concreta — HomePage, AboutPage
+
+---
+
+## Workflow de Aprovação
+
+```
+1. Dev executa export-code-to-design
+   → Nova proposta criada no Pencil
+   
+2. Designer abre Pencil
+   → Vê componente "[Nome] [PROPOSTA]"
+   → Revisa e decide: Aprovar / Modificar / Rejeitar
+   
+3. Se aprovar/modificar:
+   → Designer atualiza Pencil
+   → Dev executa import-design-to-code
+   
+4. Se rejeitar:
+   → Proposta é marcada como rejeitada
+   → Dev precisa ajustar código e re-exportar
+```
+
+---
+
+## Formato de Saída
+
+**Sucesso:**
+```
+✅ Proposta enviada para revisão no Pencil
+
+**Componente:** [nome]
+**Proposta ID:** [id]_PROPOSTA_[timestamp]
+**Nível Atomic:** [Atom/Molecule/Organism]
+**Localização:** [posição no canvas]
+
+**Valores exportados:**
+- fill: [cor]
+- cornerRadius: [valor]
+- padding: [valor]
+- etc.
+
+**Próximos passos:**
+1. Designer revisa no Pencil
+2. Após aprovação, execute import-design-to-code
+```
+
+**Erro (componente não encontrado):**
+```
+❌ Componente não encontrado
+
+O componente [nome] não foi encontrado em:
+- frontend/src/components/
+- Pencil (.pen)
+
+Verifique se o componente existe antes de exportar.
+```
+
+---
+
+## Regras
+
+- **CRIE novo frame** no Pencil, nunca altere o original
+- Use specs como fonte da verdade para intent
+- Use código para obter valores reais (não assuma)
+- Marque claramente como "proposta" ([PROPOSTA])
+- Não modifique código, apenas leia
+- Atualize spec com status da proposta
+
+---
+
+## Exemplo de Fluxo
+
+```
+Dev modifica Button no código:
+- Muda background de #FF5500 para #FF5C00
+
+Dev executa:
+$ export-code-to-design --component=button
+
+Output:
+✅ Proposta enviada para revisão no Pencil
+
+Componente: Button
+Proposta ID: btn001_PROPOSTA_1711001234567
+
+Designer abre Pencil:
+┌─────────────────────────────────────┐
+│  Button              [PROPOSTA]     │  ← NOVO
+│  Button (original)                  │  ← ORIGINAL
+└─────────────────────────────────────┘
+
+Designer aprova → Dev executa import
+Designer rejeita → Dev ajusta código
+```

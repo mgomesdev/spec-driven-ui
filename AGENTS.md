@@ -1,38 +1,55 @@
-# AGENTS.md — Agente Geral do Projeto
+# AGENTS.md
 
-## Visão geral rápida
+## ⚠️ PRIORIDADE MÁXIMA
 
-Site estratégico de posicionamento de autoridade profissional como desenvolvedor frontend. O objetivo é facilitar o processo de contratação apresentando projetos, habilidades e experiência de forma clara e convincente para recrutadores e potenciais clientes.
+Leia primeiro: `@specs/docs/guardrails.md`
 
-## Diretrizes Gerais
+---
 
-Leia o seguinte arquivo imediatamente pois é relevante para todos os workflows: `./specs/docs/guardrails.md`
+## 🚀 Início de Sessão
 
-## Tecnologias
+1. `@specs/docs/guardrails.md`
+2. `.opencode/agent-session-log.json`
+3. `@specs/docs/convencoes-codigo.md`
+4. `@specs/docs/padroes-git.md`
 
-| Tecnologia | Versão |
-|------------|--------|
-| Next.js    | 16.1.6 |
-| React      | 19.2   |
-| TypeScript | 5.9    |
-| Tailwind   | v4.2   |
+---
 
-## Diretrizes de Desenvolvimento
+## 🧠 Agentes
 
-- **Convenções de código:** `specs/docs/convencoes-codigo.md` (Nomenclatura de arquivos e componentes, Padrões de tipagem TypeScript, Estrutura de componentes React)
-- **Arquitetura geral do projeto:** `@specs/docs/architecture.md`
-- **Padrões git:** `@specs/docs/padroes-git.md`
+| Agente | Função |
+|--------|--------|
+| `@us-to-research` | Converte US em research.md |
+| `@research-to-plan` | Gera plano de ação |
+| `@bdd-generator` | Gera cenários BDD (*.feature) |
+| `@tdd-generator` | Gera testes *.spec.ts |
+| `@implement-tasks` | Implementa código via TDD |
+| `@verify-patterns` | Valida padrões e convenções |
+| `@analyze-consistency` | Analisa consistência entre artefatos |
+| `@design-tokens-generator` | Extrai tokens → globals.css |
+| `@diff-design-vs-code` | Compara design com código |
+| `@export-code-to-design` | Exporta código para Pencil |
+| `@import-design-to-code` | Importa design aprovado |
+| `@design-system-builder` | Construção do design system |
+| `@tdd-playwright` | Executa TDD por teste |
+| `@worktree-mapper` | Mapeia dependências entre componentes |
+| `@worktree-runner` | Cria worktrees Git paralelos |
 
-## Fontes Confiáveis
+---
 
-### Documentação Oficial
+## 📚 Referências
 
-- [Tailwind CSS](https://tailwindcss.com/)
-- [Next.js](https://nextjs.org/)
-- [TypeScript](https://www.typescriptlang.org/)
-- [React](https://react.dev/)
-- [Conventional Commits](https://www.conventionalcommits.org/en/v1.0.0/)
+| Tópico | Arquivo |
+|--------|---------|
+| Arquitetura e Fluxos | `@specs/docs/architecture.md` |
+| Tecnologias | `@specs/docs/tecnologias.md` |
+| Convenções de código | `@specs/docs/convencoes-codigo.md` |
+| Guardrails | `@specs/docs/guardrails.md` |
+| Padrões git | `@specs/docs/padroes-git.md` |
 
-### Blogs e Artigos
+---
 
-- [Atomic Design](https://atomicdesign.bradfrost.com/)
+## ⚓ Pre-commit
+
+1. **commit-msg**: Validação Conventional Commits
+2. **pre-commit**: Playwright Tests

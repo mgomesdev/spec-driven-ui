@@ -13,16 +13,17 @@
       "reserved": 10000
    },
    "watcher": {
-      "ignore": [
-         "node_modules/**",
-         "dist/**",
-         ".git/**",
-         "trash/**",
-         "readme/**",
-         "./README.md",
-         "specs/report/**",
-         "marketing/**"
-      ]
+"ignore": [
+          "./node_modules/**",
+          "./dist/**",
+          ".git/**",
+          "./readme/**",
+          "./README.md",
+          "./design-diff.md",
+          "wiki/**/*",
+          "**/*.spec.docs.md",
+          "**/guardrails.json"
+       ]
    },
    "share": "disabled"
 }

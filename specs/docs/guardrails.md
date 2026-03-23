@@ -16,14 +16,8 @@
 
 | # | Regra |
 |---|-------|
-| 1 | Não implemente nada sem passar pelo fluxo research → plan → tasks |
+| 1 | Não implemente nada sem passar pelo fluxo RPI completo |
 | 2 | Não invente contratos de API — consulte o `plan.md` |
-| 3 | Não use `any` no TypeScript |
-| 4 | Não faça `fetch` direto em componentes |
-| 5 | Não refatore código fora do escopo da história atual |
-| 6 | Não crie componentes sem tipar as props |
-| 7 | Não crie arquivos sem seguir o padrão de nomenclatura |
-| 8 | Não adicione comentários no código |
-| 9 | Não crie arquivos desnecessários |
-| 10 | Não ultrapasse 500 linhas por arquivo |
-| 11 | Não adicione tipagem de retorno, prefira a inferência de tipos |
+| 3 | Não refatore código fora do escopo da história atual |
+| 4 | Não crie arquivos desnecessários |
+| 5 | Design System (tokens) **SEMPRE** primeiro, antes de componentes |
